@@ -20,6 +20,7 @@
   "homepage": "https://github.com/miguelmoya1/game#readme",
   "devDependencies": {
     "@angular/cli": "^19.1.6",
-    "@nestjs/cli": "^11.0.2"
+    "@nestjs/cli": "^11.0.2",
+    "prettier": "3.5.1"
   }
 }
