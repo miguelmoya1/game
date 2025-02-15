@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:window": "docker compose -f docker-compose.window.yml up --build --watch",
+    "start:windows": "docker compose -f docker-compose.windows.dev.yml up --build --watch",
     "start:linux": "docker compose -f docker-compose.dev.yml up --build --watch",
     "start:prod": "docker compose -f docker-compose.prod.yml up --build --watch"
   },
