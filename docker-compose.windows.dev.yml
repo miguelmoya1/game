@@ -33,7 +33,7 @@ services:
             - /app/build/ # Including build directory to ignore
 
   database:
-    image: postgres:17.3
+    image: postgres:17
     ports:
       - '5432:5432'
     environment:
