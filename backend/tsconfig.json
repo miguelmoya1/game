@@ -16,6 +16,34 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@game/entities": ["src/core/domain/entities"],
+      "@game/events": ["src/core/domain/events"],
+      "@game/interfaces": ["src/core/domain/interfaces"],
+      "@game/enums": ["src/core/domain/enums"],
+      "@game/builder": ["src/core/domain/builders"],
+      "@game/use-cases-contracts": ["src/core/domain/use-cases"],
+      "@game/handlers": ["src/core/domain/handlers"],
+
+      "@game/use-cases": ["src/core/application/use-cases"],
+      "@game/services": ["src/core/application/services"],
+      "@game/queries": ["src/core/application/queries"],
+      "@game/commands": ["src/core/application/commands"],
+      "@game/interceptors": ["src/core/application/interceptors"],
+
+      "@game/guards": ["src/core/infrastructure/guards"],
+      "@game/strategies": ["src/core/infrastructure/strategies"],
+      "@game/repositories": ["src/core/infrastructure/repositories"],
+      "@game/decorators": ["src/core/infrastructure/decorators"],
+      "@game/database": ["src/core/infrastructure/database"],
+      "@game/data/dto": ["src/core/infrastructure/data/dto"],
+      "@game/data/mappers": ["src/core/infrastructure/data/mappers"],
+
+      "@game/di/use-cases": ["src/di/use-cases"],
+      "@game/di/repositories": ["src/di/repositories"],
+
+      "@game/presentation": ["src/presentation"]
+    }
   }
 }
