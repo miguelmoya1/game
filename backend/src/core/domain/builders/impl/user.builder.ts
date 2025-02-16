@@ -24,12 +24,12 @@ export class UserBuilder {
     return this;
   }
 
-  public withSurname(surname: string) {
+  public withSurname(surname: string | null) {
     this.#surname = surname;
     return this;
   }
 
-  public withNickname(nickname: string) {
+  public withNickname(nickname: string | null) {
     this.#nickname = nickname;
     return this;
   }

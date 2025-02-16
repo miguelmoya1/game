@@ -4,5 +4,6 @@ import { Provider } from '@nestjs/common';
 
 export const userRepositoryProvider: Provider<UserRepository> = {
   provide: USER_REPOSITORY,
-  useClass: UserRepositoryImpl,
+  // TODO: Fix this
+  useClass: UserRepositoryImpl as any,
 };

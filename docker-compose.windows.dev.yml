@@ -6,9 +6,7 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgres://user:password@db:5432/database
+      - database
     develop:
       watch:
         - action: sync
@@ -34,7 +32,7 @@ services:
             - /app/dist/
             - /app/build/ # Including build directory to ignore
 
-  db:
+  database:
     image: postgres:17.3
     ports:
       - '5432:5432'

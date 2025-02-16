@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ CONFIRM_YOUR_ACCOUNT }}</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        line-height: 1.5;
+      }
+
+      .container {
+        max-width: 512px;
+        margin: 0 auto;
+        padding: 16px;
+        background-color: var(--gm3-sys-color-surface-container, #f5f5f5);
+        color: var(--gm3-sys-color-on-background, #333);
+        border-radius: 4px;
+      }
+
+      h1 {
+        color: var(--gm3-sys-color-primary, #007bff);
+      }
+
+      button {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: var(--gm3-sys-color-primary, #007bff);
+        color: var(--gm3-sys-color-on-primary, #fff);
+        text-decoration: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        border: none;
+      }
+
+      .info {
+        font-size: 0.9em;
+        color: var(--gm3-sys-color-on-surface-variant, #666);
+      }
+
+      a {
+        color: var(--gm3-sys-color-on-primary, #fff) !important;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>{{ CONFIRM_YOUR_ACCOUNT }}</h1>
+      <h2>{{ THANKS_FOR_REGISTERING }}</h2>
+      <p>{{ TO_COMPLETE_THE_REGISTRATION_PROCESS }}</p>
+      <button>
+        <a href="{{ confirmationLink }}"> {{ CONFIRM_ACCOUNT }} </a>
+      </button>
+
+      <p class="info">{{ IF_YOU_HAVE_NOT_REQUESTED_TO_REGISTER }}</p>
+    </div>
+  </body>
+</html>

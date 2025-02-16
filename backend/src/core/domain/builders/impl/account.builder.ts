@@ -6,19 +6,18 @@ export class AccountBuilder {
   #provider: Provider;
   #providerId: string;
   #email: string;
-  #password: string;
+  #password?: string;
 
   #isConfirmed: boolean;
   #isPrimary: boolean;
 
-  #hashForPasswordReset: string;
-  #hashExpiredAt: Date;
+  #hashForPasswordReset: string | null;
+  #hashExpiredAt: Date | null;
 
   #createdAt: Date;
   #updatedAt: Date;
   #deletedAt: Date | null;
 
- 
   public withId(id: string) {
     this.#id = id;
     return this;
@@ -44,8 +43,8 @@ export class AccountBuilder {
     return this;
   }
 
-  public withPassword(password: string) {
-    this.#password = password;
+  public withPassword(password?: string) {
+    this.#password = password || undefined;
     return this;
   }
 
@@ -59,12 +58,12 @@ export class AccountBuilder {
     return this;
   }
 
-  public withHashForPasswordReset(hashForPasswordReset: string) {
+  public withHashForPasswordReset(hashForPasswordReset: string | null) {
     this.#hashForPasswordReset = hashForPasswordReset;
     return this;
   }
 
-  public withHashExpiredAt(hashExpiredAt: Date) {
+  public withHashExpiredAt(hashExpiredAt: Date | null) {
     this.#hashExpiredAt = hashExpiredAt;
     return this;
   }

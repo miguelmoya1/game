@@ -1,4 +1,4 @@
-import { Provider } from '@prisma/client';
+import { Provider } from '@game/entities';
 import { IsEmail, IsEnum, IsString, ValidateIf } from 'class-validator';
 
 export class CreateAccountDto {

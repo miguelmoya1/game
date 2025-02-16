@@ -2,7 +2,8 @@ import { AccountBuilder } from '@game/builder';
 import { Account } from '@game/entities';
 
 export const accountToEntity = (account: Account): Account => {
-  return new AccountBuilder(account.id, account.createdAt, account.updatedAt, account.deletedAt)
+  return new AccountBuilder()
+    .withId(account.id)
     .withUserId(account.userId)
     .withProvider(account.provider)
     .withProviderId(account.providerId)

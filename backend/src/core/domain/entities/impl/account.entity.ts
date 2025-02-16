@@ -8,7 +8,7 @@ export class Account {
   public readonly provider: Provider;
   public readonly providerId: string;
   public readonly email: string;
-  public readonly password: string | null;
+  public readonly password?: string;
 
   public readonly isConfirmed: boolean;
   public readonly isPrimary: boolean;
