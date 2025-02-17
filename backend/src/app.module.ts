@@ -25,7 +25,7 @@ import { TranslateModule } from './presentation/controllers/translate/translate.
     JwtModule.registerAsync({
       useFactory: async (config: ConfigService) => ({
         secret: config.get('JWT_SECRET'),
-        signOptions: { expiresIn: '90d' },
+        signOptions: { expiresIn: '91d' },
       }),
       imports: [ConfigModule],
       inject: [ConfigService],

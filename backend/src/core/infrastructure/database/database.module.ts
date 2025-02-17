@@ -5,8 +5,4 @@ import { DatabaseService } from './database.service';
   providers: [DatabaseService],
   exports: [DatabaseService],
 })
-export class DatabaseModule {
-  constructor() {
-    console.log('DatabaseModule initialized');
-  }
-}
+export class DatabaseModule {}
