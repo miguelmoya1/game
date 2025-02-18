@@ -1,11 +1,11 @@
-export enum Provider {
+export enum AccountProvider {
   EMAIL = 'email',
 }
 
 export class Account {
   public readonly id: string;
   public readonly userId: string;
-  public readonly provider: Provider;
+  public readonly provider: AccountProvider;
   public readonly providerId: string;
   public readonly email: string;
   public readonly password?: string;

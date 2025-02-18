@@ -1,5 +1,5 @@
 import { CreateAccountDto, CreateUserDto } from '@game/data/dto';
-import { Provider, User } from '@game/entities';
+import { AccountProvider, User } from '@game/entities';
 import { ErrorCodes } from '@game/enums';
 import { LoginEmailCreatedEvent } from '@game/events';
 import { ACCOUNT_REPOSITORY, AccountRepository, USER_REPOSITORY, UserRepository } from '@game/interfaces';
@@ -107,7 +107,7 @@ export class AccountUseCaseImpl implements AccountUseCase {
       throw new Error(ErrorCodes.ERROR_REGISTERING_USER);
     }
 
-    if (createAccountDto.password && createAccountDto.provider === Provider.EMAIL) {
+    if (createAccountDto.password && createAccountDto.provider === AccountProvider.EMAIL) {
       createAccountDto.password = await this._encryptionService.encrypt(createAccountDto.password);
     }
 

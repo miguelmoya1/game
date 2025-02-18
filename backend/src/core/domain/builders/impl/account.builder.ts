@@ -1,9 +1,9 @@
-import { Account, Provider } from '@game/entities';
+import { Account, AccountProvider } from '@game/entities';
 
 export class AccountBuilder {
   #id: string;
   #userId: string;
-  #provider: Provider;
+  #provider: AccountProvider;
   #providerId: string;
   #email: string;
   #password?: string;
@@ -28,7 +28,7 @@ export class AccountBuilder {
     return this;
   }
 
-  public withProvider(provider: Provider) {
+  public withProvider(provider: AccountProvider) {
     this.#provider = provider;
     return this;
   }
