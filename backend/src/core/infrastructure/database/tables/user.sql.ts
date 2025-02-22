@@ -1,16 +1,16 @@
 import { UserRole } from '@game/entities';
 
-export type UserDb = {
-  id: string;
-  name: string;
-  role: UserRole;
-  surname: string | null;
-  nickname: string | null;
-  language: string;
+export type User_db = {
+  readonly id: string;
+  readonly name: string;
+  readonly role: UserRole;
+  readonly surname: string | null;
+  readonly nickname: string | null;
+  readonly language: string;
 
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
+  readonly created_at: Date;
+  readonly updated_at: Date;
+  readonly deleted_at: Date | null;
 };
 
 export function createUserSql() {
@@ -21,9 +21,9 @@ export function createUserSql() {
       role VARCHAR(255) NOT NULL,
       surname VARCHAR(255),
       nickname VARCHAR(255),
-      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      deletedAt TIMESTAMP NULL
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      deleted_at TIMESTAMP NULL
     );
 
     CREATE OR REPLACE TRIGGER update_users_updated_at

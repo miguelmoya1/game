@@ -1,6 +1,6 @@
 import { CreateAccountDto } from '@game/data/dto';
 import { accountToEntity } from '@game/data/mappers';
-import { DatabaseService } from '@game/database';
+import { Account_db, DatabaseService } from '@game/database';
 import { AccountRepository } from '@game/interfaces';
 import { Injectable } from '@nestjs/common';
 
@@ -18,7 +18,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       SELECT * FROM accounts WHERE hashForPasswordReset = $1;
     `;
 
-    const response = await this._databaseService.pg.query(sql, [hashForPasswordReset]);
+    const response = await this._databaseService.pg.query<Account_db>(sql, [hashForPasswordReset]);
 
     if (!response?.rows?.length) {
       return null;
@@ -32,7 +32,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       UPDATE accounts SET password = $1, hashForPasswordReset = NULL, hashExpiredAt = NULL WHERE id = $2 RETURNING *;
     `;
 
-    const response = await this._databaseService.pg.query(sql, [password, accountId]);
+    const response = await this._databaseService.pg.query<Account_db>(sql, [password, accountId]);
 
     if (!response?.rows?.length) {
       return null;
@@ -46,7 +46,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       UPDATE accounts SET hashForPasswordReset = $1, hashExpiredAt = NOW() + INTERVAL '1 hour' WHERE email = $2 RETURNING *;
     `;
 
-    const response = await this._databaseService.pg.query(sql, [hash, email]);
+    const response = await this._databaseService.pg.query<Account_db>(sql, [hash, email]);
 
     if (!response?.rows?.length) {
       return null;
@@ -60,7 +60,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       UPDATE accounts SET isConfirmed = TRUE WHERE id = $1 RETURNING *;
     `;
 
-    const response = await this._databaseService.pg.query(sql, [accountId]);
+    const response = await this._databaseService.pg.query<Account_db>(sql, [accountId]);
 
     if (!response?.rows?.length) {
       return null;
@@ -74,7 +74,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       SELECT * FROM accounts WHERE id = $1;
     `;
 
-    const response = await this._databaseService.pg.query(sql, [accountId]);
+    const response = await this._databaseService.pg.query<Account_db>(sql, [accountId]);
 
     if (!response?.rows?.length) {
       return null;
@@ -92,7 +92,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       RETURNING *;
     `;
 
-    const response = await this._databaseService.pg.query(sql, [
+    const response = await this._databaseService.pg.query<Account_db>(sql, [
       createAccountDto.provider,
       createAccountDto.providerId,
       createAccountDto.email,
@@ -113,7 +113,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       SELECT * FROM accounts WHERE provider = 'EMAIL' AND email = $1;
     `;
 
-    const response = await this._databaseService.pg.query(sql, [email]);
+    const response = await this._databaseService.pg.query<Account_db>(sql, [email]);
 
     if (!response?.rows?.length) {
       return null;

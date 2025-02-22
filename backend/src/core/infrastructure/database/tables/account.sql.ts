@@ -1,21 +1,21 @@
 import { AccountProvider } from '@game/entities';
 
-export type AccountDb = {
-  id: string;
-  provider: AccountProvider;
-  providerId: string;
-  email: string;
-  password: string | null;
-  isConfirmed: boolean;
-  isPrimary: boolean;
-  hashForPasswordReset: string | null;
-  hasExpiredAt: Date | null;
+export type Account_db = {
+  readonly id: string;
+  readonly provider: AccountProvider;
+  readonly provider_id: string;
+  readonly email: string;
+  readonly password: string | null;
+  readonly is_confirmed: boolean;
+  readonly is_primary: boolean;
+  readonly hash_for_password_reset: string | null;
+  readonly hash_expired_at: Date | null;
 
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
+  readonly created_at: Date;
+  readonly updated_at: Date;
+  readonly deleted_at: Date | null;
 
-  userId: string;
+  readonly user_id: string;
 };
 
 export function createAccountSql() {
@@ -23,19 +23,19 @@ export function createAccountSql() {
     CREATE TABLE IF NOT EXISTS accounts (
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       provider VARCHAR(255) NOT NULL,
-      providerId VARCHAR(255) NOT NULL,
+      provider_id VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL UNIQUE,
       password VARCHAR(255),
-      isConfirmed BOOLEAN DEFAULT FALSE,
-      isPrimary BOOLEAN DEFAULT FALSE,
-      hashForPasswordReset VARCHAR(255),
-      hasExpiredAt TIMESTAMP,
+      is_confirmed BOOLEAN DEFAULT FALSE,
+      is_primary BOOLEAN DEFAULT FALSE,
+      hash_for_password_reset VARCHAR(255),
+      hash_expired_at TIMESTAMP,
 
-      createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      deletedAt TIMESTAMP DEFAULT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      deleted_at TIMESTAMP DEFAULT NULL,
       
-      userId UUID REFERENCES users(id) ON DELETE CASCADE
+      user_id UUID REFERENCES users(id) ON DELETE CASCADE
     );
 
     CREATE OR REPLACE TRIGGER update_accounts_updated_at

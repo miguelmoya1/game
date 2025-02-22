@@ -1,7 +1,8 @@
 import { UserBuilder } from '@game/builder';
+import { User_db } from '@game/database';
 import { User } from '@game/entities';
 
-export const userToEntity = (user: User): User => {
+export const userToEntity = (user: User_db): User => {
   return new UserBuilder()
     .withId(user.id)
     .withName(user.name)
@@ -10,9 +11,9 @@ export const userToEntity = (user: User): User => {
     .withLanguage(user.language)
     .withRole(user.role)
 
-    .withCreatedAt(user.createdAt)
-    .withUpdatedAt(user.updatedAt)
-    .withDeletedAt(user.deletedAt)
+    .withCreatedAt(user.created_at)
+    .withUpdatedAt(user.updated_at)
+    .withDeletedAt(user.deleted_at)
 
     .build();
 };

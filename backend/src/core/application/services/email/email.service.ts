@@ -16,7 +16,7 @@ export class EmailService {
   #resend = new Resend(this._configService.get('RESEND_API_KEY'));
   #dirName = 'templates';
 
-  #from = 'Mocky <mocky@miguelmo.dev>';
+  #from = 'game <game@miguelmo.dev>';
 
   constructor(
     private readonly _configService: ConfigService,

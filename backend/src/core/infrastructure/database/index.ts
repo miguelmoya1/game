@@ -1,3 +1,3 @@
 export * from './database.module';
 export * from './database.service';
-export { AccountDb, UserDb } from './tables';
+export { Account_db, User_db } from './tables';

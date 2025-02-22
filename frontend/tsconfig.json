@@ -16,7 +16,29 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "ES2022",
+    "baseUrl": "./",
+    "paths": {
+      "@game/builders": ["src/app/core/domain/builder"],
+      "@game/entities": ["src/app/core/domain/entities"],
+      "@game/enums": ["src/app/core/domain/enums"],
+      "@game/interfaces": ["src/app/core/domain/interfaces"],
+      "@game/use-cases-contracts": ["src/app/core/domain/use-cases"],
+      "@game/use-cases": ["src/app/core/application/use-cases"],
+      "@game/services": ["src/app/core/application/services"],
+      "@game/resolvers": ["src/app/core/application/resolvers"],
+      "@game/guards": ["src/app/core/infrastructure/guards"],
+      "@game/interceptors": ["src/app/core/infrastructure/interceptors"],
+      "@game/repositories": ["src/app/core/infrastructure/repositories"],
+      "@game/dto": ["src/app/core/infrastructure/data/dto"],
+      "@game/mappers": ["src/app/core/infrastructure/data/mappers"],
+      "@game/di/use-cases": ["src/app/di/use-cases"],
+      "@game/di/repositories": ["src/app/di/repositories"],
+      "@game/animations": ["src/app/presentation/animations"],
+      "@game/components": ["src/app/presentation/components"],
+      "@game/directives": ["src/app/presentation/directives"],
+      "@game/pipes": ["src/app/presentation/pipes"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
