@@ -15,7 +15,7 @@ export class AccountRepositoryImpl implements AccountRepository {
 
   public async findByHash(hashForPasswordReset: string) {
     const sql = `
-      SELECT * FROM accounts WHERE hashForPasswordReset = $1;
+      SELECT * FROM accounts WHERE hash_for_password_reset = $1;
     `;
 
     const response = await this._databaseService.pg.query<Account_db>(sql, [hashForPasswordReset]);
@@ -29,7 +29,7 @@ export class AccountRepositoryImpl implements AccountRepository {
 
   public async changePassword(accountId: string, password: string) {
     const sql = `
-      UPDATE accounts SET password = $1, hashForPasswordReset = NULL, hashExpiredAt = NULL WHERE id = $2 RETURNING *;
+      UPDATE accounts SET password = $1, hash_for_password_reset = NULL, hash_expired_at = NULL WHERE id = $2 RETURNING *;
     `;
 
     const response = await this._databaseService.pg.query<Account_db>(sql, [password, accountId]);
@@ -43,7 +43,7 @@ export class AccountRepositoryImpl implements AccountRepository {
 
   public async forgotPassword(email: string, hash: string) {
     const sql = `
-      UPDATE accounts SET hashForPasswordReset = $1, hashExpiredAt = NOW() + INTERVAL '1 hour' WHERE email = $2 RETURNING *;
+      UPDATE accounts SET hash_for_password_reset = $1, hash_expired_at = NOW() + INTERVAL '1 hour' WHERE email = $2 RETURNING *;
     `;
 
     const response = await this._databaseService.pg.query<Account_db>(sql, [hash, email]);
@@ -57,7 +57,7 @@ export class AccountRepositoryImpl implements AccountRepository {
 
   public async confirm(accountId: string) {
     const sql = `
-      UPDATE accounts SET isConfirmed = TRUE WHERE id = $1 RETURNING *;
+      UPDATE accounts SET is_confirmed = TRUE WHERE id = $1 RETURNING *;
     `;
 
     const response = await this._databaseService.pg.query<Account_db>(sql, [accountId]);
@@ -87,7 +87,7 @@ export class AccountRepositoryImpl implements AccountRepository {
     const { userId, isPrimary } = params;
 
     const sql = `
-      INSERT INTO accounts (provider, providerId, email, password, isPrimary, userId)
+      INSERT INTO accounts (provider, provider_id, email, password, is_primary, user_id)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;

@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { readdir, readFile } from 'node:fs/promises';
+import { join } from 'path';
 import { Pool } from 'pg';
-import { createAccountSql, createUserSql } from './tables';
 
 @Injectable()
 export class DatabaseService {
@@ -29,7 +30,7 @@ export class DatabaseService {
   async #init() {
     await this.#connect();
     await this.#prepareExtensionsAndFunctions();
-    await this.#createTable();
+    await this.#createTables();
   }
 
   async #connect() {
@@ -56,9 +57,21 @@ export class DatabaseService {
     `);
   }
 
-  async #createTable() {
-    await this.#pg.query(createUserSql());
-    await this.#pg.query(createAccountSql());
+  async #createTables() {
+    const sqlDirectory = join(__dirname, 'sql');
+    const sqlFiles = await readdir(sqlDirectory);
+
+    for (const file of sqlFiles.filter((file) => file.endsWith('.sql'))) {
+      const filePath = join(sqlDirectory, file);
+      const sql = await readFile(filePath, 'utf8');
+
+      try {
+        await this.#pg.query(sql);
+        this.#logger.log(`Executed ${file} successfully`);
+      } catch (error) {
+        this.#logger.error(`Error executing ${file}:`, error);
+      }
+    }
 
     this.#logger.log('Tables created successfully');
   }

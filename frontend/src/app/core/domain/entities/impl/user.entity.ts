@@ -21,10 +21,12 @@ export class User {
     this.surname = user.surname ?? null;
     this.language = user.language ?? '';
     this.nickname = user.nickname ?? null;
+
     this.role = user.role ?? UserRole.USER; // Assuming UserRole.USER is a valid default value
-    this.createdAt = user.createdAt ?? new Date();
-    this.updatedAt = user.updatedAt ?? new Date();
-    this.deletedAt = user.deletedAt ?? new Date();
+
+    this.createdAt = user.createdAt;
+    this.updatedAt = user.updatedAt;
+    this.deletedAt = user.deletedAt;
   }
 
   public isAdmin(): boolean {

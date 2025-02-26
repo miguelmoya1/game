@@ -37,7 +37,7 @@
       "@game/repositories": ["src/core/infrastructure/repositories"],
       "@game/decorators": ["src/core/infrastructure/decorators"],
       "@game/database": ["src/core/infrastructure/database"],
-      "@game/data/dto": ["src/core/infrastructure/data/dto"],
+      "@game/data/dto": ["src/core/infrastructure/data/dtos"],
       "@game/data/mappers": ["src/core/infrastructure/data/mappers"],
 
       "@game/di/use-cases": ["src/di/use-cases"],
