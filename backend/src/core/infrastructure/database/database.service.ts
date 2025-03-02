@@ -58,7 +58,7 @@ export class DatabaseService {
   }
 
   async #createTables() {
-    const sqlDirectory = join(__dirname, 'sql');
+    const sqlDirectory = join('sql');
     const sqlFiles = await readdir(sqlDirectory);
 
     for (const file of sqlFiles.filter((file) => file.endsWith('.sql'))) {
@@ -70,6 +70,16 @@ export class DatabaseService {
         this.#logger.log(`Executed ${file} successfully`);
       } catch (error) {
         this.#logger.error(`Error executing ${file}:`, error);
+
+        setTimeout(async () => {
+          try {
+            this.#logger.log(`Retrying ${file}...`);
+            await this.#pg.query(sql);
+            this.#logger.log(`Executed ${file} successfully`);
+          } catch (error) {
+            this.#logger.error(`Error executing ${file}:`, error);
+          }
+        }, 1000);
       }
     }
 

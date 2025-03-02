@@ -3,11 +3,6 @@ import { DatabaseService, Player_db } from '@game/database';
 import { PlayerRepository } from '@game/interfaces';
 import { Injectable } from '@nestjs/common';
 
-type CreateParams = {
-  readonly userId: string;
-  readonly isPrimary?: boolean;
-};
-
 @Injectable()
 export class PlayerRepositoryImpl implements PlayerRepository {
   constructor(private readonly _databaseService: DatabaseService) {}

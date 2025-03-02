@@ -13,12 +13,14 @@ type CreateParams = {
 export class AccountRepositoryImpl implements AccountRepository {
   constructor(private readonly _databaseService: DatabaseService) {}
 
+  protected readonly pg = this._databaseService.pg;
+
   public async findByHash(hashForPasswordReset: string) {
     const sql = `
       SELECT * FROM accounts WHERE hash_for_password_reset = $1;
     `;
 
-    const response = await this._databaseService.pg.query<Account_db>(sql, [hashForPasswordReset]);
+    const response = await this.pg.query<Account_db>(sql, [hashForPasswordReset]);
 
     if (!response?.rows?.length) {
       return null;
@@ -32,7 +34,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       UPDATE accounts SET password = $1, hash_for_password_reset = NULL, hash_expired_at = NULL WHERE id = $2 RETURNING *;
     `;
 
-    const response = await this._databaseService.pg.query<Account_db>(sql, [password, accountId]);
+    const response = await this.pg.query<Account_db>(sql, [password, accountId]);
 
     if (!response?.rows?.length) {
       return null;
@@ -46,7 +48,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       UPDATE accounts SET hash_for_password_reset = $1, hash_expired_at = NOW() + INTERVAL '1 hour' WHERE email = $2 RETURNING *;
     `;
 
-    const response = await this._databaseService.pg.query<Account_db>(sql, [hash, email]);
+    const response = await this.pg.query<Account_db>(sql, [hash, email]);
 
     if (!response?.rows?.length) {
       return null;
@@ -60,7 +62,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       UPDATE accounts SET is_confirmed = TRUE WHERE id = $1 RETURNING *;
     `;
 
-    const response = await this._databaseService.pg.query<Account_db>(sql, [accountId]);
+    const response = await this.pg.query<Account_db>(sql, [accountId]);
 
     if (!response?.rows?.length) {
       return null;
@@ -74,7 +76,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       SELECT * FROM accounts WHERE id = $1;
     `;
 
-    const response = await this._databaseService.pg.query<Account_db>(sql, [accountId]);
+    const response = await this.pg.query<Account_db>(sql, [accountId]);
 
     if (!response?.rows?.length) {
       return null;
@@ -92,7 +94,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       RETURNING *;
     `;
 
-    const response = await this._databaseService.pg.query<Account_db>(sql, [
+    const response = await this.pg.query<Account_db>(sql, [
       createAccountDto.provider,
       createAccountDto.providerId,
       createAccountDto.email,
@@ -113,7 +115,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       SELECT * FROM accounts WHERE provider = 'EMAIL' AND email = $1;
     `;
 
-    const response = await this._databaseService.pg.query<Account_db>(sql, [email]);
+    const response = await this.pg.query<Account_db>(sql, [email]);
 
     if (!response?.rows?.length) {
       return null;

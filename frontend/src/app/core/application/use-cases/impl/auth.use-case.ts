@@ -1,4 +1,4 @@
-import { inject, Injectable, resource } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AUTH_REPOSITORY } from '@game/interfaces';
 import { AuthUseCase } from '@game/use-cases-contracts';
 
@@ -6,11 +6,11 @@ import { AuthUseCase } from '@game/use-cases-contracts';
 export class AuthUseCaseImpl implements AuthUseCase {
   readonly #authRepository = inject(AUTH_REPOSITORY);
 
-  readonly #isAuthenticated = resource({
-    loader: () => this.#authRepository.isAuthenticated(),
-  });
+  readonly #isAuthenticated = this.#authRepository.isAuthenticated;
 
-  public readonly isAuthenticated = this.#isAuthenticated.asReadonly();
+  get isAuthenticated() {
+    return this.#isAuthenticated;
+  }
 
   constructor() {
     const token = localStorage.getItem('auth-token');

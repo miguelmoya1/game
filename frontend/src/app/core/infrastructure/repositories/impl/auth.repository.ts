@@ -1,20 +1,17 @@
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpEventType, httpResource } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthRepository } from '@game/interfaces';
-import { catchError, filter, firstValueFrom, map, of } from 'rxjs';
+import { isAuthenticatedMapper, tokenMapper } from '@game/mappers';
+import { filter, firstValueFrom, map } from 'rxjs';
 
 @Injectable()
 export class AuthRepositoryImpl implements AuthRepository {
   readonly #httpClient = inject(HttpClient);
 
-  public async isAuthenticated() {
-    return firstValueFrom(
-      this.#httpClient.get<{ isAuthenticated: boolean }>('auth/is-authenticated').pipe(
-        catchError(() => of({ isAuthenticated: false })),
-        map((res) => res.isAuthenticated),
-      ),
-    );
-  }
+  readonly isAuthenticated = httpResource(() => 'auth/is-authenticated', {
+    defaultValue: false,
+    parse: isAuthenticatedMapper,
+  });
 
   public async login(email: string, password: string) {
     return firstValueFrom(
@@ -27,6 +24,6 @@ export class AuthRepositoryImpl implements AuthRepository {
   }
 
   public async rehydrate() {
-    return firstValueFrom(this.#httpClient.get<{ token: string }>('auth/rehydrate').pipe(map((res) => res.token)));
+    return firstValueFrom(this.#httpClient.get<{ token: string }>('auth/rehydrate').pipe(map(tokenMapper)));
   }
 }

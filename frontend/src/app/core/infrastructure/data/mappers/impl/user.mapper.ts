@@ -2,16 +2,18 @@ import { UserBuilder } from '@game/builders';
 import { UserDto } from '@game/dto';
 import { User } from '@game/entities';
 
-export const mapUserToEntity = (user: UserDto): User => {
+export const mapUserToEntity = (user: unknown): User => {
+  const userData = user as UserDto;
+
   return new UserBuilder()
-    .withId(user.id)
-    .withName(user.name)
+    .withId(userData.id)
+    .withName(userData.name)
 
-    .withRole(user.role)
-    .withLanguage(user.language)
+    .withRole(userData.role)
+    .withLanguage(userData.language)
 
-    .withCreatedAt(new Date(user.createdAt))
-    .withUpdatedAt(new Date(user.updatedAt))
+    .withCreatedAt(new Date(userData.createdAt))
+    .withUpdatedAt(new Date(userData.updatedAt))
 
     .build();
 };

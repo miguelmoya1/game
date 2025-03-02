@@ -1,15 +1,18 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { UserDto } from '@game/dto';
+import { httpResource } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
 import { UserRepository } from '@game/interfaces';
 import { mapUserToEntity } from '@game/mappers';
-import { firstValueFrom, map } from 'rxjs';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
-  readonly #httpClient = inject(HttpClient);
+  readonly #shouldFetch = signal(false);
+  readonly #logged = httpResource(() => (this.#shouldFetch() ? 'users/me' : undefined), {
+    parse: mapUserToEntity,
+  });
 
-  public async getLogged() {
-    return firstValueFrom(this.#httpClient.get<UserDto>('users/me').pipe(map(mapUserToEntity)));
+  public readonly logged = this.#logged.asReadonly();
+
+  public setShouldFetchLogged(value: boolean) {
+    this.#shouldFetch.set(value);
   }
 }

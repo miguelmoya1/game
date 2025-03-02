@@ -43,7 +43,7 @@
       "@game/di/use-cases": ["src/di/use-cases"],
       "@game/di/repositories": ["src/di/repositories"],
 
-      "@game/presentation": ["src/presentation"]
+      "@game/controllers": ["src/presentation/controllers"]
     }
   }
 }

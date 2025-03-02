@@ -1,10 +1,10 @@
+import { AuthModule, TranslateModule, UsersModule } from '@game/controllers';
 import { DatabaseModule } from '@game/database';
 import { RepositoriesModule } from '@game/di/repositories';
 import { UseCasesModule } from '@game/di/use-cases';
 import { JwtAuthGuard } from '@game/guards';
 import { CommandsModule, EventsModule, QueriesModule } from '@game/handlers';
 import { ErrorsInterceptor } from '@game/interceptors';
-import { AuthModule, UsersModule } from '@game/presentation';
 import { ServicesModule } from '@game/services';
 import { JwtStrategy } from '@game/strategies';
 import { Module } from '@nestjs/common';
@@ -13,7 +13,6 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { TranslateModule } from './presentation/controllers/translate/translate.module';
 
 @Module({
   imports: [
