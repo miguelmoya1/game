@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { TranslateController } from './translate.controller';
 
 @Module({
-  controllers: [TranslateController]
+  controllers: [TranslateController],
 })
 export class TranslateModule {}

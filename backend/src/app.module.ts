@@ -22,7 +22,7 @@ import { PassportModule } from '@nestjs/passport';
     CqrsModule.forRoot(),
     PassportModule,
     JwtModule.registerAsync({
-      useFactory: async (config: ConfigService) => ({
+      useFactory: (config: ConfigService) => ({
         secret: config.get('JWT_SECRET'),
         signOptions: { expiresIn: '91d' },
       }),
