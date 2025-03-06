@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { gameUseCaseProvider } from './di/use-cases/impl/game.use-case.provider';
 // import { loggedGuard, notLoggedGuard } from '@game/guards';
 
 export const routes: Routes = [
@@ -10,7 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'game',
-    providers: [gameUseCaseProvider],
+    providers: [],
     loadChildren: () => import('./presentation/pages/game/router/game.routes'),
   },
   {

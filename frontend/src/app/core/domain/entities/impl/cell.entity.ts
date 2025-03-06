@@ -1,31 +1,23 @@
-import { Point } from '../../classes/point.class';
-
 export class Cell {
   public readonly id: string;
-  public readonly order: number;
-  public readonly canMove: boolean;
+  public readonly name: string;
 
-  public readonly coordinates: Point;
-  public readonly width: number;
-  public readonly height: number;
+  public readonly positionX: number;
+  public readonly positionY: number;
 
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
-  public readonly deletedAt: Date;
+  public readonly deletedAt: Date | null;
 
-  constructor(user: any) {
-    this.id = user.id ?? '';
+  constructor(cell: Pick<Cell, 'id' | 'name' | 'positionX' | 'positionY' | 'createdAt' | 'updatedAt' | 'deletedAt'>) {
+    this.id = cell.id;
+    this.name = cell.name;
 
-    this.order = user.order ?? 0;
-    this.canMove = user.canMove ?? false;
+    this.positionX = cell.positionX;
+    this.positionY = cell.positionY;
 
-    this.width = user.width ?? 25;
-    this.height = user.height ?? 25;
-
-    this.coordinates = new Point(user.coordinates.x, user.coordinates.y);
-
-    this.createdAt = user.createdAt ?? new Date();
-    this.updatedAt = user.updatedAt ?? new Date();
-    this.deletedAt = user.deletedAt;
+    this.createdAt = cell.createdAt;
+    this.updatedAt = cell.updatedAt;
+    this.deletedAt = cell.deletedAt;
   }
 }

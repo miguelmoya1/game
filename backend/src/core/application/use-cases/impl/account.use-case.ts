@@ -5,13 +5,15 @@ import { LoginEmailCreatedEvent } from '@game/events';
 import { ACCOUNT_REPOSITORY, AccountRepository, USER_REPOSITORY, UserRepository } from '@game/interfaces';
 import { EmailService, EncryptionService } from '@game/services';
 import { AccountUseCase } from '@game/use-cases-contracts';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
 import { createHash } from 'crypto';
 
 @Injectable()
 export class AccountUseCaseImpl implements AccountUseCase {
+  readonly #logger = new Logger(AccountUseCaseImpl.name);
+
   constructor(
     @Inject(ACCOUNT_REPOSITORY)
     private readonly _accountRepository: AccountRepository,
@@ -40,7 +42,7 @@ export class AccountUseCaseImpl implements AccountUseCase {
 
     const encryptedPassword = await this._encryptionService.encrypt(password);
     const { id } = accountDb;
-    const account = this._accountRepository.changePassword(id, encryptedPassword);
+    const account = await this._accountRepository.changePassword(id, encryptedPassword);
 
     if (!account) {
       throw new Error(ErrorCodes.ACCOUNT_NOT_FOUND);
@@ -50,7 +52,7 @@ export class AccountUseCaseImpl implements AccountUseCase {
   }
 
   public async rehydrate(user: User) {
-    return this.#generateToken(user);
+    return Promise.resolve(this.#generateToken(user));
   }
 
   public async forgotPassword(email: string) {
@@ -67,7 +69,9 @@ export class AccountUseCaseImpl implements AccountUseCase {
       throw new Error(ErrorCodes.USER_NOT_FOUND);
     }
 
-    this._emailService.sendForgotPassword(account, user);
+    this._emailService.sendForgotPassword(account, user).catch((error) => {
+      this.#logger.error(error);
+    });
 
     return account;
   }
