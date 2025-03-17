@@ -1,27 +1,21 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { mkdir, readFile, readdir, stat, writeFile } from 'fs/promises';
-import { join } from 'path';
-import { TranslateExtractorService } from './translate-extractor.service';
+import { join } from 'node:path';
+import { TranslateExtractorService } from './translate-extractor.service.ts';
 
-@Injectable()
 export class TranslateFilesService {
-  readonly #logger = new Logger(TranslateFilesService.name);
-  #keys: string[] = [];
+  readonly #translateExtractorService = new TranslateExtractorService();
   readonly #languages: Record<string, { [key: string]: string }> = {};
-  #languagesAvailable: string[];
-  #languagesDir = 'languages';
+  readonly #languagesDir = 'languages';
+  readonly #logger = console;
 
-  constructor(
-    private readonly _configService: ConfigService,
-    private readonly _translateExtractorService: TranslateExtractorService,
-  ) {}
+  #keys: string[] = [];
+  #languagesAvailable: string[];
 
   public async createAll(languagesAvailable: string[]) {
     this.#languagesAvailable = languagesAvailable;
 
-    if (this._configService.get('NODE_ENV') === 'development') {
-      this.#keys = await this._translateExtractorService.getKeys();
+    if (process.env.NODE_ENV === 'development') {
+      this.#keys = await this.#translateExtractorService.getKeys();
 
       await this.#createTranslates();
     }
@@ -102,7 +96,7 @@ export class TranslateFilesService {
         await writeFile(filePath, JSON.stringify(file, null, 2));
 
         // copy into dist
-        const path = join(this.#languagesDir, '../dist/languages');
+        const path = join(this.#languagesDir, '../languages');
         const distFilePath = join(path, `${language}.json`);
 
         this.#logger.debug(`(${distFilePath}) ${language}.json updated`);
@@ -116,7 +110,7 @@ export class TranslateFilesService {
 
   async #setLanguages() {
     for (const language of this.#languagesAvailable) {
-      this.#logger.verbose(`Load ${language}.json`);
+      this.#logger.log(`Load ${language}.json`);
       const filePath = join(this.#languagesDir, `${language}.json`);
 
       const content = await readFile(join(filePath), { encoding: 'utf8' });

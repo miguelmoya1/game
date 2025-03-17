@@ -1,10 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
-
-export class CreateUserDto {
-  @IsString()
+export interface CreateUserDto {
   name: string;
-
-  @IsString()
-  @IsOptional()
   surname?: string;
 }

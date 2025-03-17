@@ -1,85 +1,92 @@
-import { ActiveAccountCommand, ChangePasswordCommand, LoginWithEmailCommand, RegisterCommand } from '@game/commands';
-import { AuthEmailLoginPayloadDto, ChangePasswordDto, CreateAccountDto, CreateUserDto } from '@game/data/dto';
-import { AuthenticatedUser } from '@game/decorators';
-import { User } from '@game/entities';
-import { Public } from '@game/guards';
-import { RehydrateQuery } from '@game/queries';
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { FastifyReply } from 'fastify';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { ActiveAccountCommand } from '../../../core/domain/handlers/commands/active-account.command.ts';
+import { ChangePasswordCommand } from '../../../core/domain/handlers/commands/change-password.command.ts';
+import { ForgotPasswordCommand } from '../../../core/domain/handlers/commands/forgot-password.command.ts';
+import { LoginWithEmailCommand } from '../../../core/domain/handlers/commands/login-with-email.command.ts';
+import { RegisterCommand } from '../../../core/domain/handlers/commands/register.command.ts';
+import type { CreateAccountDto } from '../../../core/infrastructure/data/dtos/auth/create-account.dto.ts';
+import type { CreateUserDto } from '../../../core/infrastructure/data/dtos/user/create-user.dto.ts';
+import { authMiddleware } from '../../../core/infrastructure/guards/auth.guard.ts';
+import { BaseController } from '../base.controller.ts';
 
-@Controller('auth')
-export class AuthController {
-  constructor(
-    private readonly _queryBus: QueryBus,
-    private readonly _commandBus: CommandBus,
-  ) {}
+export class AuthController extends BaseController {
+  readonly #activeAccountCommand = new ActiveAccountCommand();
+  readonly #changePasswordCommand = new ChangePasswordCommand();
+  readonly #forgotPasswordCommand = new ForgotPasswordCommand();
+  readonly #loginWithEmailCommand = new LoginWithEmailCommand();
+  readonly #registerCommand = new RegisterCommand();
 
-  @Public()
-  @Get('confirm/:accountId')
-  public async confirmLogin(@Param('accountId') accountId: string, @Res() res: FastifyReply) {
-    const command = new ActiveAccountCommand(accountId);
-
-    const token = await this._commandBus.execute(command);
-
-    this.#sendToken(res, token);
+  constructor() {
+    super('/auth');
   }
 
-  @Get('is-authenticated')
-  public async isAuthenticated() {
-    return { isAuthenticated: true };
+  protected initRoutes(fastify: FastifyInstance) {
+    this.logger.debug('    GET /confirm/:accountId');
+    fastify.get('/confirm/:accountId', this.confirmAccount.bind(this));
+
+    this.logger.debug('    GET /is-authenticated');
+    fastify.get('/is-authenticated', { preValidation: [authMiddleware] }, this.isAuthenticated.bind(this));
+
+    this.logger.debug('    GET /change-password/:hashForPasswordReset');
+    fastify.post('/change-password/:hashForPasswordReset', this.changePassword.bind(this));
+
+    this.logger.debug('    POST /forgot-password');
+    fastify.post('/forgot-password', this.forgotPassword.bind(this));
+
+    this.logger.debug('    POST /login/email');
+    fastify.post('/login/email', this.loginWithEmail.bind(this));
+
+    this.logger.debug('    POST /register');
+    fastify.post('/register', this.register.bind(this));
   }
 
-  @Get('rehydrate')
-  public async rehydrate(@AuthenticatedUser() user: User) {
-    const token = new RehydrateQuery(user);
+  async confirmAccount(request: FastifyRequest, reply: FastifyReply) {
+    const { accountId } = request.params as { accountId: string };
+    const user = await this.#activeAccountCommand.execute({ accountId });
+    const verify = await reply.jwtSign(user);
 
-    return await this._queryBus.execute(token);
+    reply.setCookie('auth-token', verify);
+
+    return { ok: true };
   }
 
-  @Public()
-  @Post('change-password/:hashForPasswordReset')
-  public async changePassword(
-    @Param('hashForPasswordReset') hashForPasswordReset: string,
-    @Body() passwordDto: ChangePasswordDto,
-  ) {
-    const { password } = passwordDto;
+  async isAuthenticated(request: FastifyRequest, reply: FastifyReply) {
+    const token = await reply.jwtSign(request.userDb!);
 
-    const command = new ChangePasswordCommand(hashForPasswordReset, password);
+    reply.setCookie('auth-token', token);
 
-    return await this._commandBus.execute(command);
+    return { ok: true };
   }
 
-  @Public()
-  @Post('login/email')
-  public async loginWithEmail(@Body() authLoginEmailDto: AuthEmailLoginPayloadDto, @Res() res: FastifyReply) {
-    const { email, password } = authLoginEmailDto;
+  async changePassword(request: FastifyRequest) {
+    const { hashForPasswordReset } = request.params as { hashForPasswordReset: string };
+    const { password } = request.body as { password: string };
+    const command = await this.#changePasswordCommand.execute({ hashForPasswordReset, password });
 
-    const command = new LoginWithEmailCommand(email, password);
-    const token = await this._commandBus.execute(command);
-
-    this.#sendToken(res, token);
+    return { ok: command };
   }
 
-  @Public()
-  @Post('register')
-  public async register(
-    @Body()
-    registerDto: {
-      account: CreateAccountDto;
-      user: CreateUserDto;
-    },
-    @Res() res: FastifyReply,
-  ) {
-    const { account, user } = registerDto;
+  async forgotPassword(request: FastifyRequest) {
+    const { email } = request.body as { email: string };
+    const command = await this.#forgotPasswordCommand.execute({ email });
 
-    const command = new RegisterCommand(account, user);
-    const token = await this._commandBus.execute(command);
-
-    this.#sendToken(res, token, 201);
+    return { ok: command };
   }
 
-  #sendToken(res: FastifyReply, token: string, status = 200) {
-    res.header('authorization', `Bearer ${token}`).status(status).send();
+  async loginWithEmail(request: FastifyRequest, reply: FastifyReply) {
+    const { email, password } = request.body as { email: string; password: string };
+    const command = await this.#loginWithEmailCommand.execute({ email, password });
+    const token = await reply.jwtSign(command);
+
+    reply.setCookie('auth-token', token);
+
+    return { ok: !!command };
+  }
+
+  async register(request: FastifyRequest) {
+    const { account, user } = request.body as { account: CreateAccountDto; user: CreateUserDto };
+    const command = await this.#registerCommand.execute({ createAccountDto: account, createUserDto: user });
+
+    return { ok: !!command };
   }
 }

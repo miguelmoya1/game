@@ -1,17 +1,8 @@
-import { AccountProvider } from '@game/entities';
-import { IsEmail, IsEnum, IsString, ValidateIf } from 'class-validator';
+import type { AccountProvider } from '../../../../domain/entities/account.entity.ts';
 
-export class CreateAccountDto {
-  @IsEmail()
+export interface CreateAccountDto {
   email: string;
-
-  @IsEnum(AccountProvider)
-  provider: AccountProvider;
-
-  @IsString()
+  provider: (typeof AccountProvider)[keyof typeof AccountProvider];
   providerId: string;
-
-  @ValidateIf((o) => o.provider === AccountProvider.EMAIL)
-  @IsString()
   password?: string;
 }

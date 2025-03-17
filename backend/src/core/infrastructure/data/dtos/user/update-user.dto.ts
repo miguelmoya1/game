@@ -1,7 +1,3 @@
-import { IsOptional, IsString } from 'class-validator';
-
-export class UpdateUserDto {
-  @IsString()
-  @IsOptional()
+export interface UpdateUserDto {
   readonly nickname?: string;
 }

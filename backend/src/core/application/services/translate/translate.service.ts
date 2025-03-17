@@ -1,21 +1,19 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { FastifyRequest } from 'fastify';
-import { TranslateFilesService } from './translate-files.service';
+import type { FastifyRequest } from 'fastify';
+import { TranslateFilesService } from './translate-files.service.ts';
+import type { TranslateService } from './translate.service.contract.ts';
 
-@Injectable()
-export class TranslateService implements OnModuleInit {
-  #languages: Record<
-    string,
-    {
-      [key: string]: string;
-    }
-  >;
+export class TranslateServiceImpl implements TranslateService {
   readonly #languagesAvailable = ['es', 'en'];
 
-  constructor(private readonly _translateFilesService: TranslateFilesService) {}
+  #languages: Record<string, any>;
 
-  async onModuleInit() {
-    this.#languages = await this._translateFilesService.createAll(this.#languagesAvailable);
+  constructor() {
+    this.init();
+  }
+
+  async init() {
+    const translateFilesService = new TranslateFilesService();
+    this.#languages = await translateFilesService.createAll(this.#languagesAvailable);
   }
 
   public getTranslate(req: FastifyRequest, language?: string) {

@@ -1,12 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { readFile, readdir } from 'fs/promises';
-import { join } from 'path';
+import { readFile, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
 
-@Injectable()
 export class TranslateExtractorService {
-  #logger = new Logger(TranslateExtractorService.name);
-
-  #variableNameRegexp = '(([A-Z][A-Z\\d]*)(_[A-Z\\d]+)*)';
+  readonly #logger = console;
+  readonly #variableNameRegexp = '(([A-Z][A-Z\\d]*)(_[A-Z\\d]+)*)';
 
   async getKeys() {
     try {
