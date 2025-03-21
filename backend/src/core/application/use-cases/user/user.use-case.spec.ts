@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 import { afterEach, beforeEach, describe, it, mock } from 'node:test';
-import { addProviders, resetProviders } from '../../../di/di-manager.ts';
-import { User, UserRole } from '../../domain/entities/user.entity.ts';
-import { ErrorCodes } from '../../domain/enums/error-codes.enum.ts';
-import { USER_REPOSITORY } from '../../domain/interfaces/user.repository.ts';
-import { UserRepositoryMock } from '../../infrastructure/repositories/user.repository.mock.ts';
+import { addProviders, resetProviders } from '../../../../di/di-manager.ts';
+import { User, UserRole } from '../../../domain/entities/user.entity.ts';
+import { ErrorCodes } from '../../../domain/enums/error-codes.enum.ts';
+import { USER_REPOSITORY } from '../../../domain/interfaces/user.repository.ts';
+import { UserRepositoryMock } from '../../../infrastructure/repositories/user.repository.mock.ts';
 import { UserUseCaseImpl } from './user.use-case.ts';
 
 describe('UserUseCaseImpl', () => {

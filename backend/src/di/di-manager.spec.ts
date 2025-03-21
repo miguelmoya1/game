@@ -70,4 +70,17 @@ describe('DiManager', () => {
       ]);
     }, /Invalid provider/);
   });
+
+  it('DiManager should reset providers correctly', async () => {
+    resetProviders();
+    await addProviders([
+      {
+        provide: TEST_SERVICE,
+        useClass: TestService,
+      },
+    ]);
+
+    resetProviders();
+    assert.throws(() => inject(TEST_SERVICE), /Dependency not found/);
+  });
 });

@@ -1,4 +1,4 @@
-import { UserRole } from '../../../domain/entities/user.entity.ts';
+import { UserRole } from '../../domain/entities/user.entity.ts';
 
 export type User_db = {
   readonly id: string;

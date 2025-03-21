@@ -2,7 +2,7 @@ import { inject } from '../../../di/di-manager.ts';
 import { DATABASE_SERVICE } from '../../application/services/database/database.service.contract.ts';
 import type { CreateAccountDto } from '../data/dtos/auth/create-account.dto.ts';
 import { accountToEntity } from '../data/mappers/account.mapper.ts';
-import type { Account_db } from '../database/entities.ts';
+import type { Account_db } from '../database/account.db.ts';
 
 type CreateParams = {
   readonly userId: string;

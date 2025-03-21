@@ -1,11 +1,11 @@
-export const AccountProvider = {
-  EMAIL: 'email',
-} as const;
+export enum AccountProvider {
+  EMAIL = 'email',
+}
 
 export class Account {
   public readonly id: string;
   public readonly userId: string;
-  public readonly provider: (typeof AccountProvider)[keyof typeof AccountProvider];
+  public readonly provider: AccountProvider;
   public readonly providerId: string;
   public readonly email: string;
   public readonly password?: string;

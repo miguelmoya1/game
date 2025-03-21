@@ -1,7 +1,8 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { equal, ok } from 'node:assert';
 import { beforeEach, describe, it, mock } from 'node:test';
-import { UserUseCaseMock } from '../../../core/application/use-cases/user.use-case.mock.ts';
+import { UserUseCaseMock } from '../../../core/application/use-cases/user/user.use-case.mock.ts';
+import { UpdateUserCommand } from '../../../core/domain/handlers/commands/update-user.command.ts';
 import { GetUserByIdQuery } from '../../../core/domain/handlers/queries/get-user-by-id.query.ts';
 import { USER_USE_CASE } from '../../../core/domain/use-cases/user.use-case.contract.ts';
 import { addProviders, resetProviders } from '../../../di/di-manager.ts';
@@ -9,7 +10,7 @@ import { FASTIFY } from '../../../di/fastify.provider.ts';
 import { fastifyMock, mockFastifyResponseParam } from '../../../test/fastify.ts';
 import { UserController } from './users.controller.ts';
 
-describe('userController', () => {
+describe('UserController', () => {
   beforeEach(async () => {
     resetProviders();
 
@@ -26,11 +27,6 @@ describe('userController', () => {
   });
 
   it('should be created', () => {
-    try {
-      new UserController();
-    } catch (error) {
-      console.error(error);
-    }
     ok(new UserController());
   });
 
@@ -181,7 +177,7 @@ describe('userController', () => {
 
   describe('updateUser', () => {
     it('should return updateUserCommand', async () => {
-      const updateUserCommandMock = mock.method(UserController.prototype, 'updateUser');
+      const updateUserCommandMock = mock.method(UpdateUserCommand.prototype, 'execute');
       const userController = new UserController();
 
       await userController.updateUser({

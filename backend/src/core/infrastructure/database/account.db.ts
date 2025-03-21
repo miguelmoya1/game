@@ -1,4 +1,4 @@
-import { AccountProvider } from '../../../domain/entities/account.entity.ts';
+import { AccountProvider } from '../../domain/entities/account.entity.ts';
 
 export type Account_db = {
   readonly id: string;

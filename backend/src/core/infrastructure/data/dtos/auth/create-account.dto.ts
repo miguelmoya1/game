@@ -1,8 +1,8 @@
-import type { AccountProvider } from '../../../../domain/entities/account.entity.ts';
+import { AccountProvider } from '../../../../domain/entities/account.entity.ts';
 
 export interface CreateAccountDto {
   email: string;
-  provider: (typeof AccountProvider)[keyof typeof AccountProvider];
+  provider: AccountProvider;
   providerId: string;
   password?: string;
 }

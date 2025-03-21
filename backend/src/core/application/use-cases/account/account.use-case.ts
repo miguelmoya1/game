@@ -1,14 +1,14 @@
 import { createHash } from 'crypto';
-import { inject } from '../../../di/di-manager.ts';
-import { AccountProvider } from '../../domain/entities/account.entity.ts';
-import { ErrorCodes } from '../../domain/enums/error-codes.enum.ts';
-import { ACCOUNT_REPOSITORY } from '../../domain/interfaces/account.repository.ts';
-import { USER_REPOSITORY } from '../../domain/interfaces/user.repository.ts';
-import type { AccountUseCase } from '../../domain/use-cases/account.use-case.contract.ts';
-import type { CreateAccountDto } from '../../infrastructure/data/dtos/auth/create-account.dto.ts';
-import type { CreateUserDto } from '../../infrastructure/data/dtos/user/create-user.dto.ts';
-import { EMAIL_SERVICE } from '../services/email/email.service.contract.ts';
-import { ENCRYPTION_SERVICE } from '../services/encryption/encryption.service.contract.ts';
+import { inject } from '../../../../di/di-manager.ts';
+import { AccountProvider } from '../../../domain/entities/account.entity.ts';
+import { ErrorCodes } from '../../../domain/enums/error-codes.enum.ts';
+import { ACCOUNT_REPOSITORY } from '../../../domain/interfaces/account.repository.ts';
+import { USER_REPOSITORY } from '../../../domain/interfaces/user.repository.ts';
+import type { AccountUseCase } from '../../../domain/use-cases/account.use-case.contract.ts';
+import type { CreateAccountDto } from '../../../infrastructure/data/dtos/auth/create-account.dto.ts';
+import type { CreateUserDto } from '../../../infrastructure/data/dtos/user/create-user.dto.ts';
+import { EMAIL_SERVICE } from '../../services/email/email.service.contract.ts';
+import { ENCRYPTION_SERVICE } from '../../services/encryption/encryption.service.contract.ts';
 
 export class AccountUseCaseImpl implements AccountUseCase {
   readonly #accountRepository = inject(ACCOUNT_REPOSITORY);
@@ -42,6 +42,29 @@ export class AccountUseCaseImpl implements AccountUseCase {
     }
 
     return !!account;
+  }
+
+  public async create(createUserDto: CreateUserDto, createAccountDto: CreateAccountDto) {
+    const user = await this.#userRepository.create(createUserDto);
+
+    if (!user) {
+      throw new Error(ErrorCodes.ERROR_REGISTERING_USER);
+    }
+
+    if (createAccountDto.password && createAccountDto.provider === AccountProvider.EMAIL) {
+      createAccountDto.password = await this.#encryptionService.encrypt(createAccountDto.password);
+    }
+
+    const account = await this.#accountRepository.create(createAccountDto, {
+      userId: user.id,
+      isPrimary: true,
+    });
+
+    if (!account) {
+      throw new Error(ErrorCodes.ERROR_REGISTERING_USER);
+    }
+
+    return user;
   }
 
   public async forgotPassword(email: string) {
@@ -89,29 +112,6 @@ export class AccountUseCaseImpl implements AccountUseCase {
     }
 
     return response;
-  }
-
-  public async create(createUserDto: CreateUserDto, createAccountDto: CreateAccountDto) {
-    const user = await this.#userRepository.create(createUserDto);
-
-    if (!user) {
-      throw new Error(ErrorCodes.ERROR_REGISTERING_USER);
-    }
-
-    if (createAccountDto.password && createAccountDto.provider === AccountProvider.EMAIL) {
-      createAccountDto.password = await this.#encryptionService.encrypt(createAccountDto.password);
-    }
-
-    const account = await this.#accountRepository.create(createAccountDto, {
-      userId: user.id,
-      isPrimary: true,
-    });
-
-    if (!account) {
-      throw new Error(ErrorCodes.ERROR_REGISTERING_USER);
-    }
-
-    return user;
   }
 
   public async signInWithEmail(email: string, password: string) {

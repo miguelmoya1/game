@@ -4,7 +4,7 @@ import type { UserRepository } from '../../domain/interfaces/user.repository.ts'
 import type { CreateUserDto } from '../data/dtos/user/create-user.dto.ts';
 import type { UpdateUserDto } from '../data/dtos/user/update-user.dto.ts';
 import { userToEntity } from '../data/mappers/user.mapper.ts';
-import type { User_db } from '../database/entities.ts';
+import type { User_db } from '../database/user.db.ts';
 
 export class UserRepositoryImpl implements UserRepository {
   readonly #databaseService = inject(DATABASE_SERVICE);
