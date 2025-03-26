@@ -1,4 +1,4 @@
-import assert from 'node:assert';
+import { deepEqual, equal, ok } from 'node:assert';
 import { afterEach, beforeEach, describe, it, mock } from 'node:test';
 import { addProviders, resetProviders } from '../../../../di/di-manager.ts';
 import { User, UserRole } from '../../../domain/entities/user.entity.ts';
@@ -30,16 +30,16 @@ describe('UserUseCaseImpl', () => {
     it('should create a user', async () => {
       const user = await userUseCase.create({ name: 'John Doe' });
 
-      assert.ok(user);
-      assert.equal(user.name, 'John Doe');
+      ok(user);
+      equal(user.name, 'John Doe');
     });
 
     it('should call the repository function', async () => {
       const fnMock = mock.method(UserRepositoryMock.prototype, 'create');
 
-      assert.equal(fnMock.mock.callCount(), 0);
+      equal(fnMock.mock.callCount(), 0);
       await userUseCase.create({ name: 'test' });
-      assert.equal(fnMock.mock.callCount(), 1);
+      equal(fnMock.mock.callCount(), 1);
     });
 
     it('should call the repository with the correct data', async () => {
@@ -47,7 +47,7 @@ describe('UserUseCaseImpl', () => {
       const args = { name: 'test' };
 
       await userUseCase.create(args);
-      assert.deepEqual(fnMock.mock.calls[0].arguments, [args]);
+      deepEqual(fnMock.mock.calls[0].arguments, [args]);
     });
 
     it('should throw an error if the user is not created', async () => {
@@ -57,8 +57,8 @@ describe('UserUseCaseImpl', () => {
       try {
         await userUseCase.create({ name: 'test' });
       } catch (error) {
-        assert.ok(error);
-        assert.equal(error.message, ErrorCodes.USER_NOT_CREATED);
+        ok(error);
+        equal(error.message, ErrorCodes.USER_NOT_CREATED);
       }
     });
   });
@@ -67,15 +67,15 @@ describe('UserUseCaseImpl', () => {
     it('should get a user by id', async () => {
       const user = await userUseCase.getById('1');
 
-      assert.ok(user);
+      ok(user);
     });
 
     it('should call the repository function', async () => {
       const fnMock = mock.method(UserRepositoryMock.prototype, 'findById');
 
-      assert.equal(fnMock.mock.callCount(), 0);
+      equal(fnMock.mock.callCount(), 0);
       await userUseCase.getById('1');
-      assert.equal(fnMock.mock.callCount(), 1);
+      equal(fnMock.mock.callCount(), 1);
     });
 
     it('should call the repository with the correct data', async () => {
@@ -83,7 +83,7 @@ describe('UserUseCaseImpl', () => {
       const args = '1';
 
       await userUseCase.getById(args);
-      assert.deepEqual(fnMock.mock.calls[0].arguments, [args]);
+      deepEqual(fnMock.mock.calls[0].arguments, [args]);
     });
   });
 
@@ -91,15 +91,15 @@ describe('UserUseCaseImpl', () => {
     it('should update a user', async () => {
       const user = await userUseCase.update({ nickname: 'Jane Doe' }, '1', new User({ role: UserRole.ADMIN } as any));
 
-      assert.ok(user);
+      ok(user);
     });
 
     it('should call the repository function', async () => {
       const fnMock = mock.method(UserRepositoryMock.prototype, 'update');
 
-      assert.equal(fnMock.mock.callCount(), 0);
+      equal(fnMock.mock.callCount(), 0);
       await userUseCase.update({ nickname: 'Jane Doe' }, '1', new User({ role: UserRole.ADMIN } as any));
-      assert.equal(fnMock.mock.callCount(), 1);
+      equal(fnMock.mock.callCount(), 1);
     });
 
     it('should call the repository with the correct data if is an admin', async () => {
@@ -107,15 +107,15 @@ describe('UserUseCaseImpl', () => {
 
       await userUseCase.update({ nickname: 'Jane Doe' }, '1', new User({ role: UserRole.ADMIN } as any));
 
-      assert.deepEqual(fnMock.mock.calls[0].arguments, ['1', { nickname: 'Jane Doe' }]);
+      deepEqual(fnMock.mock.calls[0].arguments, ['1', { nickname: 'Jane Doe' }]);
     });
 
     it('should throw an error if the user is not an admin', async () => {
       try {
         await userUseCase.update({ nickname: 'Jane Doe' }, '1', new User({ role: UserRole.USER } as any));
       } catch (error) {
-        assert.ok(error);
-        assert.equal(error.message, ErrorCodes.UNAUTHORIZED);
+        ok(error);
+        equal(error.message, ErrorCodes.UNAUTHORIZED);
       }
     });
 
@@ -124,15 +124,15 @@ describe('UserUseCaseImpl', () => {
 
       await userUseCase.update({ nickname: 'Jane Doe' }, '1', new User({ id: '1' } as any));
 
-      assert.deepEqual(fnMock.mock.calls[0].arguments, ['1', { nickname: 'Jane Doe' }]);
+      deepEqual(fnMock.mock.calls[0].arguments, ['1', { nickname: 'Jane Doe' }]);
     });
 
     it('should throw an error if the user is not the owner', async () => {
       try {
         await userUseCase.update({ nickname: 'Jane Doe' }, '2', new User({ id: '1' } as any));
       } catch (error) {
-        assert.ok(error);
-        assert.equal(error.message, ErrorCodes.UNAUTHORIZED);
+        ok(error);
+        equal(error.message, ErrorCodes.UNAUTHORIZED);
       }
     });
 
@@ -144,8 +144,8 @@ describe('UserUseCaseImpl', () => {
       try {
         await userUseCase.update({ nickname: 'User' }, '1', new User({ id: '1' } as any));
       } catch (error) {
-        assert.ok(error);
-        assert.equal(error.message, ErrorCodes.USER_NOT_FOUND);
+        ok(error);
+        equal(error.message, ErrorCodes.USER_NOT_FOUND);
       }
     });
   });

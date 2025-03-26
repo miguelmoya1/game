@@ -1,6 +1,6 @@
 import { UserBuilder } from '../../../domain/builders/user.builder.ts';
 import { User } from '../../../domain/entities/user.entity.ts';
-import type { User_db } from '../../database/entities.ts';
+import type { User_db } from '../../database/user.db.ts';
 
 export const userToEntity = (user: User_db): User => {
   return new UserBuilder()

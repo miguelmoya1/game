@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { addProviders } from './di/di-manager.ts';
 import { FASTIFY } from './di/fastify.provider.ts';
 import { accountRepositoryProvider } from './di/repositories/account.repository.provider.ts';
+import { placesApiRepositoryProvider } from './di/repositories/places-api.repository.provider.ts';
 import { userRepositoryProvider } from './di/repositories/user.repository.provider.ts';
 import { databaseServiceProvider } from './di/services/database.service.provider.ts';
 import { emailServiceProvider } from './di/services/email.service.provider.ts';
@@ -79,12 +80,11 @@ async function main() {
     encryptionServiceProvider,
 
     accountRepositoryProvider,
+    placesApiRepositoryProvider,
     userRepositoryProvider,
 
     accountUseCaseProvider,
     userUseCaseProvider,
-
-    // Add more providers here
   ]);
 
   fastify.register(fastifyCors, {
@@ -101,20 +101,16 @@ async function main() {
     reply.status(500).send({ message: 'Internal Server Error' });
   });
 
-  const start = async () => {
-    try {
-      await fastify.listen({ port: 3000, host: '0.0.0.0' });
-    } catch (err) {
-      fastify.log.error(err);
-      process.exit(1);
-    }
-  };
-
-  start();
+  try {
+    await fastify.listen({ port: 3000, host: '0.0.0.0' });
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
 }
 
 try {
-  main();
+  await main();
 } catch (error) {
   console.error(error);
 }

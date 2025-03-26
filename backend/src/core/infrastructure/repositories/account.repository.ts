@@ -1,5 +1,6 @@
 import { inject } from '../../../di/di-manager.ts';
 import { DATABASE_SERVICE } from '../../application/services/database/database.service.contract.ts';
+import type { AccountRepository } from '../../domain/interfaces/account.repository.ts';
 import type { CreateAccountDto } from '../data/dtos/auth/create-account.dto.ts';
 import { accountToEntity } from '../data/mappers/account.mapper.ts';
 import type { Account_db } from '../database/account.db.ts';
@@ -9,7 +10,7 @@ type CreateParams = {
   readonly isPrimary?: boolean;
 };
 
-export class AccountRepositoryImpl {
+export class AccountRepositoryImpl implements AccountRepository {
   readonly #databaseService = inject(DATABASE_SERVICE);
   readonly #pg = this.#databaseService.pg;
 

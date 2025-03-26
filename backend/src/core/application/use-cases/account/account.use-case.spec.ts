@@ -87,7 +87,7 @@ describe('AccountUseCaseImpl', () => {
 
     it('should throw an error if the account is not found', async () => {
       const fnMock = mock.method(AccountRepositoryMock.prototype, 'findByHash');
-      fnMock.mock.mockImplementationOnce(async () => null);
+      fnMock.mock.mockImplementationOnce(async () => null as any);
 
       try {
         await accountUseCase.changePassword('hash', 'newPassword');
@@ -143,7 +143,7 @@ describe('AccountUseCaseImpl', () => {
 
     it('should throw an error if the account is not updated', async () => {
       const fnMock = mock.method(AccountRepositoryMock.prototype, 'changePassword');
-      fnMock.mock.mockImplementationOnce(async () => null);
+      fnMock.mock.mockImplementationOnce(async () => null as any);
 
       try {
         await accountUseCase.changePassword('hash', 'newPassword');
@@ -236,7 +236,7 @@ describe('AccountUseCaseImpl', () => {
 
     it('should throw an error if the account is not created', async () => {
       const fnMock = mock.method(AccountRepositoryMock.prototype, 'create');
-      fnMock.mock.mockImplementationOnce(async () => null);
+      fnMock.mock.mockImplementationOnce(async () => null as any);
 
       try {
         await accountUseCase.create(
@@ -277,7 +277,9 @@ describe('AccountUseCaseImpl', () => {
     });
 
     it('should throw an error if the account is not found', async () => {
-      mock.method(AccountRepositoryMock.prototype, 'forgotPassword').mock.mockImplementationOnce(async () => null);
+      mock
+        .method(AccountRepositoryMock.prototype, 'forgotPassword')
+        .mock.mockImplementationOnce(async () => null as any);
 
       try {
         await accountUseCase.forgotPassword('john.doe@example.com');
@@ -333,7 +335,7 @@ describe('AccountUseCaseImpl', () => {
     });
 
     it('should throw an error if the account is not found', async () => {
-      mock.method(AccountRepositoryMock.prototype, 'confirm').mock.mockImplementationOnce(async () => null);
+      mock.method(AccountRepositoryMock.prototype, 'confirm').mock.mockImplementationOnce(async () => null as any);
 
       try {
         await accountUseCase.confirm('1');
@@ -384,7 +386,7 @@ describe('AccountUseCaseImpl', () => {
     });
 
     it('should throw an error if the account is not found', async () => {
-      mock.method(AccountRepositoryMock.prototype, 'getById').mock.mockImplementationOnce(async () => null);
+      mock.method(AccountRepositoryMock.prototype, 'getById').mock.mockImplementationOnce(async () => null as any);
 
       try {
         await accountUseCase.getById('1');
@@ -425,7 +427,7 @@ describe('AccountUseCaseImpl', () => {
     it('should throw an error if the account is not found', async () => {
       mock
         .method(AccountRepositoryMock.prototype, 'getOneByProviderEmail')
-        .mock.mockImplementationOnce(async () => null);
+        .mock.mockImplementationOnce(async () => null as any);
 
       try {
         await accountUseCase.signInWithEmail('john.doe@example.com', 'password');

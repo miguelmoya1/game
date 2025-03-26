@@ -1,6 +1,6 @@
 import { AccountBuilder } from '../../../domain/builders/account.builder.ts';
 import { Account } from '../../../domain/entities/account.entity.ts';
-import type { Account_db } from '../../database/entities.ts';
+import type { Account_db } from '../../database/account.db.ts';
 
 export const accountToEntity = (account: Account_db): Account => {
   return new AccountBuilder()

@@ -1,12 +1,5 @@
 {
-  "cSpell.words": [
-    "dtos",
-    "INITDB",
-    "Inno",
-    "Millis",
-    "ossp",
-    "plpgsql"
-  ],
+  "cSpell.words": ["dtos", "housename", "housenumber", "INITDB", "Inno", "Millis", "ossp", "plpgsql", "skel"],
   "material-icon-theme.folders.associations": {
     "data": "Global",
     "dtos": "Less",
