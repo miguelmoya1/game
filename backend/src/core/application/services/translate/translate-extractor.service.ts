@@ -1,8 +1,10 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 
+@Injectable()
 export class TranslateExtractorService {
-  readonly #logger = console;
+  readonly #logger = new Logger(TranslateExtractorService.name);
   readonly #variableNameRegexp = '(([A-Z][A-Z\\d]*)(_[A-Z\\d]+)*)';
 
   async getKeys() {
@@ -21,7 +23,9 @@ export class TranslateExtractorService {
   async #extract(folder: string) {
     const dir = await readdir(folder);
     const folders = dir.filter((file) => !file.includes('.'));
-    const files = dir.filter((file) => file.includes('.ts') || file.includes('.html'));
+    const files = dir.filter(
+      (file) => file.includes('.ts') || file.includes('.html'),
+    );
 
     const strings: string[] = [];
 
@@ -68,7 +72,9 @@ export class TranslateExtractorService {
     for (const file of files) {
       const content = await readFile(join(folder, file), 'utf-8');
 
-      const results = regexps.flatMap((regexp) => this.#extractKeys(content, new RegExp(regexp, 'g')));
+      const results = regexps.flatMap((regexp) =>
+        this.#extractKeys(content, new RegExp(regexp, 'g')),
+      );
 
       strings.push(...results);
     }
@@ -77,7 +83,9 @@ export class TranslateExtractorService {
       strings.push(...(await this.#extract(join(folder, f))));
     }
 
-    return [...new Set(strings)].filter(Boolean).filter((key) => !regexExclude.some((regex) => regex.test(key)));
+    return [...new Set(strings)]
+      .filter(Boolean)
+      .filter((key) => !regexExclude.some((regex) => regex.test(key)));
   }
 
   #extractKeys(file: string, regex: RegExp) {

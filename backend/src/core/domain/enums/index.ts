@@ -1,1 +1,1 @@
-export * from './error-codes.enum.ts';
+export * from './error-codes.enum';

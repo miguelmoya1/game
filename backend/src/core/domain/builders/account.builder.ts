@@ -1,4 +1,4 @@
-import { Account, AccountProvider } from '../entities/account.entity.ts';
+import { Account, AccountProvider } from '../entities/impl/account.entity';
 
 export class AccountBuilder {
   #id: string;
@@ -28,7 +28,7 @@ export class AccountBuilder {
     return this;
   }
 
-  public withProvider(provider: (typeof AccountProvider)[keyof typeof AccountProvider]) {
+  public withProvider(provider: AccountProvider) {
     this.#provider = provider;
     return this;
   }

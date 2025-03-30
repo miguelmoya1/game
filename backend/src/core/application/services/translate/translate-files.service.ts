@@ -1,12 +1,14 @@
+import { Injectable, Logger } from '@nestjs/common';
 import { mkdir, readFile, readdir, stat, writeFile } from 'fs/promises';
 import { join } from 'node:path';
-import { TranslateExtractorService } from './translate-extractor.service.ts';
+import { TranslateExtractorService } from './translate-extractor.service';
 
+@Injectable()
 export class TranslateFilesService {
   readonly #translateExtractorService = new TranslateExtractorService();
   readonly #languages: Record<string, { [key: string]: string }> = {};
   readonly #languagesDir = 'languages';
-  readonly #logger = console;
+  readonly #logger = new Logger(TranslateFilesService.name);
 
   #keys: string[] = [];
   #languagesAvailable: string[];
@@ -38,10 +40,15 @@ export class TranslateFilesService {
       // Create file if not exists
       if (!dir.includes(`${language}.json`)) {
         this.#logger.debug(`Create ${language}.json`);
-        await writeFile(filePath, JSON.stringify(this.#getDefaultValues(), null, 2));
+        await writeFile(
+          filePath,
+          JSON.stringify(this.#getDefaultValues(), null, 2),
+        );
       }
 
-      let file = JSON.parse(await readFile(filePath, { encoding: 'utf8' }));
+      let file = JSON.parse(
+        await readFile(filePath, { encoding: 'utf8' }),
+      ) as object;
 
       const fileKeys = Object.keys(file);
 
@@ -75,12 +82,15 @@ export class TranslateFilesService {
         this.#logger.debug(`Add ${total} keys to ${language}.json`);
       }
 
-      if (JSON.stringify(Object.keys(file)) !== JSON.stringify(Object.keys(file).sort())) {
+      if (
+        JSON.stringify(Object.keys(file)) !==
+        JSON.stringify(Object.keys(file).sort())
+      ) {
         const ordered = Object.keys(file)
           .sort()
           .reduce(
             (obj, key) => {
-              obj[key] = file[key];
+              obj[key] = file[key] as string;
               return obj;
             },
             {} as { [key: string]: string },
@@ -115,7 +125,9 @@ export class TranslateFilesService {
 
       const content = await readFile(join(filePath), { encoding: 'utf8' });
 
-      this.#languages[language] = JSON.parse(content);
+      this.#languages[language] = JSON.parse(content) as {
+        [key: string]: string;
+      };
     }
   }
 

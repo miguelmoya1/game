@@ -2,12 +2,17 @@
   "cSpell.words": ["dtos", "housename", "housenumber", "INITDB", "Inno", "Millis", "ossp", "plpgsql", "skel"],
   "material-icon-theme.folders.associations": {
     "data": "Global",
-    "dtos": "Less",
+    "dto": "Less",
     "mappers": "Mappings",
     "di": "Resource",
     "domain": "Class",
     "infrastructure": "Base",
     "use-cases": "Other",
-    "domain/use-cases": "Interface"
+    "domain/use-cases": "Interface",
+    "impl": "Class",
+    "queries": "Mjml",
+    "builders": "Include",
+    "interceptors": "Connection",
+    "entities": "Import"
   }
 }

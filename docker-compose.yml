@@ -4,8 +4,8 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_USER: user
+      POSTGRES_USER: game
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: database
+      POSTGRES_DB: game
     volumes:
       - ./data/postgresql:/var/lib/postgresql/data

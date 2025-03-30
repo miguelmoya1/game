@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  role      String
+  surname   String?
+  nickname  String?
+  language  String    @default("en")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  accounts  Account[]
+
+  @@index([name])
+  @@index([role])
+  @@index([surname])
+  @@index([nickname])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([deletedAt])
+}
+
+model Place {
+  id          String    @id @default(uuid())
+  apiId       Int
+  name        String
+  lat         Float
+  lng         Float
+  addressName String?
+  amenity     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  @@index([name])
+  @@index([lat])
+  @@index([lng])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([deletedAt])
+}
+
+model PlaceApiHistory {
+  id            String    @id @default(uuid())
+  lat           Float
+  lng           Float
+  radius        Int
+  lastRequestAt DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@index([lat])
+  @@index([lng])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([deletedAt])
+}
+
+model Account {
+  id                   String    @id @default(uuid())
+  provider             String
+  providerId           String
+  email                String    @unique
+  password             String?
+  isConfirmed          Boolean   @default(false)
+  isPrimary            Boolean   @default(false)
+  hashForPasswordReset String?
+  hashExpiredAt        DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  deletedAt            DateTime?
+  userId               String
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([provider])
+  @@index([providerId])
+  @@index([isConfirmed])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([deletedAt])
+  @@index([userId])
+}

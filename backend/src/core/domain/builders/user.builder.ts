@@ -1,4 +1,4 @@
-import { User, UserRole } from '../entities/user.entity.ts';
+import { User, UserRole } from '../entities/impl/user.entity';
 
 export class UserBuilder {
   #id: string;
