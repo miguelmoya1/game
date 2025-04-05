@@ -1,9 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import {
-  ACCOUNT_USE_CASE,
-  AccountUseCase,
-} from '../../use-cases/contracts/account.use-case.contract';
+import { ACCOUNT_USE_CASE, AccountUseCase } from '../../use-cases';
 import { LoginWithEmailCommand } from '../impl/login-with-email.command';
 
 @CommandHandler(LoginWithEmailCommand)

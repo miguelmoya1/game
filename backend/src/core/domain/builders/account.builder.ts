@@ -1,9 +1,10 @@
-import { Account, AccountProvider } from '../entities/impl/account.entity';
+import { AccountProvider } from '@prisma/client';
+import { Account } from '../entities/impl/account.entity';
 
 export class AccountBuilder {
   #id: string;
   #userId: string;
-  #provider: (typeof AccountProvider)[keyof typeof AccountProvider];
+  #provider: AccountProvider;
   #providerId: string;
   #email: string;
   #password?: string;

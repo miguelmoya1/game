@@ -1,9 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import {
-  ACCOUNT_USE_CASE,
-  AccountUseCase,
-} from '../../use-cases/contracts/account.use-case.contract';
+import { ACCOUNT_USE_CASE, AccountUseCase } from '../../use-cases';
 import { RehydrateQuery } from '../impl/rehydrate.query';
 
 @QueryHandler(RehydrateQuery)

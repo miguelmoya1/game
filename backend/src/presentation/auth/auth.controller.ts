@@ -8,10 +8,10 @@ import {
   RegisterCommand,
 } from '../../core/application/commands';
 import { RehydrateQuery } from '../../core/application/queries';
-import { User } from '../../core/domain/entities/impl/user.entity';
+import { User } from '../../core/domain/entities';
 import {
   AuthenticatedUser,
-  Public,
+  IsPublic,
 } from '../../core/infrastructure/decorators';
 import {
   AuthEmailLoginPayloadDto,
@@ -27,7 +27,7 @@ export class AuthController {
     private readonly _commandBus: CommandBus,
   ) {}
 
-  @Public()
+  @IsPublic()
   @Get('confirm/:accountId')
   public async confirmLogin(
     @Param('accountId') accountId: string,
@@ -40,6 +40,8 @@ export class AuthController {
     );
 
     this.#sendToken(res, token);
+
+    return { token };
   }
 
   @Get('is-authenticated')
@@ -49,12 +51,14 @@ export class AuthController {
 
   @Get('rehydrate')
   public async rehydrate(@AuthenticatedUser() user: User) {
-    const token = new RehydrateQuery(user);
+    const query = new RehydrateQuery(user);
 
-    return await this._queryBus.execute<RehydrateQuery, string>(token);
+    const token = await this._queryBus.execute<RehydrateQuery, string>(query);
+
+    return { token };
   }
 
-  @Public()
+  @IsPublic()
   @Post('change-password/:hashForPasswordReset')
   public async changePassword(
     @Param('hashForPasswordReset') hashForPasswordReset: string,
@@ -64,12 +68,10 @@ export class AuthController {
 
     const command = new ChangePasswordCommand(hashForPasswordReset, password);
 
-    return await this._commandBus.execute<ChangePasswordCommand, string>(
-      command,
-    );
+    await this._commandBus.execute<ChangePasswordCommand, boolean>(command);
   }
 
-  @Public()
+  @IsPublic()
   @Post('login/email')
   public async loginWithEmail(
     @Body() authLoginEmailDto: AuthEmailLoginPayloadDto,
@@ -83,9 +85,11 @@ export class AuthController {
     );
 
     this.#sendToken(res, token);
+
+    return { token };
   }
 
-  @Public()
+  @IsPublic()
   @Post('register')
   public async register(
     @Body()
@@ -102,10 +106,12 @@ export class AuthController {
       command,
     );
 
-    this.#sendToken(res, token, 201);
+    this.#sendToken(res, token);
+
+    return { token };
   }
 
-  #sendToken(res: FastifyReply, token: string, status = 200) {
-    res.header('authorization', `Bearer ${token}`).status(status).send();
+  #sendToken(res: FastifyReply, token: string) {
+    res.header('authorization', `Bearer ${token}`);
   }
 }

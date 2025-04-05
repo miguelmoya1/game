@@ -1,9 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import {
-  USER_USE_CASE,
-  UserUseCase,
-} from '../../use-cases/contracts/user.use-case.contract';
+import { USER_USE_CASE, UserUseCase } from '../../use-cases';
 import { GetUserByIdQuery } from '../impl/get-user-by-id.query';
 
 @QueryHandler(GetUserByIdQuery)

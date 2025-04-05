@@ -1,4 +1,4 @@
-import { User } from '../../../domain/entities/impl/user.entity';
+import { User } from '../../../domain/entities';
 import { UpdateUserDto } from '../../../infrastructure/dto';
 
 export interface UserUseCase {

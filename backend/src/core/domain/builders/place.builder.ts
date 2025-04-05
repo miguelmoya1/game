@@ -1,13 +1,14 @@
-import { Place, PlaceAmenity } from '../entities/place.entity.ts';
+import { PlaceAmenity } from '@prisma/client';
+import { Place } from '../entities/impl/place.entity';
 
 export class PlaceBuilder {
   #id: string;
-  #apiId: number;
+  #apiId: string;
   #name: string;
   #lat: number;
   #lng: number;
   #addressName: string | null;
-  #amenity: PlaceAmenity | null;
+  #amenity: PlaceAmenity;
 
   #createdAt: Date;
   #updatedAt: Date;
@@ -18,7 +19,7 @@ export class PlaceBuilder {
     return this;
   }
 
-  public withApiId(apiId: number) {
+  public withApiId(apiId: string) {
     this.#apiId = apiId;
     return this;
   }
@@ -43,7 +44,7 @@ export class PlaceBuilder {
     return this;
   }
 
-  public withAmenity(amenity: PlaceAmenity | null) {
+  public withAmenity(amenity: PlaceAmenity) {
     this.#amenity = amenity;
     return this;
   }

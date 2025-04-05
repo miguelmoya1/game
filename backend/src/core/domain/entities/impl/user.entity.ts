@@ -1,7 +1,4 @@
-export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-}
+import { UserRole } from '@prisma/client';
 
 export class User {
   public readonly id: string;

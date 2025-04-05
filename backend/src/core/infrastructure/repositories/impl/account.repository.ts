@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { AccountProvider } from '@prisma/client';
 import {
   DATABASE_SERVICE,
   DatabaseService,
-} from '../../../application/services/database/prisma.service.contract';
-import { AccountProvider } from '../../../domain/entities/impl/account.entity';
+} from '../../../application/services/database/database.service.contract';
 import { CreateAccountDto } from '../../dto';
 import { accountToEntity } from '../../mappers';
 import { AccountRepository } from '../contracts/account.repository.contract';

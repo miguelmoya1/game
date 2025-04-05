@@ -5,7 +5,7 @@ import {
   UserUseCaseImpl,
 } from '../../../core/application/use-cases';
 
-export const UserUseCaseProvider: Provider<UserUseCase> = {
+export const userUseCaseProvider: Provider<UserUseCase> = {
   provide: USER_USE_CASE,
   useClass: UserUseCaseImpl,
 };

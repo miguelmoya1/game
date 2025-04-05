@@ -1,15 +1,12 @@
 import { Account as AccountDb } from '@prisma/client';
 import { AccountBuilder } from 'src/core/domain/builders/account.builder';
-import {
-  Account,
-  AccountProvider,
-} from '../../../domain/entities/impl/account.entity';
+import { Account } from '../../../domain/entities/impl/account.entity';
 
 export const accountToEntity = (account: AccountDb): Account => {
   return new AccountBuilder()
     .withId(account.id)
     .withUserId(account.userId)
-    .withProvider(account.provider as AccountProvider)
+    .withProvider(account.provider)
     .withProviderId(account.providerId)
     .withEmail(account.email)
     .withPassword(account.password || undefined)

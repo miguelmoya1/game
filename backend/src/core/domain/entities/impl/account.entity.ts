@@ -1,6 +1,4 @@
-export enum AccountProvider {
-  EMAIL = 'email',
-}
+import { AccountProvider } from '@prisma/client';
 
 export class Account {
   public readonly id: string;

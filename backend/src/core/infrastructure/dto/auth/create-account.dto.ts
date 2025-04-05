@@ -1,5 +1,5 @@
+import { AccountProvider } from '@prisma/client';
 import { IsEmail, IsEnum, IsString, ValidateIf } from 'class-validator';
-import { AccountProvider } from '../../../domain/entities/impl/account.entity';
 
 export class CreateAccountDto {
   @IsEmail()

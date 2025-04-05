@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { EventBus } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
+import { AccountProvider } from '@prisma/client';
 import { createHash } from 'crypto';
 import { User } from '../../../domain/entities';
-import { AccountProvider } from '../../../domain/entities/impl/account.entity';
 import { ErrorCodes } from '../../../domain/enums';
 import { CreateAccountDto, CreateUserDto } from '../../../infrastructure/dto';
 import {
@@ -25,16 +24,15 @@ import { AccountUseCase } from '../contracts/account.use-case.contract';
 @Injectable()
 export class AccountUseCaseImpl implements AccountUseCase {
   constructor(
+    @Inject(ENCRYPTION_SERVICE)
+    private readonly _encryptionService: EncryptionService,
     @Inject(ACCOUNT_REPOSITORY)
     private readonly _accountRepository: AccountRepository,
     @Inject(USER_REPOSITORY)
     private readonly _userRepository: UserRepository,
-    private readonly _jwtService: JwtService,
-    @Inject(ENCRYPTION_SERVICE)
-    private readonly _encryptionService: EncryptionService,
     @Inject(EMAIL_SERVICE)
     private readonly _emailService: EmailService,
-    private readonly _eventBus: EventBus,
+    private readonly _jwtService: JwtService,
   ) {}
 
   public async changePassword(hashForPasswordReset: string, password: string) {
@@ -170,6 +168,6 @@ export class AccountUseCaseImpl implements AccountUseCase {
   }
 
   #generateToken(user: User) {
-    return Promise.resolve(this._jwtService.sign({ sub: user.id }));
+    return Promise.resolve(this._jwtService.sign({ ...user }));
   }
 }

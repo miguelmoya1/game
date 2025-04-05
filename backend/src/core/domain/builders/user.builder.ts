@@ -1,4 +1,5 @@
-import { User, UserRole } from '../entities/impl/user.entity';
+import { UserRole } from '@prisma/client';
+import { User } from '../entities/impl/user.entity';
 
 export class UserBuilder {
   #id: string;

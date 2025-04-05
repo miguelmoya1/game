@@ -1,5 +1,4 @@
-import { Account } from '../../../domain/entities/impl/account.entity';
-import { User } from '../../../domain/entities/impl/user.entity';
+import { Account, User } from '../../../domain/entities';
 import { CreateAccountDto, CreateUserDto } from '../../../infrastructure/dto';
 
 export interface AccountUseCase {

@@ -4,7 +4,7 @@ import {
   TRANSLATE_SERVICE,
   TranslateService,
 } from '../../core/application/services/translate/translate.service.contract';
-import { Public } from '../../core/infrastructure/decorators';
+import { IsPublic } from '../../core/infrastructure/decorators';
 
 @Controller('translate')
 export class TranslateController {
@@ -14,7 +14,7 @@ export class TranslateController {
   ) {}
 
   @Get()
-  @Public()
+  @IsPublic()
   public getTranslate(@Req() req: FastifyRequest) {
     return this._translateService.getTranslate(req);
   }

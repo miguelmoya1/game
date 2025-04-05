@@ -1,16 +1,19 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
+import { JwtService } from '@nestjs/jwt';
+import { FastifyRequest } from 'fastify';
+import { User } from '../../../domain/entities';
 import { IS_PUBLIC_KEY } from '../../decorators/impl/is-public';
 
 @Injectable()
-export class JwtAuthGuard extends PassportAuthGuard('jwt') {
-  constructor(private reflector: Reflector) {
-    super();
-  }
+export class AuthGuard implements CanActivate {
+  constructor(
+    private readonly _reflector: Reflector,
+    private readonly _jwtService: JwtService,
+  ) {}
 
-  override canActivate(context: ExecutionContext) {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+  canActivate(context: ExecutionContext) {
+    const isPublic = this._reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
@@ -19,6 +22,22 @@ export class JwtAuthGuard extends PassportAuthGuard('jwt') {
       return true;
     }
 
-    return super.canActivate(context);
+    const request = context.switchToHttp().getRequest<FastifyRequest>();
+
+    const header = request.headers['authorization'];
+    const token = header && header.split(' ')[1];
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const payload = this._jwtService.verify<User>(token);
+      request.user = payload;
+    } catch {
+      return false;
+    }
+
+    return true;
   }
 }

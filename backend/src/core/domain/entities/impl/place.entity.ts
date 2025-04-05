@@ -1,15 +1,13 @@
-export enum PlaceAmenity {
-  PLACE_OF_WORSHIP = 'place_of_worship',
-}
+import { PlaceAmenity } from '@prisma/client';
 
 export class Place {
   public readonly id: string;
-  public readonly apiId: number;
+  public readonly apiId: string;
   public readonly name: string;
   public readonly lat: number;
   public readonly lng: number;
   public readonly addressName: string | null;
-  public readonly amenity: PlaceAmenity | null;
+  public readonly amenity: PlaceAmenity;
 
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
@@ -18,7 +16,16 @@ export class Place {
   constructor(
     account: Pick<
       Place,
-      'id' | 'apiId' | 'name' | 'lat' | 'lng' | 'addressName' | 'amenity' | 'createdAt' | 'updatedAt' | 'deletedAt'
+      | 'id'
+      | 'apiId'
+      | 'name'
+      | 'lat'
+      | 'lng'
+      | 'addressName'
+      | 'amenity'
+      | 'createdAt'
+      | 'updatedAt'
+      | 'deletedAt'
     >,
   ) {
     this.id = account.id;

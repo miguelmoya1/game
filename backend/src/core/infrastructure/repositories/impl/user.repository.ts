@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { UserRole } from '@prisma/client';
 import { UserRepository } from '..';
 import {
   DATABASE_SERVICE,
   DatabaseService,
-} from '../../../application/services/database/prisma.service.contract';
-import { UserRole } from '../../../domain/entities/impl/user.entity';
+} from '../../../application/services/database/database.service.contract';
 import { CreateUserDto, UpdateUserDto } from '../../dto';
 import { userToEntity } from '../../mappers';
 

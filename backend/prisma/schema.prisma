@@ -13,10 +13,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum AccountProvider {
+  EMAIL
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum PlaceAmenity {
+  PLACE_OF_WORSHIP
+}
+
 model User {
   id        String    @id @default(uuid())
   name      String
-  role      String
+  role      UserRole  @default(USER)
   surname   String?
   nickname  String?
   language  String    @default("en")
@@ -35,15 +48,15 @@ model User {
 }
 
 model Place {
-  id          String    @id @default(uuid())
-  apiId       Int
+  id          String       @id @default(uuid())
+  apiId       String
   name        String
   lat         Float
   lng         Float
   addressName String?
-  amenity     String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  amenity     PlaceAmenity
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   deletedAt   DateTime?
 
   @@index([name])
@@ -72,20 +85,20 @@ model PlaceApiHistory {
 }
 
 model Account {
-  id                   String    @id @default(uuid())
-  provider             String
+  id                   String          @id @default(uuid())
+  provider             AccountProvider @default(EMAIL)
   providerId           String
-  email                String    @unique
+  email                String          @unique
   password             String?
-  isConfirmed          Boolean   @default(false)
-  isPrimary            Boolean   @default(false)
+  isConfirmed          Boolean         @default(false)
+  isPrimary            Boolean         @default(false)
   hashForPasswordReset String?
   hashExpiredAt        DateTime?
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
   deletedAt            DateTime?
   userId               String
-  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                 User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([provider])
   @@index([providerId])
