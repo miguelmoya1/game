@@ -3,7 +3,6 @@ import {
   DATABASE_SERVICE,
   DatabaseService,
 } from '../../../application/services/database/database.service.contract';
-import { CreatePlaceDto } from '../../dto';
 import { placeToEntity } from '../../mappers';
 import { PlaceRepository } from '../contracts/place.repository.contract';
 
@@ -51,17 +50,5 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     }
 
     return result.map(placeToEntity);
-  }
-
-  async createMany(places: CreatePlaceDto[]) {
-    const result = await this.databaseService.place.createMany({
-      data: places,
-    });
-
-    if (!result) {
-      return false;
-    }
-
-    return true;
   }
 }

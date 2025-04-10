@@ -25,17 +25,7 @@ export class PlaceUseCaseImpl implements PlaceUseCase {
       await this._placeApiHistoryRepository.shouldRequestApi(lat, lng);
 
     if (shouldRequestApi) {
-      const places = await this._placeApiRepository.getPlaces(lat, lng);
-
-      if (places && places.length > 0) {
-        await this._placeRepository.createMany(
-          places.map((place) => ({
-            ...place,
-            apiId: place.apiId.toString(),
-          })),
-        );
-      }
-
+      await this._placeApiRepository.fetchAndStorePlacesFromOverpass(lat, lng);
       await this._placeApiHistoryRepository.create(lat, lng);
     }
 

@@ -1,4 +1,4 @@
-import { PlaceAmenity } from '@prisma/client';
+import { PlaceCategory } from '@prisma/client';
 import { Place } from '../entities/impl/place.entity';
 
 export class PlaceBuilder {
@@ -7,8 +7,8 @@ export class PlaceBuilder {
   #name: string;
   #lat: number;
   #lng: number;
-  #addressName: string | null;
-  #amenity: PlaceAmenity;
+  #osmTags: Record<string, string> | null;
+  #categories: PlaceCategory[];
 
   #createdAt: Date;
   #updatedAt: Date;
@@ -39,13 +39,13 @@ export class PlaceBuilder {
     return this;
   }
 
-  public withAddressName(addressName: string | null) {
-    this.#addressName = addressName;
+  public withOsmTags(osmTags: Record<string, string> | null) {
+    this.#osmTags = osmTags;
     return this;
   }
 
-  public withAmenity(amenity: PlaceAmenity) {
-    this.#amenity = amenity;
+  public withCategories(categories: PlaceCategory[]) {
+    this.#categories = categories;
     return this;
   }
 
@@ -71,8 +71,8 @@ export class PlaceBuilder {
       name: this.#name,
       lat: this.#lat,
       lng: this.#lng,
-      addressName: this.#addressName,
-      amenity: this.#amenity,
+      osmTags: this.#osmTags,
+      categories: this.#categories,
 
       createdAt: this.#createdAt,
       updatedAt: this.#updatedAt,

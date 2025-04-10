@@ -10,8 +10,8 @@ export const placeToEntity = (place: PlaceDb): Place => {
     .withName(place.name)
     .withLat(place.lat)
     .withLng(place.lng)
-    .withAddressName(place.addressName)
-    .withAmenity(place.amenity)
+    .withOsmTags(place.osmTags as Record<string, string> | null)
+    .withCategories(place.categories)
 
     .withCreatedAt(place.createdAt)
     .withUpdatedAt(place.updatedAt)

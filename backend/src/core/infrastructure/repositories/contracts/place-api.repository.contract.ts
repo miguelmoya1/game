@@ -1,11 +1,8 @@
-import { PlaceApi } from '../../../domain/types/place-api.types';
-
 export interface PlaceApiRepository {
-  getPlaces(
+  fetchAndStorePlacesFromOverpass(
     latitude: number,
     longitude: number,
-    radius?: number,
-  ): Promise<PlaceApi[]>;
+  ): Promise<void>;
 }
 
 export const PLACE_API_REPOSITORY = Symbol('PLACE_API_REPOSITORY');

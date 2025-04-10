@@ -1,4 +1,4 @@
-import { PlaceAmenity } from '@prisma/client';
+import { PlaceCategory } from '@prisma/client';
 
 export class Place {
   public readonly id: string;
@@ -6,8 +6,8 @@ export class Place {
   public readonly name: string;
   public readonly lat: number;
   public readonly lng: number;
-  public readonly addressName: string | null;
-  public readonly amenity: PlaceAmenity;
+  public readonly osmTags: Record<string, string> | null;
+  public readonly categories: PlaceCategory[];
 
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
@@ -21,8 +21,8 @@ export class Place {
       | 'name'
       | 'lat'
       | 'lng'
-      | 'addressName'
-      | 'amenity'
+      | 'osmTags'
+      | 'categories'
       | 'createdAt'
       | 'updatedAt'
       | 'deletedAt'
@@ -34,8 +34,9 @@ export class Place {
     this.name = account.name;
     this.lat = account.lat;
     this.lng = account.lng;
-    this.addressName = account.addressName;
-    this.amenity = account.amenity;
+
+    this.osmTags = account.osmTags;
+    this.categories = account.categories;
 
     this.createdAt = account.createdAt;
     this.updatedAt = account.updatedAt;

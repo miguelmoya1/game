@@ -1,5 +1,18 @@
 {
-  "cSpell.words": ["dtos", "housename", "housenumber", "INITDB", "Inno", "Millis", "ossp", "plpgsql", "skel"],
+  "cSpell.words": [
+    "dtos",
+    "EQUIPPABLE",
+    "housename",
+    "housenumber",
+    "INITDB",
+    "Inno",
+    "Millis",
+    "ossp",
+    "plpgsql",
+    "skel",
+    "stackable",
+    "townhall"
+  ],
   "material-icon-theme.folders.associations": {
     "data": "Global",
     "dto": "Less",

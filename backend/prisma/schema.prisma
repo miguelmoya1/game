@@ -1,20 +1,21 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" // Or your database provider
   url      = env("DATABASE_URL")
 }
 
+// --- Enums ---
+
+enum ItemType {
+  EQUIPPABLE // Item can be equipped by the player
+  USABLE // Item is consumed on use
+}
+
 enum AccountProvider {
-  EMAIL
+  EMAIL // Authentication provider type
 }
 
 enum UserRole {
@@ -22,9 +23,41 @@ enum UserRole {
   USER
 }
 
-enum PlaceAmenity {
-  PLACE_OF_WORSHIP
+enum PlaceCategory {
+  KNOWLEDGE
+  FAITH
+  NATURE
+  COMMERCE
+  FITNESS
+  COMMUNITY
+  CRAFT
+  HEALTH
+  ARTS
+  HISTORIC
 }
+
+enum StatsType {
+  STR // Strength
+  DEX // Dexterity
+  CON // Constitution
+  INT // Intelligence
+  WIS // Wisdom
+  CHA // Charisma
+}
+
+enum Rank {
+  E
+  D
+  C
+  B
+  A
+  S
+  SS
+  NATIONAL
+  INTERNATIONAL
+}
+
+// --- Models ---
 
 model User {
   id        String    @id @default(uuid())
@@ -33,78 +66,166 @@ model User {
   surname   String?
   nickname  String?
   language  String    @default("en")
+  accounts  Account[] // User's login accounts
+  player    Player? // Link to the player profile if this user is a player
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-  accounts  Account[]
+  deletedAt DateTime? // For soft deletes
 
   @@index([name])
   @@index([role])
   @@index([surname])
   @@index([nickname])
-  @@index([createdAt])
-  @@index([updatedAt])
-  @@index([deletedAt])
 }
 
 model Place {
-  id          String       @id @default(uuid())
-  apiId       String
-  name        String
-  lat         Float
-  lng         Float
-  addressName String?
-  amenity     PlaceAmenity
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  deletedAt   DateTime?
+  id             String                    @id @default(uuid())
+  apiId          String                    @unique // Unique ID from Overpass API (e.g., "way/12345")
+  name           String
+  lat            Float // Latitude
+  lng            Float // Longitude
+  osmTags        Json? // Raw OpenStreetMap tags stored as JSON
+  currentItemId  String? // ID of the Item currently available this month
+  currentItem    Item?                     @relation("CurrentItem", fields: [currentItemId], references: [id], onDelete: SetNull) // Relation to the current monthly item
+  collectionLogs PlayerItemCollectionLog[] // Logs of players collecting items from this place
+  categories     PlaceCategory[] // Gameplay categories associated with this place
+  createdAt      DateTime                  @default(now())
+  updatedAt      DateTime                  @updatedAt
+  deletedAt      DateTime? // For soft deletes
 
+  @@index([apiId])
   @@index([name])
-  @@index([lat])
-  @@index([lng])
-  @@index([createdAt])
-  @@index([updatedAt])
-  @@index([deletedAt])
+  @@index([lat, lng])
+  @@index([currentItemId])
 }
 
 model PlaceApiHistory {
   id            String    @id @default(uuid())
   lat           Float
   lng           Float
-  radius        Int
+  radius        Int // Radius of the API request in meters
   lastRequestAt DateTime  @default(now())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  deletedAt     DateTime?
+  deletedAt     DateTime? // For soft deletes
 
   @@index([lat])
   @@index([lng])
-  @@index([createdAt])
-  @@index([updatedAt])
-  @@index([deletedAt])
 }
 
 model Account {
   id                   String          @id @default(uuid())
   provider             AccountProvider @default(EMAIL)
-  providerId           String
+  providerId           String // ID from the provider (relevant for OAuth later)
   email                String          @unique
-  password             String?
-  isConfirmed          Boolean         @default(false)
-  isPrimary            Boolean         @default(false)
-  hashForPasswordReset String?
-  hashExpiredAt        DateTime?
+  password             String? // Hashed password
+  isConfirmed          Boolean         @default(false) // Email confirmation status
+  isPrimary            Boolean         @default(false) // If user has multiple accounts linked
+  hashForPasswordReset String? // Token for password reset
+  hashExpiredAt        DateTime? // Expiry for password reset token
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @updatedAt
-  deletedAt            DateTime?
-  userId               String
+  deletedAt            DateTime? // For soft deletes
+  userId               String // Link to the User owning this account
   user                 User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([provider])
   @@index([providerId])
   @@index([isConfirmed])
-  @@index([createdAt])
-  @@index([updatedAt])
-  @@index([deletedAt])
   @@index([userId])
+}
+
+model Player {
+  id             String                    @id @default(uuid())
+  lat            Float // Player's last known latitude
+  lng            Float // Player's last known longitude
+  rank           Rank                      @default(E) // Player's current rank
+  createdAt      DateTime                  @default(now())
+  updatedAt      DateTime                  @updatedAt
+  deletedAt      DateTime? // For soft deletes
+  userId         String                    @unique // Link to the User controlling this player
+  user           User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  inventory      PlayerItem[] // Player's item inventory
+  collectionLogs PlayerItemCollectionLog[] // Logs of items collected by this player
+  stats          Stats[] // Player's base statistics (STR, DEX, etc.)
+
+  @@index([userId])
+  @@index([rank])
+}
+
+model Stats {
+  id       String    @id @default(uuid())
+  type     StatsType // Which stat (STR, DEX, CON, etc.)
+  value    Int       @default(0) // The base value for this stat
+  playerId String // Link to the Player
+  player   Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, type]) // Ensures only one entry per stat type per player
+  @@index([playerId])
+}
+
+model PlayerItemCollectionLog {
+  id                  String   @id @default(uuid())
+  collectionMonthYear String // Month and year of collection (e.g., "2025-04") used for the unique constraint
+  collectedAt         DateTime @default(now()) // Precise time of collection
+  playerId            String // Link to the Player
+  player              Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  placeId             String // Link to the Place
+  place               Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
+  itemId              String // Link to the specific Item collected
+  item                Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, placeId, collectionMonthYear]) // Enforces one collection per player, per place, per month
+  @@index([playerId])
+  @@index([placeId])
+  @@index([itemId])
+  @@index([collectionMonthYear])
+}
+
+model PlayerItem {
+  id         String   @id @default(uuid())
+  quantity   Int      @default(1) // For stackable items (e.g., consumables)
+  isEquipped Boolean  @default(false) // Is this item currently equipped? (Only relevant for EQUIPPABLE type)
+  acquiredAt DateTime @default(now()) // When the item was obtained
+  playerId   String // Link to the Player owner
+  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  itemId     String // Link to the Item definition
+  item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+  @@index([itemId])
+  @@index([isEquipped])
+}
+
+model Item {
+  id              String                    @id @default(uuid())
+  name            String                    @unique // Unique item name
+  description     String?
+  itemType        ItemType // EQUIPPABLE or USABLE
+  imageUrl        String? // Optional image URL
+  useEffect       String? // Description or key for usable item effect (e.g., "HEAL_HP_50")
+  rank            Rank? // Optional rank of the item
+  spawnCategories PlaceCategory[] // List of place categories where this item might appear
+  currentInPlaces Place[]                   @relation("CurrentItem") // Places currently featuring this item this month
+  collectionLogs  PlayerItemCollectionLog[] // Logs related to this item being collected
+  playerItems     PlayerItem[] // Instances of this item in player inventories
+  bonuses         ItemStatBonus[] // Stat bonuses provided by this item (if EQUIPPABLE)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
+
+  @@index([name])
+  @@index([itemType])
+  @@index([rank])
+  @@index([spawnCategories])
+}
+
+model ItemStatBonus {
+  id     String    @id @default(uuid())
+  type   StatsType // Which stat is boosted (STR, DEX, etc.)
+  value  Int // The bonus value (e.g., +5, -1)
+  itemId String // Link to the Item providing the bonus
+  item   Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([itemId, type]) // Ensures only one bonus entry per stat type per item
+  @@index([itemId])
 }

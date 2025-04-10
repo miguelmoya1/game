@@ -1,37 +1,148 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { PlaceAmenity } from '@prisma/client';
-import { PlaceApi } from '../../../domain/types/place-api.types';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { PlaceCategory } from '@prisma/client';
+import {
+  DATABASE_SERVICE,
+  DatabaseService,
+} from '../../../application/services/database/database.service.contract';
+import { PlaceApi } from '../../../domain/entities';
 import { PlaceApiRepository } from '../contracts/place-api.repository.contract';
+
+interface OverpassElement {
+  type: 'node' | 'way' | 'relation';
+  id: number;
+  lat?: number;
+  lon?: number;
+  tags?: Record<string, string>;
+}
 
 @Injectable()
 export class PlaceApiRepositoryImpl implements PlaceApiRepository {
   readonly #overpassUrl = 'https://overpass-api.de/api/interpreter';
   readonly #logger = new Logger(PlaceApiRepositoryImpl.name);
+  readonly #osmTagToCategoryMap: Record<string, PlaceCategory[]> = {
+    // KNOWLEDGE
+    'amenity=university': [PlaceCategory.KNOWLEDGE],
+    'amenity=school': [PlaceCategory.KNOWLEDGE],
+    'amenity=library': [PlaceCategory.KNOWLEDGE],
+    'amenity=college': [PlaceCategory.KNOWLEDGE],
+    'shop=books': [PlaceCategory.KNOWLEDGE],
 
-  async getPlaces(latitude: number, longitude: number, radius = 1_500) {
-    const deltaLat = radius / 111_000;
-    const deltaLon = radius / (111_000 * Math.cos((latitude * Math.PI) / 180));
+    // FAITH
+    'amenity=place_of_worship': [PlaceCategory.FAITH],
+
+    // NATURE
+    'leisure=park': [PlaceCategory.NATURE, PlaceCategory.FITNESS],
+    'natural=wood': [PlaceCategory.NATURE],
+    'leisure=nature_reserve': [PlaceCategory.NATURE],
+    'boundary=national_park': [PlaceCategory.NATURE],
+
+    // COMMERCE
+    // 'amenity=cafe': [PlaceCategory.COMMERCE],
+    // 'shop=supermarket': [PlaceCategory.COMMERCE],
+    // 'amenity=marketplace': [PlaceCategory.COMMERCE],
+    // 'amenity=restaurant': [PlaceCategory.COMMERCE],
+    // 'amenity=bar': [PlaceCategory.COMMERCE],
+    // 'amenity=fast_food': [PlaceCategory.COMMERCE],
+    // 'shop=convenience': [PlaceCategory.COMMERCE],
+
+    // FITNESS
+    'leisure=fitness_centre': [PlaceCategory.FITNESS],
+    'leisure=sports_centre': [PlaceCategory.FITNESS],
+    'leisure=track': [PlaceCategory.FITNESS],
+    'leisure=pitch': [PlaceCategory.FITNESS],
+    'leisure=stadium': [PlaceCategory.FITNESS],
+    'sport=swimming': [PlaceCategory.FITNESS],
+
+    // COMMUNITY
+    'amenity=community_centre': [PlaceCategory.COMMUNITY],
+    'amenity=townhall': [PlaceCategory.COMMUNITY],
+
+    // CRAFT
+    'shop=craft': [PlaceCategory.CRAFT],
+    'amenity=workshop': [PlaceCategory.CRAFT],
+
+    // HEALTH
+    'amenity=hospital': [PlaceCategory.HEALTH],
+    'amenity=pharmacy': [PlaceCategory.HEALTH],
+    'amenity=clinic': [PlaceCategory.HEALTH],
+    'amenity=doctors': [PlaceCategory.HEALTH],
+
+    // ARTS
+    'amenity=theatre': [PlaceCategory.ARTS],
+    'tourism=museum': [
+      PlaceCategory.ARTS,
+      PlaceCategory.KNOWLEDGE,
+      PlaceCategory.HISTORIC,
+    ],
+    'tourism=gallery': [PlaceCategory.ARTS],
+    'amenity=cinema': [PlaceCategory.ARTS],
+
+    // HISTORIC
+    'historic=monument': [PlaceCategory.HISTORIC],
+    'historic=castle': [PlaceCategory.HISTORIC],
+    'historic=ruins': [PlaceCategory.HISTORIC],
+  };
+
+  constructor(
+    @Inject(DATABASE_SERVICE)
+    private readonly _databaseService: DatabaseService,
+  ) {}
+
+  async fetchAndStorePlacesFromOverpass(latitude: number, longitude: number) {
+    const radius = 4000; // in meters
+    this.#logger.debug('Fetching places with coordinates:', {
+      latitude,
+      longitude,
+      radius,
+    });
+
+    const EARTH_RADIUS_METERS = 111_000;
+    const DEGREES_TO_RADIANS = Math.PI / 180;
 
     const bBox = [
-      latitude - deltaLat,
-      longitude - deltaLon,
-      latitude + deltaLat,
-      longitude + deltaLon,
+      latitude - radius / EARTH_RADIUS_METERS,
+      longitude -
+        radius /
+          (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS)),
+      latitude + radius / EARTH_RADIUS_METERS,
+      longitude +
+        radius /
+          (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS)),
     ];
 
-    const amenity = Object.values(PlaceAmenity).join('|').toLocaleLowerCase();
+    const queryConditions: string[] = [];
+    const relevantTags = Object.keys(this.#osmTagToCategoryMap).reduce(
+      (acc, key) => {
+        const [tagKey, tagValue] = key.split('=');
+        if (!acc[tagKey]) acc[tagKey] = new Set<string>();
+        acc[tagKey].add(tagValue);
+        return acc;
+      },
+      {} as Record<string, Set<string>>,
+    );
+
+    const bBoxStr = bBox.join(',');
+
+    for (const [tagKey, tagValuesSet] of Object.entries(relevantTags)) {
+      const valuesRegex = Array.from(tagValuesSet).join('|');
+      queryConditions.push(
+        `node["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`,
+      );
+      queryConditions.push(
+        `way["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`,
+      );
+      queryConditions.push(
+        `relation["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`,
+      );
+    }
 
     const overpassQuery = `
-      [out:json][timeout:25];
-      (
-        node["amenity"~"${amenity}"](${bBox.join(',')});
-        way["amenity"~"${amenity}"](${bBox.join(',')});
-        relation["amenity"~"${amenity}"](${bBox.join(',')});
-      );
-      out geom;
-      >;
-      out skel qt;
-    `;
+          [out:json][timeout:60];
+          (
+            ${queryConditions.join('\n        ')}
+          );
+          out body center;
+        `;
 
     try {
       const response = await fetch(this.#overpassUrl, {
@@ -54,86 +165,140 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
           tags: Record<string, string>;
           lat?: number;
           lon?: number;
-          geometry?: { lat: number; lon: number }[];
+          center?: { lat: number; lon: number };
         }[];
       };
 
-      const poIs: PlaceApi[] = [];
+      let processedCount = 0;
+      let skippedCount = 0;
+
+      const allItems = await this._databaseService.item.findMany({
+        select: {
+          id: true,
+          spawnCategories: true,
+        },
+      });
+
       for (const element of data.elements) {
-        if (
-          (element.type === 'node' || element.type === 'way') &&
-          element.tags?.amenity === amenity
-        ) {
-          const name =
-            element.tags?.name || element.tags?.['name:en'] || 'NO_NAME';
-          let lat: number, lng: number;
-          const addressName: string =
-            element.tags?.['addr:street'] ||
-            element.tags?.['addr:housename'] ||
-            element.tags?.['addr:housenumber'] ||
-            '';
-          const apiId = element.id;
+        const apiId = `${element.type}/${element.id}`;
 
-          if (element.type === 'node') {
-            lat = element.lat as number;
-            lng = element.lon as number;
-          } else {
-            const centroid = this.#calculateCentroid(element.geometry!);
+        const name = element.tags?.name || element.tags?.['name:en'];
+        if (!name) {
+          this.#logger.debug(
+            `No name found for place with API ID ${apiId} with tags ${JSON.stringify(
+              element.tags,
+            )}`,
+          );
+          skippedCount++;
+          continue;
+        }
 
-            if (centroid) {
-              lat = centroid.lat;
-              lng = centroid.lon;
-            } else {
-              continue;
-            }
-          }
+        const categories = this.#getCategoriesForPlace(element);
+        if (categories.length === 0) {
+          this.#logger.debug(
+            `No categories found for place with API ID ${apiId} with name ${name}`,
+          );
+          skippedCount++;
+          continue;
+        }
 
-          const poi = {
-            apiId,
-            name,
-            lat,
-            lng,
-            addressName,
-            amenity: element.tags?.amenity as PlaceAmenity,
-          };
+        let lat: number, lng: number;
 
-          poIs.push(poi);
+        if ('lat' in element && 'lon' in element) {
+          lat = element.lat as number;
+          lng = element.lon as number;
+        } else if (element.center) {
+          lat = element.center.lat;
+          lng = element.center.lon;
+        } else {
+          this.#logger.debug(
+            `No coordinates found for place with API ID ${apiId} with name ${name}`,
+          );
+          skippedCount++;
+          continue;
+        }
+
+        const randomItemId = allItems
+          .filter((item) =>
+            item.spawnCategories.some((category) =>
+              categories.includes(category),
+            ),
+          )
+          .map((item) => item.id)[Math.floor(Math.random() * allItems.length)];
+
+        if (!randomItemId) {
+          this.#logger.debug(
+            `No random item found for place with API ID ${apiId} with name ${name}`,
+          );
+          skippedCount++;
+          continue;
+        }
+
+        const placeApi = new PlaceApi({
+          apiId: apiId.toString(),
+          name,
+          lat,
+          lng,
+          osmTags: element.tags,
+          categories,
+        });
+
+        try {
+          await this._databaseService.place.upsert({
+            where: { apiId: placeApi.apiId },
+            update: {
+              name: placeApi.name,
+              lat: placeApi.lat,
+              lng: placeApi.lng,
+              osmTags: placeApi.osmTags,
+              categories: placeApi.categories,
+              currentItemId: randomItemId,
+            },
+            create: {
+              apiId: placeApi.apiId,
+              name: placeApi.name,
+              lat: placeApi.lat,
+              lng: placeApi.lng,
+              osmTags: placeApi.osmTags,
+              categories: placeApi.categories,
+              currentItemId: randomItemId,
+            },
+          });
+
+          processedCount++;
+        } catch (error) {
+          this.#logger.error(
+            `Error saving place with API ID ${placeApi.apiId}: ${error}`,
+          );
+          skippedCount++;
         }
       }
-      return poIs;
+
+      this.#logger.debug(
+        `Processed ${processedCount} POIs, skipped ${skippedCount} POIs.`,
+      );
     } catch (error) {
       this.#logger.error(error);
-      return [];
     }
   }
 
-  #calculateCentroid(nodes: { lat: number; lon: number }[]) {
-    if (!nodes || nodes.length === 0) {
-      return null;
+  #getCategoriesForPlace(place: OverpassElement): PlaceCategory[] {
+    const associatedCategories = new Set<PlaceCategory>();
+
+    if (!place.tags) return [];
+
+    for (const [key, value] of Object.entries(place.tags)) {
+      const tagString = `${key}=${value}`;
+      const mapped = this.#osmTagToCategoryMap[tagString];
+      if (mapped) {
+        if (Array.isArray(mapped)) {
+          mapped.forEach((cat) => associatedCategories.add(cat));
+        } else {
+          associatedCategories.add(mapped);
+        }
+      }
     }
 
-    let area = 0.0;
-    let cx = 0.0;
-    let cy = 0.0;
-    const n = nodes.length;
-
-    for (let i = 0; i < n; i++) {
-      const x1 = nodes[i].lon;
-      const y1 = nodes[i].lat;
-      const x2 = nodes[(i + 1) % n].lon;
-      const y2 = nodes[(i + 1) % n].lat;
-      const cross = x1 * y2 - x2 * y1;
-      area += cross;
-      cx += (x1 + x2) * cross;
-      cy += (y1 + y2) * cross;
-    }
-
-    area *= 0.5;
-    if (area === 0) {
-      return { lon: nodes[0].lon, lat: nodes[0].lat };
-    }
-    cx /= 6 * area;
-    cy /= 6 * area;
-    return { lon: cx, lat: cy };
+    return Array.from(associatedCategories);
   }
 }
