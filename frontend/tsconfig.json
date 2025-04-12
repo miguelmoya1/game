@@ -23,7 +23,6 @@
       "@game/entities": ["src/app/core/domain/entities"],
       "@game/enums": ["src/app/core/domain/enums"],
       "@game/interfaces": ["src/app/core/domain/interfaces"],
-      "@game/use-cases-contracts": ["src/app/core/domain/use-cases"],
       "@game/use-cases": ["src/app/core/application/use-cases"],
       "@game/services": ["src/app/core/application/services"],
       "@game/resolvers": ["src/app/core/application/resolvers"],

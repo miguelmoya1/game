@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AUTH_REPOSITORY } from '@game/interfaces';
-import { AuthUseCase } from '@game/use-cases-contracts';
+import { AuthUseCase } from '../contracts/auth.use-case.contract';
 
 @Injectable()
 export class AuthUseCaseImpl implements AuthUseCase {

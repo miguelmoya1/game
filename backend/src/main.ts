@@ -25,3 +25,5 @@ async function bootstrap() {
 }
 
 bootstrap().catch(console.error);
+
+// TODO: Create tsconfig and add paths

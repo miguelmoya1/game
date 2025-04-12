@@ -1,6 +1,7 @@
 import { computed, effect, inject, Injectable } from '@angular/core';
 import { USER_REPOSITORY } from '@game/interfaces';
-import { AUTH_USE_CASE, UserUseCase } from '@game/use-cases-contracts';
+import { AUTH_USE_CASE } from '../contracts/auth.use-case.contract';
+import { UserUseCase } from '../contracts/user.use-case.contract';
 
 @Injectable()
 export class UserUseCaseImpl implements UserUseCase {
