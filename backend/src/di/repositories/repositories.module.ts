@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { accountRepositoryProvider } from './impl/account.repository.provider';
+import { itemRepositoryProvider } from './impl/item.repository.provider';
 import { placeApiHistoryRepositoryProvider } from './impl/place-api-history.repository.provider';
 import { placeApiRepositoryProvider } from './impl/place-api.repository.provider';
 import { placeRepositoryProvider } from './impl/place.repository.provider';
@@ -11,6 +12,7 @@ const repositories = [
   accountRepositoryProvider,
   placeRepositoryProvider,
   userRepositoryProvider,
+  itemRepositoryProvider,
 ];
 
 @Global()

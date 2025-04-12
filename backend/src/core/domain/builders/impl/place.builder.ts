@@ -1,15 +1,14 @@
-import { UserRole } from '@prisma/client';
-import { User } from '../entities/impl/user.entity';
+import { PlaceCategory } from '@prisma/client';
+import { Place } from '../../entities/impl/place.entity';
 
-export class UserBuilder {
+export class PlaceBuilder {
   #id: string;
-
+  #apiId: string;
   #name: string;
-  #surname: string | null;
-  #nickname: string | null;
-  #language = 'en';
-
-  #role: UserRole = UserRole.USER;
+  #lat: number;
+  #lng: number;
+  #osmTags: Record<string, string> | null;
+  #categories: PlaceCategory[];
 
   #createdAt: Date;
   #updatedAt: Date;
@@ -20,28 +19,33 @@ export class UserBuilder {
     return this;
   }
 
+  public withApiId(apiId: string) {
+    this.#apiId = apiId;
+    return this;
+  }
+
   public withName(name: string) {
     this.#name = name;
     return this;
   }
 
-  public withSurname(surname: string | null) {
-    this.#surname = surname;
+  public withLat(lat: number) {
+    this.#lat = lat;
     return this;
   }
 
-  public withNickname(nickname: string | null) {
-    this.#nickname = nickname;
+  public withLng(lng: number) {
+    this.#lng = lng;
     return this;
   }
 
-  public withLanguage(language: string) {
-    this.#language = language;
+  public withOsmTags(osmTags: Record<string, string> | null) {
+    this.#osmTags = osmTags;
     return this;
   }
 
-  public withRole(role: UserRole) {
-    this.#role = role;
+  public withCategories(categories: PlaceCategory[]) {
+    this.#categories = categories;
     return this;
   }
 
@@ -61,13 +65,15 @@ export class UserBuilder {
   }
 
   public build() {
-    return new User({
+    return new Place({
       id: this.#id,
+      apiId: this.#apiId,
       name: this.#name,
-      surname: this.#surname,
-      language: this.#language,
-      nickname: this.#nickname,
-      role: this.#role,
+      lat: this.#lat,
+      lng: this.#lng,
+      osmTags: this.#osmTags,
+      categories: this.#categories,
+
       createdAt: this.#createdAt,
       updatedAt: this.#updatedAt,
       deletedAt: this.#deletedAt,

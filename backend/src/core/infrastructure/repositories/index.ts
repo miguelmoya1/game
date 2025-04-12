@@ -23,6 +23,12 @@ export {
 export { PlaceApiRepositoryImpl } from './impl/place-api.repository';
 
 export {
+  ITEM_REPOSITORY,
+  ItemRepository,
+} from './contracts/item.repository.contract';
+export { ItemRepositoryImpl } from './impl/item.repository';
+
+export {
   PLACE_API_HISTORY_REPOSITORY,
   PlaceApiHistoryRepository,
 } from './contracts/place-api-history.repository.contract';

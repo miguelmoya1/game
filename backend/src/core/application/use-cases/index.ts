@@ -12,3 +12,6 @@ export {
   PlaceUseCase,
 } from './contracts/place.use-case.contract';
 export { PlaceUseCaseImpl } from './impl/place.use-case';
+
+export { ITEM_USE_CASE, ItemUseCase } from './contracts/item.use-case.contract';
+export { ItemUseCaseImpl } from './impl/item.use-case';

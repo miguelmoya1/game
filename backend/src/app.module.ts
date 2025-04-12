@@ -12,6 +12,7 @@ import { RepositoriesModule } from './di/repositories';
 import { ServicesModule } from './di/services';
 import { UseCasesModule } from './di/use-cases';
 import { AuthController } from './presentation/auth/auth.controller';
+import { ItemsController } from './presentation/items/items.controller';
 import { PlacesController } from './presentation/places/places.controller';
 import { TranslateController } from './presentation/translate/translate.controller';
 import { UsersController } from './presentation/users/users.controller';
@@ -55,6 +56,7 @@ import { UsersController } from './presentation/users/users.controller';
     UsersController,
     TranslateController,
     PlacesController,
+    ItemsController,
   ],
 })
 export class AppModule {}

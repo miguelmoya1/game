@@ -1,5 +1,5 @@
 import { AccountProvider } from '@prisma/client';
-import { Account } from '../entities/impl/account.entity';
+import { Account } from '../../entities/impl/account.entity';
 
 export class AccountBuilder {
   #id: string;

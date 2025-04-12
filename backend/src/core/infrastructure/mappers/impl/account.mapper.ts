@@ -1,6 +1,6 @@
 import { Account as AccountDb } from '@prisma/client';
-import { AccountBuilder } from 'src/core/domain/builders/account.builder';
-import { Account } from '../../../domain/entities/impl/account.entity';
+import { AccountBuilder } from '../../../domain/builders';
+import { Account } from '../../../domain/entities';
 
 export const accountToEntity = (account: AccountDb): Account => {
   return new AccountBuilder()

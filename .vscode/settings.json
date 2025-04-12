@@ -27,5 +27,7 @@
     "builders": "Include",
     "interceptors": "Connection",
     "entities": "Import"
-  }
+  },
+  "IDX.aI.enableInlineCompletion": true,
+  "IDX.aI.enableCodebaseIndexing": true
 }

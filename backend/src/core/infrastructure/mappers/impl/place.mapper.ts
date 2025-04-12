@@ -1,5 +1,5 @@
 import { Place as PlaceDb } from '@prisma/client';
-import { PlaceBuilder } from '../../../domain/builders/place.builder';
+import { PlaceBuilder } from '../../../domain/builders/impl/place.builder';
 import { Place } from '../../../domain/entities/impl/place.entity';
 
 export const placeToEntity = (place: PlaceDb): Place => {
