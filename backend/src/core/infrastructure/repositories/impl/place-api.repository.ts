@@ -89,7 +89,7 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
   ) {}
 
   async fetchAndStorePlacesFromOverpass(latitude: number, longitude: number) {
-    const radius = 4000; // in meters
+    const radius = 750; // in meters
     this.#logger.debug('Fetching places with coordinates:', {
       latitude,
       longitude,
@@ -218,13 +218,25 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
           continue;
         }
 
-        const randomItemId = allItems
-          .filter((item) =>
-            item.spawnCategories.some((category) =>
-              categories.includes(category),
-            ),
-          )
-          .map((item) => item.id)[Math.floor(Math.random() * allItems.length)];
+        const itemsMatchingCategories = allItems.filter((item) =>
+          item.spawnCategories.some((category) => {
+            return categories.includes(category);
+          }),
+        );
+
+        if (itemsMatchingCategories.length === 0) {
+          this.#logger.debug(
+            `No items found for place with API ID ${apiId} with name ${name}`,
+          );
+          skippedCount++;
+          continue;
+        }
+
+        // Select a random item from the filtered list
+        const randomItemId =
+          itemsMatchingCategories[
+            Math.floor(Math.random() * itemsMatchingCategories.length)
+          ].id;
 
         if (!randomItemId) {
           this.#logger.debug(

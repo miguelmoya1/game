@@ -28,21 +28,31 @@ export class PlaceRepositoryImpl implements PlaceRepository {
 
   // TODO: Check the logic of this repository (lat, lng, radius)
   async get(latitude: number, longitude: number) {
+    const radius = 500; // 500m
+
+    const EARTH_RADIUS_METERS = 6_371_000;
+    const DEGREES_TO_RADIANS = Math.PI / 180;
+
+    const latitudeDelta = (radius / EARTH_RADIUS_METERS) * (180 / Math.PI);
+    const longitudeDelta =
+      (radius /
+        (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS))) *
+      (180 / Math.PI);
+
     const result = await this.databaseService.place.findMany({
       where: {
         lat: {
-          gte: latitude - 0.01,
-          lte: latitude + 0.01,
+          gte: latitude - latitudeDelta,
+          lte: latitude + latitudeDelta,
         },
         lng: {
-          gte: longitude - 0.01,
-          lte: longitude + 0.01,
+          gte: longitude - longitudeDelta,
+          lte: longitude + longitudeDelta,
         },
       },
       orderBy: {
         createdAt: 'desc',
       },
-      take: 10,
     });
 
     if (!result) {

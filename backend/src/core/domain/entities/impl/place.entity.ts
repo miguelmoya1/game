@@ -8,6 +8,7 @@ export class Place {
   public readonly lng: number;
   public readonly osmTags: Record<string, string> | null;
   public readonly categories: PlaceCategory[];
+  public readonly currentItemId: string | null;
 
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
@@ -23,6 +24,7 @@ export class Place {
       | 'lng'
       | 'osmTags'
       | 'categories'
+      | 'currentItemId'
       | 'createdAt'
       | 'updatedAt'
       | 'deletedAt'
@@ -37,6 +39,7 @@ export class Place {
 
     this.osmTags = account.osmTags;
     this.categories = account.categories;
+    this.currentItemId = account.currentItemId;
 
     this.createdAt = account.createdAt;
     this.updatedAt = account.updatedAt;

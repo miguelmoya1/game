@@ -1,19 +1,22 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetPlacesQuery } from '../../core/application/queries';
-import { User } from '../../core/domain/entities';
-import { AuthenticatedUser } from '../../core/infrastructure/decorators';
+import { IsPublic } from '../../core/infrastructure/decorators';
 
 @Controller('places')
 export class PlacesController {
   constructor(private readonly _queryBus: QueryBus) {}
 
   @Get()
+  @IsPublic()
   public getPlaces(
-    @Param('lat') lat: number,
-    @Param('lng') lng: number,
-    @AuthenticatedUser() user: User,
+    @Query('lat') lat: number,
+    @Query('lng') lng: number,
+    // @AuthenticatedUser() user: User,
   ) {
-    return this._queryBus.execute(new GetPlacesQuery(lat, lng, user));
+    console.log('lat', lat);
+    console.log('lng', lng);
+    return this._queryBus.execute(new GetPlacesQuery(lat, lng, {} as any));
+    // return this._queryBus.execute(new GetPlacesQuery(lat, lng, user));
   }
 }

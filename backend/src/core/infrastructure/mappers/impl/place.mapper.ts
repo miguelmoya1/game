@@ -12,6 +12,7 @@ export const placeToEntity = (place: PlaceDb): Place => {
     .withLng(place.lng)
     .withOsmTags(place.osmTags as Record<string, string> | null)
     .withCategories(place.categories)
+    .withCurrentItemId(place.currentItemId)
 
     .withCreatedAt(place.createdAt)
     .withUpdatedAt(place.updatedAt)

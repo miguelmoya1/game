@@ -9,6 +9,7 @@ export class PlaceBuilder {
   #lng: number;
   #osmTags: Record<string, string> | null;
   #categories: PlaceCategory[];
+  #currentItemId: string | null;
 
   #createdAt: Date;
   #updatedAt: Date;
@@ -49,6 +50,11 @@ export class PlaceBuilder {
     return this;
   }
 
+  public withCurrentItemId(itemId: string | null) {
+    this.#currentItemId = itemId;
+    return this;
+  }
+
   public withCreatedAt(createdAt: Date) {
     this.#createdAt = createdAt;
     return this;
@@ -73,6 +79,7 @@ export class PlaceBuilder {
       lng: this.#lng,
       osmTags: this.#osmTags,
       categories: this.#categories,
+      currentItemId: this.#currentItemId,
 
       createdAt: this.#createdAt,
       updatedAt: this.#updatedAt,

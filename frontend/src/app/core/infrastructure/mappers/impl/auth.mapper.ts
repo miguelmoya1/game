@@ -1,11 +1,31 @@
 export const isAuthenticatedMapper = (value: unknown) => {
-  const response = value as { isAuthenticated: boolean };
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+  if (!('isAuthenticated' in value)) {
+    return false;
+  }
 
-  return response.isAuthenticated;
+  const isAuthenticated = value as { isAuthenticated: unknown };
+  if (typeof isAuthenticated.isAuthenticated !== 'boolean') {
+    return false;
+  }
+
+  return isAuthenticated.isAuthenticated;
 };
 
 export const tokenMapper = (value: unknown) => {
-  const response = value as { token: string };
+  if (typeof value !== 'object' || value === null) {
+    throw new TypeError('Invalid data structure received. Cannot map to token.');
+  }
 
-  return response.token;
+  if (!('token' in value)) {
+    throw new TypeError('Invalid data structure received. Cannot map to token.');
+  }
+
+  if (typeof (value as { token: unknown }).token !== 'string') {
+    throw new TypeError('Invalid data structure received. Cannot map to token.');
+  }
+
+  return value.token as string;
 };
