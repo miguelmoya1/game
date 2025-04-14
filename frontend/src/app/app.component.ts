@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TRANSLATE_REPOSITORY } from '@game/interfaces';
-import { AUTH_USE_CASE, USER_USE_CASE } from '@game/use-cases-contracts';
+import { TRANSLATE_REPOSITORY } from '@game/repositories';
+import { AUTH_USE_CASE, USER_USE_CASE } from '@game/use-cases';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

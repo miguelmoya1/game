@@ -1,5 +1,4 @@
-import { AuthUseCaseImpl } from '@game/use-cases';
-import { AUTH_USE_CASE } from '@game/use-cases-contracts';
+import { AUTH_USE_CASE, AuthUseCaseImpl } from '@game/use-cases';
 
 export const authUseCaseProvider = {
   provide: AUTH_USE_CASE,

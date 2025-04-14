@@ -1,12 +1,10 @@
-import { Component, ElementRef, viewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { MapComponent } from './components/map/map.component';
 
 @Component({
   selector: 'app-game',
-  imports: [],
+  imports: [MapComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
-export class GameComponent {
-  protected readonly canvasCharacters = viewChild.required<ElementRef<HTMLCanvasElement>>('canvasCharacters');
-  protected readonly canvasGrid = viewChild.required<ElementRef<HTMLCanvasElement>>('canvasGrid');
-}
+export class GameComponent {}

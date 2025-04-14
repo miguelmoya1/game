@@ -1,7 +1,7 @@
 import { httpResource } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { UserRepository } from '@game/interfaces';
 import { mapUserToEntity } from '@game/mappers';
+import { UserRepository } from '../contracts/user.repository.contract';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {

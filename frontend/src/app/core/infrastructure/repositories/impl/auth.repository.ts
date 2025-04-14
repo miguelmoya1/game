@@ -1,8 +1,8 @@
 import { HttpClient, HttpEventType, httpResource } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AuthRepository } from '@game/interfaces';
 import { isAuthenticatedMapper, tokenMapper } from '@game/mappers';
 import { filter, firstValueFrom, map } from 'rxjs';
+import { AuthRepository } from '../contracts/auth.repository.contract';
 
 @Injectable()
 export class AuthRepositoryImpl implements AuthRepository {
