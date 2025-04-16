@@ -1,5 +1,5 @@
 import { Component, effect, ElementRef, inject, viewChild } from '@angular/core';
-import { GeolocationService, MapService } from '@game/services';
+import { MapCoreService } from '@game/services';
 
 @Component({
   selector: 'app-map',
@@ -20,26 +20,13 @@ import { GeolocationService, MapService } from '@game/services';
   ],
 })
 export class MapComponent {
-  readonly #mapService = inject(MapService);
-  readonly #geolocationService = inject(GeolocationService);
+  readonly #mapCoreService = inject(MapCoreService);
 
   protected readonly mapContainer = viewChild.required<ElementRef<HTMLDivElement>>('map');
 
   constructor() {
     effect(() => {
-      this.#mapService.prepareMap(this.mapContainer().nativeElement);
-    });
-
-    effect(() => {
-      const position = this.#geolocationService.position();
-
-      const coords = position?.coords
-        ? ([position.coords.longitude, position.coords.latitude] as [number, number])
-        : undefined;
-
-      if (!coords) return;
-
-      this.#mapService.setCenter(coords);
+      this.#mapCoreService.setMap(this.mapContainer().nativeElement);
     });
   }
 }

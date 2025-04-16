@@ -12,7 +12,6 @@ export class PlaceUseCaseImpl implements PlaceUseCase {
   public readonly all = this.#placeRepository.all.asReadonly();
 
   constructor() {
-    console.log('Position:');
     effect(() => {
       const position = this.#geolocationService.position();
 

@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { GeolocationService, MapService } from '@game/services';
+import { GeolocationService, MapCoreService, MapPlaceService, MapPlayerService } from '@game/services';
 import { PLACE_USE_CASE } from '@game/use-cases';
 import { MapComponent } from './components/map/map.component';
 
@@ -17,7 +17,9 @@ import { MapComponent } from './components/map/map.component';
 })
 export class GameComponent {
   readonly #placeUseCase = inject(PLACE_USE_CASE);
-  readonly #mapService = inject(MapService);
+  readonly #mapCoreService = inject(MapCoreService);
+  readonly #mapPlayerService = inject(MapPlayerService);
+  readonly #mapPlaceService = inject(MapPlaceService);
   readonly #geolocationService = inject(GeolocationService);
 
   constructor() {
@@ -26,7 +28,7 @@ export class GameComponent {
 
       if (!pois) return;
 
-      this.#mapService.poisToDisplay.set(pois);
+      this.#mapPlaceService.setMarkers(pois);
     });
 
     effect(() => {
@@ -34,9 +36,11 @@ export class GameComponent {
 
       if (!userPosition) return;
 
-      const userPositionCoordinates: [number, number] = [userPosition.coords.latitude, userPosition.coords.longitude];
+      const userPositionCoordinates: [number, number] = [userPosition.coords.longitude, userPosition.coords.latitude];
 
-      this.#mapService.playerPosition.set(userPositionCoordinates);
+      this.#mapPlayerService.playerPosition.set(userPositionCoordinates);
+
+      this.#mapCoreService.setCenter(userPositionCoordinates);
     });
   }
 }
