@@ -14,8 +14,6 @@ export class PlacesController {
     @Query('lng') lng: number,
     // @AuthenticatedUser() user: User,
   ) {
-    console.log('lat', lat);
-    console.log('lng', lng);
     return this._queryBus.execute(new GetPlacesQuery(lat, lng, {} as any));
     // return this._queryBus.execute(new GetPlacesQuery(lat, lng, user));
   }

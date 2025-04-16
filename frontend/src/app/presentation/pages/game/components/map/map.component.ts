@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, inject, untracked, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, inject, viewChild } from '@angular/core';
 import { GeolocationService, MapService } from '@game/services';
 
 @Component({
@@ -27,17 +27,12 @@ export class MapComponent {
 
   constructor() {
     effect(() => {
-      const position = untracked(() => this.#geolocationService.position());
-
-      const coords = position?.coords
-        ? ([position.coords.longitude, position.coords.latitude] as [number, number])
-        : undefined;
-
-      this.#mapService.prepareMap(this.mapContainer().nativeElement, coords);
+      this.#mapService.prepareMap(this.mapContainer().nativeElement);
     });
 
     effect(() => {
       const position = this.#geolocationService.position();
+
       const coords = position?.coords
         ? ([position.coords.longitude, position.coords.latitude] as [number, number])
         : undefined;

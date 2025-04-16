@@ -1,43 +1,49 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { ErrorCodes } from '../../../domain/enums';
+import { ErrorCodes } from '../../../domain/enums/error-codes.enum';
 import { ErrorHandlerService } from './error-handler.service.contract';
 
 @Injectable()
 export class ErrorHandlerServiceImpl implements ErrorHandlerService {
   handleException(error: Error) {
-    if (error.message in ErrorCodes) {
-      if (error.message.includes(ErrorCodes.INTERNAL_SERVER_ERROR)) {
+    switch (error.message as ErrorCodes) {
+      // --- Bad Request (400) ---
+      case ErrorCodes.PLACE_MISSING_LAT_LNG:
+      case ErrorCodes.USER_OR_PASSWORD_INVALID:
+      case ErrorCodes.HASH_EXPIRED:
+        throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+
+      // --- Unauthorized (401) ---
+      case ErrorCodes.UNAUTHORIZED:
+        throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
+
+      // --- Not Found (404) ---
+      case ErrorCodes.ACCOUNT_NOT_FOUND:
+      case ErrorCodes.USER_NOT_FOUND:
+      case ErrorCodes.PLACE_NOT_FOUND:
+      case ErrorCodes.ITEM_NOT_FOUND:
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+
+      // --- Conflict (409) ---
+      case ErrorCodes.USER_ALREADY_EXISTS:
+        throw new HttpException(error.message, HttpStatus.CONFLICT);
+
+      // --- Internal Server Error (500) ---
+      case ErrorCodes.CANNOT_ACTIVATE_ACCOUNT:
+      case ErrorCodes.ERROR_REGISTERING_USER:
+      case ErrorCodes.USER_NOT_CREATED:
+      case ErrorCodes.PLACE_NOT_CREATED:
+      case ErrorCodes.INTERNAL_SERVER_ERROR:
+        throw new HttpException(
+          error.message,
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+
+      // --- Default Case ---
+      default:
         throw new HttpException(
           ErrorCodes.INTERNAL_SERVER_ERROR,
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
-      }
-
-      if (error.message.includes('NOT_FOUND')) {
-        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-      }
-
-      if (error.message.includes('BAD_REQUEST')) {
-        throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-      }
-
-      if (error.message.includes('FORBIDDEN')) {
-        throw new HttpException(error.message, HttpStatus.FORBIDDEN);
-      }
-
-      if (error.message.includes('UNAUTHORIZED')) {
-        throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
-      }
-
-      if (
-        error.message.includes('CONFLICT') ||
-        error.message.includes('DUPLICATE') ||
-        error.message.includes('ALREADY_EXISTS')
-      ) {
-        throw new HttpException(error.message, HttpStatus.CONFLICT);
-      }
-
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }

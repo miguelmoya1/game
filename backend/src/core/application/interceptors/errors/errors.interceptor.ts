@@ -23,12 +23,12 @@ export class ErrorsInterceptor implements NestInterceptor {
 
   intercept(_: ExecutionContext, next: CallHandler) {
     return next.handle().pipe(
-      catchError((error) => {
-        this.#logger.error(error);
+      catchError((error: Error) => {
+        this.#logger.error(error.message);
 
-        this._errorHandler.handleException(error as Error);
+        this._errorHandler.handleException(error);
 
-        throw error;
+        return error as never;
       }),
     );
   }

@@ -7,9 +7,11 @@
     "INITDB",
     "Inno",
     "maplibre",
+    "maplibregl",
     "Millis",
     "ossp",
     "plpgsql",
+    "pois",
     "skel",
     "stackable",
     "townhall"

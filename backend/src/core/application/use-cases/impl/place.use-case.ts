@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ErrorCodes } from '../../../domain/enums';
 import {
   PLACE_API_HISTORY_REPOSITORY,
@@ -23,10 +23,7 @@ export class PlaceUseCaseImpl implements PlaceUseCase {
 
   async getAll(lat: number, lng: number) {
     if (!lat || !lng) {
-      throw new HttpException(
-        ErrorCodes.PLACE_MISSING_LAT_LNG,
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new Error(ErrorCodes.PLACE_MISSING_LAT_LNG);
     }
 
     const shouldRequestApi =

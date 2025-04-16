@@ -14,12 +14,9 @@ export class GeolocationService {
 
   constructor() {
     this.updateCurrentPosition();
-    effect(() => {
-      this.#watching() ? this.#watchPosition() : this.#clearWatchPosition();
-    });
 
     effect(() => {
-      console.log('Position changed:', this.#position()?.coords);
+      this.#watching() ? this.#watchPosition() : this.#clearWatchPosition();
     });
   }
 

@@ -5,10 +5,7 @@ import { PlaceRepository } from '../contracts/place.repository.contract';
 
 @Injectable()
 export class PlaceRepositoryImpl implements PlaceRepository {
-  readonly #coordinates = signal({
-    lat: 0,
-    lng: 0,
-  });
+  readonly #coordinates = signal<{ lat: number; lng: number } | null>(null);
 
   public setCoordinates(lat: number, lng: number) {
     this.#coordinates.set({
@@ -18,13 +15,15 @@ export class PlaceRepositoryImpl implements PlaceRepository {
   }
 
   public readonly all = httpResource(
-    () => ({
-      url: 'places',
-      params: {
-        lat: this.#coordinates()!.lat,
-        lng: this.#coordinates()!.lng,
-      },
-    }),
+    () => {
+      const coords = this.#coordinates();
+
+      if (!coords) {
+        return undefined;
+      }
+
+      return `places?lat=${coords.lat}&lng=${coords.lng}`;
+    },
     { parse: mapPlaceArrayToEntityArray, defaultValue: [] },
   );
 }
