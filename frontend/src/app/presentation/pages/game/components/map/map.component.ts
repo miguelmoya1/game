@@ -2,7 +2,7 @@ import { Component, effect, ElementRef, inject, viewChild } from '@angular/core'
 import { MapCoreService } from '@game/services';
 
 @Component({
-  selector: 'app-map',
+  selector: 'game-map',
   template: '<div #map class="map"></div>',
   styles: [
     `

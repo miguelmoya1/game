@@ -1,0 +1,26 @@
+<h1>{{ 'LOGIN_TITLE' | translate }}</h1>
+
+<div class="content">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <input gameInput formControlName="email" type="email" [placeholder]="'LOGIN_EMAIL_PLACEHOLDER' | translate" />
+    <input
+      gameInput
+      formControlName="password"
+      type="password"
+      label="Password"
+      [placeholder]="'LOGIN_PASSWORD_PLACEHOLDER' | translate"
+    />
+
+    <button gameButton type="submit" [disabled]="registerForm.invalid">
+      {{ 'LOGIN_BUTTON_TEXT' | translate }}
+    </button>
+  </form>
+
+  <div class="register-link">
+    <p>{{ 'REGISTER_TO_LOGIN_TEXT' | translate }}</p>
+
+    <button routerLink="/auth/login" gameButton [style]="'outlined'">
+      {{ 'REGISTER_TO_LOGIN_BUTTON_TEXT' | translate }}
+    </button>
+  </div>
+</div>

@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+:root {
+  --font-family-main: 'Orbitron', 'Segoe UI', Roboto, sans-serif;
+  --background-color: #0d1a26;
+  --text-color: #fff;
+  --color-primary: #c6ebfc;
+  --color-primary-rgb: 198, 235, 252;
+  --color-secondary: #90ee90;
+  --color-secondary-rgb: 144, 238, 144;
+  --color-tertiary: #ffcccb;
+  --color-tertiary-rgb: 255, 204, 203;
+  --color-border: #e6f7ff;
+  --color-border-rgb: 230, 247, 255;
+  --color-disabled: #555;
+  --color-disabled-rgb: 85, 85, 85;
+  --color-disabled-text: #aaa;
+  --color-disabled-text-rgb: 170, 170, 170;
+  --color-border-disabled: #777;
+  --color-border-disabled-rgb: 119, 119, 119;
+}
+
 html,
 body {
   margin: 0;
@@ -9,5 +31,12 @@ body {
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family-main);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  background: url(/images/background.png);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
 }

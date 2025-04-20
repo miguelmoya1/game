@@ -1,7 +1,7 @@
 import { computed, inject, ResourceStatus } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { CanMatchFn, Router } from '@angular/router';
-import { AUTH_USE_CASE } from '@game/use-cases-contracts';
+import { AUTH_USE_CASE } from '@game/use-cases';
 import { filter, map, tap } from 'rxjs';
 
 export const notLoggedGuard: CanMatchFn = (route, segments) => {

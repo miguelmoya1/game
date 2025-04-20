@@ -4,7 +4,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
 import { authRepositoryProvider, translateRepositoryProvider, userRepositoryProvider } from '@game/di/repositories';
 import { authUseCaseProvider, userUseCaseProvider } from '@game/di/use-cases';
-import { baseUrlInterceptor, headerInterceptor } from '@game/interceptors';
+import { baseUrlInterceptor, errorsInterceptor, headerInterceptor } from '@game/interceptors';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
@@ -14,9 +14,6 @@ const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '.
 export const appConfig: ApplicationConfig = {
   providers: [
     provideExperimentalZonelessChangeDetection(),
-    provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, baseUrlInterceptor])),
-    provideAnimationsAsync(),
     provideTranslateService({
       defaultLanguage: 'en',
       loader: {
@@ -25,6 +22,9 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     }),
+    provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, baseUrlInterceptor, errorsInterceptor])),
+    provideAnimationsAsync(),
 
     authRepositoryProvider,
     userRepositoryProvider,

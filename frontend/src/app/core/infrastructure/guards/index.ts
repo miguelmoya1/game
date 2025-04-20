@@ -1,2 +1,2 @@
-export * from './impl/logged.guard';
-export * from './impl/not-logged.guard';
+export { loggedGuard } from './impl/logged.guard';
+export { notLoggedGuard } from './impl/not-logged.guard';

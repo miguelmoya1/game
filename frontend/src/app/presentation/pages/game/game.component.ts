@@ -4,9 +4,9 @@ import { PLACE_USE_CASE } from '@game/use-cases';
 import { MapComponent } from './components/map/map.component';
 
 @Component({
-  selector: 'app-game',
+  selector: 'game-game',
   imports: [MapComponent],
-  template: ` <app-map /> `,
+  template: ` <game-map /> `,
   styles: `
     :host {
       display: block;

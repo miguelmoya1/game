@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-// import { loggedGuard, notLoggedGuard } from '@game/guards';
+import { loggedGuard, notLoggedGuard } from './core/infrastructure/guards';
 
 export const routes: Routes = [
   {
@@ -9,8 +9,13 @@ export const routes: Routes = [
   },
   {
     path: 'game',
-    providers: [],
+    canMatch: [loggedGuard],
     loadChildren: () => import('./presentation/pages/game/router/game.routes'),
+  },
+  {
+    path: 'auth',
+    canMatch: [notLoggedGuard],
+    loadChildren: () => import('./presentation/pages/auth/router/auth.routes'),
   },
   {
     path: '**',

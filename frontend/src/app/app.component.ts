@@ -1,21 +1,26 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NotificationsComponent } from '@game/components';
 import { TRANSLATE_REPOSITORY } from '@game/repositories';
 import { AUTH_USE_CASE, USER_USE_CASE } from '@game/use-cases';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'game-root',
-  imports: [RouterOutlet],
-  template: ` <router-outlet /> `,
+  imports: [RouterOutlet, NotificationsComponent],
+  template: `
+    @if (translateLoaded()) {
+      <router-outlet />
+
+      <game-notifications />
+    }
+  `,
   styles: `
     :host {
       display: block;
 
       height: 100%;
       width: 100%;
-
-      background-color: #f0f0f0;
     }
   `,
 })
@@ -26,6 +31,7 @@ export class AppComponent {
   readonly #authUseCase = inject(AUTH_USE_CASE);
   readonly #userUseCase = inject(USER_USE_CASE);
 
+  protected readonly translateLoaded = signal(false);
   protected readonly showHeader = computed(() => {
     return this.#authUseCase.isAuthenticated.value();
   });
@@ -56,5 +62,7 @@ export class AppComponent {
       },
       true,
     );
+
+    this.translateLoaded.set(true);
   }
 }

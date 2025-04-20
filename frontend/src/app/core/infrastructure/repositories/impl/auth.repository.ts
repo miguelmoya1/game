@@ -1,7 +1,7 @@
 import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { isAuthenticatedMapper, tokenMapper } from '@game/mappers';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import { AuthRepository } from '../contracts/auth.repository.contract';
 
 @Injectable()
@@ -14,14 +14,10 @@ export class AuthRepositoryImpl implements AuthRepository {
   });
 
   public async login(email: string, password: string) {
-    const tokenResponse = await firstValueFrom(this.#httpClient.post('auth/login/email', { email, password }));
-
-    return tokenMapper(tokenResponse);
+    return await firstValueFrom(this.#httpClient.post('auth/login/email', { email, password }).pipe(map(tokenMapper)));
   }
 
   public async rehydrate() {
-    const tokenRehydrate = await firstValueFrom(this.#httpClient.get('auth/rehydrate'));
-
-    return tokenMapper(tokenRehydrate);
+    return await firstValueFrom(this.#httpClient.get('auth/rehydrate').pipe(map(tokenMapper)));
   }
 }

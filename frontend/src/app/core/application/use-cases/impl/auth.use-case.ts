@@ -6,11 +6,7 @@ import { AuthUseCase } from '../contracts/auth.use-case.contract';
 export class AuthUseCaseImpl implements AuthUseCase {
   readonly #authRepository = inject(AUTH_REPOSITORY);
 
-  readonly #isAuthenticated = this.#authRepository.isAuthenticated;
-
-  get isAuthenticated() {
-    return this.#isAuthenticated;
-  }
+  readonly isAuthenticated = this.#authRepository.isAuthenticated;
 
   constructor() {
     const token = localStorage.getItem('auth-token');
@@ -22,7 +18,7 @@ export class AuthUseCaseImpl implements AuthUseCase {
 
   public logout() {
     localStorage.removeItem('auth-token');
-    this.#isAuthenticated.set(false);
+    this.isAuthenticated.set(false);
   }
 
   public async login(email: string, password: string) {
@@ -34,7 +30,7 @@ export class AuthUseCaseImpl implements AuthUseCase {
 
     localStorage.setItem('auth-token', token);
 
-    this.#isAuthenticated.set(true);
+    this.isAuthenticated.set(true);
 
     return true;
   }
@@ -56,7 +52,7 @@ export class AuthUseCaseImpl implements AuthUseCase {
 
     localStorage.setItem('auth-token', newToken);
 
-    this.#isAuthenticated.set(true);
+    this.isAuthenticated.set(true);
 
     return true;
   }

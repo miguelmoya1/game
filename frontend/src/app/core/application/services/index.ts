@@ -4,4 +4,5 @@ export { GlobalStateService } from './impl/global-state.service';
 export { MapCoreService } from './impl/map-core.service';
 export { MapPlaceService } from './impl/map-place.service';
 export { MapPlayerService } from './impl/map-player.service';
+export { NotificationService } from './impl/notification.service';
 export { ScreenService } from './impl/screen.service';

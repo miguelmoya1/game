@@ -1,0 +1,34 @@
+h1 {
+  width: 100%;
+  text-align: center;
+
+  margin: 0;
+  margin-bottom: 2rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 6fr 2fr;
+
+  gap: 1rem;
+
+  width: 100%;
+  height: 100%;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+
+    button {
+      margin-top: 1rem;
+    }
+  }
+
+  .register-link {
+    margin-top: 1rem;
+    text-align: center;
+  }
+}

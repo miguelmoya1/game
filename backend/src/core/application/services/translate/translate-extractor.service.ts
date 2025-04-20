@@ -10,9 +10,10 @@ export class TranslateExtractorService {
   async getKeys() {
     try {
       const core = await this.#extract('src/core');
+      const app = await this.#extract('../frontend/src/app');
       const templates = await this.#extract('templates');
 
-      return [...new Set([...templates, ...core])].sort();
+      return [...new Set([...templates, ...core, ...app])].sort();
     } catch (e) {
       this.#logger.warn(e);
     }
@@ -35,17 +36,19 @@ export class TranslateExtractorService {
       //message: 'variableNameRegexp',
       ` message: '${this.#variableNameRegexp}'`,
       // {{ 'variableNameRegexp' | translate }}
-      `'${this.#variableNameRegexp}' \\}}`,
+      `'${this.#variableNameRegexp}' | translate}}`,
       // placeholder="variableNameRegexp"
       `placeholder=.${this.#variableNameRegexp}.`,
       // label="variableNameRegexp"
       `label=.${this.#variableNameRegexp}.`,
       // .translate('variableNameRegexp')
-      `\\.translate\\('${this.#variableNameRegexp}'\\)`,
+      `.translate('${this.#variableNameRegexp}')`,
+      // .instant('variableNameRegexp')
+      `.instant\\('${this.#variableNameRegexp}'\\)`,
       // enums like variableNameRegexp = 'variableNameRegexp',
-      `${this.#variableNameRegexp} = '${this.#variableNameRegexp}'`,
+      `\\w+ = '${this.#variableNameRegexp}'`,
       // data?.['variableNameRegexp'] || 'Next page';
-      `data\\?\\.\\['${this.#variableNameRegexp}'\\]`,
+      `data?\\.\\['${this.#variableNameRegexp}'\\]`,
       // anyKey: 'variableNameRegexp'
       `: '${this.#variableNameRegexp}'`,
       // ('variableNameRegexp') || ('variableNameRegexp', { data: 'data' })
