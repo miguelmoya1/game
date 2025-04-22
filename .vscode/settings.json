@@ -22,14 +22,15 @@
     "mappers": "Mappings",
     "di": "Resource",
     "domain": "Class",
-    "infrastructure": "Base",
+    "data-access": "Base",
     "use-cases": "Other",
     "domain/use-cases": "Interface",
     "impl": "Class",
     "queries": "Mjml",
     "builders": "Include",
     "interceptors": "Connection",
-    "entities": "Import"
+    "entities": "Import",
+    "features": "Controller"
   },
   "IDX.aI.enableInlineCompletion": true,
   "IDX.aI.enableCodebaseIndexing": true

@@ -1,21 +1,21 @@
 import { Routes } from '@angular/router';
-import { loggedGuard, notLoggedGuard } from './core/infrastructure/guards';
+import { notLoggedGuard } from '@game/core/guards/not-logged.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'game',
+    redirectTo: 'auth/login',
     pathMatch: 'full',
   },
-  {
-    path: 'game',
-    canMatch: [loggedGuard],
-    loadChildren: () => import('./presentation/pages/game/router/game.routes'),
-  },
+  // {
+  //   path: 'game',
+  //   canMatch: [loggedGuard],
+  // loadChildren: () => import('./features/game/router/game.routes'),
+  // },
   {
     path: 'auth',
     canMatch: [notLoggedGuard],
-    loadChildren: () => import('./presentation/pages/auth/router/auth.routes'),
+    loadChildren: () => import('./features/auth/routes/auth.routes'),
   },
   {
     path: '**',

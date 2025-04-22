@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Req } from '@nestjs/common';
+import { Controller, Get, Inject, Param, Req } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
 import {
   TRANSLATE_SERVICE,
@@ -17,5 +17,20 @@ export class TranslateController {
   @IsPublic()
   public getTranslate(@Req() req: FastifyRequest) {
     return this._translateService.getTranslate(req);
+  }
+
+  @Get('languages')
+  @IsPublic()
+  public getLanguages() {
+    return this._translateService.getLanguages();
+  }
+
+  @Get('/:lang')
+  @IsPublic()
+  public getTranslateByLanguage(
+    @Req() req: FastifyRequest,
+    @Param('lang') lang: string,
+  ) {
+    return this._translateService.getTranslate(req, lang);
   }
 }
