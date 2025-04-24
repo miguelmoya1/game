@@ -10,10 +10,18 @@ export class AuthTokenService {
 
   public readonly token = this.#token.asReadonly() as Signal<string>;
 
+  constructor() {
+    const token = localStorage.getItem(TOKEN_KEY);
+
+    if (token) {
+      this.#token.set(token);
+    }
+  }
+
   public setToken(value: string) {
     this.#token.set(value);
 
-    localStorage.setItem('token', value ?? '');
+    localStorage.setItem(TOKEN_KEY, value ?? '');
   }
 
   public hasToken() {

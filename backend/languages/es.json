@@ -42,5 +42,6 @@
   "USER_ALREADY_EXISTS": "El usuario ya existe",
   "USER_NOT_CREATED": "El usuario no fue creado",
   "USER_NOT_FOUND": "Usuario no encontrado",
-  "USER_OR_PASSWORD_INVALID": "Usuario o contraseña inválidos"
+  "USER_OR_PASSWORD_INVALID": "Usuario o contraseña inválidos",
+  "XML": ""
 }

@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { NotificationService } from '@game/core/services/notification.service';
-import { TranslateService } from '@game/core/services/translate.service';
+import { Router, RouterLink } from '@angular/router';
 import { GameButtonDirective } from '@game/shared/directives/button.directive';
 import { GameInputDirective } from '@game/shared/directives/input.directive';
 import { TranslatePipe } from '@game/shared/pipes/translate.pipe';
@@ -16,8 +14,7 @@ import { AUTH_FACADE } from '../../services/auth.facade.contract';
 })
 export class LoginComponent {
   readonly #authFacade = inject(AUTH_FACADE);
-  readonly #notificationService = inject(NotificationService);
-  readonly #translateService = inject(TranslateService);
+  readonly #router = inject(Router);
 
   protected readonly loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -35,7 +32,7 @@ export class LoginComponent {
     const result = await this.#authFacade.loginEmail({ email, password });
 
     if (result) {
-      this.#notificationService.add(this.#translateService.instant('LOGIN.SUCCESS'), 'success');
+      await this.#router.navigate(['/map']);
     }
   }
 

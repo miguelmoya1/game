@@ -12,7 +12,7 @@ export class AuthService {
     parse: isAuthenticatedMapper,
   });
   readonly #shouldFetch = computed(() => this.#isAuthenticated.value());
-  readonly #currentUser = httpResource(() => (this.#shouldFetch() ? 'auth/current-user' : undefined), {
+  readonly #currentUser = httpResource(() => (this.#shouldFetch() ? 'users/me' : undefined), {
     defaultValue: null,
     parse: mapUserToEntity,
   });

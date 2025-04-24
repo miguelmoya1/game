@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { FastifyReply } from 'fastify';
 import {
   ActiveAccountCommand,
   ChangePasswordCommand,
@@ -29,17 +28,12 @@ export class AuthController {
 
   @IsPublic()
   @Get('confirm/:accountId')
-  public async confirmLogin(
-    @Param('accountId') accountId: string,
-    @Res() res: FastifyReply,
-  ) {
+  public async confirmLogin(@Param('accountId') accountId: string) {
     const command = new ActiveAccountCommand(accountId);
 
     const token = await this._commandBus.execute<ActiveAccountCommand, string>(
       command,
     );
-
-    this.#sendToken(res, token);
 
     return { token };
   }
@@ -75,7 +69,6 @@ export class AuthController {
   @Post('login/email')
   public async loginWithEmail(
     @Body() authLoginEmailDto: AuthEmailLoginPayloadDto,
-    @Res() res: FastifyReply,
   ) {
     const { email, password } = authLoginEmailDto;
 
@@ -83,8 +76,6 @@ export class AuthController {
     const token = await this._commandBus.execute<LoginWithEmailCommand, string>(
       command,
     );
-
-    this.#sendToken(res, token);
 
     return { token };
   }
@@ -97,7 +88,6 @@ export class AuthController {
       account: CreateAccountDto;
       user: CreateUserDto;
     },
-    @Res() res: FastifyReply,
   ) {
     const { account, user } = registerDto;
 
@@ -106,12 +96,6 @@ export class AuthController {
       command,
     );
 
-    this.#sendToken(res, token);
-
     return { token };
-  }
-
-  #sendToken(res: FastifyReply, token: string) {
-    res.header('authorization', `Bearer ${token}`);
   }
 }

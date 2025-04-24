@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AccountProvider } from '@prisma/client';
 import { createHash } from 'crypto';
@@ -23,6 +23,8 @@ import { AccountUseCase } from '../contracts/account.use-case.contract';
 
 @Injectable()
 export class AccountUseCaseImpl implements AccountUseCase {
+  readonly #logger = new Logger(AccountUseCaseImpl.name);
+
   constructor(
     @Inject(ENCRYPTION_SERVICE)
     private readonly _encryptionService: EncryptionService,
@@ -143,7 +145,12 @@ export class AccountUseCaseImpl implements AccountUseCase {
   public async signInWithEmail(email: string, password: string) {
     const result = await this._accountRepository.getOneByProviderEmail(email);
 
+    this.#logger.debug(
+      `Account found: ${result ? 'yes' : 'no'} for email: ${email}`,
+    );
+
     if (!result) {
+      this.#logger.debug(`Sign-in failed for email: ${email}`);
       throw new Error(ErrorCodes.USER_OR_PASSWORD_INVALID);
     }
 
@@ -153,6 +160,7 @@ export class AccountUseCaseImpl implements AccountUseCase {
     );
 
     if (!isPasswordValid) {
+      this.#logger.debug(`Password validation failed for email: ${email}`);
       throw new Error(ErrorCodes.USER_OR_PASSWORD_INVALID);
     }
 
@@ -161,6 +169,7 @@ export class AccountUseCaseImpl implements AccountUseCase {
     const user = await this._userRepository.findById(userId);
 
     if (!user) {
+      this.#logger.debug(`User not found for email: ${email}`);
       throw new Error(ErrorCodes.USER_OR_PASSWORD_INVALID);
     }
 
