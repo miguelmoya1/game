@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { FastifyRequest } from 'fastify';
-import { User } from '../../../domain/entities';
+import { UserEntity } from '../../../domain/entities';
 import { IS_PUBLIC_KEY } from '../../decorators/impl/is-public';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const payload = this._jwtService.verify<User>(token);
+      const payload = this._jwtService.verify<UserEntity>(token);
       request.user = payload;
     } catch {
       return false;

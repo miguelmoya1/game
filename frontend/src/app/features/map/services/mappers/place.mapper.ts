@@ -1,4 +1,4 @@
-import { Place } from '@game/shared/models/place.entity';
+import { Place } from '@game/shared/models/impl/place.entity';
 import { PlaceDto } from '../dtos/place.dto';
 
 function isPlaceDto(obj: unknown): obj is PlaceDto {

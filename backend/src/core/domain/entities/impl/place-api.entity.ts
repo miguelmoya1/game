@@ -1,6 +1,7 @@
-import { PlaceCategory } from '@prisma/client';
+import { PlaceCategory } from '../../enums';
+import { PlaceApi } from '../../types';
 
-export class PlaceApi {
+export class PlaceApiEntity implements PlaceApi {
   declare public readonly apiId: string;
   declare public readonly name: string;
   declare public readonly lat: number;
@@ -9,17 +10,17 @@ export class PlaceApi {
   declare public readonly randomItemId: string;
   declare public readonly categories: PlaceCategory[];
 
-  constructor(
-    account: Pick<
-      PlaceApi,
-      'apiId' | 'name' | 'lat' | 'lng' | 'osmTags' | 'categories'
-    >,
-  ) {
-    this.apiId = account.apiId;
-    this.name = account.name;
-    this.lat = account.lat;
-    this.lng = account.lng;
-    this.osmTags = account.osmTags;
-    this.categories = account.categories;
+  private constructor(place: PlaceApi) {
+    this.apiId = place.apiId;
+    this.name = place.name;
+    this.lat = place.lat;
+    this.lng = place.lng;
+    this.osmTags = place.osmTags;
+    this.randomItemId = place.randomItemId;
+    this.categories = place.categories;
+  }
+
+  public static create(place: PlaceApi) {
+    return new PlaceApiEntity(place);
   }
 }

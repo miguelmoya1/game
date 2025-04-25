@@ -86,8 +86,8 @@ model Place {
   lat            Float // Latitude
   lng            Float // Longitude
   osmTags        Json? // Raw OpenStreetMap tags stored as JSON
-  currentItemId  String? // ID of the Item currently available this month
-  currentItem    Item?                     @relation("CurrentItem", fields: [currentItemId], references: [id], onDelete: SetNull) // Relation to the current monthly item
+  currentItemId  String
+  currentItem    Item                      @relation("CurrentItem", fields: [currentItemId], references: [id])
   collectionLogs PlayerItemCollectionLog[] // Logs of players collecting items from this place
   categories     PlaceCategory[] // Gameplay categories associated with this place
   createdAt      DateTime                  @default(now())

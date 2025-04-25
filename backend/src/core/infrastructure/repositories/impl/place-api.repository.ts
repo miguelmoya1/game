@@ -4,7 +4,7 @@ import {
   DATABASE_SERVICE,
   DatabaseService,
 } from '../../../application/services/database/database.service.contract';
-import { PlaceApi } from '../../../domain/entities';
+import { PlaceApiEntity } from '../../../domain/entities';
 import { PlaceApiRepository } from '../contracts/place-api.repository.contract';
 
 interface OverpassElement {
@@ -246,13 +246,14 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
           continue;
         }
 
-        const placeApi = new PlaceApi({
+        const placeApi = PlaceApiEntity.create({
           apiId: apiId.toString(),
           name,
           lat,
           lng,
           osmTags: element.tags,
           categories,
+          randomItemId,
         });
 
         try {
@@ -264,7 +265,7 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
               lng: placeApi.lng,
               osmTags: placeApi.osmTags,
               categories: placeApi.categories,
-              currentItemId: randomItemId,
+              currentItemId: placeApi.randomItemId,
             },
             create: {
               apiId: placeApi.apiId,
@@ -273,7 +274,7 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
               lng: placeApi.lng,
               osmTags: placeApi.osmTags,
               categories: placeApi.categories,
-              currentItemId: randomItemId,
+              currentItemId: placeApi.randomItemId,
             },
           });
 

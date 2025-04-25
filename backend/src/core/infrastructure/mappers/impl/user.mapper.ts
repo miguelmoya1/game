@@ -1,17 +1,16 @@
 import { User as UserDb } from '@prisma/client';
-import { UserBuilder } from '../../../domain/builders/impl/user.builder';
-import { User } from '../../../domain/entities/impl/user.entity';
+import { UserEntity } from '../../../domain/entities';
 
-export const userToEntity = (user: UserDb): User => {
-  return new UserBuilder()
-    .withId(user.id)
-    .withName(user.name)
-    .withSurname(user.surname)
-    .withNickname(user.nickname)
-    .withLanguage(user.language)
-    .withRole(user.role)
-    .withCreatedAt(user.createdAt)
-    .withUpdatedAt(user.updatedAt)
-    .withDeletedAt(user.deletedAt)
-    .build();
+export const userToEntity = (user: UserDb): UserEntity => {
+  return UserEntity.create({
+    id: user.id,
+    name: user.name,
+    surname: user.surname,
+    nickname: user.nickname,
+    role: user.role,
+    language: user.language,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+    deletedAt: user.deletedAt,
+  });
 };

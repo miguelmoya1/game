@@ -1,4 +1,4 @@
-import { Account } from '../../../domain/entities/impl/account.entity';
+import { AccountEntity } from '../../../domain/entities';
 import { CreateAccountDto } from '../../dto';
 
 type CreateParams = {
@@ -7,16 +7,19 @@ type CreateParams = {
 };
 
 export interface AccountRepository {
-  getOneByProviderEmail(email: string): Promise<Account | null>;
-  getById(accountId: string): Promise<Account | null>;
+  getOneByProviderEmail(email: string): Promise<AccountEntity | null>;
+  getById(accountId: string): Promise<AccountEntity | null>;
   create(
     registerDto: CreateAccountDto,
     params: CreateParams,
-  ): Promise<Account | null>;
-  confirm(accountId: string): Promise<Account | null>;
-  forgotPassword(email: string, hash: string): Promise<Account | null>;
-  changePassword(accountId: string, password: string): Promise<Account | null>;
-  findByHash(hashForPasswordReset: string): Promise<Account | null>;
+  ): Promise<AccountEntity | null>;
+  confirm(accountId: string): Promise<AccountEntity | null>;
+  forgotPassword(email: string, hash: string): Promise<AccountEntity | null>;
+  changePassword(
+    accountId: string,
+    password: string,
+  ): Promise<AccountEntity | null>;
+  findByHash(hashForPasswordReset: string): Promise<AccountEntity | null>;
 }
 
 export const ACCOUNT_REPOSITORY = Symbol('ACCOUNT_REPOSITORY');

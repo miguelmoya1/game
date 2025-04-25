@@ -1,6 +1,7 @@
-import { AccountProvider } from '@prisma/client';
+import { AccountProvider } from '../../enums/impl/account-provider.enum';
+import { Account } from '../../types';
 
-export class Account {
+export class AccountEntity implements Account {
   public readonly id: string;
   public readonly userId: string;
   public readonly provider: AccountProvider;
@@ -18,24 +19,7 @@ export class Account {
   public readonly updatedAt: Date;
   public readonly deletedAt: Date | null;
 
-  constructor(
-    account: Pick<
-      Account,
-      | 'id'
-      | 'userId'
-      | 'provider'
-      | 'providerId'
-      | 'email'
-      | 'password'
-      | 'isConfirmed'
-      | 'isPrimary'
-      | 'hashForPasswordReset'
-      | 'hashExpiredAt'
-      | 'createdAt'
-      | 'updatedAt'
-      | 'deletedAt'
-    >,
-  ) {
+  private constructor(account: Account) {
     this.id = account.id;
     this.userId = account.userId;
     this.provider = account.provider;
@@ -52,5 +36,9 @@ export class Account {
     this.createdAt = account.createdAt;
     this.updatedAt = account.updatedAt;
     this.deletedAt = account.deletedAt;
+  }
+
+  public static create(account: Account) {
+    return new AccountEntity(account);
   }
 }

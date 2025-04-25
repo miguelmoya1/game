@@ -1,0 +1,17 @@
+import { PlaceList } from '../../types';
+
+export class PlaceListEntity implements PlaceList {
+  public readonly id: string;
+  public readonly lat: number;
+  public readonly lng: number;
+
+  private constructor(placeList: PlaceList) {
+    this.id = placeList.id;
+    this.lat = placeList.lat;
+    this.lng = placeList.lng;
+  }
+
+  public static create(placeList: PlaceList) {
+    return new PlaceListEntity(placeList);
+  }
+}

@@ -1,20 +1,17 @@
 import { Item as ItemDb } from '@prisma/client';
-import { ItemBuilder } from '../../../domain/builders';
-import { Item } from '../../../domain/entities/impl/item.entity';
+import { ItemEntity } from '../../../domain/entities';
 
-export const itemToEntity = (item: ItemDb): Item => {
-  return new ItemBuilder()
-    .withId(item.id)
+export const itemToEntity = (item: ItemDb): ItemEntity => {
+  return ItemEntity.create({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    itemType: item.itemType,
+    useEffect: item.useEffect,
+    rank: item.rank,
+    spawnCategories: item.spawnCategories,
 
-    .withName(item.name)
-    .withDescription(item.description)
-    .withItemType(item.itemType)
-    .withEffect(item.useEffect)
-    .withRank(item.rank)
-    .withSpawnCategories(item.spawnCategories)
-
-    .withCreatedAt(item.createdAt)
-    .withUpdatedAt(item.updatedAt)
-
-    .build();
+    createdAt: item.createdAt,
+    updatedAt: item.updatedAt,
+  });
 };

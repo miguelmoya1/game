@@ -3,7 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { UpdateUserCommand } from 'src/core/application/commands';
 import { UpdateUserDto } from 'src/core/infrastructure/dto';
 import { GetUserByIdQuery } from '../../core/application/queries';
-import { User } from '../../core/domain/entities/impl/user.entity';
+import { UserEntity } from '../../core/domain/entities/impl/user.entity';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
 
 @Controller('users')
@@ -14,7 +14,7 @@ export class UsersController {
   ) {}
 
   @Get('me')
-  getUserLogged(@AuthenticatedUser() user: User) {
+  getUserLogged(@AuthenticatedUser() user: UserEntity) {
     return this._queryBus.execute(new GetUserByIdQuery(user.id));
   }
 
@@ -27,7 +27,7 @@ export class UsersController {
   updateUser(
     @Param('userId') userId: string,
     @Body() updateUserDto: UpdateUserDto,
-    @AuthenticatedUser() user: User,
+    @AuthenticatedUser() user: UserEntity,
   ) {
     return this._commandBus.execute(
       new UpdateUserCommand(updateUserDto, userId, user),

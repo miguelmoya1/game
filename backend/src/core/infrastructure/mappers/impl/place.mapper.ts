@@ -1,22 +1,22 @@
-import { Place as PlaceDb } from '@prisma/client';
-import { PlaceBuilder } from '../../../domain/builders/impl/place.builder';
-import { Place } from '../../../domain/entities/impl/place.entity';
+import { Item as ItemDb, Place as PlaceDb } from '@prisma/client';
+import { PlaceEntity } from '../../../domain/entities';
+import { itemToEntity } from './item.mapper';
 
-export const placeToEntity = (place: PlaceDb): Place => {
-  return new PlaceBuilder()
-    .withId(place.id)
-
-    .withApiId(place.apiId)
-    .withName(place.name)
-    .withLat(place.lat)
-    .withLng(place.lng)
-    .withOsmTags(place.osmTags as Record<string, string> | null)
-    .withCategories(place.categories)
-    .withCurrentItemId(place.currentItemId)
-
-    .withCreatedAt(place.createdAt)
-    .withUpdatedAt(place.updatedAt)
-    .withDeletedAt(place.deletedAt)
-
-    .build();
+export const placeToEntity = (
+  place: PlaceDb & { currentItem: ItemDb },
+): PlaceEntity => {
+  return PlaceEntity.create({
+    id: place.id,
+    apiId: place.apiId,
+    name: place.name,
+    lat: place.lat,
+    lng: place.lng,
+    osmTags: place.osmTags as Record<string, string> | null,
+    categories: place.categories,
+    currentItemId: place.currentItemId,
+    currentItem: itemToEntity(place.currentItem),
+    createdAt: place.createdAt,
+    updatedAt: place.updatedAt,
+    deletedAt: place.deletedAt,
+  });
 };

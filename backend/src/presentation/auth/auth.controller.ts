@@ -7,7 +7,7 @@ import {
   RegisterCommand,
 } from '../../core/application/commands';
 import { RehydrateQuery } from '../../core/application/queries';
-import { User } from '../../core/domain/entities';
+import { UserEntity } from '../../core/domain/entities';
 import {
   AuthenticatedUser,
   IsPublic,
@@ -44,7 +44,7 @@ export class AuthController {
   }
 
   @Get('rehydrate')
-  public async rehydrate(@AuthenticatedUser() user: User) {
+  public async rehydrate(@AuthenticatedUser() user: UserEntity) {
     const query = new RehydrateQuery(user);
 
     const token = await this._queryBus.execute<RehydrateQuery, string>(query);

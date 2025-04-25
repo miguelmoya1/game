@@ -1,6 +1,7 @@
-import { UserRole } from '@prisma/client';
+import { UserRole } from '../../enums/impl/user-role.enum';
+import { User } from '../../types';
 
-export class User {
+export class UserEntity implements User {
   public readonly id: string;
 
   public readonly name: string;
@@ -13,26 +14,21 @@ export class User {
   public readonly updatedAt: Date;
   public readonly deletedAt: Date | null;
 
-  constructor(
-    user: Pick<
-      User,
-      | 'id'
-      | 'name'
-      | 'surname'
-      | 'nickname'
-      | 'language'
-      | 'role'
-      | 'createdAt'
-      | 'updatedAt'
-      | 'deletedAt'
-    >,
-  ) {
+  public checkOwnership(userId: string) {
+    return this.id === userId;
+  }
+
+  public isAdmin() {
+    return this.role === UserRole.ADMIN;
+  }
+
+  private constructor(user: User) {
     this.id = user.id;
+
     this.name = user.name;
     this.surname = user.surname;
     this.nickname = user.nickname;
     this.language = user.language;
-
     this.role = user.role;
 
     this.createdAt = user.createdAt;
@@ -40,11 +36,7 @@ export class User {
     this.deletedAt = user.deletedAt;
   }
 
-  public checkOwnership(userId: string) {
-    return this.id === userId;
-  }
-
-  public isAdmin() {
-    return this.role === UserRole.ADMIN;
+  public static create(user: User) {
+    return new UserEntity(user);
   }
 }

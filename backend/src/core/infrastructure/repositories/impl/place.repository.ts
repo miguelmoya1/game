@@ -3,7 +3,7 @@ import {
   DATABASE_SERVICE,
   DatabaseService,
 } from '../../../application/services/database/database.service.contract';
-import { placeToEntity } from '../../mappers';
+import { placeListToEntity, placeToEntity } from '../../mappers';
 import { PlaceRepository } from '../contracts/place.repository.contract';
 
 @Injectable()
@@ -16,6 +16,9 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     const result = await this.databaseService.place.findUnique({
       where: {
         id,
+      },
+      include: {
+        currentItem: true,
       },
     });
 
@@ -53,12 +56,15 @@ export class PlaceRepositoryImpl implements PlaceRepository {
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        currentItem: true,
+      },
     });
 
     if (!result) {
       return [];
     }
 
-    return result.map(placeToEntity);
+    return result.map(placeListToEntity);
   }
 }

@@ -1,12 +1,12 @@
-import { User } from '../../../domain/entities';
+import { UserEntity } from '../../../domain/entities';
 import { UpdateUserDto } from '../../../infrastructure/dto';
 
 export interface UserUseCase {
-  getById(userId: string): Promise<User | null>;
+  getById(userId: string): Promise<UserEntity | null>;
   update(
     updateUserDto: UpdateUserDto,
     userId: string,
-    user: User,
+    user: UserEntity,
   ): Promise<boolean>;
 }
 

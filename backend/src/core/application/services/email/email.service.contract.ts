@@ -1,15 +1,14 @@
 import type { CreateEmailResponse } from 'resend';
-import { Account } from '../../../domain/entities/impl/account.entity';
-import { User } from '../../../domain/entities/impl/user.entity';
+import { AccountEntity, UserEntity } from '../../../domain/entities';
 
 export interface EmailService {
   sendConfirmationEmail(
-    account: Account,
-    user: User,
+    account: AccountEntity,
+    user: UserEntity,
   ): Promise<CreateEmailResponse>;
   sendPasswordResetEmail(
-    account: Account,
-    user: User,
+    account: AccountEntity,
+    user: UserEntity,
   ): Promise<CreateEmailResponse>;
 }
 

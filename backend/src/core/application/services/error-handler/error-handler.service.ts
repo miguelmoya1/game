@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { ErrorCodes } from '../../../domain/enums/error-codes.enum';
+import { ErrorCodes } from '../../../domain/enums/impl/error-codes.enums';
 import { ErrorHandlerService } from './error-handler.service.contract';
 
 @Injectable()

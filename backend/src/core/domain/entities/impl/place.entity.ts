@@ -1,6 +1,7 @@
-import { PlaceCategory } from '@prisma/client';
+import { PlaceCategory } from '../../enums';
+import { Item, Place } from '../../types';
 
-export class Place {
+export class PlaceEntity implements Place {
   public readonly id: string;
   public readonly apiId: string;
   public readonly name: string;
@@ -8,41 +9,30 @@ export class Place {
   public readonly lng: number;
   public readonly osmTags: Record<string, string> | null;
   public readonly categories: PlaceCategory[];
-  public readonly currentItemId: string | null;
+  public readonly currentItemId: string;
+  public readonly currentItem: Item;
 
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
   public readonly deletedAt: Date | null;
 
-  constructor(
-    account: Pick<
-      Place,
-      | 'id'
-      | 'apiId'
-      | 'name'
-      | 'lat'
-      | 'lng'
-      | 'osmTags'
-      | 'categories'
-      | 'currentItemId'
-      | 'createdAt'
-      | 'updatedAt'
-      | 'deletedAt'
-    >,
-  ) {
-    this.id = account.id;
-    this.apiId = account.apiId;
+  private constructor(place: Place) {
+    this.id = place.id;
+    this.apiId = place.apiId;
+    this.name = place.name;
+    this.lat = place.lat;
+    this.lng = place.lng;
+    this.osmTags = place.osmTags;
+    this.categories = place.categories;
+    this.currentItemId = place.currentItemId;
+    this.currentItem = place.currentItem;
 
-    this.name = account.name;
-    this.lat = account.lat;
-    this.lng = account.lng;
+    this.createdAt = place.createdAt;
+    this.updatedAt = place.updatedAt;
+    this.deletedAt = place.deletedAt;
+  }
 
-    this.osmTags = account.osmTags;
-    this.categories = account.categories;
-    this.currentItemId = account.currentItemId;
-
-    this.createdAt = account.createdAt;
-    this.updatedAt = account.updatedAt;
-    this.deletedAt = account.deletedAt;
+  public static create(place: Place) {
+    return new PlaceEntity(place);
   }
 }

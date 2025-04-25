@@ -1,8 +1,8 @@
-import { Place } from '../../../domain/entities';
+import { PlaceEntity, PlaceListEntity } from '../../../domain/entities';
 
 export interface PlaceRepository {
-  get(latitude: number, longitude: number): Promise<Place[]>;
-  findById(id: string): Promise<Place | null>;
+  get(latitude: number, longitude: number): Promise<PlaceListEntity[]>;
+  findById(id: string): Promise<PlaceEntity | null>;
 }
 
 export const PLACE_REPOSITORY = Symbol('PLACE_REPOSITORY');

@@ -2,8 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Resend } from 'resend';
-import { Account } from '../../../domain/entities/impl/account.entity';
-import { User } from '../../../domain/entities/impl/user.entity';
+import { AccountEntity, UserEntity } from '../../../domain/entities';
 import {
   TRANSLATE_SERVICE,
   TranslateService,
@@ -26,7 +25,10 @@ export class EmailServiceImpl implements EmailService {
     private readonly _translateService: TranslateService,
   ) {}
 
-  public sendConfirmationEmail = async (account: Account, user: User) => {
+  public sendConfirmationEmail = async (
+    account: AccountEntity,
+    user: UserEntity,
+  ) => {
     const confirmationLink = `${process.env.URL_FRONTEND}/auth/confirm/${account.id}`;
 
     const language = user.language || 'en';
@@ -43,7 +45,10 @@ export class EmailServiceImpl implements EmailService {
     });
   };
 
-  public sendPasswordResetEmail = async (account: Account, user: User) => {
+  public sendPasswordResetEmail = async (
+    account: AccountEntity,
+    user: UserEntity,
+  ) => {
     const resetLink = `${process.env.URL_FRONTEND}/auth/reset-password/${account.hashForPasswordReset}`;
 
     const language = user.language || 'en';

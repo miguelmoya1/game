@@ -17,7 +17,7 @@ export const notLoggedGuard: CanMatchFn = (route, segments) => {
     filter((value) => value.status !== ResourceStatus.Idle && value.status !== ResourceStatus.Loading),
     tap((res) => {
       if (res.value) {
-        router.navigate(['/projects']);
+        router.navigate(['/map']);
       }
     }),
     map(() => true),

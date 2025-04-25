@@ -1,7 +1,7 @@
 import { httpResource } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { GeolocationService } from '@game/core/services/geolocation.service';
-import { mapPlaceArrayToEntityArray } from './mappers/place.mapper';
+import { mapPlaceListArrayToEntityArray } from './mappers/place-list.mapper';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ export class PlaceService {
 
       return `places?lat=${latitude}&lng=${longitude}`;
     },
-    { parse: mapPlaceArrayToEntityArray, defaultValue: [] },
+    { parse: mapPlaceListArrayToEntityArray, defaultValue: [] },
   );
 
   public readonly all = this.#all.asReadonly();

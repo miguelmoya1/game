@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Place } from '@game/shared/models/place.entity';
 import { Marker } from 'maplibre-gl';
+import { PlaceList } from '../../../shared/types/impl/place-list.type';
 import { MapCoreService } from './map-core.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class MapPlaceService {
 
   public readonly markedSelected = signal<Marker | null>(null);
 
-  public addPlaces(places: Place[]) {
+  public addPlaces(places: PlaceList[]) {
     const placesIds = new Set(places.map((place) => place.id));
 
     const markersToRemove: string[] = [];
@@ -40,8 +40,9 @@ export class MapPlaceService {
     });
   }
 
-  #createElementMarker(place: Place): HTMLElement {
+  #createElementMarker(place: PlaceList): HTMLElement {
     const element = document.createElement('div');
+    const color = 'green'; // Default color if no category is found
     // Basic styles applied directly, no external CSS class needed for core function
     element.style.width = '32px';
     element.style.height = '42px';
@@ -59,13 +60,12 @@ export class MapPlaceService {
         <g filter="url(#poi-diamond-shadow-${uniqueIdSuffix})">
           <path id="marker-body-${uniqueIdSuffix}"
             d="M16 40 C16 40 4 24 4 16 C4 8 9 2 16 2 C23 2 28 8 28 16 C28 24 16 40 16 40 Z"
-            fill="green" stroke="#424242" stroke-width="0.5">
+            fill="${color}" stroke="#424242" stroke-width="0.5">
             <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="-5 16 40" to="5 16 40" dur="20s" repeatCount="indefinite" values="-5 16 40; 0 16 40; 5 16 40; 0 16 40; -5 16 40" keyTimes="0; 0.25; 0.5; 0.75; 1" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1"/>
             </path>
           </g>
         </svg>
       `;
-    // fill="${poi.color}" stroke="#424242" stroke-width="0.5">
     element.innerHTML = svgString;
 
     element.addEventListener('click', (e) => {

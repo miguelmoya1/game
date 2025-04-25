@@ -1,10 +1,10 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
-import { User } from '../../../domain/entities';
+import { UserEntity } from '../../../domain/entities';
 
 declare module 'fastify' {
   interface FastifyRequest {
-    user: User;
+    user: UserEntity;
   }
 }
 
@@ -15,7 +15,7 @@ export const AuthenticatedUser = createParamDecorator(
     const user = request.user;
 
     if (data && user && data in user) {
-      return user[data as keyof User];
+      return user[data as keyof UserEntity];
     }
 
     return user;

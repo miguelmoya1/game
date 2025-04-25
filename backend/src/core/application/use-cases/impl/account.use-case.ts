@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AccountProvider } from '@prisma/client';
 import { createHash } from 'crypto';
-import { User } from '../../../domain/entities';
+import { UserEntity } from '../../../domain/entities';
 import { ErrorCodes } from '../../../domain/enums';
 import { CreateAccountDto, CreateUserDto } from '../../../infrastructure/dto';
 import {
@@ -63,7 +63,7 @@ export class AccountUseCaseImpl implements AccountUseCase {
     return !!account;
   }
 
-  public rehydrate(user: User) {
+  public rehydrate(user: UserEntity) {
     return this.#generateToken(user);
   }
 
@@ -176,7 +176,7 @@ export class AccountUseCaseImpl implements AccountUseCase {
     return this.#generateToken(user);
   }
 
-  #generateToken(user: User) {
+  #generateToken(user: UserEntity) {
     return Promise.resolve(this._jwtService.sign({ ...user }));
   }
 }

@@ -1,4 +1,4 @@
-import { UserRole } from '@game/shared/enums/user.enum';
+import { UserRole } from '@game/shared/enums/impl/user.enum';
 
 export interface UserDto {
   readonly id: string;

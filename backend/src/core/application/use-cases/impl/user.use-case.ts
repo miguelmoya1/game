@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from '../../../domain/entities';
+import { UserEntity } from '../../../domain/entities';
 import { ErrorCodes } from '../../../domain/enums';
 import { CreateUserDto, UpdateUserDto } from '../../../infrastructure/dto';
 import {
@@ -31,7 +31,7 @@ export class UserUseCaseImpl implements UserUseCase {
   public async update(
     updateUserDto: UpdateUserDto,
     userId: string,
-    user: User,
+    user: UserEntity,
   ) {
     if (!user.isAdmin() || !user.checkOwnership(userId)) {
       throw new Error(ErrorCodes.UNAUTHORIZED);

@@ -1,5 +1,6 @@
-export { Account } from './impl/account.entity';
-export { Item } from './impl/item.entity';
-export { PlaceApi } from './impl/place-api.entity';
-export { Place } from './impl/place.entity';
-export { User } from './impl/user.entity';
+export { AccountEntity } from './impl/account.entity';
+export { ItemEntity } from './impl/item.entity';
+export { PlaceApiEntity } from './impl/place-api.entity';
+export { PlaceListEntity } from './impl/place-list.entity';
+export { PlaceEntity } from './impl/place.entity';
+export { UserEntity } from './impl/user.entity';
