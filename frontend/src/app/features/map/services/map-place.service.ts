@@ -3,6 +3,11 @@ import { Marker } from 'maplibre-gl';
 import { PlaceList } from '../../../shared/types/impl/place-list.type';
 import { MapCoreService } from './map-core.service';
 
+type Selected = {
+  marker: Marker | null;
+  place: PlaceList | null;
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +16,7 @@ export class MapPlaceService {
   readonly #map = this.#mapCoreService.map;
   readonly #markers = new Map<string, Marker>();
 
-  public readonly markedSelected = signal<Marker | null>(null);
+  public readonly markerSelected = signal<Selected | null>(null);
 
   public addPlaces(places: PlaceList[]) {
     const placesIds = new Set(places.map((place) => place.id));
@@ -30,6 +35,7 @@ export class MapPlaceService {
 
     places.forEach((place) => {
       const existingMarker = this.#markers.get(place.id);
+
       if (!existingMarker) {
         const element = this.#createElementMarker(place);
         const marker = new Marker({ element }).setLngLat([place.lng, place.lat]).addTo(this.#map()!);
@@ -73,7 +79,18 @@ export class MapPlaceService {
 
       // Find the marker instance associated with this element/poiId
       const markerInstance = this.#markers.get(place.id);
-      this.markedSelected.set(markerInstance ?? null);
+
+      if (!markerInstance) {
+        this.markerSelected.set(null);
+        return;
+      }
+
+      const selected = {
+        marker: markerInstance ?? null,
+        place: this.markerSelected()?.place === place ? null : place,
+      };
+
+      this.markerSelected.set(selected);
     });
 
     return element;

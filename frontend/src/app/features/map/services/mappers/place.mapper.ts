@@ -1,4 +1,4 @@
-import { Place } from '@game/shared/models/impl/place.entity';
+import { PlaceEntity } from '@game/shared/models/impl/place.entity';
 import { PlaceDto } from '../dtos/place.dto';
 
 function isPlaceDto(obj: unknown): obj is PlaceDto {
@@ -29,7 +29,7 @@ function isPlaceDtoArray(obj: unknown): obj is PlaceDto[] {
   return Array.isArray(obj) && obj.every(isPlaceDto);
 }
 
-export const mapPlaceToEntity = (data: unknown): Place => {
+export const mapPlaceToEntity = (data: unknown) => {
   if (!isPlaceDto(data)) {
     console.error('Invalid data structure for PlaceDto:', data);
     throw new TypeError('Invalid data structure received. Cannot map to Place entity.');
@@ -37,7 +37,7 @@ export const mapPlaceToEntity = (data: unknown): Place => {
   return mapPlace(data);
 };
 
-export const mapPlaceArrayToEntityArray = (data: unknown): Place[] => {
+export const mapPlaceArrayToEntityArray = (data: unknown) => {
   if (!isPlaceDtoArray(data)) {
     console.error('Invalid data structure for PlaceDto array:', data);
     throw new TypeError('Invalid data structure received. Cannot map to Place[] entity array.');
@@ -46,8 +46,8 @@ export const mapPlaceArrayToEntityArray = (data: unknown): Place[] => {
   return data.map(mapPlace);
 };
 
-const mapPlace = (data: PlaceDto): Place => {
-  return new Place({
+const mapPlace = (data: PlaceDto): PlaceEntity => {
+  return PlaceEntity.create({
     id: data.id,
     apiId: data.apiId,
     name: data.name,
@@ -55,7 +55,8 @@ const mapPlace = (data: PlaceDto): Place => {
     lng: data.lng,
     osmTags: data.osmTags,
     categories: data.categories,
-
+    currentItemId: data.currentItemId,
+    currentItem: data.currentItem,
     createdAt: new Date(data.createdAt),
     updatedAt: new Date(data.updatedAt),
     deletedAt: data.deletedAt ? new Date(data.deletedAt) : null,

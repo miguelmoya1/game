@@ -1,5 +1,6 @@
 import { PlaceCategory } from '../../enums';
 import { Place } from '../../types';
+import { ItemEntity } from './item.entity';
 
 export class PlaceEntity implements Place {
   public readonly id: string;
@@ -8,9 +9,9 @@ export class PlaceEntity implements Place {
   public readonly lat: number;
   public readonly lng: number;
   public readonly osmTags: Record<string, string> | null;
-  public readonly categories: PlaceCategory | null;
-  public readonly currentItemId: string | null;
-  public readonly currentItem: string[];
+  public readonly categories: PlaceCategory[] | null;
+  public readonly currentItemId: string;
+  public readonly currentItem: ItemEntity;
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
   public readonly deletedAt: Date | null;

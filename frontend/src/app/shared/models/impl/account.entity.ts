@@ -38,7 +38,7 @@ export class AccountEntity implements Account {
     this.deletedAt = account.deletedAt;
   }
 
-  public static create(account: Account): AccountEntity {
+  public static create(account: Account) {
     return new AccountEntity(account);
   }
 }

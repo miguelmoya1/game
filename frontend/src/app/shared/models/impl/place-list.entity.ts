@@ -11,7 +11,7 @@ export class PlaceListEntity implements PlaceList {
     this.lng = placeList.lng;
   }
 
-  public static create(placeList: PlaceList): PlaceListEntity {
+  public static create(placeList: PlaceList) {
     return new PlaceListEntity(placeList);
   }
 }

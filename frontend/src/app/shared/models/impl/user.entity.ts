@@ -30,7 +30,7 @@ export class UserEntity implements User {
     this.deletedAt = user.deletedAt;
   }
 
-  public static create(user: User): UserEntity {
+  public static create(user: User) {
     return new UserEntity(user);
   }
 }

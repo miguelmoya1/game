@@ -1,3 +1,5 @@
+import { PlaceCategory } from '@game/shared/enums';
+
 export interface PlaceDto {
   id: string;
   apiId: string;
@@ -5,7 +7,10 @@ export interface PlaceDto {
   lat: number;
   lng: number;
   osmTags: Record<string, string> | null;
-  categories: string[];
+  categories: PlaceCategory[];
+  currentItemId: string;
+  // TODO: Update this to the correct type
+  currentItem: any;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

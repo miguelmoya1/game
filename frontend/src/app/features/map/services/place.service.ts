@@ -1,13 +1,19 @@
 import { httpResource } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { GeolocationService } from '@game/core/services/geolocation.service';
 import { mapPlaceListArrayToEntityArray } from './mappers/place-list.mapper';
+import { mapPlaceToEntity } from './mappers/place.mapper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlaceService {
   readonly #geolocationService = inject(GeolocationService);
+  readonly #placeSelected = signal<string | null>(null);
+
+  readonly #place = httpResource(() => (this.#placeSelected() ? `places/${this.#placeSelected()}` : undefined), {
+    parse: mapPlaceToEntity,
+  });
 
   readonly #all = httpResource(
     () => {
@@ -25,4 +31,9 @@ export class PlaceService {
   );
 
   public readonly all = this.#all.asReadonly();
+  public readonly place = this.#place.asReadonly();
+
+  public setPlaceId(id: string | null) {
+    this.#placeSelected.set(id);
+  }
 }
