@@ -19,6 +19,10 @@
   --color-disabled-text-rgb: 170, 170, 170;
   --color-border-disabled: #777;
   --color-border-disabled-rgb: 119, 119, 119;
+
+  --color-info: #ffcccb;
+  --color-info-rgb: 255, 204, 203;
+  --font-size-info: 0.8rem;
 }
 
 html,

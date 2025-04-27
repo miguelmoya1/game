@@ -1,14 +1,14 @@
 import { Directive, effect, ElementRef, inject, input, Renderer2 } from '@angular/core';
 
-export type GameButtonStyle = 'primary' | 'secondary' | 'tertiary' | 'outlined';
+export type ButtonStyle = 'primary' | 'secondary' | 'tertiary' | 'outlined';
 
 @Directive({
   selector: '[gameButton]',
 })
-export class GameButtonDirective {
+export class ButtonDirective {
   readonly #el = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
-  public readonly style = input<GameButtonStyle>('primary');
+  public readonly style = input<ButtonStyle>('primary');
   public readonly disabled = input<boolean>(false);
 
   constructor() {
@@ -41,7 +41,7 @@ export class GameButtonDirective {
     });
   }
 
-  #prepareStyle(style: GameButtonStyle, disabled: boolean) {
+  #prepareStyle(style: ButtonStyle, disabled: boolean) {
     if (disabled) {
       this.#renderer.setStyle(this.#el.nativeElement, 'backgroundColor', 'var(--color-disabled)');
       this.#renderer.setStyle(this.#el.nativeElement, 'color', 'var(--color-disabled-text)');

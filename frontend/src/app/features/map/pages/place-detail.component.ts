@@ -1,14 +1,13 @@
 import { Component, effect, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
-import { GameBorderDirective } from '@game/shared/directives/border.directive';
-import { GameButtonDirective } from '@game/shared/directives/button.directive';
+import { BorderDirective, ButtonDirective, InfoDirective } from '@game/shared/directives';
 import { TranslatePipe } from '@game/shared/pipes/translate.pipe';
 import { PlaceService } from '../services/place.service';
 
 @Component({
   selector: 'game-place-detail',
-  imports: [GameButtonDirective, GameBorderDirective, TranslatePipe],
-  hostDirectives: [GameBorderDirective],
+  imports: [ButtonDirective, BorderDirective, TranslatePipe, InfoDirective],
+  hostDirectives: [BorderDirective],
   templateUrl: './place-detail.component.html',
   styleUrl: './place-detail.component.css',
 })

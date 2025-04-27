@@ -58,6 +58,26 @@ enum Rank {
   INTERNATIONAL
 }
 
+enum Race {
+  HUMAN
+  ELF
+  DWARF
+  ORC
+}
+
+enum SetEffectType {
+  PASSIVE_HEAL_TEAM
+  PASSIVE_HEAL_SELF
+  REVIVE_ONCE
+  IMMUNE_POISON
+}
+
+enum EffectTarget {
+  TEAM
+  ENEMY
+  ALLY
+}
+
 // --- Models ---
 
 model User {
@@ -136,6 +156,29 @@ model Account {
   @@index([userId])
 }
 
+model PlayerSpell {
+  id         String   @id @default(uuid())
+  playerId   String
+  spellId    String
+  acquiredAt DateTime @default(now())
+  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  spell      Spell    @relation(fields: [spellId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, spellId])
+  @@index([playerId])
+  @@index([spellId])
+}
+
+model Spell {
+  id           String        @id @default(uuid())
+  name         String        @unique
+  description  String?
+  race         Race?
+  playerSpells PlayerSpell[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
 model Player {
   id             String                    @id @default(uuid())
   lat            Float // Player's last known latitude
@@ -149,6 +192,8 @@ model Player {
   inventory      PlayerItem[] // Player's item inventory
   collectionLogs PlayerItemCollectionLog[] // Logs of items collected by this player
   stats          Stats[] // Player's base statistics (STR, DEX, etc.)
+  race           Race
+  playerSpells   PlayerSpell[]
 
   @@index([userId])
   @@index([rank])
@@ -210,23 +255,67 @@ model Item {
   currentInPlaces Place[]                   @relation("CurrentItem") // Places currently featuring this item this month
   collectionLogs  PlayerItemCollectionLog[] // Logs related to this item being collected
   playerItems     PlayerItem[] // Instances of this item in player inventories
-  bonuses         ItemStatBonus[] // Stat bonuses provided by this item (if EQUIPPABLE)
+  statBonuses     StatBonus[] // Stat bonuses provided by this item (if EQUIPPABLE)
+  setId           String?
+  set             Set?                      @relation(fields: [setId], references: [id])
   createdAt       DateTime                  @default(now())
   updatedAt       DateTime                  @updatedAt
+  deletedAt       DateTime?
 
   @@index([name])
   @@index([itemType])
   @@index([rank])
   @@index([spawnCategories])
+  @@index([setId])
 }
 
-model ItemStatBonus {
-  id     String    @id @default(uuid())
-  type   StatsType // Which stat is boosted (STR, DEX, etc.)
-  value  Int // The bonus value (e.g., +5, -1)
-  itemId String // Link to the Item providing the bonus
-  item   Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
+model Set {
+  id          String      @id @default(uuid())
+  name        String      @unique
+  description String?
+  items       Item[]
+  setEffects  SetEffect[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
 
-  @@unique([itemId, type]) // Ensures only one bonus entry per stat type per item
+model SetEffect {
+  id          String      @id @default(uuid())
+  setId       String
+  set         Set         @relation(fields: [setId], references: [id], onDelete: Cascade)
+  pieces      Int
+  description String?
+  statBonuses StatBonus[]
+  effects     Effect[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@unique([setId, pieces])
+  @@index([setId])
+}
+
+model Effect {
+  id          String        @id @default(uuid())
+  type        SetEffectType
+  amount      Int
+  target      EffectTarget
+  setEffectId String
+  setEffect   SetEffect     @relation(fields: [setEffectId], references: [id], onDelete: Cascade)
+
+  @@index([setEffectId])
+}
+
+model StatBonus {
+  id          String     @id @default(uuid())
+  type        StatsType // Which stat is boosted (STR, DEX, etc.)
+  value       Int // The bonus value (e.g., +5, -1)
+  itemId      String?
+  item        Item?      @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  setEffectId String?
+  setEffect   SetEffect? @relation(fields: [setEffectId], references: [id], onDelete: Cascade)
+
+  @@unique([itemId, type])
+  @@unique([setEffectId, type])
   @@index([itemId])
+  @@index([setEffectId])
 }

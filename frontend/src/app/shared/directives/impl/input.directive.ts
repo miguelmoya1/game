@@ -3,7 +3,7 @@ import { Directive, ElementRef, inject, Renderer2 } from '@angular/core';
 @Directive({
   selector: '[gameInput]',
 })
-export class GameInputDirective {
+export class InputDirective {
   readonly #el = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
 

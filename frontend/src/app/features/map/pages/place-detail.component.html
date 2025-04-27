@@ -5,6 +5,15 @@
     <h1>{{ place.name }}</h1>
 
     <div class="item">
+      <div class="title">
+        {{ 'CURRENT_ITEM' | translate }}
+
+        <!-- TODO: Change to alreadyClaimed -->
+        @if (place.currentItem) {
+          <span gameInfo> ({{ 'ALREADY_CLAIMED' | translate }}) </span>
+        }
+      </div>
+
       @let item = place.currentItem;
 
       <div gameBorder class="image"></div>

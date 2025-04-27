@@ -1,18 +1,17 @@
 import { Directive, ElementRef, inject, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[gameBorder]',
+  selector: '[gameInfo]',
 })
-export class GameBorderDirective {
+export class InfoDirective {
   readonly #el = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
 
   constructor() {
     const styles: { [key: string]: string } = {
-      border: '1px solid var(--color-border)',
-      borderRadius: '0',
-      boxShadow: '0 0 4px 2px var(--color-border)',
-      padding: '1rem',
+      color: 'var(--color-info)',
+      fontSize: 'var(--font-size-info)',
+      fontFamily: 'italic',
     };
 
     Object.entries(styles).forEach(([prop, value]) => {

@@ -1,15 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { GameButtonDirective } from '@game/shared/directives/button.directive';
-import { GameInputDirective } from '@game/shared/directives/input.directive';
+import { ButtonDirective, InputDirective } from '@game/shared/directives';
+import { AccountProvider } from '@game/shared/enums';
 import { TranslatePipe } from '@game/shared/pipes/translate.pipe';
-import { AccountProvider } from '../../data-access/dto/register.dto';
 import { AUTH_FACADE } from '../../services/auth.facade.contract';
 
 @Component({
   selector: 'game-register',
-  imports: [TranslatePipe, ReactiveFormsModule, GameInputDirective, GameButtonDirective, RouterLink],
+  imports: [TranslatePipe, ReactiveFormsModule, InputDirective, ButtonDirective, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })

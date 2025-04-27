@@ -1,4 +1,4 @@
-import { AccountProvider } from '@prisma/client';
+import { AccountProvider } from '../../enums';
 
 export type Account = {
   readonly id: string;

@@ -1,4 +1,4 @@
-import { ItemType, PlaceCategory, Rank } from '@prisma/client';
+import { ItemType, PlaceCategory, Rank } from '../../enums';
 
 export type Item = {
   readonly id: string;

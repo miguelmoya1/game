@@ -1,6 +1,22 @@
 import { ItemType, PlaceCategory, Rank } from '../../enums';
 import { Item } from '../../types';
 
+export class ItemPermission {
+  public readonly canBeClaimed: boolean;
+  public readonly canBeUsed: boolean;
+  public readonly canBeEquipped: boolean;
+
+  private constructor() {
+    this.canBeClaimed = false;
+    this.canBeUsed = false;
+    this.canBeEquipped = false;
+  }
+
+  public static create() {
+    return new ItemPermission();
+  }
+}
+
 export class ItemEntity implements Item {
   public readonly id: string;
   public readonly name: string;
@@ -11,6 +27,7 @@ export class ItemEntity implements Item {
   public readonly spawnCategories: PlaceCategory[];
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
+  public readonly permission: ItemPermission;
 
   private constructor(item: Item) {
     this.id = item.id;
@@ -22,6 +39,8 @@ export class ItemEntity implements Item {
     this.spawnCategories = item.spawnCategories;
     this.createdAt = item.createdAt;
     this.updatedAt = item.updatedAt;
+
+    this.permission = ItemPermission.create();
   }
 
   public static create(item: Item) {

@@ -1,7 +1,4 @@
-export enum AccountProvider {
-  EMAIL = 'EMAIL',
-  // GOOGLE = 'GOOGLE',
-}
+import { AccountProvider } from '@game/shared/enums';
 
 export type RegisterDto = {
   readonly email: string;
