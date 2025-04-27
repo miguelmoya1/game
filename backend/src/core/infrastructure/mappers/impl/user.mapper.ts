@@ -1,7 +1,7 @@
 import { User as UserDb } from '@prisma/client';
 import { UserEntity } from '../../../domain/entities';
 
-export const userToEntity = (user: UserDb): UserEntity => {
+export const userToEntity = (user: UserDb) => {
   return UserEntity.create({
     id: user.id,
     name: user.name,

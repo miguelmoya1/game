@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
 
     try {
       const payload = this._jwtService.verify<UserEntity>(token);
-      request.user = payload;
+      request.user = UserEntity.create(payload);
     } catch {
       return false;
     }

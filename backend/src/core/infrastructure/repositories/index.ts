@@ -33,3 +33,9 @@ export {
   PlaceApiHistoryRepository,
 } from './contracts/place-api-history.repository.contract';
 export { PlaceApiHistoryRepositoryImpl } from './impl/place-api-history.repository';
+
+export {
+  PLAYER_ITEM_COLLECTION_LOG_REPOSITORY,
+  PlayerItemCollectionLogRepository,
+} from './contracts/player-item-collection-log.repository.contract';
+export { PlayerItemCollectionLogRepositoryImpl } from './impl/player-item-collection-log.repository';

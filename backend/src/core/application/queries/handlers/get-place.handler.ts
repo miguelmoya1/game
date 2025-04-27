@@ -10,8 +10,8 @@ export class GetPlaceHandler implements IQueryHandler<GetPlaceQuery> {
   ) {}
 
   async execute(query: GetPlaceQuery) {
-    const { id } = query;
+    const { id, user } = query;
 
-    return await this._placeUseCase.getById(id);
+    return await this._placeUseCase.getById(id, user);
   }
 }

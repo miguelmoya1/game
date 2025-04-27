@@ -40,7 +40,7 @@
   max-height: 650px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: minmax(54px, auto);
+  grid-template-rows: auto;
 
   grid-template-areas:
     'title title'
@@ -63,7 +63,7 @@
     grid-area: item;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(54px, auto);
+    grid-auto-rows: auto;
     padding: 4px;
 
     grid-template-areas:
@@ -100,10 +100,8 @@
     .actions {
       grid-area: actions;
 
-      button {
-        width: 100%;
-        height: 100%;
-      }
+      display: flex;
+      justify-content: flex-end;
     }
   }
 }

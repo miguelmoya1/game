@@ -10,8 +10,8 @@ export class GetPlacesHandler implements IQueryHandler<GetPlacesQuery> {
   ) {}
 
   async execute(query: GetPlacesQuery) {
-    const { lat, lng } = query;
+    const { lat, lng, user } = query;
 
-    return await this._placeUseCase.getAll(lat, lng);
+    return await this._placeUseCase.getAll(lat, lng, user);
   }
 }

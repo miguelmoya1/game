@@ -1,7 +1,7 @@
 import { Account as AccountDb } from '@prisma/client';
 import { AccountEntity } from '../../../domain/entities';
 
-export const accountToEntity = (account: AccountDb): AccountEntity => {
+export const accountToEntity = (account: AccountDb) => {
   return AccountEntity.create({
     id: account.id,
     userId: account.userId,

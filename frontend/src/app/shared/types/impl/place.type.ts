@@ -7,11 +7,18 @@ export type Place = {
   readonly name: string;
   readonly lat: number;
   readonly lng: number;
-  readonly osmTags: Record<string, string> | null;
   readonly categories: PlaceCategory[] | null;
   readonly currentItemId: string;
   readonly currentItem: Item;
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly deletedAt: Date | null;
+
+  readonly permissions: {
+    readonly alreadyClaimed: boolean;
+    readonly canBeClaimed: boolean;
+    readonly canCreate: boolean;
+    readonly canDelete: boolean;
+    readonly canEdit: boolean;
+  };
 };

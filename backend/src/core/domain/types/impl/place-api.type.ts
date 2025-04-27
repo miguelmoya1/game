@@ -1,4 +1,4 @@
-import { PlaceCategory } from '@prisma/client';
+import { PlaceCategory } from '../../enums';
 
 export type PlaceApi = {
   readonly apiId: string;

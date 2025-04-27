@@ -1,4 +1,5 @@
 import { PlaceCategory } from '@game/shared/enums';
+import { Item } from '../../../../shared/types';
 
 export interface PlaceDto {
   id: string;
@@ -6,11 +7,17 @@ export interface PlaceDto {
   name: string;
   lat: number;
   lng: number;
-  osmTags: Record<string, string> | null;
   categories: PlaceCategory[];
   currentItemId: string;
-  // TODO: Update this to the correct type
-  currentItem: any;
+  permissions: {
+    alreadyClaimed: boolean;
+    canBeClaimed: boolean;
+    canCreate: boolean;
+    canDelete: boolean;
+    canEdit: boolean;
+  };
+  // TODO: Add itemDto type
+  currentItem: Item;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

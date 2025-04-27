@@ -5,14 +5,11 @@
     <h1>{{ place.name }}</h1>
 
     <div class="item">
-      <div class="title">
-        {{ 'CURRENT_ITEM' | translate }}
-
-        <!-- TODO: Change to alreadyClaimed -->
-        @if (place.currentItem) {
+      @if (place.permissions.alreadyClaimed) {
+        <div class="title">
           <span gameInfo> ({{ 'ALREADY_CLAIMED' | translate }}) </span>
-        }
-      </div>
+        </div>
+      }
 
       @let item = place.currentItem;
 
@@ -22,7 +19,9 @@
       <div gameBorder class="description">{{ item.description }}</div>
 
       <div class="actions">
-        <button gameButton color="primary">{{ 'CLAIM' | translate }}</button>
+        <button [disabled]="!place.permissions.canBeClaimed" gameButton color="primary">
+          {{ 'CLAIM' | translate }}
+        </button>
       </div>
     </div>
   </div>

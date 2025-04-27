@@ -1,4 +1,4 @@
-import { PlaceCategory } from '@prisma/client';
+import { PlaceCategory } from '../../enums';
 import { Item } from './item.type';
 
 export type Place = {

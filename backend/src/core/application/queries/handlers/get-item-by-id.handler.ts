@@ -10,8 +10,8 @@ export class GetItemByIdHandler implements IQueryHandler<GetItemByIdQuery> {
   ) {}
 
   async execute(query: GetItemByIdQuery) {
-    const { itemId } = query;
+    const { itemId, user } = query;
 
-    return await this._placeUseCase.getById(itemId);
+    return await this._placeUseCase.getById(itemId, user);
   }
 }

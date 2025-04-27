@@ -212,7 +212,7 @@ model Stats {
 
 model PlayerItemCollectionLog {
   id                  String   @id @default(uuid())
-  collectionMonthYear String // Month and year of collection (e.g., "2025-04") used for the unique constraint
+  collectionMonthYear String // Month and year of collection (e.g., "04-2025") used for the unique constraint
   collectedAt         DateTime @default(now()) // Precise time of collection
   playerId            String // Link to the Player
   player              Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)

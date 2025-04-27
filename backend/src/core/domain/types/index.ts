@@ -3,4 +3,5 @@ export { Item } from './impl/item.type';
 export { PlaceApi } from './impl/place-api.type';
 export { PlaceList } from './impl/place-list.type';
 export { Place } from './impl/place.type';
+export { PlayerItemCollectionLog } from './impl/player-item-collection-log.type';
 export { User } from './impl/user.type';

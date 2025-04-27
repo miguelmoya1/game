@@ -14,7 +14,6 @@ function isPlaceDto(obj: unknown): obj is PlaceDto {
     typeof dto['name'] === 'string' &&
     typeof dto['lat'] === 'number' &&
     typeof dto['lng'] === 'number' &&
-    (typeof dto['osmTags'] === 'object' || dto['osmTags'] === null) &&
     Array.isArray(dto['categories']) &&
     dto['categories'].every((cat) => typeof cat === 'string') &&
     typeof dto['createdAt'] === 'string' &&
@@ -53,12 +52,12 @@ const mapPlace = (data: PlaceDto): PlaceEntity => {
     name: data.name,
     lat: data.lat,
     lng: data.lng,
-    osmTags: data.osmTags,
     categories: data.categories,
     currentItemId: data.currentItemId,
     currentItem: data.currentItem,
     createdAt: new Date(data.createdAt),
     updatedAt: new Date(data.updatedAt),
+    permissions: data.permissions,
     deletedAt: data.deletedAt ? new Date(data.deletedAt) : null,
   });
 };

@@ -1,4 +1,4 @@
-import { UserRole } from '../../enums/impl/user-role.enum';
+import { UserRole } from '../../enums';
 
 export type User = {
   readonly id: string;

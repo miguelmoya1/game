@@ -2,9 +2,7 @@ import { Item as ItemDb, Place as PlaceDb } from '@prisma/client';
 import { PlaceEntity } from '../../../domain/entities';
 import { itemToEntity } from './item.mapper';
 
-export const placeToEntity = (
-  place: PlaceDb & { currentItem: ItemDb },
-): PlaceEntity => {
+export const placeToEntity = (place: PlaceDb & { currentItem: ItemDb }) => {
   return PlaceEntity.create({
     id: place.id,
     apiId: place.apiId,

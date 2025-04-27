@@ -8,13 +8,19 @@ export class PlaceEntity implements Place {
   public readonly name: string;
   public readonly lat: number;
   public readonly lng: number;
-  public readonly osmTags: Record<string, string> | null;
   public readonly categories: PlaceCategory[] | null;
   public readonly currentItemId: string;
   public readonly currentItem: ItemEntity;
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
   public readonly deletedAt: Date | null;
+  public readonly permissions: {
+    readonly alreadyClaimed: boolean;
+    readonly canBeClaimed: boolean;
+    readonly canCreate: boolean;
+    readonly canDelete: boolean;
+    readonly canEdit: boolean;
+  };
 
   private constructor(place: Place) {
     this.id = place.id;
@@ -22,10 +28,10 @@ export class PlaceEntity implements Place {
     this.name = place.name;
     this.lat = place.lat;
     this.lng = place.lng;
-    this.osmTags = place.osmTags;
     this.categories = place.categories;
     this.currentItemId = place.currentItemId;
     this.currentItem = place.currentItem;
+    this.permissions = place.permissions;
 
     this.createdAt = place.createdAt;
     this.updatedAt = place.updatedAt;
