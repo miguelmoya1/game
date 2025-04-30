@@ -17,6 +17,10 @@ export class ItemRepositoryImpl implements ItemRepository {
       where: {
         id,
       },
+      include: {
+        statBonuses: true,
+        set: true,
+      },
     });
 
     if (!result) {

@@ -1,5 +1,6 @@
 import { ItemType, PlaceCategory, Rank } from '../../enums';
 import { Item } from '../../types';
+import { StatBonusEntity } from './stat-bonus.entity';
 
 export class ItemEntity implements Item {
   public readonly id: string;
@@ -9,6 +10,9 @@ export class ItemEntity implements Item {
   public readonly useEffect: string | null;
   public readonly rank: Rank | null;
   public readonly spawnCategories: PlaceCategory[];
+
+  public readonly statBonuses?: StatBonusEntity[] | null;
+
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
 
@@ -20,6 +24,9 @@ export class ItemEntity implements Item {
     this.useEffect = item.useEffect;
     this.rank = item.rank;
     this.spawnCategories = item.spawnCategories;
+
+    this.statBonuses = item.statBonuses;
+
     this.createdAt = item.createdAt;
     this.updatedAt = item.updatedAt;
   }

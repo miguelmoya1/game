@@ -18,7 +18,12 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         id,
       },
       include: {
-        currentItem: true,
+        currentItem: {
+          include: {
+            statBonuses: true,
+            set: true,
+          },
+        },
       },
     });
 
@@ -57,7 +62,9 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         createdAt: 'desc',
       },
       include: {
-        currentItem: true,
+        currentItem: {
+          select: { id: true },
+        },
       },
     });
 

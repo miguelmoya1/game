@@ -1,6 +1,7 @@
 import { ItemType, PlaceCategory, Rank } from '@prisma/client';
 import { ItemEntity } from '../../../../domain/entities';
 import { ItemPermissions } from '../../../services/permissions/types/item-permissions.type';
+import { StatBonusResponseDto } from '../../stat-bonus/dto/stat-bonus-response.dto';
 
 export class ItemResponseDto {
   public readonly id: string;
@@ -10,6 +11,7 @@ export class ItemResponseDto {
   public readonly useEffect: string | null;
   public readonly rank: Rank | null;
   public readonly spawnCategories: PlaceCategory[];
+  public readonly statBonuses: StatBonusResponseDto[];
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
   public readonly permissions: ItemPermissions;
@@ -25,6 +27,7 @@ export class ItemResponseDto {
     createdAt: Date;
     updatedAt: Date;
     permissions: ItemPermissions;
+    statBonuses?: StatBonusResponseDto[];
   }) {
     this.id = props.id;
     this.name = props.name;
@@ -36,6 +39,7 @@ export class ItemResponseDto {
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.permissions = props.permissions;
+    this.statBonuses = props.statBonuses || [];
 
     Object.freeze(this);
   }
@@ -52,6 +56,9 @@ export class ItemResponseDto {
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
       permissions: permissions,
+      statBonuses: item.statBonuses?.map((statBonus) =>
+        StatBonusResponseDto.create(statBonus),
+      ),
     };
 
     return new ItemResponseDto(dtoProps);
