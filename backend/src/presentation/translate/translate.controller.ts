@@ -1,28 +1,30 @@
-import { Controller, Get, Inject, Param, Req } from '@nestjs/common';
+import { Controller, Get, Param, Req } from '@nestjs/common';
+import { QueryBus } from '@nestjs/cqrs';
 import { FastifyRequest } from 'fastify';
 import {
-  TRANSLATE_SERVICE,
-  TranslateService,
-} from '../../core/application/services/translate/translate.service.contract';
+  GetLanguageQuery,
+  GetTranslateQuery,
+} from '../../core/application/queries';
 import { IsPublic } from '../../core/infrastructure/decorators';
 
 @Controller('translate')
 export class TranslateController {
-  constructor(
-    @Inject(TRANSLATE_SERVICE)
-    private readonly _translateService: TranslateService,
-  ) {}
+  constructor(private readonly _queryBus: QueryBus) {}
 
   @Get()
   @IsPublic()
   public getTranslate(@Req() req: FastifyRequest) {
-    return this._translateService.getTranslate(req);
+    const command = new GetTranslateQuery(req);
+
+    return this._queryBus.execute(command);
   }
 
   @Get('languages')
   @IsPublic()
   public getLanguages() {
-    return this._translateService.getLanguages();
+    const command = new GetLanguageQuery();
+
+    return this._queryBus.execute(command);
   }
 
   @Get('/:lang')
@@ -31,6 +33,8 @@ export class TranslateController {
     @Req() req: FastifyRequest,
     @Param('lang') lang: string,
   ) {
-    return this._translateService.getTranslate(req, lang);
+    const command = new GetTranslateQuery(req, lang);
+
+    return this._queryBus.execute(command);
   }
 }

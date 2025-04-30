@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { UpdateUserCommand } from 'src/core/application/commands';
-import { UpdateUserDto } from 'src/core/infrastructure/dto';
 import { GetUserByIdQuery } from '../../core/application/queries';
 import { UserEntity } from '../../core/domain/entities/impl/user.entity';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -16,11 +16,6 @@ export class UsersController {
   @Get('me')
   getUserLogged(@AuthenticatedUser() user: UserEntity) {
     return this._queryBus.execute(new GetUserByIdQuery(user.id));
-  }
-
-  @Get(':userId')
-  getUser(@Param('userId') userId: string) {
-    return this._queryBus.execute(new GetUserByIdQuery(userId));
   }
 
   @Patch(':userId')

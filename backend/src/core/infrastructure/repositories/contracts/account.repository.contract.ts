@@ -1,19 +1,12 @@
+import { CreateAccountDataDto } from '../../../application/commands/auth/dto/create-account-data.dto';
 import { AccountEntity } from '../../../domain/entities';
-import { CreateAccountDto } from '../../dto';
-
-type CreateParams = {
-  readonly userId: string;
-  readonly isPrimary?: boolean;
-};
 
 export interface AccountRepository {
+  active(accountId: string): Promise<AccountEntity | null>;
+
   getOneByProviderEmail(email: string): Promise<AccountEntity | null>;
   getById(accountId: string): Promise<AccountEntity | null>;
-  create(
-    registerDto: CreateAccountDto,
-    params: CreateParams,
-  ): Promise<AccountEntity | null>;
-  confirm(accountId: string): Promise<AccountEntity | null>;
+  create(registerDto: CreateAccountDataDto): Promise<AccountEntity | null>;
   forgotPassword(email: string, hash: string): Promise<AccountEntity | null>;
   changePassword(
     accountId: string,

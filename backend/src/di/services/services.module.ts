@@ -1,13 +1,13 @@
-import { Global, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { databaseServiceProvider } from './impl/database.service.provider';
 import { emailServiceProvider } from './impl/email.service.provider';
 import { encryptionServiceProvider } from './impl/encryption.service.provider';
-import { errorHandlerServiceProvider } from './impl/error-handler.service.provider';
 import { permissionsServiceProvider } from './impl/permission.service.provider';
 import { translateServiceProvider } from './impl/translate.service.provider';
 
 const services = [
-  errorHandlerServiceProvider,
   permissionsServiceProvider,
   encryptionServiceProvider,
   translateServiceProvider,
@@ -15,8 +15,18 @@ const services = [
   emailServiceProvider,
 ];
 
-@Global()
 @Module({
+  imports: [
+    JwtModule.registerAsync({
+      useFactory: (config: ConfigService) => ({
+        secret: config.get('JWT_SECRET'),
+        signOptions: { expiresIn: '90d' },
+      }),
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      global: true,
+    }),
+  ],
   providers: [...services],
   exports: [...services],
 })

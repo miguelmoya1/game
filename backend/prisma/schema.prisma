@@ -58,13 +58,6 @@ enum Rank {
   INTERNATIONAL
 }
 
-enum Race {
-  HUMAN
-  ELF
-  DWARF
-  ORC
-}
-
 enum SetEffectType {
   PASSIVE_HEAL_TEAM
   PASSIVE_HEAL_SELF
@@ -156,31 +149,38 @@ model Account {
   @@index([userId])
 }
 
-model PlayerSpell {
-  id         String   @id @default(uuid())
-  playerId   String
-  spellId    String
-  acquiredAt DateTime @default(now())
-  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  spell      Spell    @relation(fields: [spellId], references: [id], onDelete: Cascade)
+model Race {
+  id          String   @id @default(uuid())
+  name        String   @unique // e.g., "Human", "Elf", "Goblin"
+  description String?
+  isPlayable  Boolean  @default(true) // Can players choose this race?
+  spells      Spell[] // Spells belonging to this race
+  players     Player[] // Players of this race
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  @@unique([playerId, spellId])
-  @@index([playerId])
-  @@index([spellId])
+  @@index([name])
+  @@index([isPlayable])
 }
 
 model Spell {
-  id           String        @id @default(uuid())
-  name         String        @unique
-  description  String?
-  race         Race?
-  playerSpells PlayerSpell[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id            String   @id @default(uuid())
+  name          String   @unique
+  description   String?
+  requiredLevel Int      @default(1) // Minimum player level to use this spell
+  // Removed playerSpells relation
+  raceId        String // Foreign key for Race
+  race          Race     @relation(fields: [raceId], references: [id]) // Relation to Race
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([raceId])
+  @@index([requiredLevel])
 }
 
 model Player {
   id             String                    @id @default(uuid())
+  level          Int                       @default(1) // Player's current level
   lat            Float // Player's last known latitude
   lng            Float // Player's last known longitude
   rank           Rank                      @default(E) // Player's current rank
@@ -192,11 +192,15 @@ model Player {
   inventory      PlayerItem[] // Player's item inventory
   collectionLogs PlayerItemCollectionLog[] // Logs of items collected by this player
   stats          Stats[] // Player's base statistics (STR, DEX, etc.)
-  race           Race
-  playerSpells   PlayerSpell[]
+  // Changed from enum to relation
+  raceId         String // Foreign key for Race
+  race           Race                      @relation(fields: [raceId], references: [id]) // Relation to Race
+  // Removed playerSpells relation
 
   @@index([userId])
   @@index([rank])
+  @@index([raceId])
+  @@index([level])
 }
 
 model Stats {

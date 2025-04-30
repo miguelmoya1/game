@@ -12,12 +12,10 @@ import {
   AuthenticatedUser,
   IsPublic,
 } from '../../core/infrastructure/decorators';
-import {
-  AuthEmailLoginPayloadDto,
-  ChangePasswordDto,
-  CreateAccountDto,
-  CreateUserDto,
-} from '../../core/infrastructure/dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { CreateAccountDto } from './dto/create-account.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { LoginWithEmailDto } from './dto/login-with-email.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -67,10 +65,8 @@ export class AuthController {
 
   @IsPublic()
   @Post('login/email')
-  public async loginWithEmail(
-    @Body() authLoginEmailDto: AuthEmailLoginPayloadDto,
-  ) {
-    const { email, password } = authLoginEmailDto;
+  public async loginWithEmail(@Body() loginWithEmailDto: LoginWithEmailDto) {
+    const { email, password } = loginWithEmailDto;
 
     const command = new LoginWithEmailCommand(email, password);
     const token = await this._commandBus.execute<LoginWithEmailCommand, string>(

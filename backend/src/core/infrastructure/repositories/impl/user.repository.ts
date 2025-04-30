@@ -1,5 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { AccountProvider, UserRole } from '@prisma/client';
+import { CreateUserDataDto } from '../../../application/commands/auth/dto/create-user-data.dto';
+import { UpdateUserDataDto } from '../../../application/commands/user/dto/update-user-data.dto';
 import {
   DATABASE_SERVICE,
   DatabaseService,
@@ -8,7 +10,6 @@ import {
   ENCRYPTION_SERVICE,
   EncryptionService,
 } from '../../../application/services/encryption/encryption.service.contract';
-import { CreateUserDto, UpdateUserDto } from '../../dto';
 import { userToEntity } from '../../mappers';
 import { UserRepository } from '../contracts/user.repository.contract';
 
@@ -23,7 +24,7 @@ export class UserRepositoryImpl implements UserRepository {
     this.#init();
   }
 
-  public async create(createUSerDto: CreateUserDto) {
+  public async create(createUSerDto: CreateUserDataDto) {
     const user = await this._database.user.create({
       data: {
         name: createUSerDto.name,
@@ -53,7 +54,7 @@ export class UserRepositoryImpl implements UserRepository {
     return userToEntity(user);
   }
 
-  public async update(id: string, updateUserDto: UpdateUserDto) {
+  public async update(id: string, updateUserDto: UpdateUserDataDto) {
     const updatedUser = await this._database.user.update({
       where: { id },
       data: {

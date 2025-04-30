@@ -1,4 +1,5 @@
-import { Global, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { ServicesModule } from '../services';
 import { accountRepositoryProvider } from './impl/account.repository.provider';
 import { itemRepositoryProvider } from './impl/item.repository.provider';
 import { placeApiHistoryRepositoryProvider } from './impl/place-api-history.repository.provider';
@@ -17,8 +18,8 @@ const repositories = [
   itemRepositoryProvider,
 ];
 
-@Global()
 @Module({
+  imports: [ServicesModule],
   providers: [...repositories],
   exports: [...repositories],
 })

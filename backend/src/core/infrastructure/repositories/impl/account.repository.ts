@@ -1,17 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { AccountProvider } from '@prisma/client';
+import { CreateAccountDataDto } from '../../../application/commands/auth/dto/create-account-data.dto';
 import {
   DATABASE_SERVICE,
   DatabaseService,
 } from '../../../application/services/database/database.service.contract';
-import { CreateAccountDto } from '../../dto';
 import { accountToEntity } from '../../mappers';
 import { AccountRepository } from '../contracts/account.repository.contract';
-
-type CreateParams = {
-  readonly userId: string;
-  readonly isPrimary?: boolean;
-};
 
 @Injectable()
 export class AccountRepositoryImpl implements AccountRepository {
@@ -70,31 +65,36 @@ export class AccountRepositoryImpl implements AccountRepository {
     return accountToEntity(res);
   }
 
-  public async confirm(accountId: string) {
-    const account = await this._database.account.findUnique({
-      where: {
-        id: accountId,
-      },
-    });
+  public async active(accountId: string) {
+    try {
+      const account = await this._database.account.findUnique({
+        where: {
+          id: accountId,
+        },
+      });
 
-    if (!account) {
+      if (!account) {
+        return null;
+      }
+
+      const updated = await this._database.account.update({
+        where: {
+          id: accountId,
+        },
+        data: {
+          isConfirmed: true,
+        },
+      });
+
+      if (!updated) {
+        return null;
+      }
+
+      return accountToEntity(updated);
+    } catch (error) {
+      console.error('Error activating account:', error);
       return null;
     }
-
-    const updated = await this._database.account.update({
-      where: {
-        id: accountId,
-      },
-      data: {
-        isConfirmed: true,
-      },
-    });
-
-    if (!updated) {
-      return null;
-    }
-
-    return accountToEntity(updated);
   }
 
   public async getById(accountId: string) {
@@ -115,13 +115,9 @@ export class AccountRepositoryImpl implements AccountRepository {
     return accountToEntity(account);
   }
 
-  public async create(
-    createAccountDto: CreateAccountDto,
-    params: CreateParams,
-  ) {
-    const { userId, isPrimary } = params;
-
-    const { email, provider, providerId, password } = createAccountDto;
+  public async create(createAccountDto: CreateAccountDataDto) {
+    const { email, provider, providerId, password, userId, isPrimary } =
+      createAccountDto;
 
     const account = await this._database.account.create({
       data: {
