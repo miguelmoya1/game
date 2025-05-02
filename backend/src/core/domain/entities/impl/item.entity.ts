@@ -1,6 +1,6 @@
 import { ItemType, PlaceCategory, Rank } from '../../enums';
-import { Item } from '../../types';
-import { StatBonusEntity } from './stat-bonus.entity';
+import { Item, Stats } from '../../types';
+import { SetEntity } from './set.entity';
 
 export class ItemEntity implements Item {
   public readonly id: string;
@@ -10,11 +10,15 @@ export class ItemEntity implements Item {
   public readonly useEffect: string | null;
   public readonly rank: Rank | null;
   public readonly spawnCategories: PlaceCategory[];
+  public readonly imageUrl: string | null;
 
-  public readonly statBonuses?: StatBonusEntity[] | null;
+  public readonly stats?: Stats[] | null;
+  public readonly setId: string | null;
+  public readonly set?: SetEntity | null;
 
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
+  public readonly deletedAt: Date | null;
 
   private constructor(item: Item) {
     this.id = item.id;
@@ -23,12 +27,16 @@ export class ItemEntity implements Item {
     this.itemType = item.itemType;
     this.useEffect = item.useEffect;
     this.rank = item.rank;
-    this.spawnCategories = item.spawnCategories;
 
-    this.statBonuses = item.statBonuses;
+    this.spawnCategories = item.spawnCategories;
+    this.stats = item.stats;
+
+    this.setId = item.setId;
+    this.set = item.set;
 
     this.createdAt = item.createdAt;
     this.updatedAt = item.updatedAt;
+    this.deletedAt = item.deletedAt;
   }
 
   public static create(item: Item) {

@@ -2,6 +2,7 @@ export { RehydrateQuery } from './auth/impl/rehydrate.query';
 export { GetItemByIdQuery } from './item/impl/get-item-by-id.query';
 export { GetPlaceQuery } from './place/impl/get-place.query';
 export { GetPlacesQuery } from './place/impl/get-places.query';
+export { GetPlayerByIdQuery } from './player/impl/get-player-by-id.query';
 export { QueriesModule } from './queries.module';
 export { GetLanguageQuery } from './translate/impl/get-languages.query';
 export { GetTranslateQuery } from './translate/impl/get-translate.query';

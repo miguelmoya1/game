@@ -7,10 +7,7 @@ import {
   USER_REPOSITORY,
   UserRepository,
 } from '../../../../infrastructure/repositories';
-import {
-  EMAIL_SERVICE,
-  EmailService,
-} from '../../../services/email/email.service.contract';
+import { EMAIL_SERVICE, EmailService } from '../../../services';
 import { RegisterCommand } from '../impl/register.command';
 
 @CommandHandler(RegisterCommand)

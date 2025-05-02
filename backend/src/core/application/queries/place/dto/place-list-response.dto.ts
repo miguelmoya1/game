@@ -1,5 +1,5 @@
 import { PlaceListEntity } from '../../../../domain/entities';
-import { PlacePermissions } from '../../../services/permissions/types/place-permissions.type';
+import { PlacePermissions } from '../../../services';
 
 export class PlaceListResponseDto {
   public readonly id: string;

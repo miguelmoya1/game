@@ -10,7 +10,7 @@ export class PlaceEntity implements Place {
   public readonly osmTags: Record<string, string> | null;
   public readonly categories: PlaceCategory[];
   public readonly currentItemId: string;
-  public readonly currentItem: Item;
+  public readonly currentItem?: Item | null;
 
   public readonly createdAt: Date;
   public readonly updatedAt: Date;

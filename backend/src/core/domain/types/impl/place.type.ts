@@ -9,8 +9,9 @@ export type Place = {
   readonly lng: number;
   readonly osmTags: Record<string, string> | null;
   readonly categories: PlaceCategory[];
+
   readonly currentItemId: string;
-  readonly currentItem: Item;
+  readonly currentItem?: Item | null;
 
   readonly createdAt: Date;
   readonly updatedAt: Date;

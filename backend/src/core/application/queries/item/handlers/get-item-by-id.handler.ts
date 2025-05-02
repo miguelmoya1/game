@@ -5,10 +5,7 @@ import {
   ITEM_REPOSITORY,
   ItemRepository,
 } from '../../../../infrastructure/repositories';
-import {
-  PERMISSIONS_SERVICE,
-  PermissionsService,
-} from '../../../services/permissions/permissions.service.contract';
+import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
 import { ItemResponseDto } from '../dto/item-response.dto';
 import { GetItemByIdQuery } from '../impl/get-item-by-id.query';
 

@@ -1,9 +1,9 @@
 import { Provider } from '@nestjs/common';
-import { EncryptionServiceImpl } from '../../../core/application/services/encryption/encryption.service';
 import {
   ENCRYPTION_SERVICE,
   EncryptionService,
-} from '../../../core/application/services/encryption/encryption.service.contract';
+  EncryptionServiceImpl,
+} from '../../../core/application/services';
 
 export const encryptionServiceProvider: Provider<EncryptionService> = {
   provide: ENCRYPTION_SERVICE,

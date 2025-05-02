@@ -4,4 +4,6 @@ export { PlaceApiEntity } from './impl/place-api.entity';
 export { PlaceListEntity } from './impl/place-list.entity';
 export { PlaceEntity } from './impl/place.entity';
 export { PlayerItemCollectionLogEntity } from './impl/player-item-collection-log.entity';
+export { PlayerEntity } from './impl/player.entity';
+export { SetEntity } from './impl/set.entity';
 export { UserEntity } from './impl/user.entity';

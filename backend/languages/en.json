@@ -30,6 +30,7 @@
   "PLACE_MISSING_LAT_LNG": "Missing latitude and longitude for the place",
   "PLACE_NOT_CREATED": "Place could not be created",
   "PLACE_NOT_FOUND": "Place not found",
+  "PLAYER_NOT_FOUND": "",
   "POST": "Post",
   "REGISTER_BUTTON_TEXT": "Register",
   "REGISTER_CONFIRM_PASSWORD_PLACEHOLDER": "Confirm password",

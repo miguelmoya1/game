@@ -1,7 +1,8 @@
 import { ItemType, PlaceCategory, Rank } from '@prisma/client';
 import { ItemEntity } from '../../../../domain/entities';
-import { ItemPermissions } from '../../../services/permissions/types/item-permissions.type';
-import { StatBonusResponseDto } from '../../stat-bonus/dto/stat-bonus-response.dto';
+import { Stats } from '../../../../domain/types';
+import { ItemPermissions } from '../../../services';
+import { SetResponseDto } from '../../set/dto/set-response.dto';
 
 export class ItemResponseDto {
   public readonly id: string;
@@ -11,10 +12,14 @@ export class ItemResponseDto {
   public readonly useEffect: string | null;
   public readonly rank: Rank | null;
   public readonly spawnCategories: PlaceCategory[];
-  public readonly statBonuses: StatBonusResponseDto[];
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
   public readonly permissions: ItemPermissions;
+
+  public readonly stats?: Stats[] | null;
+
+  public readonly setId?: string | null;
+  public readonly set?: SetResponseDto | null;
 
   private constructor(props: {
     id: string;
@@ -23,11 +28,13 @@ export class ItemResponseDto {
     itemType: ItemType;
     useEffect: string | null;
     rank: Rank | null;
+    setId?: string | null;
     spawnCategories: PlaceCategory[];
     createdAt: Date;
     updatedAt: Date;
     permissions: ItemPermissions;
-    statBonuses?: StatBonusResponseDto[];
+    stats?: Stats[] | null;
+    set?: SetResponseDto | null;
   }) {
     this.id = props.id;
     this.name = props.name;
@@ -39,7 +46,9 @@ export class ItemResponseDto {
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.permissions = props.permissions;
-    this.statBonuses = props.statBonuses || [];
+    this.stats = props.stats;
+    this.setId = props.setId;
+    this.set = props.set;
 
     Object.freeze(this);
   }
@@ -52,13 +61,13 @@ export class ItemResponseDto {
       itemType: item.itemType,
       useEffect: item.useEffect,
       rank: item.rank,
+      setId: item.setId,
       spawnCategories: item.spawnCategories,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
       permissions: permissions,
-      statBonuses: item.statBonuses?.map((statBonus) =>
-        StatBonusResponseDto.create(statBonus),
-      ),
+      stats: item.stats,
+      set: item.set ? SetResponseDto.create(item.set) : null,
     };
 
     return new ItemResponseDto(dtoProps);

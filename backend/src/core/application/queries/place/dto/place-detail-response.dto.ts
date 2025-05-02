@@ -1,7 +1,6 @@
 import { PlaceCategory } from '@prisma/client';
 import { PlaceEntity } from '../../../../domain/entities';
-import { ItemPermissions } from '../../../services/permissions/types/item-permissions.type';
-import { PlacePermissions } from '../../../services/permissions/types/place-permissions.type';
+import { ItemPermissions, PlacePermissions } from '../../../services';
 import { ItemResponseDto } from '../../item/dto/item-response.dto';
 
 export class PlaceDetailResponseDto {
@@ -50,10 +49,9 @@ export class PlaceDetailResponseDto {
     placePermissions: PlacePermissions,
     itemPermissions: ItemPermissions,
   ) {
-    const currentItemDto = ItemResponseDto.create(
-      place.currentItem,
-      itemPermissions,
-    );
+    const currentItemDto = place.currentItem
+      ? ItemResponseDto.create(place.currentItem, itemPermissions)
+      : null;
 
     const dtoProps = {
       id: place.id,

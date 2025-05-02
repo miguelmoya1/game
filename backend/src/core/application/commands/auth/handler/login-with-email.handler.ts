@@ -8,10 +8,7 @@ import {
   USER_REPOSITORY,
   UserRepository,
 } from '../../../../infrastructure/repositories';
-import {
-  ENCRYPTION_SERVICE,
-  EncryptionService,
-} from '../../../services/encryption/encryption.service.contract';
+import { ENCRYPTION_SERVICE, EncryptionService } from '../../../services';
 import { LoginResponseDto } from '../dto/login-response.dto';
 import { LoginWithEmailCommand } from '../impl/login-with-email.command';
 

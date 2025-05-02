@@ -1,9 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import {
-  TRANSLATE_SERVICE,
-  TranslateService,
-} from '../../../services/translate/translate.service.contract';
+import { TRANSLATE_SERVICE, TranslateService } from '../../../services';
 import { GetTranslateQuery } from '../impl/get-translate.query';
 
 @QueryHandler(GetTranslateQuery)

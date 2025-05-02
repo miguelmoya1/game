@@ -7,10 +7,7 @@ import {
   PLAYER_ITEM_COLLECTION_LOG_REPOSITORY,
   PlayerItemCollectionLogRepository,
 } from '../../../../infrastructure/repositories';
-import {
-  PERMISSIONS_SERVICE,
-  PermissionsService,
-} from '../../../services/permissions/permissions.service.contract';
+import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
 import { PlaceDetailResponseDto } from '../dto/place-detail-response.dto';
 import { GetPlaceQuery } from '../impl/get-place.query';
 

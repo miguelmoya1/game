@@ -5,10 +5,7 @@ import {
   ACCOUNT_REPOSITORY,
   AccountRepository,
 } from '../../../../infrastructure/repositories';
-import {
-  ENCRYPTION_SERVICE,
-  EncryptionService,
-} from '../../../services/encryption/encryption.service.contract';
+import { ENCRYPTION_SERVICE, EncryptionService } from '../../../services';
 import { ChangePasswordCommand } from '../impl/change-password.command';
 
 @CommandHandler(ChangePasswordCommand)

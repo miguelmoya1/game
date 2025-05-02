@@ -1,41 +1,47 @@
 export {
   ACCOUNT_REPOSITORY,
   AccountRepository,
-} from './contracts/account.repository.contract';
-export { AccountRepositoryImpl } from './impl/account.repository';
+} from './account/contracts/account.repository.contract';
+export { AccountRepositoryImpl } from './account/impl/account.repository';
 
 export {
   USER_REPOSITORY,
   UserRepository,
-} from './contracts/user.repository.contract';
-export { UserRepositoryImpl } from './impl/user.repository';
+} from './user/contracts/user.repository.contract';
+export { UserRepositoryImpl } from './user/impl/user.repository';
 
 export {
   PLACE_REPOSITORY,
   PlaceRepository,
-} from './contracts/place.repository.contract';
-export { PlaceRepositoryImpl } from './impl/place.repository';
+} from './place/contracts/place.repository.contract';
+export { PlaceRepositoryImpl } from './place/impl/place.repository';
 
 export {
   PLACE_API_REPOSITORY,
   PlaceApiRepository,
-} from './contracts/place-api.repository.contract';
-export { PlaceApiRepositoryImpl } from './impl/place-api.repository';
+} from './place/contracts/place-api.repository.contract';
+export { PlaceApiRepositoryImpl } from './place/impl/place-api.repository';
 
 export {
   ITEM_REPOSITORY,
   ItemRepository,
-} from './contracts/item.repository.contract';
-export { ItemRepositoryImpl } from './impl/item.repository';
+} from './item/contracts/item.repository.contract';
+export { ItemRepositoryImpl } from './item/impl/item.repository';
 
 export {
   PLACE_API_HISTORY_REPOSITORY,
   PlaceApiHistoryRepository,
-} from './contracts/place-api-history.repository.contract';
-export { PlaceApiHistoryRepositoryImpl } from './impl/place-api-history.repository';
+} from './place/contracts/place-api-history.repository.contract';
+export { PlaceApiHistoryRepositoryImpl } from './place/impl/place-api-history.repository';
 
 export {
   PLAYER_ITEM_COLLECTION_LOG_REPOSITORY,
   PlayerItemCollectionLogRepository,
-} from './contracts/player-item-collection-log.repository.contract';
-export { PlayerItemCollectionLogRepositoryImpl } from './impl/player-item-collection-log.repository';
+} from './player/contracts/player-item-collection-log.repository.contract';
+export { PlayerItemCollectionLogRepositoryImpl } from './player/impl/player-item-collection-log.repository';
+
+export {
+  PLAYER_REPOSITORY,
+  PlayerRepository,
+} from './player/contracts/player.repository.contract';
+export { PlayerRepositoryImpl } from './player/impl/player.repository';

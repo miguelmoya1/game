@@ -4,19 +4,17 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // Or your database provider
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// --- Enums ---
-
 enum ItemType {
-  EQUIPPABLE // Item can be equipped by the player
-  USABLE // Item is consumed on use
+  EQUIPPABLE
+  USABLE
 }
 
 enum AccountProvider {
-  EMAIL // Authentication provider type
+  EMAIL
 }
 
 enum UserRole {
@@ -38,12 +36,12 @@ enum PlaceCategory {
 }
 
 enum StatsType {
-  STR // Strength
-  DEX // Dexterity
-  CON // Constitution
-  INT // Intelligence
-  WIS // Wisdom
-  CHA // Charisma
+  STR
+  DEX
+  CON
+  INT
+  WIS
+  CHA
 }
 
 enum Rank {
@@ -58,7 +56,7 @@ enum Rank {
   INTERNATIONAL
 }
 
-enum SetEffectType {
+enum EffectType {
   PASSIVE_HEAL_TEAM
   PASSIVE_HEAL_SELF
   REVIVE_ONCE
@@ -66,12 +64,18 @@ enum SetEffectType {
 }
 
 enum EffectTarget {
-  TEAM
-  ENEMY
   ALLY
+  ENEMY
+  SELF
+  TEAM
 }
 
-// --- Models ---
+enum StatsTarget {
+  ALLY
+  ENEMY
+  SELF
+  TEAM
+}
 
 model User {
   id        String    @id @default(uuid())
@@ -80,11 +84,11 @@ model User {
   surname   String?
   nickname  String?
   language  String    @default("en")
-  accounts  Account[] // User's login accounts
-  player    Player? // Link to the player profile if this user is a player
+  accounts  Account[]
+  player    Player?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  deletedAt DateTime? // For soft deletes
+  deletedAt DateTime?
 
   @@index([name])
   @@index([role])
@@ -94,18 +98,18 @@ model User {
 
 model Place {
   id             String                    @id @default(uuid())
-  apiId          String                    @unique // Unique ID from Overpass API (e.g., "way/12345")
+  apiId          String                    @unique
   name           String
-  lat            Float // Latitude
-  lng            Float // Longitude
-  osmTags        Json? // Raw OpenStreetMap tags stored as JSON
+  lat            Float
+  lng            Float
+  osmTags        Json?
   currentItemId  String
   currentItem    Item                      @relation("CurrentItem", fields: [currentItemId], references: [id])
-  collectionLogs PlayerItemCollectionLog[] // Logs of players collecting items from this place
-  categories     PlaceCategory[] // Gameplay categories associated with this place
+  collectionLogs PlayerItemCollectionLog[]
+  categories     PlaceCategory[]
   createdAt      DateTime                  @default(now())
   updatedAt      DateTime                  @updatedAt
-  deletedAt      DateTime? // For soft deletes
+  deletedAt      DateTime?
 
   @@index([apiId])
   @@index([name])
@@ -117,11 +121,11 @@ model PlaceApiHistory {
   id            String    @id @default(uuid())
   lat           Float
   lng           Float
-  radius        Int // Radius of the API request in meters
+  radius        Int
   lastRequestAt DateTime  @default(now())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  deletedAt     DateTime? // For soft deletes
+  deletedAt     DateTime?
 
   @@index([lat])
   @@index([lng])
@@ -130,18 +134,18 @@ model PlaceApiHistory {
 model Account {
   id                   String          @id @default(uuid())
   provider             AccountProvider @default(EMAIL)
-  providerId           String // ID from the provider (relevant for OAuth later)
+  providerId           String
   email                String          @unique
-  password             String? // Hashed password
-  isConfirmed          Boolean         @default(false) // Email confirmation status
-  isPrimary            Boolean         @default(false) // If user has multiple accounts linked
-  hashForPasswordReset String? // Token for password reset
-  hashExpiredAt        DateTime? // Expiry for password reset token
+  password             String?
+  isConfirmed          Boolean         @default(false)
+  isPrimary            Boolean         @default(false)
+  hashForPasswordReset String?
+  hashExpiredAt        DateTime?
+  userId               String
+  user                 User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @updatedAt
-  deletedAt            DateTime? // For soft deletes
-  userId               String // Link to the User owning this account
-  user                 User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deletedAt            DateTime?
 
   @@index([provider])
   @@index([providerId])
@@ -150,14 +154,15 @@ model Account {
 }
 
 model Race {
-  id          String   @id @default(uuid())
-  name        String   @unique // e.g., "Human", "Elf", "Goblin"
+  id          String    @id @default(uuid())
+  name        String    @unique
   description String?
-  isPlayable  Boolean  @default(true) // Can players choose this race?
-  spells      Spell[] // Spells belonging to this race
-  players     Player[] // Players of this race
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isPlayable  Boolean   @default(true)
+  spells      Spell[]
+  players     Player[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 
   @@index([name])
   @@index([isPlayable])
@@ -167,10 +172,9 @@ model Spell {
   id            String   @id @default(uuid())
   name          String   @unique
   description   String?
-  requiredLevel Int      @default(1) // Minimum player level to use this spell
-  // Removed playerSpells relation
-  raceId        String // Foreign key for Race
-  race          Race     @relation(fields: [raceId], references: [id]) // Relation to Race
+  requiredLevel Int      @default(1)
+  raceId        String
+  race          Race     @relation(fields: [raceId], references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -180,22 +184,21 @@ model Spell {
 
 model Player {
   id             String                    @id @default(uuid())
-  level          Int                       @default(1) // Player's current level
-  lat            Float // Player's last known latitude
-  lng            Float // Player's last known longitude
-  rank           Rank                      @default(E) // Player's current rank
+  level          Int                       @default(1)
+  rank           Rank                      @default(E)
+  experience     Int                       @default(0)
+  // TODO: Add a type for stats
+  /// [Stats] [{statsType: STR, value: 10}]
+  stats          Json                      @db.JsonB
+  userId         String                    @unique
+  user           User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  raceId         String
+  race           Race                      @relation(fields: [raceId], references: [id])
+  inventory      PlayerItem[]
+  collectionLogs PlayerItemCollectionLog[]
   createdAt      DateTime                  @default(now())
   updatedAt      DateTime                  @updatedAt
-  deletedAt      DateTime? // For soft deletes
-  userId         String                    @unique // Link to the User controlling this player
-  user           User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  inventory      PlayerItem[] // Player's item inventory
-  collectionLogs PlayerItemCollectionLog[] // Logs of items collected by this player
-  stats          Stats[] // Player's base statistics (STR, DEX, etc.)
-  // Changed from enum to relation
-  raceId         String // Foreign key for Race
-  race           Race                      @relation(fields: [raceId], references: [id]) // Relation to Race
-  // Removed playerSpells relation
+  deletedAt      DateTime?
 
   @@index([userId])
   @@index([rank])
@@ -203,29 +206,18 @@ model Player {
   @@index([level])
 }
 
-model Stats {
-  id       String    @id @default(uuid())
-  type     StatsType // Which stat (STR, DEX, CON, etc.)
-  value    Int       @default(0) // The base value for this stat
-  playerId String // Link to the Player
-  player   Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
-
-  @@unique([playerId, type]) // Ensures only one entry per stat type per player
-  @@index([playerId])
-}
-
 model PlayerItemCollectionLog {
   id                  String   @id @default(uuid())
-  collectionMonthYear String // Month and year of collection (e.g., "04-2025") used for the unique constraint
-  collectedAt         DateTime @default(now()) // Precise time of collection
-  playerId            String // Link to the Player
+  collectionMonthYear String
+  collectedAt         DateTime @default(now())
+  playerId            String
   player              Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  placeId             String // Link to the Place
+  placeId             String
   place               Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
-  itemId              String // Link to the specific Item collected
+  itemId              String
   item                Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
-  @@unique([playerId, placeId, collectionMonthYear]) // Enforces one collection per player, per place, per month
+  @@unique([playerId, placeId, collectionMonthYear])
   @@index([playerId])
   @@index([placeId])
   @@index([itemId])
@@ -234,12 +226,12 @@ model PlayerItemCollectionLog {
 
 model PlayerItem {
   id         String   @id @default(uuid())
-  quantity   Int      @default(1) // For stackable items (e.g., consumables)
-  isEquipped Boolean  @default(false) // Is this item currently equipped? (Only relevant for EQUIPPABLE type)
-  acquiredAt DateTime @default(now()) // When the item was obtained
-  playerId   String // Link to the Player owner
+  quantity   Int      @default(1)
+  isEquipped Boolean  @default(false)
+  acquiredAt DateTime @default(now())
+  playerId   String
   player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  itemId     String // Link to the Item definition
+  itemId     String
   item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
   @@index([playerId])
@@ -249,17 +241,18 @@ model PlayerItem {
 
 model Item {
   id              String                    @id @default(uuid())
-  name            String                    @unique // Unique item name
+  name            String                    @unique
   description     String?
-  itemType        ItemType // EQUIPPABLE or USABLE
-  imageUrl        String? // Optional image URL
-  useEffect       String? // Description or key for usable item effect (e.g., "HEAL_HP_50")
-  rank            Rank? // Optional rank of the item
-  spawnCategories PlaceCategory[] // List of place categories where this item might appear
-  currentInPlaces Place[]                   @relation("CurrentItem") // Places currently featuring this item this month
-  collectionLogs  PlayerItemCollectionLog[] // Logs related to this item being collected
-  playerItems     PlayerItem[] // Instances of this item in player inventories
-  statBonuses     StatBonus[] // Stat bonuses provided by this item (if EQUIPPABLE)
+  itemType        ItemType
+  imageUrl        String?
+  useEffect       String?
+  rank            Rank?
+  spawnCategories PlaceCategory[]
+  currentInPlaces Place[]                   @relation("CurrentItem")
+  collectionLogs  PlayerItemCollectionLog[]
+  playerItems     PlayerItem[]
+  /// [Stats] [{statsType: STR, value: 10, statsTarget: ALLY}] 
+  stats           Json?                     @db.JsonB
   setId           String?
   set             Set?                      @relation(fields: [setId], references: [id])
   createdAt       DateTime                  @default(now())
@@ -274,52 +267,13 @@ model Item {
 }
 
 model Set {
-  id          String      @id @default(uuid())
-  name        String      @unique
+  id          String    @id @default(uuid())
+  name        String    @unique
   description String?
   items       Item[]
-  setEffects  SetEffect[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-}
-
-model SetEffect {
-  id          String      @id @default(uuid())
-  setId       String
-  set         Set         @relation(fields: [setId], references: [id], onDelete: Cascade)
-  pieces      Int
-  description String?
-  statBonuses StatBonus[]
-  effects     Effect[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  @@unique([setId, pieces])
-  @@index([setId])
-}
-
-model Effect {
-  id          String        @id @default(uuid())
-  type        SetEffectType
-  amount      Int
-  target      EffectTarget
-  setEffectId String
-  setEffect   SetEffect     @relation(fields: [setEffectId], references: [id], onDelete: Cascade)
-
-  @@index([setEffectId])
-}
-
-model StatBonus {
-  id          String     @id @default(uuid())
-  type        StatsType // Which stat is boosted (STR, DEX, etc.)
-  value       Int // The bonus value (e.g., +5, -1)
-  itemId      String?
-  item        Item?      @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  setEffectId String?
-  setEffect   SetEffect? @relation(fields: [setEffectId], references: [id], onDelete: Cascade)
-
-  @@unique([itemId, type])
-  @@unique([setEffectId, type])
-  @@index([itemId])
-  @@index([setEffectId])
+  ///[Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR, statsTarget?: ALLY}]
+  effects     Json?     @db.JsonB
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 }

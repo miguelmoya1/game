@@ -30,6 +30,7 @@
   "PLACE_MISSING_LAT_LNG": "Faltan latitud y longitud",
   "PLACE_NOT_CREATED": "Lugar no creado",
   "PLACE_NOT_FOUND": "Lugar no encontrado",
+  "PLAYER_NOT_FOUND": "",
   "POST": "Publicar",
   "REGISTER_BUTTON_TEXT": "Registrar",
   "REGISTER_CONFIRM_PASSWORD_PLACEHOLDER": "Confirma tu contraseña",

@@ -11,10 +11,7 @@ import {
   PLAYER_ITEM_COLLECTION_LOG_REPOSITORY,
   PlayerItemCollectionLogRepository,
 } from '../../../../infrastructure/repositories';
-import {
-  PERMISSIONS_SERVICE,
-  PermissionsService,
-} from '../../../services/permissions/permissions.service.contract';
+import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
 import { PlaceListResponseDto } from '../dto/place-list-response.dto';
 import { GetPlacesQuery } from '../impl/get-places.query';
 
