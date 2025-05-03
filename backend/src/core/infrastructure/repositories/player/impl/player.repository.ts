@@ -23,4 +23,16 @@ export class PlayerRepositoryImpl implements PlayerRepository {
 
     return playerToEntity(player);
   }
+
+  async getByUserId(userId: string) {
+    const player = await this._database.player.findUnique({
+      where: { userId },
+    });
+
+    if (!player) {
+      return null;
+    }
+
+    return playerToEntity(player);
+  }
 }

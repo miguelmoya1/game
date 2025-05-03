@@ -1,0 +1,19 @@
+:host {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  max-width: 54rem;
+  margin: 0 auto;
+
+  gap: 1rem;
+
+  .control {
+    cursor: pointer;
+  }
+}

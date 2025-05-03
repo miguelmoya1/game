@@ -6,6 +6,7 @@ import { QueriesModule } from '../core/application/queries';
 import { AuthController } from './auth/auth.controller';
 import { ItemsController } from './items/items.controller';
 import { PlacesController } from './places/places.controller';
+import { PlayerController } from './player/places.controller';
 import { TranslateController } from './translate/translate.controller';
 import { UsersController } from './users/users.controller';
 
@@ -15,6 +16,7 @@ import { UsersController } from './users/users.controller';
     AuthController,
     ItemsController,
     PlacesController,
+    PlayerController,
     TranslateController,
     UsersController,
   ],
