@@ -45,3 +45,9 @@ export {
   PlayerRepository,
 } from './player/contracts/player.repository.contract';
 export { PlayerRepositoryImpl } from './player/impl/player.repository';
+
+export {
+  PLAYER_ITEM_REPOSITORY,
+  PlayerItemRepository,
+} from './player/contracts/player-item.repository.contract';
+export { PlayerItemRepositoryImpl } from './player/impl/player-item.repository';

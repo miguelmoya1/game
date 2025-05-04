@@ -1,6 +1,6 @@
 import { Place as PlaceDb } from '@prisma/client';
 import { PlaceEntity } from '../../../../domain/entities';
-import { itemForPlaceToEntity } from '../../item/mappers/item.mapper';
+import { itemToEntity } from '../../item/mappers/item.mapper';
 import { PlaceIncludePayload } from '../utils/place-includes';
 
 export const placeToEntity = (place: PlaceIncludePayload) => {
@@ -13,7 +13,7 @@ export const placeToEntity = (place: PlaceIncludePayload) => {
     osmTags: place.osmTags as Record<string, string> | null,
     categories: place.categories,
     currentItemId: place.currentItemId,
-    currentItem: itemForPlaceToEntity(place.currentItem),
+    currentItem: itemToEntity(place.currentItem),
     createdAt: place.createdAt,
     updatedAt: place.updatedAt,
     deletedAt: place.deletedAt,

@@ -16,7 +16,7 @@ export class ErrorsInterceptor implements NestInterceptor {
       catchError((error: Error) => {
         this.#logger.error(error.message);
 
-        return error as never;
+        throw error;
       }),
     );
   }

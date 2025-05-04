@@ -32,8 +32,7 @@ export class PermissionsServiceImpl implements PermissionsService {
       canEdit: user.isAdmin(),
       canDelete: user.isAdmin(),
       canCreate: user.isAdmin(),
-      canBeClaimed:
-        !playerItemCollectionLog?.isCollectedFrom(new Date()) || true,
+      canBeClaimed: !playerItemCollectionLog?.isCollectedFrom(new Date()),
       alreadyClaimed: !!playerItemCollectionLog?.collectedAt,
     };
   }

@@ -19,6 +19,8 @@
   --color-disabled-text-rgb: 170, 170, 170;
   --color-border-disabled: #777;
   --color-border-disabled-rgb: 119, 119, 119;
+  --color-warning: #fc8280;
+  --color-warning-rgb: 252, 130, 128;
 
   --color-info: #ffcccb;
   --color-info-rgb: 255, 204, 203;

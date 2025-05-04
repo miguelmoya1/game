@@ -1,9 +1,9 @@
 import { Prisma } from '@prisma/client';
 
-export const itemForPlaceInclude = {
+export const itemInclude = {
   set: true,
 };
 
-export type ItemForPlaceIncludePayload = Prisma.ItemGetPayload<{
-  include: typeof itemForPlaceInclude;
+export type ItemIncludePayload = Prisma.ItemGetPayload<{
+  include: typeof itemInclude;
 }>;

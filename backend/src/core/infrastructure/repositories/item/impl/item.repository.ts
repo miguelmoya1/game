@@ -4,8 +4,8 @@ import {
   DatabaseService,
 } from '../../../../application/services';
 import { ItemRepository } from '../contracts/item.repository.contract';
-import { itemForPlaceToEntity } from '../mappers/item.mapper';
-import { itemForPlaceInclude } from '../utils/item-includes';
+import { itemToEntity } from '../mappers/item.mapper';
+import { itemInclude } from '../utils/item-includes';
 
 @Injectable()
 export class ItemRepositoryImpl implements ItemRepository {
@@ -18,13 +18,13 @@ export class ItemRepositoryImpl implements ItemRepository {
       where: {
         id,
       },
-      include: itemForPlaceInclude,
+      include: itemInclude,
     });
 
     if (!result) {
       return null;
     }
 
-    return itemForPlaceToEntity(result);
+    return itemToEntity(result);
   }
 }

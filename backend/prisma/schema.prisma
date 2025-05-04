@@ -187,7 +187,6 @@ model Player {
   level          Int                       @default(1)
   rank           Rank                      @default(E)
   experience     Int                       @default(0)
-  // TODO: Add a type for stats
   /// [Stats] [{statsType: STR, value: 10}]
   stats          Json                      @db.JsonB
   userId         String                    @unique
@@ -233,6 +232,8 @@ model PlayerItem {
   player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
   itemId     String
   item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@index([playerId])
   @@index([itemId])

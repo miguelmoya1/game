@@ -5,5 +5,7 @@ export * from './auth/impl/forgot-password.command';
 export * from './auth/impl/login-with-email.command';
 export * from './auth/impl/register.command';
 export * from './commands.module';
+export * from './place/impl/claim-place-item.command';
+export * from './player/dto/create-player-data.dto';
 export * from './user/dto/update-user-data.dto';
 export * from './user/impl/update-user.command';

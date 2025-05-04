@@ -21,17 +21,11 @@ export class PlayerItemCollectionLogEntity implements PlayerItemCollectionLog {
     return new PlayerItemCollectionLogEntity(playerItemCollectionLog);
   }
 
-  /**
-   * Formats the given date to a string representing the collection month and year.
-   *
-   * @param time The date to format.
-   * @returns A string in the format "MM-YYYY".
-   */
   public static formatToCollectionMonthYear(time: Date) {
     const month = time.getMonth() + 1;
     const year = time.getFullYear();
 
-    return `${month.toString().padStart(2, '0')}-${year}`;
+    return `${year}-${month.toString().padStart(2, '0')}`;
   }
 
   public isCollectedFrom(date: Date) {

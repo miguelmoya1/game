@@ -3,7 +3,10 @@ import {
   DATABASE_SERVICE,
   DatabaseService,
 } from '../../../../application/services';
-import { PlayerRepository } from '../contracts/player.repository.contract';
+import {
+  Create,
+  PlayerRepository,
+} from '../contracts/player.repository.contract';
 import { playerToEntity } from '../mappers/player.mapper';
 
 @Injectable()
@@ -34,5 +37,17 @@ export class PlayerRepositoryImpl implements PlayerRepository {
     }
 
     return playerToEntity(player);
+  }
+
+  async create(player: Create) {
+    const newPlayer = await this._database.player.create({
+      data: {
+        userId: player.userId,
+        raceId: player.raceId,
+        stats: player.stats,
+      },
+    });
+
+    return playerToEntity(newPlayer);
   }
 }

@@ -1,4 +1,6 @@
 export { RehydrateQuery } from './auth/impl/rehydrate.query';
+export { GetInventoryForUserQuery } from './inventory/impl/get-inventory-for-user.query';
+export { GetInventoryQuery } from './inventory/impl/get-inventory.query';
 export { GetItemByIdQuery } from './item/impl/get-item-by-id.query';
 export { GetPlaceQuery } from './place/impl/get-place.query';
 export { GetPlacesQuery } from './place/impl/get-places.query';

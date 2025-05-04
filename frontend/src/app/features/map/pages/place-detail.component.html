@@ -19,7 +19,7 @@
       <div gameBorder class="description">{{ item.description }}</div>
 
       <div class="actions">
-        <button [disabled]="!place.permissions.canBeClaimed" gameButton color="primary">
+        <button [disabled]="!place.permissions.canBeClaimed || loading()" (click)="claim()" gameButton color="primary">
           {{ 'CLAIM' | translate }}
         </button>
       </div>

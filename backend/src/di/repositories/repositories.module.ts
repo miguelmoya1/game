@@ -6,6 +6,7 @@ import { placeApiHistoryRepositoryProvider } from './impl/place-api-history.repo
 import { placeApiRepositoryProvider } from './impl/place-api.repository.provider';
 import { placeRepositoryProvider } from './impl/place.repository.provider';
 import { playerItemCollectionLogRepositoryProvider } from './impl/player-item-collection-log.repository.provider';
+import { playerItemRepositoryProvider } from './impl/player-item.repository.provider';
 import { playerRepositoryProvider } from './impl/player.repository.provider';
 import { userRepositoryProvider } from './impl/user.repository.provider';
 
@@ -18,6 +19,7 @@ const repositories = [
   userRepositoryProvider,
   itemRepositoryProvider,
   playerRepositoryProvider,
+  playerItemRepositoryProvider,
 ];
 
 @Module({

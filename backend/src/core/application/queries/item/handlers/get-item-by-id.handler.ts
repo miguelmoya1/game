@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { ErrorCodes } from '../../../../domain/enums';
 import {
@@ -23,7 +23,7 @@ export class GetItemByIdHandler implements IQueryHandler<GetItemByIdQuery> {
     const item = await this._itemRepository.findById(itemId);
 
     if (!item) {
-      throw new Error(ErrorCodes.ITEM_NOT_FOUND);
+      throw new HttpException(ErrorCodes.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const permissions = this._permissionsService.getItemPermissions(user);

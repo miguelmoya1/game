@@ -1,9 +1,9 @@
 import { ItemEntity } from '../../../../domain/entities';
 import { Stats } from '../../../../domain/types';
-import { ItemForPlaceIncludePayload } from '../utils/item-includes';
+import { ItemIncludePayload } from '../utils/item-includes';
 import { setToEntity } from './set.mapper';
 
-export const itemForPlaceToEntity = (item: ItemForPlaceIncludePayload) => {
+export const itemToEntity = (item: ItemIncludePayload) => {
   return ItemEntity.create({
     id: item.id,
     name: item.name,

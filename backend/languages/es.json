@@ -25,6 +25,7 @@
   "INT": "",
   "INTERNAL_SERVER_ERROR": "Error interno del servidor",
   "INTERNATIONAL": "Internacional",
+  "INVENTORY_NOT_FOUND": "",
   "ITEM_NOT_FOUND": "Elemento no encontrado",
   "LOGIN_BUTTON_TEXT": "Iniciar sesión",
   "LOGIN_EMAIL_PLACEHOLDER": "Correo electrónico",

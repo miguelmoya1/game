@@ -37,5 +37,6 @@ const mapPlaceList = (data: PlaceListDto) => {
     id: data.id,
     lat: data.lat,
     lng: data.lng,
+    permissions: data.permissions,
   });
 };

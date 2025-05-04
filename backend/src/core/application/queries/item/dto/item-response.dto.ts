@@ -1,5 +1,5 @@
-import { ItemType, PlaceCategory, Rank } from '@prisma/client';
 import { ItemEntity } from '../../../../domain/entities';
+import { ItemType, PlaceCategory, Rank } from '../../../../domain/enums';
 import { Stats } from '../../../../domain/types';
 import { ItemPermissions } from '../../../services';
 import { SetResponseDto } from '../../set/dto/set-response.dto';

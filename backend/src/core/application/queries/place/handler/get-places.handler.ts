@@ -53,6 +53,7 @@ export class GetPlacesHandler implements IQueryHandler<GetPlacesQuery> {
       await this._playerItemCollectionLogRepository.getForPlaces(
         places.map((place) => place.id),
       );
+
     return places.map((place) => {
       const permissions = this._permissionsService.getPlacePermissions(
         place,

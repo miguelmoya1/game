@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { RepositoriesModule } from '../../../di/repositories';
 import { ServicesModule } from '../../../di/services';
 import { RehydrateHandler } from './auth/handler/rehydrate.handler';
+import { GetInventoryForUserHandler } from './inventory/handlers/get-inventory-for-user.handler';
+import { GetInventoryHandler } from './inventory/handlers/get-inventory.handler';
 import { GetItemByIdHandler } from './item/handlers/get-item-by-id.handler';
 import { GetPlaceHandler } from './place/handler/get-place.handler';
 import { GetPlacesHandler } from './place/handler/get-places.handler';
@@ -26,6 +28,9 @@ import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
 
     GetPlayerByIdHandler,
     GetPlayerByUserIdHandler,
+
+    GetInventoryForUserHandler,
+    GetInventoryHandler,
   ],
 })
 export class QueriesModule {}

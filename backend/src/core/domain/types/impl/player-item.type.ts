@@ -1,3 +1,5 @@
+import { Item } from './item.type';
+
 export type PlayerItem = {
   readonly id: string;
   readonly quantity: number;
@@ -6,4 +8,7 @@ export type PlayerItem = {
 
   readonly playerId: string;
   readonly itemId: string;
+  readonly item: Item;
+  readonly createdAt: Date | null;
+  readonly updatedAt: Date | null;
 };

@@ -6,5 +6,6 @@ export const placeListToEntity = (place: PlaceListIncludePayload) => {
     id: place.id,
     lat: place.lat,
     lng: place.lng,
+    currentItemId: place.currentItemId,
   });
 };
