@@ -1,0 +1,214 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  background-color: rgba(var(--color-primary-rgb), 0.05);
+  border: 1px solid rgba(var(--color-border-rgb), 0.3);
+  border-radius: 8px;
+  padding: 20px;
+  color: var(--text-color);
+  font-family: var(--font-family-main);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(var(--color-border-rgb), 0.15);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.rank {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+.rank.rank-S,
+.rank.rank-SS {
+  background-color: rgba(var(--color-secondary-rgb), 0.15);
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.image {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  border: 1px solid rgba(var(--color-border-rgb), 0.3);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--color-disabled-text);
+  overflow: hidden;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+}
+
+.meta {
+  flex-grow: 1;
+}
+
+.type,
+.description {
+  margin: 0 0 5px 0;
+  font-size: 0.9rem;
+  color: var(--color-info);
+}
+.type span {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.section {
+  border-top: 1px solid rgba(var(--color-border-rgb), 0.15);
+  padding-top: 15px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-secondary);
+  margin-bottom: 10px;
+}
+
+.stats ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.stats li {
+  background-color: rgba(var(--background-color), 0.5);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid rgba(var(--color-border-rgb), 0.1);
+}
+.stats .stat-name {
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.usable-effect p,
+.direct-effects ul {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-info);
+  background-color: rgba(var(--background-color), 0.5);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(var(--color-border-rgb), 0.1);
+}
+.direct-effects ul {
+  list-style: disc;
+  padding-left: 30px;
+}
+.direct-effects li {
+  margin-bottom: 5px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.spawn-categories .categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.spawn-categories .category-tag {
+  background-color: rgba(var(--color-primary-rgb), 0.1);
+  color: var(--color-primary);
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(var(--color-primary-rgb), 0.3);
+}
+
+.set-info {
+  background-color: rgba(var(--color-secondary-rgb), 0.05);
+  border: 1px solid rgba(var(--color-secondary-rgb), 0.2);
+  padding: 15px;
+  border-radius: 6px;
+}
+.set-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-secondary);
+  margin: 0 0 5px 0;
+}
+.set-description {
+  font-size: 0.9rem;
+  color: var(--color-info);
+  margin-bottom: 15px;
+}
+.set-effects-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+.set-effects-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.set-effects-list li {
+  background-color: rgba(var(--background-color), 0.5);
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--color-secondary);
+}
+.set-effects-list .effect-target {
+  font-style: italic;
+  color: var(--color-disabled-text);
+  margin-left: 5px;
+}
+
+.footer {
+  /* Antes .item-footer */
+  font-size: var(--font-size-info);
+  color: var(--color-disabled-text);
+  text-align: right;
+  border-top: 1px solid rgba(var(--color-border-rgb), 0.15);
+  padding-top: 10px;
+}

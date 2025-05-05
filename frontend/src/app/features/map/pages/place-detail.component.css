@@ -50,58 +50,10 @@
 
   h1 {
     grid-area: title;
-    font-size: 2rem;
-    color: white;
 
     max-width: clamp(var(--min-width), 90%, var(--max-width));
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .item {
-    grid-area: item;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: auto;
-    padding: 4px;
-
-    grid-template-areas:
-      'title    title       title       title'
-      'image    name        name        name'
-      'image    description description description'
-      'empty    description description description'
-      'actions  actions     actions     actions';
-
-    gap: 1rem;
-
-    .title {
-      grid-area: title;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      gap: 0.5rem;
-    }
-
-    .image {
-      grid-area: image;
-    }
-
-    .name {
-      grid-area: name;
-    }
-
-    .description {
-      grid-area: description;
-    }
-
-    .actions {
-      grid-area: actions;
-
-      display: flex;
-      justify-content: flex-end;
-    }
   }
 }

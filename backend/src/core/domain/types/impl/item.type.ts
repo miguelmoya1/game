@@ -1,4 +1,5 @@
 import { ItemType, PlaceCategory, Rank } from '../../enums';
+import { Effect } from './effect.type';
 import { Set } from './set.type';
 import { Stats } from './stats.type';
 
@@ -8,7 +9,7 @@ export type Item = {
   readonly description: string | null;
   readonly itemType: ItemType;
   readonly imageUrl: string | null;
-  readonly useEffect: string | null;
+  readonly effect?: Effect[] | null;
   readonly rank: Rank | null;
   readonly spawnCategories: PlaceCategory[];
 

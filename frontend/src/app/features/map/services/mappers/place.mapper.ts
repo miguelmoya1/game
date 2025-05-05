@@ -1,5 +1,5 @@
 import { PlaceEntity } from '@game/shared/models/impl/place.entity';
-import { PlaceDto } from '../dtos/place.dto';
+import { PlaceDto } from '../dto/place.dto';
 
 function isPlaceDto(obj: unknown): obj is PlaceDto {
   if (typeof obj !== 'object' || obj === null) {

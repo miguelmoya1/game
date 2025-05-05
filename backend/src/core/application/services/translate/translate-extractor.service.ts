@@ -10,10 +10,11 @@ export class TranslateExtractorService {
   async getKeys() {
     try {
       const core = await this.#extract('src/core');
+      const prisma = await this.#extract('prisma');
       const app = await this.#extract('../frontend/src/app');
       const templates = await this.#extract('templates');
 
-      return [...new Set([...templates, ...core, ...app])].sort();
+      return [...new Set([...templates, ...core, ...app, ...prisma])].sort();
     } catch (e) {
       this.#logger.warn(e);
     }
@@ -25,7 +26,10 @@ export class TranslateExtractorService {
     const dir = await readdir(folder);
     const folders = dir.filter((file) => !file.includes('.'));
     const files = dir.filter(
-      (file) => file.includes('.ts') || file.includes('.html'),
+      (file) =>
+        file.includes('.ts') ||
+        file.includes('.html') ||
+        file.includes('.prisma'),
     );
 
     const strings: string[] = [];
@@ -34,7 +38,7 @@ export class TranslateExtractorService {
       //new HttpException('variableNameRegexp', HttpStatus.BAD_REQUEST);
       `new HttpException\\('${this.#variableNameRegexp}'`,
       //message: 'variableNameRegexp',
-      ` message: '${this.#variableNameRegexp}'`,
+      `message: '${this.#variableNameRegexp}'`,
       // {{ 'variableNameRegexp' | translate }}
       `'${this.#variableNameRegexp}' | translate}}`,
       // placeholder="variableNameRegexp"
@@ -70,6 +74,8 @@ export class TranslateExtractorService {
       /\w_REPOSITORY/,
       // If is only 1 letter
       /^[A-Z]$/,
+      // If is only 2 letters
+      /^[A-Z]{2}$/,
     ];
 
     for (const file of files) {

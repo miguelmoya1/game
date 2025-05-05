@@ -1,4 +1,6 @@
 export { AccountProvider } from './impl/account.enum';
+export { EffectTarget } from './impl/effect-target.enum';
+export { EffectType } from './impl/effect-type.enum';
 export { ItemType } from './impl/item.enum';
 export { PlaceCategory } from './impl/place-category.enum';
 export { Rank } from './impl/rank.enum';

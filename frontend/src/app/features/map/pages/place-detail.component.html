@@ -13,16 +13,7 @@
 
       @let item = place.currentItem;
 
-      <div gameBorder class="image"></div>
-
-      <div gameBorder class="name">{{ item.name }}</div>
-      <div gameBorder class="description">{{ item.description }}</div>
-
-      <div class="actions">
-        <button [disabled]="!place.permissions.canBeClaimed || loading()" (click)="claim()" gameButton color="primary">
-          {{ 'CLAIM' | translate }}
-        </button>
-      </div>
+      <game-item [item]="item" />
     </div>
   </div>
 }

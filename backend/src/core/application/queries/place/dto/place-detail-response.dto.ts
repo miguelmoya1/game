@@ -1,6 +1,6 @@
 import { PlaceCategory } from '@prisma/client';
 import { PlaceEntity } from '../../../../domain/entities';
-import { ItemPermissions, PlacePermissions } from '../../../services';
+import { PlacePermissions } from '../../../services';
 import { ItemResponseDto } from '../../item/dto/item-response.dto';
 
 export class PlaceDetailResponseDto {
@@ -16,7 +16,7 @@ export class PlaceDetailResponseDto {
 
   public readonly permissions: PlacePermissions;
 
-  public readonly currentItem: ItemResponseDto | null;
+  public readonly currentItem: ItemResponseDto;
 
   private constructor(props: {
     id: string;
@@ -29,7 +29,7 @@ export class PlaceDetailResponseDto {
     updatedAt: Date;
     deletedAt: Date | null;
     permissions: PlacePermissions;
-    currentItem: ItemResponseDto | null;
+    currentItem: ItemResponseDto;
   }) {
     this.id = props.id;
     this.apiId = props.apiId;
@@ -47,12 +47,8 @@ export class PlaceDetailResponseDto {
   public static create(
     place: PlaceEntity,
     placePermissions: PlacePermissions,
-    itemPermissions: ItemPermissions,
+    currentItem: ItemResponseDto,
   ) {
-    const currentItemDto = place.currentItem
-      ? ItemResponseDto.create(place.currentItem, itemPermissions)
-      : null;
-
     const dtoProps = {
       id: place.id,
       apiId: place.apiId,
@@ -66,7 +62,7 @@ export class PlaceDetailResponseDto {
 
       permissions: placePermissions,
 
-      currentItem: currentItemDto,
+      currentItem,
     };
 
     return new PlaceDetailResponseDto(dtoProps);

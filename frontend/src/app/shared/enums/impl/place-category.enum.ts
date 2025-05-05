@@ -1,1 +1,12 @@
-export enum PlaceCategory {}
+export enum PlaceCategory {
+  KNOWLEDGE = 'KNOWLEDGE',
+  FAITH = 'FAITH',
+  NATURE = 'NATURE',
+  COMMERCE = 'COMMERCE',
+  FITNESS = 'FITNESS',
+  COMMUNITY = 'COMMUNITY',
+  CRAFT = 'CRAFT',
+  HEALTH = 'HEALTH',
+  ARTS = 'ARTS',
+  HISTORIC = 'HISTORIC',
+}

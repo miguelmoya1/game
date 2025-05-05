@@ -1,23 +1,40 @@
 import { ItemType, PlaceCategory, Rank } from '../../enums';
-import { Item } from '../../types';
+import { Effect, Item, Stats } from '../../types';
+import { SetEntity } from './set.entity';
 
 export class ItemEntity implements Item {
-  id: string;
-  name: string;
-  description: string | null;
-  itemType: ItemType;
-  useEffect: string | null;
-  rank: Rank | null;
-  spawnCategories: PlaceCategory[];
-  createdAt: Date;
-  updatedAt: Date;
+  public readonly id: string;
+  public readonly name: string;
+  public readonly description: string | null;
+  public readonly itemType: ItemType;
+  public readonly imageUrl: string | null;
+  public readonly effect?: Effect[] | null;
+  public readonly rank: Rank | null;
+  public readonly spawnCategories: PlaceCategory[];
+  public readonly createdAt: Date;
+  public readonly updatedAt: Date;
+  public readonly permissions: {
+    readonly canCreate: boolean;
+    readonly canEdit: boolean;
+    readonly canDelete: boolean;
+  };
+
+  public readonly stats?: Stats[] | null;
+
+  public readonly setId?: string | null;
+  public readonly set?: SetEntity | null;
 
   private constructor(item: Item) {
     this.id = item.id;
     this.name = item.name;
     this.description = item.description;
     this.itemType = item.itemType;
-    this.useEffect = item.useEffect;
+    this.imageUrl = item.imageUrl;
+    this.effect = item.effect;
+    this.permissions = item.permissions;
+    this.stats = item.stats;
+    this.setId = item.setId;
+    this.set = item.set;
     this.rank = item.rank;
     this.spawnCategories = item.spawnCategories;
     this.createdAt = item.createdAt;

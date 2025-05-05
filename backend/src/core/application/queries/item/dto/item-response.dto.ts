@@ -1,6 +1,6 @@
 import { ItemEntity } from '../../../../domain/entities';
 import { ItemType, PlaceCategory, Rank } from '../../../../domain/enums';
-import { Stats } from '../../../../domain/types';
+import { Effect, Stats } from '../../../../domain/types';
 import { ItemPermissions } from '../../../services';
 import { SetResponseDto } from '../../set/dto/set-response.dto';
 
@@ -9,7 +9,8 @@ export class ItemResponseDto {
   public readonly name: string;
   public readonly description: string | null;
   public readonly itemType: ItemType;
-  public readonly useEffect: string | null;
+  public readonly imageUrl: string | null;
+  public readonly effect?: Effect[] | null;
   public readonly rank: Rank | null;
   public readonly spawnCategories: PlaceCategory[];
   public readonly createdAt: Date;
@@ -26,7 +27,8 @@ export class ItemResponseDto {
     name: string;
     description: string | null;
     itemType: ItemType;
-    useEffect: string | null;
+    imageUrl: string | null;
+    effect?: Effect[] | null;
     rank: Rank | null;
     setId?: string | null;
     spawnCategories: PlaceCategory[];
@@ -40,7 +42,8 @@ export class ItemResponseDto {
     this.name = props.name;
     this.description = props.description;
     this.itemType = props.itemType;
-    this.useEffect = props.useEffect;
+    this.imageUrl = props.imageUrl;
+    this.effect = props.effect;
     this.rank = props.rank;
     this.spawnCategories = props.spawnCategories;
     this.createdAt = props.createdAt;
@@ -59,7 +62,8 @@ export class ItemResponseDto {
       name: item.name,
       description: item.description,
       itemType: item.itemType,
-      useEffect: item.useEffect,
+      imageUrl: item.imageUrl,
+      effect: item.effect,
       rank: item.rank,
       setId: item.setId,
       spawnCategories: item.spawnCategories,

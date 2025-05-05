@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { ErrorCodes } from '../../../../domain/enums';
 import {
@@ -8,6 +8,7 @@ import {
   PlayerItemCollectionLogRepository,
 } from '../../../../infrastructure/repositories';
 import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
+import { ItemResponseDto } from '../../item/dto/item-response.dto';
 import { PlaceDetailResponseDto } from '../dto/place-detail-response.dto';
 import { GetPlaceQuery } from '../impl/get-place.query';
 
@@ -28,7 +29,7 @@ export class GetPlaceHandler implements IQueryHandler<GetPlaceQuery> {
     const place = await this._placeRepository.findById(placeId);
 
     if (!place) {
-      throw new Error(ErrorCodes.PLACE_NOT_FOUND);
+      throw new HttpException(ErrorCodes.PLACE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const playerItemCollectionLog =
@@ -42,6 +43,15 @@ export class GetPlaceHandler implements IQueryHandler<GetPlaceQuery> {
 
     const permissionsItem = this._permissionsService.getItemPermissions(user);
 
-    return PlaceDetailResponseDto.create(place, permissions, permissionsItem);
+    if (!place.currentItem) {
+      throw new HttpException(ErrorCodes.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    const itemResponse = ItemResponseDto.create(
+      place.currentItem,
+      permissionsItem,
+    );
+
+    return PlaceDetailResponseDto.create(place, permissions, itemResponse);
   }
 }

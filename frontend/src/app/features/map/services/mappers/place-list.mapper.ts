@@ -1,5 +1,5 @@
 import { PlaceListEntity } from '../../../../shared/models/impl/place-list.entity';
-import { PlaceListDto } from '../dtos/place-list.dto';
+import { PlaceListDto } from '../dto/place-list.dto';
 
 const isPlaceListDto = (obj: unknown): obj is PlaceListDto => {
   if (typeof obj !== 'object' || obj === null) {

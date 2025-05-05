@@ -1,0 +1,101 @@
+@let itemTemplate = item();
+
+<div class="header">
+  <h2 class="name">{{ itemTemplate.name }}</h2>
+  @if (itemTemplate.rank) {
+    <span class="rank rank-{{ itemTemplate.rank }}">
+      {{ itemTemplate.rank | translate }}
+    </span>
+  }
+</div>
+
+<div class="info">
+  <div class="image">
+    @if (itemTemplate.imageUrl) {
+      <img [src]="itemTemplate.imageUrl" [alt]="itemTemplate.name" />
+    } @else {
+      IMG
+    }
+  </div>
+  <div class="meta">
+    <p class="type">
+      <span>{{ 'TYPE' | translate }}:</span> {{ itemTemplate.itemType | translate }}
+    </p>
+    @if (itemTemplate.description) {
+      <p class="description">{{ itemTemplate.description }}</p>
+    }
+  </div>
+</div>
+
+@if (itemTemplate.stats && itemTemplate.stats.length > 0) {
+  <div class="section stats">
+    <h3 class="section-title">{{ 'BONUS_STATS' | translate }}:</h3>
+    <ul>
+      @for (stat of itemTemplate.stats; track $index) {
+        <li>
+          <span class="stat-name stat-{{ stat.satsType }}">{{ stat.satsType }}</span>
+          <span>{{ stat.value >= 0 ? '+' : '' }}{{ stat.value }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+}
+
+@if (itemTemplate.effect && itemTemplate.effect.length > 0) {
+  <div class="section direct-effects">
+    <h3 class="section-title">{{ 'DIRECT_EFFECTS' | translate }}:</h3>
+    <ul>
+      @for (eff of itemTemplate.effect; track $index) {
+        <li>{{ eff.type }}: {{ eff.value }}</li>
+      }
+    </ul>
+  </div>
+}
+
+@if (itemTemplate.spawnCategories && itemTemplate.spawnCategories.length > 0) {
+  <div class="section spawn-categories">
+    <h3 class="section-title">
+      {{ 'SPAWN_CATEGORIES' | translate }}
+    </h3>
+    <ul class="categories-list">
+      @for (category of itemTemplate.spawnCategories; track $index) {
+        <li class="category-tag">{{ category | translate }}</li>
+      }
+    </ul>
+  </div>
+}
+
+@if (itemTemplate.set; as set) {
+  <div class="section set-info">
+    <h3 class="set-name">{{ set.name }}</h3>
+    @if (set.description) {
+      <p class="set-description">{{ set.description }}</p>
+    }
+
+    @if (set.effects && set.effects.length > 0) {
+      <div>
+        <h4 class="set-effects-title">{{ 'SET_EFFECTS' | translate }}:</h4>
+        <ul class="set-effects-list">
+          @for (effect of set.effects; track $index) {
+            <li>
+              @if (effect.type) {
+                {{ effect.type }} ({{ effect.value }})
+                @if (effect.target) {
+                  <span class="effect-target">({{ effect.target }})</span>
+                }
+              }
+              @if (effect.stats) {
+                {{ 'BONUS_OF' }} {{ effect.stats | translate }} (+{{ effect.value }})
+                @if (effect.statsTarget) {
+                  <span class="effect-target">({{ effect.statsTarget }})</span>
+                }
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+}
+
+<!-- <div class="footer">ID: {{ itemTemplate.id }}</div> -->

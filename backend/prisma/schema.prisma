@@ -246,7 +246,8 @@ model Item {
   description     String?
   itemType        ItemType
   imageUrl        String?
-  useEffect       String?
+  // [Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR, statsTarget?: ALLY}]
+  effect          Json?                     @db.JsonB
   rank            Rank?
   spawnCategories PlaceCategory[]
   currentInPlaces Place[]                   @relation("CurrentItem")
