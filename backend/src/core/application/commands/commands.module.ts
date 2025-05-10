@@ -6,7 +6,9 @@ import { ChangePasswordHandler } from './auth/handler/change-password.handler';
 import { ForgotPasswordHandler } from './auth/handler/forgot-password.handler';
 import { LoginWithEmailHandler } from './auth/handler/login-with-email.handler';
 import { RegisterHandler } from './auth/handler/register.handler';
+import { CreateItemHandler } from './item/handler/create-item.handler';
 import { ClaimPlaceItemHandler } from './place/handler/claim-place-item.handler';
+import { CreateSetHandler } from './set/handler/create-set.handler';
 import { UpdateUserHandler } from './user/handler/update-user.handler';
 
 const commands = [
@@ -19,6 +21,10 @@ const commands = [
   UpdateUserHandler,
 
   ClaimPlaceItemHandler,
+
+  CreateSetHandler,
+
+  CreateItemHandler,
 ];
 
 @Module({

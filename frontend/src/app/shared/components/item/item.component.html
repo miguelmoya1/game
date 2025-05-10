@@ -46,7 +46,9 @@
     <h3 class="section-title">{{ 'DIRECT_EFFECTS' | translate }}:</h3>
     <ul>
       @for (eff of itemTemplate.effect; track $index) {
-        <li>{{ eff.type }}: {{ eff.value }}</li>
+        <li>
+          <game-effect [effect]="eff" />
+        </li>
       }
     </ul>
   </div>
@@ -66,36 +68,9 @@
 }
 
 @if (itemTemplate.set; as set) {
-  <div class="section set-info">
-    <h3 class="set-name">{{ set.name }}</h3>
-    @if (set.description) {
-      <p class="set-description">{{ set.description }}</p>
-    }
-
-    @if (set.effects && set.effects.length > 0) {
-      <div>
-        <h4 class="set-effects-title">{{ 'SET_EFFECTS' | translate }}:</h4>
-        <ul class="set-effects-list">
-          @for (effect of set.effects; track $index) {
-            <li>
-              @if (effect.type) {
-                {{ effect.type }} ({{ effect.value }})
-                @if (effect.target) {
-                  <span class="effect-target">({{ effect.target }})</span>
-                }
-              }
-              @if (effect.stats) {
-                {{ 'BONUS_OF' }} {{ effect.stats | translate }} (+{{ effect.value }})
-                @if (effect.statsTarget) {
-                  <span class="effect-target">({{ effect.statsTarget }})</span>
-                }
-              }
-            </li>
-          }
-        </ul>
-      </div>
-    }
+  <div class="section">
+    <game-set [set]="set" />
   </div>
 }
 
-<!-- <div class="footer">ID: {{ itemTemplate.id }}</div> -->
+<div class="footer">ID: {{ itemTemplate.id }}</div>

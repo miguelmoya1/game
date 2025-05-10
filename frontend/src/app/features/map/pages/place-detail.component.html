@@ -4,16 +4,12 @@
   <div class="content">
     <h1>{{ place.name }}</h1>
 
-    <div class="item">
-      @if (place.permissions.alreadyClaimed) {
-        <div class="title">
-          <span gameInfo> ({{ 'ALREADY_CLAIMED' | translate }}) </span>
-        </div>
-      }
+    @let item = place.currentItem;
 
-      @let item = place.currentItem;
+    <game-item [item]="item" />
 
-      <game-item [item]="item" />
-    </div>
+    <button gameButton [disabled]="!place.permissions.canBeClaimed" (click)="claim()">
+      {{ (place.permissions.alreadyClaimed ? 'ALREADY_CLAIMED' : 'CLAIM') | translate }}
+    </button>
   </div>
 }

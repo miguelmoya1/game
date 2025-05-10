@@ -8,9 +8,7 @@ type Selected = {
   place: PlaceList | null;
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MapPlaceService {
   readonly #mapCoreService = inject(MapCoreService);
   readonly #map = this.#mapCoreService.map;

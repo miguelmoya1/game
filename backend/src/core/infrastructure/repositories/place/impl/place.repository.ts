@@ -3,8 +3,9 @@ import {
   DATABASE_SERVICE,
   DatabaseService,
 } from '../../../../application/services';
-import { placeListToEntity, placeToEntity } from '../../../mappers';
 import { PlaceRepository } from '../contracts/place.repository.contract';
+import { placeListToEntity } from '../mappers/place-list.mapper';
+import { placeToEntity } from '../mappers/place.mapper';
 import { placeInclude, placeListInclude } from '../utils/place-includes';
 
 @Injectable()
@@ -26,6 +27,31 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     }
 
     return placeToEntity(result);
+  }
+
+  async search(criteria: string) {
+    const result = await this.databaseService.place.findMany({
+      where: {
+        OR: [
+          {
+            id: {
+              contains: criteria,
+              mode: 'insensitive',
+            },
+          },
+          {
+            name: {
+              contains: criteria,
+              mode: 'insensitive',
+            },
+          },
+        ],
+      },
+      include: placeInclude,
+      take: 5,
+    });
+
+    return result.map((place) => placeToEntity(place));
   }
 
   // TODO: Check the logic of this repository (lat, lng, radius)

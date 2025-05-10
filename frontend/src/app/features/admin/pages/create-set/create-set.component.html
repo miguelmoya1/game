@@ -1,0 +1,9 @@
+<h2 class="title">{{ 'CREATE_NEW_SET' | translate }}</h2>
+
+<game-set-form [setForm]="setForm" />
+
+<div class="actions">
+  <button gameButton type="submit" [disabled]="!setForm.valid" class="submit-button">
+    {{ 'CREATE_SET' | translate }}
+  </button>
+</div>

@@ -1,0 +1,14 @@
+@let setTemplate = set();
+
+<h3 class="name">{{ setTemplate.name }}</h3>
+@if (setTemplate.description) {
+  <p class="description">{{ setTemplate.description }}</p>
+}
+
+@if (setTemplate.effects && setTemplate.effects.length > 0) {
+  <h4 class="effects-title">{{ 'EFFECTS' | translate }}:</h4>
+
+  @for (effect of setTemplate.effects; track $index) {
+    <game-effect [effect]="effect" />
+  }
+}

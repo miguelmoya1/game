@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NotificationsComponent } from '@game/shared/components/notifications/notifications.component';
-import { AuthService } from './core/services/auth.service';
+import { AuthGlobalService } from './core/services/auth-global.service';
 
 @Component({
   selector: 'game-root',
@@ -24,7 +24,7 @@ export class AppComponent {
   // readonly #translateService = inject(TranslateService);
 
   // readonly #translateRepository = inject(TRANSLATE_REPOSITORY);
-  readonly #authService = inject(AuthService);
+  readonly #authService = inject(AuthGlobalService);
 
   protected readonly showHeader = computed(() => {
     return this.#authService.isAuthenticated.value();

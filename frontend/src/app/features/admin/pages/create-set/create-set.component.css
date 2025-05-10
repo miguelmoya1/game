@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  margin: 0 auto;
+  font-family: var(--font-family-main);
+  color: var(--text-color);
+  max-width: 800px;
+
+  padding: 2rem;
+}
+
+.title {
+  color: var(--color-primary);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  border-bottom: 1px solid rgba(var(--color-border-rgb), 0.15);
+  padding-bottom: 15px;
+}
+
+.actions {
+  margin-top: 1rem;
+
+  display: flex;
+  justify-content: center;
+}

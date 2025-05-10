@@ -1,6 +1,6 @@
 import { ItemEntity } from '../../../../domain/entities';
 import { ItemType, PlaceCategory, Rank } from '../../../../domain/enums';
-import { Effect, Stats } from '../../../../domain/types';
+import { Effect } from '../../../../domain/types';
 import { ItemPermissions } from '../../../services';
 import { SetResponseDto } from '../../set/dto/set-response.dto';
 
@@ -16,8 +16,6 @@ export class ItemResponseDto {
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
   public readonly permissions: ItemPermissions;
-
-  public readonly stats?: Stats[] | null;
 
   public readonly setId?: string | null;
   public readonly set?: SetResponseDto | null;
@@ -35,7 +33,6 @@ export class ItemResponseDto {
     createdAt: Date;
     updatedAt: Date;
     permissions: ItemPermissions;
-    stats?: Stats[] | null;
     set?: SetResponseDto | null;
   }) {
     this.id = props.id;
@@ -49,7 +46,6 @@ export class ItemResponseDto {
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.permissions = props.permissions;
-    this.stats = props.stats;
     this.setId = props.setId;
     this.set = props.set;
 
@@ -70,7 +66,6 @@ export class ItemResponseDto {
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
       permissions: permissions,
-      stats: item.stats,
       set: item.set ? SetResponseDto.create(item.set) : null,
     };
 

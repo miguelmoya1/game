@@ -5,7 +5,7 @@ import { MapTopControlsComponent } from '../components/map-top-controls/map-top-
 import { MapCoreService } from '../services/map-core.service';
 import { MapPlaceService } from '../services/map-place.service';
 import { MapPlayerService } from '../services/map-player.service';
-import { PlaceService } from '../services/place.service';
+import { PLACE_SERVICE } from '../services/place.service.contract';
 
 @Component({
   selector: 'game-map',
@@ -15,7 +15,7 @@ import { PlaceService } from '../services/place.service';
 })
 export class MapComponent {
   readonly #geolocationService = inject(GeolocationService);
-  readonly #placeService = inject(PlaceService);
+  readonly #placeService = inject(PLACE_SERVICE);
   readonly #router = inject(Router);
 
   readonly #mapCoreService = inject(MapCoreService);
@@ -30,7 +30,7 @@ export class MapComponent {
     });
 
     effect(() => {
-      const places = this.#placeService.all.value();
+      const places = this.#placeService.list.value();
 
       this.#mapPlaceService.addPlaces(places);
     });
@@ -51,9 +51,7 @@ export class MapComponent {
         return;
       }
 
-      this.#router.navigate(['map', marker.place.id], {
-        state: { place: marker.place },
-      });
+      this.#router.navigate(['map', marker.place.id]);
     });
   }
 }

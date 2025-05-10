@@ -8,6 +8,7 @@ import { placeRepositoryProvider } from './impl/place.repository.provider';
 import { playerItemCollectionLogRepositoryProvider } from './impl/player-item-collection-log.repository.provider';
 import { playerItemRepositoryProvider } from './impl/player-item.repository.provider';
 import { playerRepositoryProvider } from './impl/player.repository.provider';
+import { setRepositoryProvider } from './impl/set.repository.provider';
 import { userRepositoryProvider } from './impl/user.repository.provider';
 
 const repositories = [
@@ -20,6 +21,7 @@ const repositories = [
   itemRepositoryProvider,
   playerRepositoryProvider,
   playerItemRepositoryProvider,
+  setRepositoryProvider,
 ];
 
 @Module({

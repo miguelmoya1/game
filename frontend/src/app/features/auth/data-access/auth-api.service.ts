@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 import { tokenMapper } from '../mappers/auth.mapper';
-import { AuthApiServiceContract } from './auth-api.service.contract';
+import { AuthApiService } from './auth-api.service.contract';
 import { LoginEmailDto } from './dto/login-email.dto';
 import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
-export class AuthApiService implements AuthApiServiceContract {
+export class AuthApiServiceImpl implements AuthApiService {
   readonly #httpClient = inject(HttpClient);
 
   async loginEmail(loginEmailDto: LoginEmailDto) {

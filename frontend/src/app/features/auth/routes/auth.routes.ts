@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { AuthApiService } from '../data-access/auth-api.service';
+import { AuthApiServiceImpl } from '../data-access/auth-api.service';
 import { AUTH_API_SERVICE } from '../data-access/auth-api.service.contract';
-import { AuthFacade } from '../services/auth.facade';
-import { AUTH_FACADE } from '../services/auth.facade.contract';
+import { AuthServiceImpl } from '../services/auth.service';
+import { AUTH_SERVICE } from '../services/auth.service.contract';
 
 const authRoutes: Routes = [
   {
@@ -10,11 +10,11 @@ const authRoutes: Routes = [
     providers: [
       {
         provide: AUTH_API_SERVICE,
-        useClass: AuthApiService,
+        useClass: AuthApiServiceImpl,
       },
       {
-        provide: AUTH_FACADE,
-        useClass: AuthFacade,
+        provide: AUTH_SERVICE,
+        useClass: AuthServiceImpl,
       },
     ],
     loadComponent: () => import('../pages/auth-layout/auth-layout.component').then((m) => m.AuthLayoutComponent),

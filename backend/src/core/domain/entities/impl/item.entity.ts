@@ -1,5 +1,5 @@
 import { ItemType, PlaceCategory, Rank } from '../../enums';
-import { Effect, Item, Stats } from '../../types';
+import { Effect, Item } from '../../types';
 import { SetEntity } from './set.entity';
 
 export class ItemEntity implements Item {
@@ -12,7 +12,6 @@ export class ItemEntity implements Item {
   public readonly spawnCategories: PlaceCategory[];
   public readonly imageUrl: string | null;
 
-  public readonly stats?: Stats[] | null;
   public readonly setId: string | null;
   public readonly set?: SetEntity | null;
 
@@ -30,7 +29,6 @@ export class ItemEntity implements Item {
     this.imageUrl = item.imageUrl;
 
     this.spawnCategories = item.spawnCategories;
-    this.stats = item.stats;
 
     this.setId = item.setId;
     this.set = item.set;

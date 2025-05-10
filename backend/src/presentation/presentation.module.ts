@@ -8,6 +8,8 @@ import { InventoryController } from './inventory/inventory.controller';
 import { ItemsController } from './items/items.controller';
 import { PlacesController } from './places/places.controller';
 import { PlayerController } from './player/places.controller';
+import { SearchController } from './search/search.controller';
+import { SetController } from './set/set.controller';
 import { TranslateController } from './translate/translate.controller';
 import { UsersController } from './users/users.controller';
 
@@ -15,12 +17,14 @@ import { UsersController } from './users/users.controller';
   imports: [CqrsModule.forRoot(), CommandsModule, QueriesModule, EventsModule],
   controllers: [
     AuthController,
+    InventoryController,
     ItemsController,
     PlacesController,
     PlayerController,
+    SearchController,
+    SetController,
     TranslateController,
     UsersController,
-    InventoryController,
   ],
 })
 export class PresentationModule {}

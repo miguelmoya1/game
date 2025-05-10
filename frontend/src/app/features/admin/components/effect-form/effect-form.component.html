@@ -1,0 +1,89 @@
+@let effectGroupTemplate = effectGroup();
+
+<div [formGroup]="$any(effectGroupTemplate)" class="effect-form-container">
+  <div class="form-group small-margin">
+    <label for="effectMinimumItems-{{ index() }}">{{ 'REQUIRED_PIECES' | translate }}</label>
+    <input
+      id="effectMinimumItems-{{ index() }}"
+      type="number"
+      formControlName="minimumItems"
+      placeholder="{{ 'EXAMPLE_2' | translate }}"
+    />
+    @if (
+      effectGroupTemplate.get('minimumItems')?.invalid &&
+      (effectGroupTemplate.get('minimumItems')?.dirty || effectGroupTemplate.get('minimumItems')?.touched)
+    ) {
+      <div class="error-message">
+        @if (effectGroupTemplate.get('minimumItems')?.errors?.['required']) {
+          {{ 'REQUIRED' | translate }}
+        }
+        @if (effectGroupTemplate.get('minimumItems')?.errors?.['min']) {
+          {{ 'MINIMUM_1' | translate }}
+        }
+      </div>
+    }
+  </div>
+
+  <div class="effect-fields-grid">
+    <div class="form-group">
+      <label for="effectType-{{ index() }}">{{ 'EFFECT_TYPE_OPTIONAL' | translate }}</label>
+      <select id="effectType-{{ index() }}" formControlName="type">
+        <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
+        @for (eType of effectTypes; track eType) {
+          <option [value]="eType">{{ eType | translate }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="effectTarget-{{ index() }}">{{ 'EFFECT_TARGET_OPTIONAL' | translate }}</label>
+      <select id="effectTarget-{{ index() }}" formControlName="target">
+        <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
+        @for (eTarget of effectTargets; track eTarget) {
+          <option [value]="eTarget">{{ eTarget | translate }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="effectStatsType-{{ index() }}">{{ 'MODIFIED_STAT_OPTIONAL' | translate }}</label>
+      <select id="effectStatsType-{{ index() }}" formControlName="stats">
+        <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
+        @for (sType of statsTypes; track sType) {
+          <option [value]="sType">{{ sType | translate }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="effectStatsTarget-{{ index() }}">{{ 'STAT_TARGET_OPTIONAL' | translate }}</label>
+      <select id="effectStatsTarget-{{ index() }}" formControlName="statsTarget">
+        <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
+        @for (sTarget of statsTargets; track sTarget) {
+          <option [value]="sTarget">{{ sTarget | translate }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group full-width">
+    <label for="effectValue-{{ index() }}">{{ 'EFFECT_OR_STAT_VALUE_OPTIONAL' | translate }}</label>
+    <input
+      id="effectValue-{{ index() }}"
+      type="number"
+      step="any"
+      formControlName="value"
+      placeholder="{{ 'EXAMPLE_10_OR_01' | translate }}"
+    />
+    @if (
+      effectGroupTemplate.get('value')?.invalid &&
+      (effectGroupTemplate.get('value')?.dirty || effectGroupTemplate.get('value')?.touched)
+    ) {
+      <div class="error-message">
+        @if (effectGroupTemplate.get('value')?.errors?.['pattern']) {
+          {{ 'MUST_BE_NUMBER' | translate }}
+        }
+      </div>
+    }
+  </div>
+</div>

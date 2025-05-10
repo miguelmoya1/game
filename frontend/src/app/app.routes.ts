@@ -24,6 +24,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/inventory/routes/inventory.routes'),
   },
   {
+    path: 'admin',
+    canMatch: [loggedGuard],
+    loadChildren: () => import('./features/admin/routes/admin.routes'),
+  },
+  {
     path: '**',
     redirectTo: 'auth/login',
   },

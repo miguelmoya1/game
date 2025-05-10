@@ -5,9 +5,7 @@ type Position = { latitude: number; longitude: number };
 
 const FIXED_ZOOM_LEVEL = 18;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MapCoreService {
   #mapLibre = signal<Map | null>(null);
   readonly #mapConfig: Partial<MapOptions> = {

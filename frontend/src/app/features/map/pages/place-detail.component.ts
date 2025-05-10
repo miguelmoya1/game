@@ -1,19 +1,19 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BorderDirective, ButtonDirective, InfoDirective } from '@game/shared/directives';
+import { BorderDirective, ButtonDirective } from '@game/shared/directives';
 import { TranslatePipe } from '@game/shared/pipes/translate.pipe';
 import { ItemComponent } from '../../../shared/components/item/item.component';
-import { PlaceService } from '../services/place.service';
+import { PLACE_SERVICE } from '../services/place.service.contract';
 
 @Component({
   selector: 'game-place-detail',
-  imports: [ButtonDirective, TranslatePipe, InfoDirective, ItemComponent],
+  imports: [ButtonDirective, TranslatePipe, ItemComponent],
   hostDirectives: [BorderDirective],
   templateUrl: './place-detail.component.html',
   styleUrl: './place-detail.component.css',
 })
 export class PlaceDetailComponent {
-  readonly #placeService = inject(PlaceService);
+  readonly #placeService = inject(PLACE_SERVICE);
   readonly #router = inject(Router);
   readonly loading = signal(false);
 

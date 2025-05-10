@@ -4,9 +4,7 @@ import { MapCoreService } from './map-core.service';
 
 type Position = { latitude: number; longitude: number };
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MapPlayerService {
   readonly #mapCoreService = inject(MapCoreService);
   readonly #map = this.#mapCoreService.map!;

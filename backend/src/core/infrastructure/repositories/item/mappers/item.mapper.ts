@@ -1,5 +1,5 @@
 import { ItemEntity } from '../../../../domain/entities';
-import { Effect, Stats } from '../../../../domain/types';
+import { Effect } from '../../../../domain/types';
 import { ItemIncludePayload } from '../utils/item-includes';
 import { setToEntity } from './set.mapper';
 
@@ -13,8 +13,6 @@ export const itemToEntity = (item: ItemIncludePayload) => {
     rank: item.rank,
     spawnCategories: item.spawnCategories,
     imageUrl: item.imageUrl,
-
-    stats: item.stats as Stats[],
 
     setId: item.setId,
     set: item.set ? setToEntity(item.set) : undefined,

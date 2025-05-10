@@ -51,3 +51,9 @@ export {
   PlayerItemRepository,
 } from './player/contracts/player-item.repository.contract';
 export { PlayerItemRepositoryImpl } from './player/impl/player-item.repository';
+
+export {
+  SET_REPOSITORY,
+  SetRepository,
+} from './set/contracts/set.repository.contract';
+export { SetRepositoryImpl } from './set/impl/set.repository';

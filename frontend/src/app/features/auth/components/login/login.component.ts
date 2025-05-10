@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { ButtonDirective, InputDirective } from '@game/shared/directives';
 import { TranslatePipe } from '@game/shared/pipes/translate.pipe';
-import { AUTH_FACADE } from '../../services/auth.facade.contract';
+import { AUTH_SERVICE } from '../../services/auth.service.contract';
 
 @Component({
   selector: 'game-login',
@@ -12,7 +12,7 @@ import { AUTH_FACADE } from '../../services/auth.facade.contract';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  readonly #authFacade = inject(AUTH_FACADE);
+  readonly #authService = inject(AUTH_SERVICE);
   readonly #router = inject(Router);
 
   protected readonly loginForm = new FormGroup({
@@ -28,7 +28,7 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.getRawValue() as { email: string; password: string };
 
-    const result = await this.#authFacade.loginEmail({ email, password });
+    const result = await this.#authService.loginEmail({ email, password });
 
     if (result) {
       await this.#router.navigate(['/map']);

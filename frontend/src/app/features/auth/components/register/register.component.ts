@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ButtonDirective, InputDirective } from '@game/shared/directives';
 import { AccountProvider } from '@game/shared/enums';
 import { TranslatePipe } from '@game/shared/pipes/translate.pipe';
-import { AUTH_FACADE } from '../../services/auth.facade.contract';
+import { AUTH_SERVICE } from '../../services/auth.service.contract';
 
 @Component({
   selector: 'game-register',
@@ -13,7 +13,7 @@ import { AUTH_FACADE } from '../../services/auth.facade.contract';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  readonly #authFacade = inject(AUTH_FACADE);
+  readonly #authService = inject(AUTH_SERVICE);
 
   protected readonly registerForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -40,7 +40,7 @@ export class RegisterComponent {
 
     const { email, password } = this.registerForm.getRawValue() as { email: string; password: string };
 
-    const result = await this.#authFacade.register({
+    const result = await this.#authService.register({
       email,
       password,
       provider: AccountProvider.EMAIL,

@@ -37,20 +37,14 @@
 }
 
 .content {
-  max-height: 650px;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  grid-template-areas:
-    'title title'
-    'item item';
-
-  overflow-y: auto;
+  gap: 1rem;
 
   h1 {
-    grid-area: title;
-
     max-width: clamp(var(--min-width), 90%, var(--max-width));
     overflow: hidden;
     text-overflow: ellipsis;

@@ -1,0 +1,35 @@
+:host {
+  width: min(100%, 300px);
+  display: flex;
+  flex-direction: column;
+
+  padding: 1rem;
+
+  border: 1px solid var(--color-border);
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-secondary);
+  margin: 0 0 5px 0;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: var(--color-info);
+  margin-bottom: 15px;
+}
+
+.effects-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-secondary);
+  margin-bottom: 10px;
+}
+
+.effects-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}

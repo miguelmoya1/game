@@ -4,11 +4,10 @@ import { GeolocationService } from '@game/core/services/geolocation.service';
 import { PlaceApiService } from '../data-access/place-api.service';
 import { mapPlaceListArrayToEntityArray } from './mappers/place-list.mapper';
 import { mapPlaceToEntity } from './mappers/place.mapper';
+import { PlaceService } from './place.service.contract';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class PlaceService {
+@Injectable()
+export class PlaceServiceImpl implements PlaceService {
   readonly #geolocationService = inject(GeolocationService);
   readonly #placeApiService = inject(PlaceApiService);
   readonly #placeSelected = signal<string | null>(null);
@@ -17,7 +16,7 @@ export class PlaceService {
     parse: mapPlaceToEntity,
   });
 
-  readonly #all = httpResource(
+  readonly #list = httpResource(
     () => {
       const position = this.#geolocationService.position();
 
@@ -32,7 +31,7 @@ export class PlaceService {
     { parse: mapPlaceListArrayToEntityArray, defaultValue: [] },
   );
 
-  public readonly all = this.#all.asReadonly();
+  public readonly list = this.#list.asReadonly();
   public readonly place = this.#place.asReadonly();
 
   public setPlaceId(id: string | null) {
@@ -49,6 +48,6 @@ export class PlaceService {
     await this.#placeApiService.claim(placeId);
 
     this.#place.reload();
-    this.#all.reload();
+    this.#list.reload();
   }
 }

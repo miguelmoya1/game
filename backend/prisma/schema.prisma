@@ -63,14 +63,7 @@ enum EffectType {
   IMMUNE_POISON
 }
 
-enum EffectTarget {
-  ALLY
-  ENEMY
-  SELF
-  TEAM
-}
-
-enum StatsTarget {
+enum Target {
   ALLY
   ENEMY
   SELF
@@ -187,7 +180,7 @@ model Player {
   level          Int                       @default(1)
   rank           Rank                      @default(E)
   experience     Int                       @default(0)
-  /// [Stats] [{statsType: STR, value: 10}]
+  /// [Stats] [{statsType: STR, value: 10, target: ALLY}]
   stats          Json                      @db.JsonB
   userId         String                    @unique
   user           User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -246,15 +239,13 @@ model Item {
   description     String?
   itemType        ItemType
   imageUrl        String?
-  // [Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR, statsTarget?: ALLY}]
+  // [Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR}]
   effect          Json?                     @db.JsonB
   rank            Rank?
   spawnCategories PlaceCategory[]
   currentInPlaces Place[]                   @relation("CurrentItem")
   collectionLogs  PlayerItemCollectionLog[]
   playerItems     PlayerItem[]
-  /// [Stats] [{statsType: STR, value: 10, statsTarget: ALLY}] 
-  stats           Json?                     @db.JsonB
   setId           String?
   set             Set?                      @relation(fields: [setId], references: [id])
   createdAt       DateTime                  @default(now())
@@ -273,7 +264,7 @@ model Set {
   name        String    @unique
   description String?
   items       Item[]
-  ///[Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR, statsTarget?: ALLY}]
+  ///[Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR, minimumItems?: number}]
   effects     Json?     @db.JsonB
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

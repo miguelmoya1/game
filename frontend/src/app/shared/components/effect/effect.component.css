@@ -1,0 +1,10 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.target {
+  font-weight: bold;
+  color: var(--color-secondary);
+}

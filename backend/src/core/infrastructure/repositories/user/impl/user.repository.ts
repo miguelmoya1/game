@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { AccountProvider, UserRole } from '@prisma/client';
 import {
   CreateUserDataDto,
   UpdateUserDataDto,
@@ -10,6 +9,7 @@ import {
   ENCRYPTION_SERVICE,
   EncryptionService,
 } from '../../../../application/services';
+import { AccountProvider, UserRole } from '../../../../domain/enums';
 import { UserRepository } from '../contracts/user.repository.contract';
 import { userToEntity } from '../mappers/user.mapper';
 

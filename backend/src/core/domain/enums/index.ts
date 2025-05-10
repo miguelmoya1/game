@@ -1,10 +1,9 @@
 export { AccountProvider } from './impl/account-provider.enum';
-export { EffectTarget } from './impl/effect-target.enum';
 export { EffectType } from './impl/effect-type.enum';
 export { ErrorCodes } from './impl/error-codes.enums';
 export { ItemType } from './impl/item-type.enum';
 export { PlaceCategory } from './impl/place-category.enum';
 export { Rank } from './impl/rank.enum';
-export { StatsTarget } from './impl/stats-target.enum';
 export { StatsType } from './impl/stats-type.enum';
+export { Target } from './impl/target.enum';
 export { UserRole } from './impl/user-role.enum';

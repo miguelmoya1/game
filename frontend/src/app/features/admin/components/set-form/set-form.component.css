@@ -1,0 +1,151 @@
+:host {
+  display: block;
+  margin: 0 auto;
+  font-family: var(--font-family-main);
+  color: var(--text-color);
+  max-width: 800px;
+
+  padding: 2rem;
+}
+
+.create-form {
+  background-color: rgba(var(--color-primary-rgb), 0.05);
+  border: 1px solid rgba(var(--color-border-rgb), 0.3);
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.form-title {
+  color: var(--color-primary);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  border-bottom: 1px solid rgba(var(--color-border-rgb), 0.15);
+  padding-bottom: 15px;
+}
+
+.form-section {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(var(--color-border-rgb), 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--color-secondary);
+}
+
+.form-group input[type='text'],
+.form-group input[type='number'],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(var(--background-color), 0.7);
+  border: 1px solid rgba(var(--color-border-rgb), 0.3);
+  border-radius: 4px;
+  color: var(--text-color);
+  font-family: var(--font-family-main);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.error-message {
+  color: var(--color-warning);
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.dynamic-section .section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.dynamic-section .add-button {
+  background-color: transparent;
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 1.4rem;
+  line-height: 24px;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.dynamic-section .add-button:hover {
+  background-color: rgba(var(--color-secondary-rgb), 0.1);
+  color: var(--text-color);
+}
+
+.dynamic-section .dynamic-item {
+  border: 1px dashed rgba(var(--color-border-rgb), 0.2);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  background-color: rgba(var(--background-color), 0.1);
+}
+
+.dynamic-section .effect-group-title {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(var(--color-border-rgb), 0.1);
+  padding-bottom: 8px;
+}
+
+.dynamic-section .no-items-text {
+  font-style: italic;
+  color: var(--color-disabled-text);
+  text-align: center;
+  margin: 10px 0;
+}
+
+.dynamic-section .remove-action {
+  text-align: right;
+  margin-top: 15px;
+}
+
+.dynamic-section .remove-button {
+  background-color: transparent;
+  border: 1px solid var(--color-warning);
+  color: var(--color-warning);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dynamic-section .remove-button:hover {
+  background-color: rgba(var(--color-warning-rgb), 0.1);
+  color: var(--text-color);
+}
+
+.form-actions {
+  margin-top: 1rem;
+
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 15px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--color-secondary);
+  }
+
+  input[type='text'],
+  input[type='number'],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(var(--background-color), 0.7);
+    border: 1px solid rgba(var(--color-border-rgb), 0.3);
+    border-radius: 4px;
+    color: var(--text-color);
+    font-family: var(--font-family-main);
+    font-size: 1rem;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 30px;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 5px rgba(var(--color-primary-rgb), 0.5);
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: var(--color-warning);
+    }
+  }
+
+  select {
+    option {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+  }
+
+  select::-ms-expand {
+    display: none;
+  }
+}
+
+.form-group.small-margin {
+  margin-bottom: 10px;
+}
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.error-message {
+  color: var(--color-warning);
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.effect-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}

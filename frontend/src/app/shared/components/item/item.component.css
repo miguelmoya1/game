@@ -162,48 +162,6 @@
   border: 1px solid rgba(var(--color-primary-rgb), 0.3);
 }
 
-.set-info {
-  background-color: rgba(var(--color-secondary-rgb), 0.05);
-  border: 1px solid rgba(var(--color-secondary-rgb), 0.2);
-  padding: 15px;
-  border-radius: 6px;
-}
-.set-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--color-secondary);
-  margin: 0 0 5px 0;
-}
-.set-description {
-  font-size: 0.9rem;
-  color: var(--color-info);
-  margin-bottom: 15px;
-}
-.set-effects-title {
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--text-color);
-  margin-bottom: 8px;
-}
-.set-effects-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 0.9rem;
-}
-.set-effects-list li {
-  background-color: rgba(var(--background-color), 0.5);
-  padding: 8px;
-  border-radius: 4px;
-  margin-bottom: 8px;
-  border-left: 3px solid var(--color-secondary);
-}
-.set-effects-list .effect-target {
-  font-style: italic;
-  color: var(--color-disabled-text);
-  margin-left: 5px;
-}
-
 .footer {
   /* Antes .item-footer */
   font-size: var(--font-size-info);

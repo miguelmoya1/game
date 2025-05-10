@@ -2,10 +2,10 @@ import { computed, inject, ResourceStatus } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { CanMatchFn, Router } from '@angular/router';
 import { filter, map, tap } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { AuthGlobalService } from '../services/auth-global.service';
 
 export const loggedGuard: CanMatchFn = () => {
-  const authService = inject(AuthService);
+  const authService = inject(AuthGlobalService);
   const router = inject(Router);
 
   const isAuthenticated = computed(() => ({
