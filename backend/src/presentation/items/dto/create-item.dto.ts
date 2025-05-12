@@ -23,7 +23,7 @@ export class CreateItemDto {
 
   @IsOptional()
   @IsArray({ message: 'MUST_BE_ARRAY' })
-  declare readonly effect?: Effect[];
+  declare readonly effects?: Effect[];
 
   @IsOptional()
   @IsArray({ message: 'MUST_BE_ARRAY' })

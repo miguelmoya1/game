@@ -1,54 +1,27 @@
-@let formTemplate = setForm();
-
-<form [formGroup]="formTemplate">
-  <div class="form-section">
-    <div class="form-group">
-      <label for="setName">{{ 'SET_NAME' | translate }}</label>
-      <input id="setName" type="text" formControlName="name" placeholder="{{ 'SET_NAME' | translate }}" />
-      @if (name()?.invalid && (name()?.dirty || name()?.touched)) {
-        <div class="error-message">
-          @if (name()?.errors?.['required']) {
-            {{ 'NAME_REQUIRED' | translate }}
-          }
-          @if (name()?.errors?.['minlength']) {
-            {{ 'NAME_MIN_LENGTH' | translate }}
-          }
-        </div>
-      }
-    </div>
-
-    <div class="form-group">
-      <label for="setDescription">{{ 'SET_DESCRIPTION_OPTIONAL' | translate }}</label>
-      <textarea
-        id="setDescription"
-        formControlName="description"
-        placeholder="{{ 'SET_DESCRIPTION_PLACEHOLDER' | translate }}"
-      ></textarea>
-    </div>
-  </div>
-
-  <div class="form-section dynamic-section" formArrayName="effects">
-    <h3 class="section-title">
-      {{ 'SET_EFFECTS' | translate }}
-      <button type="button" (click)="addEffect()" class="add-button">+</button>
-    </h3>
-
-    @if (effects().controls.length === 0) {
-      <p class="no-items-text">{{ 'ADD_EFFECTS_FOR_SET' | translate }}</p>
-    }
-
-    @for (effectGroup of effects().controls; track $index; let i = $index) {
-      <div class="dynamic-item effect-group" [formGroupName]="i">
-        <h4 class="effect-group-title">{{ 'EFFECT' | translate }} #{{ i + 1 }}</h4>
-
-        <game-effect-form [effectGroup]="effectGroup" [index]="i" />
-
-        <div class="remove-action">
-          <button type="button" (click)="removeEffect(i)" class="remove-button full-width-remove">
-            {{ 'REMOVE_EFFECT' | translate }} #{{ i + 1 }}
-          </button>
-        </div>
+<form [formGroup]="setForm()">
+  <div class="form-group">
+    <label for="setName">{{ 'SET_NAME' | translate }}</label>
+    <input id="setName" type="text" formControlName="name" placeholder="{{ 'SET_NAME' | translate }}" />
+    @if (name.invalid && (name.dirty || name.touched)) {
+      <div class="error-message">
+        @if (name.errors?.['required']) {
+          {{ 'NAME_REQUIRED' | translate }}
+        }
+        @if (name.errors?.['minlength']) {
+          {{ 'NAME_MIN_LENGTH' | translate }}
+        }
       </div>
     }
   </div>
+
+  <div class="form-group">
+    <label for="setDescription">{{ 'SET_DESCRIPTION_OPTIONAL' | translate }}</label>
+    <textarea
+      id="setDescription"
+      formControlName="description"
+      placeholder="{{ 'SET_DESCRIPTION_PLACEHOLDER' | translate }}"
+    ></textarea>
+  </div>
+
+  <game-effects-form [effectsArray]="effects" />
 </form>

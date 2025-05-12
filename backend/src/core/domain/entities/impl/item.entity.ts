@@ -7,7 +7,7 @@ export class ItemEntity implements Item {
   public readonly name: string;
   public readonly description: string | null;
   public readonly itemType: ItemType;
-  public readonly effect?: Effect[] | null;
+  public readonly effects?: Effect[] | null;
   public readonly rank: Rank | null;
   public readonly spawnCategories: PlaceCategory[];
   public readonly imageUrl: string | null;
@@ -24,7 +24,7 @@ export class ItemEntity implements Item {
     this.name = item.name;
     this.description = item.description;
     this.itemType = item.itemType;
-    this.effect = item.effect;
+    this.effects = item.effects;
     this.rank = item.rank;
     this.imageUrl = item.imageUrl;
 

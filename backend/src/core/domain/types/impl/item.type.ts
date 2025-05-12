@@ -9,7 +9,7 @@ export type Item = {
   readonly description: string | null;
   readonly itemType: ItemType;
   readonly imageUrl: string | null;
-  readonly effect?: Effect[] | null;
+  readonly effects?: Effect[] | null;
   readonly rank: Rank | null;
   readonly spawnCategories: PlaceCategory[];
 

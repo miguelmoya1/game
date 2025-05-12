@@ -27,33 +27,6 @@
   </div>
 </div>
 
-@if (itemTemplate.stats && itemTemplate.stats.length > 0) {
-  <div class="section stats">
-    <h3 class="section-title">{{ 'BONUS_STATS' | translate }}:</h3>
-    <ul>
-      @for (stat of itemTemplate.stats; track $index) {
-        <li>
-          <span class="stat-name stat-{{ stat.satsType }}">{{ stat.satsType }}</span>
-          <span>{{ stat.value >= 0 ? '+' : '' }}{{ stat.value }}</span>
-        </li>
-      }
-    </ul>
-  </div>
-}
-
-@if (itemTemplate.effect && itemTemplate.effect.length > 0) {
-  <div class="section direct-effects">
-    <h3 class="section-title">{{ 'DIRECT_EFFECTS' | translate }}:</h3>
-    <ul>
-      @for (eff of itemTemplate.effect; track $index) {
-        <li>
-          <game-effect [effect]="eff" />
-        </li>
-      }
-    </ul>
-  </div>
-}
-
 @if (itemTemplate.spawnCategories && itemTemplate.spawnCategories.length > 0) {
   <div class="section spawn-categories">
     <h3 class="section-title">

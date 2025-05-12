@@ -1,6 +1,6 @@
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["debian-openssl-3.0.x"]
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -235,12 +235,12 @@ model PlayerItem {
 
 model Item {
   id              String                    @id @default(uuid())
-  name            String                    @unique
+  name            String
   description     String?
   itemType        ItemType
   imageUrl        String?
   // [Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR}]
-  effect          Json?                     @db.JsonB
+  effects         Json?                     @db.JsonB
   rank            Rank?
   spawnCategories PlaceCategory[]
   currentInPlaces Place[]                   @relation("CurrentItem")

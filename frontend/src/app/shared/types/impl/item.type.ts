@@ -13,7 +13,7 @@ export type Item = {
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly imageUrl: string | null;
-  readonly effect?: Effect[] | null;
+  readonly effects?: Effect[] | null;
   readonly permissions: {
     readonly canCreate: boolean;
     readonly canEdit: boolean;

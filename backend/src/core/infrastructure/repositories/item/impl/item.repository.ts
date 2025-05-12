@@ -67,7 +67,7 @@ export class ItemRepositoryImpl implements ItemRepository {
         description: item.description,
         imageUrl: item.imageUrl,
         itemType: item.itemType,
-        effect: item.effect,
+        effects: item.effects,
         spawnCategories: item.spawnCategories,
         rank: item.rank,
         setId: item.setId,

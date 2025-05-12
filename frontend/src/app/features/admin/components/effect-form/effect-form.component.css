@@ -1,57 +1,13 @@
 :host {
   display: block;
+  border: 1px dashed var(--color-border);
+  border-radius: 5px;
+
+  padding: 1rem;
 }
 
 .form-group {
   margin-bottom: 15px;
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    color: var(--color-secondary);
-  }
-
-  input[type='text'],
-  input[type='number'],
-  textarea,
-  select {
-    width: 100%;
-    padding: 10px;
-    background-color: rgba(var(--background-color), 0.7);
-    border: 1px solid rgba(var(--color-border-rgb), 0.3);
-    border-radius: 4px;
-    color: var(--text-color);
-    font-family: var(--font-family-main);
-    font-size: 1rem;
-    box-sizing: border-box;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding-right: 30px;
-
-    &:focus {
-      outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 5px rgba(var(--color-primary-rgb), 0.5);
-    }
-
-    &.ng-invalid.ng-touched {
-      border-color: var(--color-warning);
-    }
-  }
-
-  select {
-    option {
-      background-color: var(--background-color);
-      color: var(--text-color);
-    }
-  }
-
-  select::-ms-expand {
-    display: none;
-  }
 }
 
 .form-group.small-margin {

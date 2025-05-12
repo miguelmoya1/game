@@ -7,7 +7,7 @@ export type CreateItemDataDto = {
   imageUrl?: string;
   rank?: Rank;
   itemType: ItemType;
-  effect?: Effect[];
+  effects?: Effect[];
   spawnCategories?: PlaceCategory[];
   setId?: string;
 };

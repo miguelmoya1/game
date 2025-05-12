@@ -9,7 +9,7 @@ export const itemToEntity = (item: ItemIncludePayload) => {
     name: item.name,
     description: item.description,
     itemType: item.itemType,
-    effect: item.effect as Effect[],
+    effects: item.effects as Effect[],
     rank: item.rank,
     spawnCategories: item.spawnCategories,
     imageUrl: item.imageUrl,

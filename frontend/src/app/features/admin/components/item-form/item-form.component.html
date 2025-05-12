@@ -1,0 +1,68 @@
+<form [formGroup]="itemForm()">
+  <div class="form-group">
+    <label for="itemName">{{ 'ITEM_NAME' | translate }}</label>
+    <input id="itemName" type="text" formControlName="name" placeholder="{{ 'ITEM_NAME' | translate }}" />
+    @if (name.invalid && (name.dirty || name.touched)) {
+      <div class="error-message">
+        @if (name.errors?.['required']) {
+          {{ 'NAME_REQUIRED' | translate }}
+        }
+        @if (name.errors?.['minlength']) {
+          {{ 'NAME_MIN_LENGTH' | translate }}
+        }
+      </div>
+    }
+  </div>
+
+  <div class="form-group">
+    <label for="itemDescription">{{ 'ITEM_DESCRIPTION_OPTIONAL' | translate }}</label>
+    <textarea
+      id="itemDescription"
+      formControlName="description"
+      placeholder="{{ 'ITEM_DESCRIPTION_PLACEHOLDER' | translate }}"
+    ></textarea>
+  </div>
+
+  <!-- IMAGE -->
+
+  <div class="form-group">
+    <label for="itemType">{{ 'ITEM_TYPE' | translate }}</label>
+    <select id="itemType" formControlName="itemType">
+      <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
+      @for (type of itemTypes; track $index) {
+        <option [value]="type">{{ type | translate }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="itemRark">{{ 'ITEM_RANK' | translate }}</label>
+    <select id="itemRark" formControlName="rank">
+      <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
+      @for (rank of ranks; track $index) {
+        <option [value]="rank">{{ rank | translate }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="itemSet">{{ 'ITEM_SET' | translate }}</label>
+    <select id="itemSet" formControlName="setId">
+      <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
+      @for (set of setsOptions.value(); track $index) {
+        <option [value]="set.id">{{ set.name | translate }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="itemRarity">{{ 'ITEM_SPAWN_CATEGORIES' | translate }}</label>
+    <select id="itemRarity" formControlName="spawnCategories" multiple>
+      @for (category of spawnCategoriesOptions; track $index) {
+        <option [value]="category">{{ category | translate }}</option>
+      }
+    </select>
+  </div>
+
+  <game-effects-form [effectsArray]="effectsArray" />
+</form>

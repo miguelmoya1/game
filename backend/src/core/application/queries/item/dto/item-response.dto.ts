@@ -10,7 +10,7 @@ export class ItemResponseDto {
   public readonly description: string | null;
   public readonly itemType: ItemType;
   public readonly imageUrl: string | null;
-  public readonly effect?: Effect[] | null;
+  public readonly effects?: Effect[] | null;
   public readonly rank: Rank | null;
   public readonly spawnCategories: PlaceCategory[];
   public readonly createdAt: Date;
@@ -26,7 +26,7 @@ export class ItemResponseDto {
     description: string | null;
     itemType: ItemType;
     imageUrl: string | null;
-    effect?: Effect[] | null;
+    effects?: Effect[] | null;
     rank: Rank | null;
     setId?: string | null;
     spawnCategories: PlaceCategory[];
@@ -40,7 +40,7 @@ export class ItemResponseDto {
     this.description = props.description;
     this.itemType = props.itemType;
     this.imageUrl = props.imageUrl;
-    this.effect = props.effect;
+    this.effects = props.effects;
     this.rank = props.rank;
     this.spawnCategories = props.spawnCategories;
     this.createdAt = props.createdAt;
@@ -59,7 +59,7 @@ export class ItemResponseDto {
       description: item.description,
       itemType: item.itemType,
       imageUrl: item.imageUrl,
-      effect: item.effect,
+      effects: item.effects,
       rank: item.rank,
       setId: item.setId,
       spawnCategories: item.spawnCategories,

@@ -1,0 +1,18 @@
+<h3 class="title">
+  {{ 'EFFECTS' | translate }}
+  <button gameButton type="button" (click)="addEffect()" class="add-button">+</button>
+</h3>
+@if (effectsArray().controls.length === 0) {
+  <p class="no-items-text">{{ 'ADD_EFFECTS' | translate }}</p>
+}
+@for (effectGroup of effectsArray().controls; track $index; let i = $index) {
+  <h4 class="effect-group-title">{{ 'EFFECT' | translate }} #{{ i + 1 }}</h4>
+
+  <game-effect-form [effectGroup]="effectGroup" [index]="i" />
+
+  <div class="remove-action">
+    <button gameButton type="button" (click)="removeEffect(i)" class="remove-button full-width-remove">
+      {{ 'REMOVE_EFFECT' | translate }} #{{ i + 1 }}
+    </button>
+  </div>
+}

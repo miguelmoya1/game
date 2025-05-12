@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
+import { ItemApiServiceImpl } from '../data-access/item-api.service';
+import { ITEM_API_SERVICE } from '../data-access/item-api.service.contract';
 import { SetApiServiceImpl } from '../data-access/set-api.service';
 import { SET_API_SERVICE } from '../data-access/set-api.service.contract';
+import { ItemsServiceImpl } from '../services/items.service';
+import { ITEMS_SERVICE } from '../services/items.service.contract';
 import { SetsServiceImpl } from '../services/sets.service';
 import { SETS_SERVICE } from '../services/sets.service.contract';
 
@@ -16,6 +20,14 @@ const adminRoutes: Routes = [
         provide: SET_API_SERVICE,
         useClass: SetApiServiceImpl,
       },
+      {
+        provide: ITEM_API_SERVICE,
+        useClass: ItemApiServiceImpl,
+      },
+      {
+        provide: ITEMS_SERVICE,
+        useClass: ItemsServiceImpl,
+      },
     ],
     children: [
       {
@@ -25,6 +37,10 @@ const adminRoutes: Routes = [
       {
         path: 'sets/new',
         loadComponent: () => import('../pages/create-set/create-set.component').then((m) => m.CreateSetComponent),
+      },
+      {
+        path: 'items/new',
+        loadComponent: () => import('../pages/create-item/create-item.component').then((m) => m.CreateItemComponent),
       },
     ],
   },
