@@ -27,6 +27,8 @@
   "DATABASE_URL": "Database URL",
   "DEX": "Dex",
   "EDIT": "Edit",
+  "EDIT_ITEM": "Edit item",
+  "EDIT_SET": "Edit set",
   "EFFECT": "Effect",
   "EFFECTS": "Effects",
   "EFFECT_OR_STAT_VALUE_OPTIONAL": "Effect or stat value (optional)",

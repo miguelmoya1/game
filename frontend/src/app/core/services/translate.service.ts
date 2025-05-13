@@ -7,7 +7,7 @@ import { Injectable, signal } from '@angular/core';
 export class TranslateService {
   readonly #currentLanguage = signal('en');
 
-  readonly translates = httpResource(() => `translate/${this.#currentLanguage()}`, {
+  readonly translates = httpResource(() => `translate/es`, {
     defaultValue: {} as Record<string, string>,
     parse: (response: unknown) => {
       return response as Record<string, string>;

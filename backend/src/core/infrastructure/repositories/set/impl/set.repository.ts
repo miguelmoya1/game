@@ -52,6 +52,20 @@ export class SetRepositoryImpl implements SetRepository {
     return result.map((set) => setToEntity(set));
   }
 
+  public async getById(id: string) {
+    const set = await this._database.set.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!set) {
+      return null;
+    }
+
+    return setToEntity(set);
+  }
+
   public async create(createUSerDto: CreateSetDataDto) {
     const set = await this._database.set.create({
       data: {

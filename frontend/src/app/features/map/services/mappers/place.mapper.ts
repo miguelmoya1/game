@@ -24,25 +24,12 @@ function isPlaceDto(obj: unknown): obj is PlaceDto {
   );
 }
 
-function isPlaceDtoArray(obj: unknown): obj is PlaceDto[] {
-  return Array.isArray(obj) && obj.every(isPlaceDto);
-}
-
 export const mapPlaceToEntity = (data: unknown) => {
   if (!isPlaceDto(data)) {
     console.error('Invalid data structure for PlaceDto:', data);
     throw new TypeError('Invalid data structure received. Cannot map to Place entity.');
   }
   return mapPlace(data);
-};
-
-export const mapPlaceArrayToEntityArray = (data: unknown) => {
-  if (!isPlaceDtoArray(data)) {
-    console.error('Invalid data structure for PlaceDto array:', data);
-    throw new TypeError('Invalid data structure received. Cannot map to Place[] entity array.');
-  }
-
-  return data.map(mapPlace);
 };
 
 const mapPlace = (data: PlaceDto): PlaceEntity => {

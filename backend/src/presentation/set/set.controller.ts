@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateSetCommand } from '../../core/application/commands';
 import {
+  GetSetByIdQuery,
   GetSetListQuery,
   SetResponseDto,
 } from '../../core/application/queries';
@@ -21,6 +22,17 @@ export class SetController {
     const command = new GetSetListQuery(user);
 
     return await this._queryBus.execute<GetSetListQuery, SetResponseDto[]>(
+      command,
+    );
+  }
+
+  @Get(':setId')
+  async getSetById(
+    @AuthenticatedUser() user: UserEntity,
+    @Param('setId') setId: string,
+  ) {
+    const command = new GetSetByIdQuery(setId, user);
+    return await this._queryBus.execute<GetSetByIdQuery, SetResponseDto>(
       command,
     );
   }

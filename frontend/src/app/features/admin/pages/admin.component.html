@@ -19,7 +19,7 @@
 
   <div class="results">
     @for (result of results.sets; track result.id) {
-      <game-search-card [search]="result" />
+      <game-search-card [search]="result" (onClickEdit)="onClickEdit('sets', result.id)" />
     } @empty {
       <div class="no-results">
         <p>{{ 'NO_RESULTS' | translate }}</p>
@@ -33,7 +33,7 @@
 
   <div class="results">
     @for (result of results.places; track result.id) {
-      <game-search-card [search]="result" />
+      <game-search-card [search]="result" (onClickEdit)="onClickEdit('places', result.id)" />
     } @empty {
       <div class="no-results">
         <p>{{ 'NO_RESULTS' | translate }}</p>
@@ -47,7 +47,7 @@
 
   <div class="results">
     @for (result of results.items; track result.id) {
-      <game-search-card [search]="result" />
+      <game-search-card [search]="result" (onClickEdit)="onClickEdit('items', result.id)" />
     } @empty {
       <div class="no-results">
         <p>{{ 'NO_RESULTS' | translate }}</p>

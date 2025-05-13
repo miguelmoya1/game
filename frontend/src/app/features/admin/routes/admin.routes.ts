@@ -35,8 +35,16 @@ const adminRoutes: Routes = [
         loadComponent: () => import('../pages/admin.component').then((m) => m.AdminComponent),
       },
       {
+        path: 'sets/:setId/edit',
+        loadComponent: () => import('../pages/edit-set/edit-set.component').then((m) => m.EditSetComponent),
+      },
+      {
         path: 'sets/new',
         loadComponent: () => import('../pages/create-set/create-set.component').then((m) => m.CreateSetComponent),
+      },
+      {
+        path: 'items/:itemId/edit',
+        loadComponent: () => import('../pages/edit-item/edit-item.component').then((m) => m.EditItemComponent),
       },
       {
         path: 'items/new',

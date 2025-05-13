@@ -11,4 +11,12 @@ export class SetApiServiceImpl implements SetApiService {
   async create(createSetDto: CreateSetDto) {
     return firstValueFrom(this.#httpClient.post<void>('sets', createSetDto));
   }
+
+  async update(id: string, updateSetDto: CreateSetDto) {
+    return firstValueFrom(this.#httpClient.put<void>(`sets/${id}`, updateSetDto));
+  }
+
+  async delete(id: string) {
+    return firstValueFrom(this.#httpClient.delete<void>(`sets/${id}`));
+  }
 }

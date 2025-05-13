@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonDirective } from '../../../../shared/directives';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
 import { SetFormComponent } from '../../components/set-form/set-form.component';
+import { getEmptySetForm } from '../../helpers/set-form.helper';
 import { SETS_SERVICE } from '../../services/sets.service.contract';
 
 @Component({
@@ -16,16 +17,7 @@ export class CreateSetComponent {
   readonly #setsService = inject(SETS_SERVICE);
   readonly #router = inject(Router);
 
-  protected readonly setForm = new FormGroup({
-    name: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.minLength(3)],
-    }),
-    description: new FormControl<string | undefined>(undefined, {
-      nonNullable: true,
-    }),
-    effects: new FormArray([]),
-  });
+  protected readonly setForm = getEmptySetForm();
 
   async onSubmit() {
     if (!this.setForm.valid) {

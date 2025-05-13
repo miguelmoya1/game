@@ -1,0 +1,9 @@
+<h2 class="title">{{ 'EDIT_ITEM' | translate }}</h2>
+
+<game-item-form [itemForm]="itemForm" />
+
+<div class="actions">
+  <button gameButton type="submit" [disabled]="!itemForm.valid" class="submit-button" (click)="onSubmit()">
+    {{ 'EDIT_ITEM' | translate }}
+  </button>
+</div>

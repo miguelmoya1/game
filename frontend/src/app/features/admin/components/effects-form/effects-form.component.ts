@@ -1,7 +1,8 @@
 import { Component, input } from '@angular/core';
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective } from '../../../../shared/directives';
 import { TranslatePipe } from '../../../../shared/pipes/translate.pipe';
+import { getEmptyEffectForm } from '../../helpers/effect-form.helper';
 import { EffectFormComponent } from '../effect-form/effect-form.component';
 
 @Component({
@@ -13,21 +14,10 @@ import { EffectFormComponent } from '../effect-form/effect-form.component';
 export class EffectsFormComponent {
   public readonly effectsArray = input.required<FormArray>();
   protected addEffect() {
-    this.effectsArray().push(this.#createEffectGroup());
+    this.effectsArray().push(getEmptyEffectForm());
   }
 
   protected removeEffect(index: number) {
     this.effectsArray().removeAt(index);
-  }
-
-  #createEffectGroup() {
-    return new FormGroup({
-      type: new FormControl(null),
-      value: new FormControl(null, [Validators.pattern(/^-?\d*\.?\d+$/)]),
-      target: new FormControl(null),
-      stats: new FormControl(null),
-      statsTarget: new FormControl(null),
-      minimumItems: new FormControl(0, [Validators.required, Validators.min(0)]),
-    });
   }
 }
