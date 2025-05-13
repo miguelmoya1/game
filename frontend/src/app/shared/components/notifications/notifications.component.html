@@ -1,11 +1,9 @@
 @let notification = notifications()[0];
 
 @if (notification) {
-  <game-card horizontal class="notification {{ notification.type }}">
-    @if (notification.title) {
-      <h3 class="notification-title">{{ notification.title }}</h3>
-    }
+  @if (notification.title) {
+    <h3 class="notification-title">{{ notification.title }}</h3>
+  }
 
-    <p class="notification-message">{{ notification.message }}</p>
-  </game-card>
+  <p class="notification-message">{{ notification.message }}</p>
 }

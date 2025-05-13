@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateSetDataDto } from '../../../../application/commands';
+import { UpdateSetDataDto } from '../../../../application/commands/set/dto/update-set-data.dto';
 import {
   DATABASE_SERVICE,
   DatabaseService,
@@ -79,6 +80,21 @@ export class SetRepositoryImpl implements SetRepository {
       return null;
     }
 
+    return setToEntity(set);
+  }
+
+  public async update(id: string, updateSetDto: UpdateSetDataDto) {
+    const set = await this._database.set.update({
+      where: { id },
+      data: {
+        name: updateSetDto.name,
+        description: updateSetDto.description,
+        effects: updateSetDto.effects,
+      },
+    });
+    if (!set) {
+      return null;
+    }
     return setToEntity(set);
   }
 }

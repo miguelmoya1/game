@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateItemDataDto } from '../../../../application/commands';
+import { UpdateItemDataDto } from '../../../../application/commands/item/dto/update-item-data.dto';
 import {
   DATABASE_SERVICE,
   DatabaseService,
@@ -79,6 +80,27 @@ export class ItemRepositoryImpl implements ItemRepository {
       return null;
     }
 
+    return itemToEntity(result);
+  }
+
+  async update(id: string, updateItemDto: UpdateItemDataDto) {
+    const result = await this.databaseService.item.update({
+      where: { id },
+      data: {
+        name: updateItemDto.name,
+        description: updateItemDto.description,
+        imageUrl: updateItemDto.imageUrl,
+        itemType: updateItemDto.itemType,
+        effects: updateItemDto.effects,
+        spawnCategories: updateItemDto.spawnCategories,
+        rank: updateItemDto.rank,
+        setId: updateItemDto.setId,
+      },
+      include: itemInclude,
+    });
+    if (!result) {
+      return null;
+    }
     return itemToEntity(result);
   }
 }
