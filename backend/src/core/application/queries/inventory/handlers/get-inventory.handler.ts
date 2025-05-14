@@ -44,10 +44,7 @@ export class GetInventoryHandler implements IQueryHandler<GetInventoryQuery> {
     const inventory = await this._playerItemRepository.getForPlayer(playerId);
 
     if (!inventory) {
-      throw new HttpException(
-        ErrorCodes.INVENTORY_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      return [];
     }
 
     const permissions = this._permissionsService.getItemPermissions(user);

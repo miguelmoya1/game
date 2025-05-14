@@ -3,7 +3,7 @@ import { Rank } from '../enums';
 import { ItemEntity } from '../models';
 import { mapSetToEntity } from './set.mapper';
 
-const isItemListDto = (obj: unknown): obj is ItemDto => {
+const isItemDto = (obj: unknown): obj is ItemDto => {
   if (typeof obj !== 'object' || obj === null) {
     return false;
   }
@@ -21,7 +21,7 @@ const isItemListDto = (obj: unknown): obj is ItemDto => {
 };
 
 export const mapItemToEntity = (data: unknown) => {
-  if (!isItemListDto(data)) {
+  if (!isItemDto(data)) {
     console.error('Invalid data structure for ItemListDto:', data);
     throw new TypeError('Invalid data structure received. Cannot map to ItemList entity.');
   }
@@ -35,7 +35,7 @@ export const mapItemToEntity = (data: unknown) => {
     effects: data.effects,
     rank: data.rank as Rank,
     setId: data.setId ?? undefined,
-    set: mapSetToEntity(data.set),
+    set: data.set ? mapSetToEntity(data.set) : undefined,
     spawnCategories: data.spawnCategories,
     permissions: data.permissions,
     createdAt: new Date(data.createdAt),

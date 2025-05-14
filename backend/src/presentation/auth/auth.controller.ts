@@ -29,11 +29,9 @@ export class AuthController {
   public async confirmLogin(@Param('accountId') accountId: string) {
     const command = new ActiveAccountCommand(accountId);
 
-    const token = await this._commandBus.execute<ActiveAccountCommand, string>(
+    return await this._commandBus.execute<ActiveAccountCommand, string>(
       command,
     );
-
-    return { token };
   }
 
   @Get('is-authenticated')
@@ -45,9 +43,7 @@ export class AuthController {
   public async rehydrate(@AuthenticatedUser() user: UserEntity) {
     const query = new RehydrateQuery(user);
 
-    const token = await this._queryBus.execute<RehydrateQuery, string>(query);
-
-    return { token };
+    return await this._queryBus.execute<RehydrateQuery, string>(query);
   }
 
   @IsPublic()
@@ -69,11 +65,9 @@ export class AuthController {
     const { email, password } = loginWithEmailDto;
 
     const command = new LoginWithEmailCommand(email, password);
-    const token = await this._commandBus.execute<LoginWithEmailCommand, string>(
+    return await this._commandBus.execute<LoginWithEmailCommand, string>(
       command,
     );
-
-    return { token };
   }
 
   @IsPublic()
@@ -88,10 +82,6 @@ export class AuthController {
     const { account, user } = registerDto;
 
     const command = new RegisterCommand(account, user);
-    const token = await this._commandBus.execute<RegisterCommand, string>(
-      command,
-    );
-
-    return { token };
+    return await this._commandBus.execute<RegisterCommand, string>(command);
   }
 }

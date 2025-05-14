@@ -56,8 +56,21 @@ export class LoginWithEmailHandler
       throw new HttpException(ErrorCodes.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    const token = await this._jwtService.signAsync(user);
-
-    return LoginResponseDto.create(token);
+    try {
+      const { id, nickname, role, language } = user;
+      const token = await this._jwtService.signAsync({
+        id,
+        nickname,
+        role,
+        language,
+      });
+      return LoginResponseDto.create(token);
+    } catch (error) {
+      console.error('Error signing JWT:', error);
+      throw new HttpException(
+        ErrorCodes.INTERNAL_SERVER_ERROR,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

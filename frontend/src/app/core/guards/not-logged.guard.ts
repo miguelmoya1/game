@@ -4,7 +4,7 @@ import { CanMatchFn, Router } from '@angular/router';
 import { AuthGlobalService } from '@game/core/services/auth-global.service';
 import { filter, map, tap } from 'rxjs';
 
-export const notLoggedGuard: CanMatchFn = (route, segments) => {
+export const notLoggedGuard: CanMatchFn = (_route, _segments) => {
   const authService = inject(AuthGlobalService);
   const router = inject(Router);
 

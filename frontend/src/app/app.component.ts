@@ -42,7 +42,7 @@ export class AppComponent {
     });
   }
 
-  async #loadLanguage(language = 'en') {
+  async #loadLanguage(_language = 'en') {
     // this.#translateService.addLangs(['es', 'en']);
     // this.#translateService.use(language);
     // const translates = await this.#translateRepository.getTranslation();
