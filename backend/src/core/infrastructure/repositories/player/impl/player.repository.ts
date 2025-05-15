@@ -16,8 +16,12 @@ export class PlayerRepositoryImpl implements PlayerRepository {
   ) {}
 
   async getById(playerId: string) {
-    const player = await this._database.player.findUnique({
-      where: { id: playerId },
+    const now = new Date();
+    const player = await this._database.player.findFirst({
+      where: {
+        id: playerId,
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
+      },
     });
 
     if (!player) {
@@ -28,8 +32,12 @@ export class PlayerRepositoryImpl implements PlayerRepository {
   }
 
   async getByUserId(userId: string) {
-    const player = await this._database.player.findUnique({
-      where: { userId },
+    const now = new Date();
+    const player = await this._database.player.findFirst({
+      where: {
+        userId,
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
+      },
     });
 
     if (!player) {
@@ -49,5 +57,12 @@ export class PlayerRepositoryImpl implements PlayerRepository {
     });
 
     return playerToEntity(newPlayer);
+  }
+
+  async delete(id: string) {
+    await this._database.player.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 }

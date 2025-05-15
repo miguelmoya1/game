@@ -15,9 +15,11 @@ export class PlaceRepositoryImpl implements PlaceRepository {
   ) {}
 
   async findById(id: string) {
-    const result = await this.databaseService.place.findUnique({
+    const now = new Date();
+    const result = await this.databaseService.place.findFirst({
       where: {
         id,
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
       },
       include: placeInclude,
     });
@@ -30,20 +32,26 @@ export class PlaceRepositoryImpl implements PlaceRepository {
   }
 
   async search(criteria: string) {
+    const now = new Date();
     const result = await this.databaseService.place.findMany({
       where: {
-        OR: [
+        AND: [
+          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
           {
-            id: {
-              contains: criteria,
-              mode: 'insensitive',
-            },
-          },
-          {
-            name: {
-              contains: criteria,
-              mode: 'insensitive',
-            },
+            OR: [
+              {
+                id: {
+                  contains: criteria,
+                  mode: 'insensitive',
+                },
+              },
+              {
+                name: {
+                  contains: criteria,
+                  mode: 'insensitive',
+                },
+              },
+            ],
           },
         ],
       },
@@ -56,6 +64,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
 
   // TODO: Check the logic of this repository (lat, lng, radius)
   async get(latitude: number, longitude: number) {
+    const now = new Date();
     const radius = 500; // 500m
 
     const EARTH_RADIUS_METERS = 6_371_000;
@@ -69,14 +78,19 @@ export class PlaceRepositoryImpl implements PlaceRepository {
 
     const result = await this.databaseService.place.findMany({
       where: {
-        lat: {
-          gte: latitude - latitudeDelta,
-          lte: latitude + latitudeDelta,
-        },
-        lng: {
-          gte: longitude - longitudeDelta,
-          lte: longitude + longitudeDelta,
-        },
+        AND: [
+          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
+          {
+            lat: {
+              gte: latitude - latitudeDelta,
+              lte: latitude + latitudeDelta,
+            },
+            lng: {
+              gte: longitude - longitudeDelta,
+              lte: longitude + longitudeDelta,
+            },
+          },
+        ],
       },
       orderBy: {
         createdAt: 'desc',
@@ -92,6 +106,9 @@ export class PlaceRepositoryImpl implements PlaceRepository {
   }
 
   async delete(id: string) {
-    await this.databaseService.place.delete({ where: { id } });
+    await this.databaseService.place.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 }

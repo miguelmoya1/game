@@ -15,7 +15,12 @@ export class SetRepositoryImpl implements SetRepository {
   ) {}
 
   public async getAll() {
-    const sets = await this._database.set.findMany();
+    const now = new Date();
+    const sets = await this._database.set.findMany({
+      where: {
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
+      },
+    });
 
     if (!sets) {
       return null;
@@ -25,26 +30,32 @@ export class SetRepositoryImpl implements SetRepository {
   }
 
   async search(criteria: string) {
+    const now = new Date();
     const result = await this._database.set.findMany({
       where: {
-        OR: [
+        AND: [
+          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
           {
-            id: {
-              contains: criteria,
-              mode: 'insensitive',
-            },
-          },
-          {
-            name: {
-              contains: criteria,
-              mode: 'insensitive',
-            },
-          },
-          {
-            description: {
-              contains: criteria,
-              mode: 'insensitive',
-            },
+            OR: [
+              {
+                id: {
+                  contains: criteria,
+                  mode: 'insensitive',
+                },
+              },
+              {
+                name: {
+                  contains: criteria,
+                  mode: 'insensitive',
+                },
+              },
+              {
+                description: {
+                  contains: criteria,
+                  mode: 'insensitive',
+                },
+              },
+            ],
           },
         ],
       },
@@ -54,9 +65,11 @@ export class SetRepositoryImpl implements SetRepository {
   }
 
   public async getById(id: string) {
-    const set = await this._database.set.findUnique({
+    const now = new Date();
+    const set = await this._database.set.findFirst({
       where: {
         id,
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
       },
     });
 
@@ -99,6 +112,9 @@ export class SetRepositoryImpl implements SetRepository {
   }
 
   async delete(id: string) {
-    await this._database.set.delete({ where: { id } });
+    await this._database.set.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 }

@@ -15,9 +15,13 @@ export class AccountRepositoryImpl implements AccountRepository {
   ) {}
 
   async findByHash(hashForPasswordReset: string) {
+    const now = new Date();
     const account = await this._database.account.findFirst({
       where: {
-        hashForPasswordReset,
+        AND: [
+          { hashForPasswordReset },
+          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
+        ],
       },
     });
 
@@ -98,12 +102,12 @@ export class AccountRepositoryImpl implements AccountRepository {
   }
 
   public async getById(accountId: string) {
+    const now = new Date();
     const account = await this._database.account.findFirst({
       where: {
-        OR: [
-          {
-            id: accountId,
-          },
+        AND: [
+          { id: accountId },
+          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
         ],
       },
     });
@@ -142,6 +146,7 @@ export class AccountRepositoryImpl implements AccountRepository {
       where: {
         provider: AccountProvider.EMAIL,
         email,
+        deletedAt: null,
       },
     });
 
@@ -150,5 +155,12 @@ export class AccountRepositoryImpl implements AccountRepository {
     }
 
     return accountToEntity(res);
+  }
+
+  async delete(id: string) {
+    await this._database.account.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 }

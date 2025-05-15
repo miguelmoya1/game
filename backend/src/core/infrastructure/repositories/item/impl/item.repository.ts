@@ -16,9 +16,11 @@ export class ItemRepositoryImpl implements ItemRepository {
   ) {}
 
   async findById(id: string) {
-    const result = await this.databaseService.item.findUnique({
+    const now = new Date();
+    const result = await this.databaseService.item.findFirst({
       where: {
         id,
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
       },
       include: itemInclude,
     });
@@ -31,26 +33,32 @@ export class ItemRepositoryImpl implements ItemRepository {
   }
 
   async search(criteria: string) {
+    const now = new Date();
     const result = await this.databaseService.item.findMany({
       where: {
-        OR: [
+        AND: [
+          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
           {
-            id: {
-              contains: criteria,
-              mode: 'insensitive',
-            },
-          },
-          {
-            name: {
-              contains: criteria,
-              mode: 'insensitive',
-            },
-          },
-          {
-            description: {
-              contains: criteria,
-              mode: 'insensitive',
-            },
+            OR: [
+              {
+                id: {
+                  contains: criteria,
+                  mode: 'insensitive',
+                },
+              },
+              {
+                name: {
+                  contains: criteria,
+                  mode: 'insensitive',
+                },
+              },
+              {
+                description: {
+                  contains: criteria,
+                  mode: 'insensitive',
+                },
+              },
+            ],
           },
         ],
       },
@@ -105,6 +113,9 @@ export class ItemRepositoryImpl implements ItemRepository {
   }
 
   async delete(id: string) {
-    await this.databaseService.item.delete({ where: { id } });
+    await this.databaseService.item.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 }

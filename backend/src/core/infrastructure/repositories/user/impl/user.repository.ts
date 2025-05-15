@@ -41,9 +41,11 @@ export class UserRepositoryImpl implements UserRepository {
   }
 
   public async findById(id: string) {
-    const user = await this._database.user.findUnique({
+    const now = new Date();
+    const user = await this._database.user.findFirst({
       where: {
         id,
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
       },
     });
 
@@ -67,6 +69,13 @@ export class UserRepositoryImpl implements UserRepository {
     }
 
     return null;
+  }
+
+  async delete(id: string) {
+    await this._database.user.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 
   async #init() {
