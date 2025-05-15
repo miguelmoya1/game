@@ -16,4 +16,8 @@ export class ItemApiServiceImpl implements ItemApiService {
   async update(id: string, updateItemDto: UpdateItemDto) {
     return firstValueFrom(this.#httpClient.put<void>(`items/${id}`, updateItemDto));
   }
+
+  async delete(id: string) {
+    return firstValueFrom(this.#httpClient.delete<void>(`items/${id}`));
+  }
 }

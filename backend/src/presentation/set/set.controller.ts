@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   CreateSetCommand,
+  DeleteSetCommand,
   UpdateSetCommand,
 } from '../../core/application/commands';
 import {
@@ -63,5 +72,15 @@ export class SetController {
     };
     const command = new UpdateSetCommand(setId, updateSetDataDto, user);
     return await this._commandBus.execute<UpdateSetCommand, void>(command);
+  }
+
+  @Delete(':setId')
+  async deleteSet(
+    @AuthenticatedUser() user: UserEntity,
+    @Param('setId') setId: string,
+  ) {
+    const command = new DeleteSetCommand(setId, user);
+    await this._commandBus.execute(command);
+    return { success: true };
   }
 }

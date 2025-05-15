@@ -8,6 +8,7 @@ export interface SetRepository {
   create(createSetDto: CreateSetDataDto): Promise<SetEntity | null>;
   update(id: string, updateSetDto: UpdateSetDataDto): Promise<SetEntity | null>;
   search(criteria: string): Promise<SetEntity[]>;
+  delete(id: string): Promise<void>;
 }
 
 export const SET_REPOSITORY = Symbol('SET_REPOSITORY');

@@ -103,4 +103,8 @@ export class ItemRepositoryImpl implements ItemRepository {
     }
     return itemToEntity(result);
   }
+
+  async delete(id: string) {
+    await this.databaseService.item.delete({ where: { id } });
+  }
 }

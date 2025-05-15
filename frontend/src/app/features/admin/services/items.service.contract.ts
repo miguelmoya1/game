@@ -9,6 +9,7 @@ export type ItemsService = {
 
   create(createSetDto: CreateItemDto): Promise<void>;
   update(id: string, createSetDto: UpdateItemDto): Promise<void>;
+  delete(id: string): Promise<void>;
 };
 
 export const ITEMS_SERVICE = new InjectionToken<ItemsService>('ITEMS_SERVICE');

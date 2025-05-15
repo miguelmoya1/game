@@ -25,4 +25,8 @@ export class ItemsServiceImpl implements ItemsService {
   public async update(id: string, updateItemDto: UpdateItemDto) {
     await this.#itemApiService.update(id, updateItemDto);
   }
+
+  public async delete(id: string) {
+    await this.#itemApiService.delete(id);
+  }
 }

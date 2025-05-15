@@ -7,9 +7,12 @@ import { ForgotPasswordHandler } from './auth/handler/forgot-password.handler';
 import { LoginWithEmailHandler } from './auth/handler/login-with-email.handler';
 import { RegisterHandler } from './auth/handler/register.handler';
 import { CreateItemHandler } from './item/handler/create-item.handler';
+import { DeleteItemHandler } from './item/handler/delete-item.handler';
 import { UpdateItemHandler } from './item/handler/update-item.handler';
 import { ClaimPlaceItemHandler } from './place/handler/claim-place-item.handler';
+import { DeletePlaceHandler } from './place/handler/delete-place.handler';
 import { CreateSetHandler } from './set/handler/create-set.handler';
+import { DeleteSetHandler } from './set/handler/delete-set.handler';
 import { UpdateSetHandler } from './set/handler/update-set.handler';
 import { UpdateUserHandler } from './user/handler/update-user.handler';
 
@@ -23,12 +26,15 @@ const commands = [
   UpdateUserHandler,
 
   ClaimPlaceItemHandler,
+  DeletePlaceHandler,
 
   CreateSetHandler,
   UpdateSetHandler,
+  DeleteSetHandler,
 
   CreateItemHandler,
   UpdateItemHandler,
+  DeleteItemHandler,
 ];
 
 @Module({

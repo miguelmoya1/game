@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   CreateItemCommand,
+  DeleteItemCommand,
   UpdateItemCommand,
 } from '../../core/application/commands';
 import { GetItemByIdQuery } from '../../core/application/queries';
@@ -45,5 +54,15 @@ export class ItemsController {
     };
     const command = new UpdateItemCommand(itemId, updateItemDataDto, user);
     return await this._commandBus.execute<UpdateItemCommand, void>(command);
+  }
+
+  @Delete(':itemId')
+  async deleteItem(
+    @AuthenticatedUser() user: UserEntity,
+    @Param('itemId') itemId: string,
+  ) {
+    const command = new DeleteItemCommand(itemId, user);
+    await this._commandBus.execute(command);
+    return { success: true };
   }
 }

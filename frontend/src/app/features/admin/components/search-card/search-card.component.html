@@ -1,7 +1,13 @@
 @let searchTemplate = search();
 
 <h4>{{ searchTemplate.name }}</h4>
-
 <p>{{ searchTemplate.description }}</p>
 
-<button gameButton (click)="onClickEdit.emit(searchTemplate.id)" class="action-button">{{ 'EDIT' | translate }}</button>
+<div class="actions">
+  <button [style]="'primary'" gameButton (click)="onClickEdit.emit(searchTemplate.id)">
+    {{ 'EDIT' | translate }}
+  </button>
+  <button [style]="'tertiary'" gameButton (click)="onClickDelete.emit(searchTemplate.id)">
+    {{ 'DELETE' | translate }}
+  </button>
+</div>

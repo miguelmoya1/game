@@ -97,4 +97,8 @@ export class SetRepositoryImpl implements SetRepository {
     }
     return setToEntity(set);
   }
+
+  async delete(id: string) {
+    await this._database.set.delete({ where: { id } });
+  }
 }

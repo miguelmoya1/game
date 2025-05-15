@@ -10,6 +10,7 @@ export interface ItemRepository {
     id: string,
     updateItemDto: UpdateItemDataDto,
   ): Promise<ItemEntity | null>;
+  delete(id: string): Promise<void>;
 }
 
 export const ITEM_REPOSITORY = Symbol('ITEM_REPOSITORY');

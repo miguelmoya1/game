@@ -90,4 +90,8 @@ export class PlaceRepositoryImpl implements PlaceRepository {
 
     return result.map(placeListToEntity);
   }
+
+  async delete(id: string) {
+    await this.databaseService.place.delete({ where: { id } });
+  }
 }

@@ -13,4 +13,5 @@ export class SearchCardComponent {
   public readonly search = input.required<SearchEntity>();
 
   public readonly onClickEdit = output<string>();
+  public readonly onClickDelete = output<string>();
 }
