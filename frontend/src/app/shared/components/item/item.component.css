@@ -118,31 +118,6 @@
   justify-content: space-between;
   border: 1px solid rgba(var(--color-border-rgb), 0.1);
 }
-.stats .stat-name {
-  font-weight: bold;
-  color: var(--color-primary);
-}
-
-.usable-effect p,
-.direct-effects ul {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--color-info);
-  background-color: rgba(var(--background-color), 0.5);
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid rgba(var(--color-border-rgb), 0.1);
-}
-.direct-effects ul {
-  list-style: disc;
-  padding-left: 30px;
-}
-.direct-effects li {
-  margin-bottom: 5px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
 
 .spawn-categories .categories-list {
   display: flex;

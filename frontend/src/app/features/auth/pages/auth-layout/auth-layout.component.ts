@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CardComponent } from '@game/shared/components/card/card.component';
 
 @Component({
   selector: 'game-auth-layout',
-  imports: [RouterOutlet, CardComponent],
+  imports: [RouterOutlet],
   template: `
-    <game-card>
+    <div class="container">
       <router-outlet />
-    </game-card>
+    </div>
   `,
   styles: `
     :host {
@@ -20,9 +19,9 @@ import { CardComponent } from '@game/shared/components/card/card.component';
       height: 100%;
     }
 
-    game-card {
-      width: 100%;
-      max-width: 400px;
+    .container {
+      border: 1px solid var(--color-border);
+      padding: 2rem;
     }
   `,
 })

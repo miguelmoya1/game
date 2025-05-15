@@ -1,4 +1,4 @@
-import { Injectable, Signal, signal } from '@angular/core';
+import { computed, Injectable, Signal, signal } from '@angular/core';
 
 const TOKEN_KEY = 'token-key';
 
@@ -18,14 +18,12 @@ export class AuthTokenService {
     }
   }
 
+  public readonly hasToken = computed(() => this.#token() !== null);
+
   public setToken(value: string) {
     this.#token.set(value);
 
     localStorage.setItem(TOKEN_KEY, value ?? '');
-  }
-
-  public hasToken() {
-    return this.#token() !== null;
   }
 
   public removeToken() {

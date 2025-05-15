@@ -2,12 +2,19 @@
 
 <div class="content">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <input gameInput formControlName="email" type="email" [placeholder]="'REGISTER_EMAIL_PLACEHOLDER' | translate" />
+    <input
+      gameInput
+      formControlName="email"
+      autocomplete="email"
+      type="email"
+      [placeholder]="'REGISTER_EMAIL_PLACEHOLDER' | translate"
+    />
     <input
       gameInput
       formControlName="password"
       type="password"
       label="Password"
+      autocomplete="new-password"
       [placeholder]="'REGISTER_PASSWORD_PLACEHOLDER' | translate"
     />
     <input
@@ -15,6 +22,7 @@
       formControlName="confirmPassword"
       type="password"
       label="Confirm Password"
+      autocomplete="new-password"
       [placeholder]="'REGISTER_CONFIRM_PASSWORD_PLACEHOLDER' | translate"
     />
 
@@ -24,10 +32,10 @@
   </form>
 
   <div class="register-link">
-    <p>{{ 'REGISTER_TO_REGISTER_TEXT' | translate }}</p>
+    <p>{{ 'REGISTER_TO_LOGIN_TEXT' | translate }}</p>
 
     <button routerLink="/auth/login" gameButton [style]="'outlined'">
-      {{ 'REGISTER_TO_REGISTER_BUTTON_TEXT' | translate }}
+      {{ 'REGISTER_TO_LOGIN_BUTTON_TEXT' | translate }}
     </button>
   </div>
 </div>

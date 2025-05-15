@@ -2,10 +2,18 @@
 
 <div class="content">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <input gameInput formControlName="email" type="email" [placeholder]="'LOGIN_EMAIL_PLACEHOLDER' | translate" />
+    <input
+      gameInput
+      formControlName="email"
+      type="email"
+      autocomplete="email"
+      label="Email"
+      [placeholder]="'LOGIN_EMAIL_PLACEHOLDER' | translate"
+    />
     <input
       gameInput
       formControlName="password"
+      autocomplete="current-password"
       type="password"
       label="Password"
       [placeholder]="'LOGIN_PASSWORD_PLACEHOLDER' | translate"

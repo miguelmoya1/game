@@ -14,7 +14,7 @@ export const loggedGuard: CanMatchFn = () => {
   }));
 
   return toObservable(isAuthenticated).pipe(
-    filter((value) => value.status !== ResourceStatus.Idle && value.status !== ResourceStatus.Loading),
+    filter((value) => value.status !== ResourceStatus.Loading),
     tap((logged) => {
       if (!logged.value) {
         router.navigate(['/auth/login']);

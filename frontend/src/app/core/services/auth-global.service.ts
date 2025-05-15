@@ -1,5 +1,6 @@
 import { httpResource } from '@angular/common/http';
-import { computed, Injectable } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
+import { AuthTokenService } from './auth-token.service';
 import { isAuthenticatedMapper } from './mappers/is-authenticated.mapper';
 import { mapUserToEntity } from './mappers/user-logged.mapper';
 
@@ -7,10 +8,15 @@ import { mapUserToEntity } from './mappers/user-logged.mapper';
   providedIn: 'root',
 })
 export class AuthGlobalService {
-  readonly #isAuthenticated = httpResource<boolean>('auth/is-authenticated', {
-    defaultValue: false,
-    parse: isAuthenticatedMapper,
-  });
+  readonly #authTokenService = inject(AuthTokenService);
+
+  readonly #isAuthenticated = httpResource<boolean>(
+    () => (this.#authTokenService.hasToken() ? 'auth/is-authenticated' : undefined),
+    {
+      defaultValue: false,
+      parse: isAuthenticatedMapper,
+    },
+  );
 
   readonly #shouldFetch = computed(() => this.#isAuthenticated.value());
   readonly #currentUser = httpResource(() => (this.#shouldFetch() ? 'users/me' : undefined), {

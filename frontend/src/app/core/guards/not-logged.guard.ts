@@ -14,7 +14,7 @@ export const notLoggedGuard: CanMatchFn = (_route, _segments) => {
   }));
 
   return toObservable(isAuthenticated).pipe(
-    filter((value) => value.status !== ResourceStatus.Idle && value.status !== ResourceStatus.Loading),
+    filter((value) => value.status !== ResourceStatus.Loading),
     tap((res) => {
       if (res.value) {
         router.navigate(['/map']);
