@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ButtonDirective, InputDirective } from '@game/shared/directives';
+import { ButtonDirective } from '@game/shared/directives';
 import { TranslatePipe } from '@game/shared/pipes/translate.pipe';
 import { AUTH_SERVICE } from '../../services/auth.service.contract';
 
 @Component({
   selector: 'game-login',
-  imports: [ReactiveFormsModule, ButtonDirective, InputDirective, TranslatePipe, RouterLink],
+  imports: [ReactiveFormsModule, ButtonDirective, TranslatePipe, RouterLink],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })

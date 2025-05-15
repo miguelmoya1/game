@@ -23,6 +23,8 @@
   background-position: center;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: opacity(0.8);
+
+  border: 1px solid var(--color-border);
 }
 
 .close {

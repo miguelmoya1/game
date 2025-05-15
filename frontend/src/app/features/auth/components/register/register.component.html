@@ -2,30 +2,39 @@
 
 <div class="content">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <input
-      gameInput
-      formControlName="email"
-      autocomplete="email"
-      type="email"
-      [placeholder]="'REGISTER_EMAIL_PLACEHOLDER' | translate"
-    />
-    <input
-      gameInput
-      formControlName="password"
-      type="password"
-      label="Password"
-      autocomplete="new-password"
-      [placeholder]="'REGISTER_PASSWORD_PLACEHOLDER' | translate"
-    />
-    <input
-      gameInput
-      formControlName="confirmPassword"
-      type="password"
-      label="Confirm Password"
-      autocomplete="new-password"
-      [placeholder]="'REGISTER_CONFIRM_PASSWORD_PLACEHOLDER' | translate"
-    />
-
+    <div class="input-group">
+      <label for="register-email">{{ 'REGISTER_EMAIL_PLACEHOLDER' | translate }}</label>
+      <input
+        id="register-email"
+        gameInput
+        formControlName="email"
+        autocomplete="email"
+        type="email"
+        [placeholder]="'REGISTER_EMAIL_PLACEHOLDER' | translate"
+      />
+    </div>
+    <div class="input-group">
+      <label for="register-password">{{ 'REGISTER_PASSWORD_PLACEHOLDER' | translate }}</label>
+      <input
+        id="register-password"
+        gameInput
+        formControlName="password"
+        type="password"
+        autocomplete="new-password"
+        [placeholder]="'REGISTER_PASSWORD_PLACEHOLDER' | translate"
+      />
+    </div>
+    <div class="input-group">
+      <label for="register-confirm-password">{{ 'REGISTER_CONFIRM_PASSWORD_PLACEHOLDER' | translate }}</label>
+      <input
+        id="register-confirm-password"
+        gameInput
+        formControlName="confirmPassword"
+        type="password"
+        autocomplete="new-password"
+        [placeholder]="'REGISTER_CONFIRM_PASSWORD_PLACEHOLDER' | translate"
+      />
+    </div>
     <button gameButton type="submit" [disabled]="registerForm.invalid">
       {{ 'REGISTER_BUTTON_TEXT' | translate }}
     </button>
