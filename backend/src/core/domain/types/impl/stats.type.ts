@@ -1,7 +1,7 @@
 import { StatsType, Target } from '../../enums';
 
 export type Stats = {
-  readonly satsType: StatsType;
+  readonly statsType: StatsType;
   readonly value: number;
   readonly target?: Target;
 };

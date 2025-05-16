@@ -1,0 +1,51 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--text-color);
+  font-family: var(--font-family-main);
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  margin-top: 4rem;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.player-info {
+  background: transparent;
+  border-radius: 1.5rem;
+  box-shadow: none;
+  padding: 2.5rem 2rem;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.player-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1.1rem;
+
+  padding: 1rem;
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.label {
+  color: var(--color-secondary);
+  font-weight: 600;
+  width: 250px;
+}
+
+ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}

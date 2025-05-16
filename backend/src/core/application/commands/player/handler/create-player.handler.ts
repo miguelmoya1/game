@@ -21,27 +21,27 @@ export class CreatePlayerHandler
 
     const stats = [
       {
-        satsType: StatsType.WIS,
+        statsType: StatsType.WIS,
         value: 0,
       },
       {
-        satsType: StatsType.STR,
+        statsType: StatsType.STR,
         value: 0,
       },
       {
-        satsType: StatsType.DEX,
+        statsType: StatsType.DEX,
         value: 0,
       },
       {
-        satsType: StatsType.CON,
+        statsType: StatsType.CON,
         value: 0,
       },
       {
-        satsType: StatsType.INT,
+        statsType: StatsType.INT,
         value: 0,
       },
       {
-        satsType: StatsType.CHA,
+        statsType: StatsType.CHA,
         value: 0,
       },
     ];
