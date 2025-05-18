@@ -25,7 +25,12 @@
 
 .effect-fields-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(180px, 1fr));
   gap: 10px;
   margin-bottom: 10px;
+}
+
+@media (min-width: 735px) {
+  .effect-fields-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
 }

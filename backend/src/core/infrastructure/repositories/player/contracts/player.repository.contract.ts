@@ -10,6 +10,7 @@ export type Create = CreatePlayerDataDto & {
 export interface PlayerRepository {
   getById(playerId: string): Promise<PlayerEntity | null>;
   getByUserId(userId: string): Promise<PlayerEntity | null>;
+  getByIds(playerIds: string[]): Promise<PlayerEntity[]>;
 
   create(player: Create): Promise<PlayerEntity>;
 }

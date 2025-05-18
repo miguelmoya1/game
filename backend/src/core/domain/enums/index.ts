@@ -2,6 +2,7 @@ export { AccountProvider } from './impl/account-provider.enum';
 export { EffectType } from './impl/effect-type.enum';
 export { ErrorCodes } from './impl/error-codes.enums';
 export { ItemType } from './impl/item-type.enum';
+export { PartyStatus } from './impl/party-status.enum';
 export { PlaceCategory } from './impl/place-category.enum';
 export { Rank } from './impl/rank.enum';
 export { StatsType } from './impl/stats-type.enum';

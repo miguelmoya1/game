@@ -1,0 +1,30 @@
+.party-info-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+.party-row {
+  display: flex;
+  gap: 16px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.party-members-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.party-member {
+  background: #e3e3e3;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+.party-visualization-empty {
+  color: #888;
+  font-style: italic;
+  margin-top: 16px;
+}

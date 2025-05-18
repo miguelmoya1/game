@@ -31,6 +31,18 @@ export class PlayerRepositoryImpl implements PlayerRepository {
     return playerToEntity(player);
   }
 
+  async getByIds(playerIds: string[]) {
+    const now = new Date();
+    const players = await this._database.player.findMany({
+      where: {
+        id: { in: playerIds },
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
+      },
+    });
+
+    return players.map(playerToEntity);
+  }
+
   async getByUserId(userId: string) {
     const now = new Date();
     const player = await this._database.player.findFirst({

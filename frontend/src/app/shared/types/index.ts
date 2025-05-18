@@ -2,6 +2,7 @@ export { type Account } from './impl/account.type';
 export { type Effect } from './impl/effect.type';
 export { type Inventory } from './impl/inventory.type';
 export { type Item } from './impl/item.type';
+export { type Party } from './impl/party.type';
 export { type PlaceList } from './impl/place-list.type';
 export { type Place } from './impl/place.type';
 export { type Player } from './impl/player.type';

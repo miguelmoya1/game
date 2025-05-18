@@ -1,1 +1,6 @@
-{}
+{
+  "GROUP": "Group",
+  "LEADER": "Leader",
+  "MEMBERS": "Members",
+  "NO_GROUP": "You are not in any group."
+}

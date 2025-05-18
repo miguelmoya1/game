@@ -9,6 +9,10 @@ import { RegisterHandler } from './auth/handler/register.handler';
 import { CreateItemHandler } from './item/handler/create-item.handler';
 import { DeleteItemHandler } from './item/handler/delete-item.handler';
 import { UpdateItemHandler } from './item/handler/update-item.handler';
+import { AddMemberToPartyHandler } from './party/handler/add-member-to-party.handler';
+import { CreatePartyHandler } from './party/handler/create-party.handler';
+import { DeletePartyHandler } from './party/handler/delete-party.handler';
+import { RemoveMemberFromPartyHandler } from './party/handler/remove-member-from-party.handler';
 import { ClaimPlaceItemHandler } from './place/handler/claim-place-item.handler';
 import { DeletePlaceHandler } from './place/handler/delete-place.handler';
 import { CreateSetHandler } from './set/handler/create-set.handler';
@@ -35,6 +39,11 @@ const commands = [
   CreateItemHandler,
   UpdateItemHandler,
   DeleteItemHandler,
+
+  CreatePartyHandler,
+  AddMemberToPartyHandler,
+  RemoveMemberFromPartyHandler,
+  DeletePartyHandler,
 ];
 
 @Module({

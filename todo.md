@@ -8,21 +8,21 @@ This document outlines the next major features to be developed, the proposed ord
 
 ### Backend Tasks:
 
-- [ ] **`Party` Entity Definition (or dynamic in-memory structure)**:
+- [x] **`Party` Entity Definition (or dynamic in-memory structure)**:
   - Fields: `id` (if persisted, otherwise managed in-memory), `leaderId`, `members` (list of `playerId`), `maxMembers` (e.g., 4-6 players), `creationTime`.
   - Consider if parties are purely in-memory or need light persistence for session recovery.
-- [ ] **API Endpoints for Parties (Real-time or HTTP)**:
-  - [ ] `POST /parties`: Create a new party (creator becomes the leader).
-  - [ ] `POST /parties/{partyId}/invite/{playerId}`: Invite a player to the party.
-  - [ ] `POST /parties/invitations/{invitationId}/accept`: Player accepts a party invitation.
-  - [ ] `POST /parties/invitations/{invitationId}/decline`: Player declines a party invitation.
-  - [ ] `GET /parties/{partyId}`: Get details of a specific party (members).
-  - [ ] `POST /parties/{partyId}/leave`: Allow a player to leave their current party. (If leader leaves, new leader might be assigned or party disbands).
-  - [ ] `POST /parties/{partyId}/kick/{playerId}`: Kick a member (leader only).
-  - [ ] `POST /parties/{partyId}/promote/{playerId}`: Promote a member to leader (leader only).
-  - [ ] `DELETE /parties/{partyId}`: Disband a party (leader only, or automatically if empty).
-- [ ] **Party Membership Logic**:
-  - [ ] Ensure a player can only be in one party at a time.
+- [x] **API Endpoints for Parties (Real-time or HTTP)**:
+  - [x] `POST /parties`: Create a new party (creator becomes the leader).
+  - [x] `POST /parties/{partyId}/invite/{playerId}`: Invite a player to the party.
+  - [x] `POST /parties/invitations/{invitationId}/accept`: Player accepts a party invitation.
+  - [x] `POST /parties/invitations/{invitationId}/decline`: Player declines a party invitation.
+  - [x] `GET /parties/{partyId}`: Get details of a specific party (members).
+  - [x] `POST /parties/{partyId}/leave`: Allow a player to leave their current party. (If leader leaves, new leader might be assigned or party disbands).
+  - [x] `POST /parties/{partyId}/kick/{playerId}`: Kick a member (leader only).
+  - [x] `POST /parties/{partyId}/promote/{playerId}`: Promote a member to leader (leader only).
+  - [x] `DELETE /parties/{partyId}`: Disband a party (leader only, or automatically if empty).
+- [x] **Party Membership Logic**:
+  - [x] Ensure a player can only be in one party at a time.
 - [ ] **Integration with Set Buffs (Party-specific)**:
   - [ ] Modify the set buff calculation so that if a set affects party members, these buffs are correctly applied to the corresponding players within the same party. (This will connect to Phase 2).
 
@@ -135,6 +135,34 @@ This document outlines the next major features to be developed, the proposed ord
   - [ ] Guild invitation management UI for players.
   - [ ] Guild management panel for leaders/officers (edit details, manage ranks, kick/promote members, update MOTD, manage recruitment).
   - [ ] Display current guild affiliation and basic info prominently.
+
+## Phase 4: Spells System (Race-based Spells)
+
+**Objective:** Implement a system where each player has access to spells according to their race. Spells are defined and linked to races, and players can view and use their available spells.
+
+### Backend Tasks:
+
+- [ ] **`Spell` Entity Definition:**
+  - Fields: `id`, `name`, `description`, `requiredLevel`, `raceId` (relation to Race), `effects` (JSON or structured fields), `createdAt`, `updatedAt`.
+  - Ensure each race can have multiple spells, and spells can only be used by players of the corresponding race.
+- [ ] **API Endpoints for Spells:**
+  - [ ] `GET /players/me/spells`: Get all spells available to the current player (based on their race and level).
+  - [ ] `GET /spells/{spellId}`: Get details of a specific spell.
+  - [ ] (Optional) `POST /spells/cast`: Endpoint to cast a spell (if real-time or turn-based logic is needed).
+- [ ] **Spell Assignment Logic:**
+  - [ ] When a player's race changes, update their available spells accordingly.
+  - [ ] Only return spells for which the player meets the required level.
+- [ ] **Integration with Player Panel:**
+  - [ ] Ensure spells are shown in the player info endpoint if needed.
+
+### Frontend Tasks:
+
+- [ ] **User Interface (UI) for Spells:**
+  - [ ] Display a list of available spells in the player section.
+  - [ ] Show spell details (name, description, effects, required level).
+  - [ ] (Optional) UI to cast spells if the game supports it.
+
+---
 
 ## Additional Considerations (Applicable to all Phases):
 

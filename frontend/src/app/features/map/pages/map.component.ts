@@ -2,6 +2,7 @@ import { Component, effect, ElementRef, inject, viewChild } from '@angular/core'
 import { Router, RouterOutlet } from '@angular/router';
 import { GeolocationService } from '../../../core/services/geolocation.service';
 import { MapTopControlsComponent } from '../components/map-top-controls/map-top-controls.component';
+import { PartyVisualizationComponent } from '../components/party-visualization/party-visualization.component';
 import { MapCoreService } from '../services/map-core.service';
 import { MapPlaceService } from '../services/map-place.service';
 import { MapPlayerService } from '../services/map-player.service';
@@ -9,7 +10,7 @@ import { PLACE_SERVICE } from '../services/place.service.contract';
 
 @Component({
   selector: 'game-map',
-  imports: [RouterOutlet, MapTopControlsComponent],
+  imports: [RouterOutlet, MapTopControlsComponent, PartyVisualizationComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
 })

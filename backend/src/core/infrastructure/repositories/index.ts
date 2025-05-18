@@ -57,3 +57,9 @@ export {
   SetRepository,
 } from './set/contracts/set.repository.contract';
 export { SetRepositoryImpl } from './set/impl/set.repository';
+
+export {
+  PARTY_REPOSITORY,
+  PartyRepository,
+} from './party/contracts/party.repository.contract';
+export { PartyRepositoryImpl } from './party/impl/party.repository';

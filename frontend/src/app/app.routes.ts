@@ -34,6 +34,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/player/routes/player.routes'),
   },
   {
+    path: 'party',
+    canMatch: [loggedGuard],
+    loadChildren: () => import('./features/party/routes/party.routes'),
+  },
+  {
     path: '**',
     redirectTo: 'auth/login',
   },

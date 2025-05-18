@@ -1,6 +1,7 @@
 export { Account } from './impl/account.type';
 export { Effect } from './impl/effect.type';
 export { Item } from './impl/item.type';
+export { Party } from './impl/party.type';
 export { PlaceApi } from './impl/place-api.type';
 export { PlaceList } from './impl/place-list.type';
 export { Place } from './impl/place.type';

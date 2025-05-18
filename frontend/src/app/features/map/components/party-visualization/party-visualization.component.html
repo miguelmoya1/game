@@ -1,0 +1,22 @@
+<div class="party-visualizer">
+  @if (party(); as party) {
+    <div class="party-info">
+      <div class="party-header">
+        <span class="group-label">{{ 'GROUP' | translate }}</span>
+        <span class="members-count"> {{ party.memberIds.length || 1 }}/{{ party.maxMembers }} </span>
+      </div>
+      <div class="party-members">
+        @for (memberId of party?.memberIds; track memberId) {
+          <div class="party-member">
+            <span class="member-id">{{ memberId }}</span>
+            <!-- Futuro: <span class="member-life">100 HP</span> <span class="member-level">Lv. 10</span> -->
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <button gameButton type="button" class="create-group-btn" (click)="onCreateParty()">
+      {{ 'CREATE_GROUP' | translate }}
+    </button>
+  }
+</div>
