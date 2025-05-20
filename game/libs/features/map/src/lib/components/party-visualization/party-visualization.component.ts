@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { PartyService } from '@game/core';
+import { PARTY_SERVICE } from '@game/core';
 import { ButtonDirective, TranslatePipe } from '@game/shared';
 
 @Component({
@@ -9,7 +9,7 @@ import { ButtonDirective, TranslatePipe } from '@game/shared';
   imports: [TranslatePipe, ButtonDirective],
 })
 export class PartyVisualizationComponent {
-  readonly partyService = inject(PartyService);
+  readonly partyService = inject(PARTY_SERVICE);
   party = signal(this.partyService.party.value());
 
   onCreateParty() {

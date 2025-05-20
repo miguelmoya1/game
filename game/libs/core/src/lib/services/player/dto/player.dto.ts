@@ -1,4 +1,4 @@
-import { Stats } from '../../types/stats.type';
+import { Stats } from '../../../types/stats.type';
 
 export interface PlayerDto {
   readonly id: string;

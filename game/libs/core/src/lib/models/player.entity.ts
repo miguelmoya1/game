@@ -10,17 +10,17 @@ export class PlayerEntity implements Player {
   public readonly userId: string;
   public readonly raceId: string;
 
-  private constructor(place: Player) {
-    this.id = place.id;
-    this.level = place.level;
-    this.rank = place.rank;
-    this.experience = place.experience;
-    this.stats = place.stats;
-    this.userId = place.userId;
-    this.raceId = place.raceId;
+  private constructor(player: Player) {
+    this.id = player.id;
+    this.level = player.level;
+    this.rank = player.rank;
+    this.experience = player.experience;
+    this.stats = player.stats;
+    this.userId = player.userId;
+    this.raceId = player.raceId;
   }
 
-  public static create(place: Player) {
-    return new PlayerEntity(place);
+  public static create(player: Player) {
+    return new PlayerEntity(player);
   }
 }

@@ -1,6 +1,6 @@
-import { PartyStatus } from '../enums/party-status.enum';
+import { PartyStatus } from '../../../enums/party-status.enum';
 
-export interface Party {
+export type PartyDto = {
   id: string;
   leaderId: string;
   memberIds: string[];
@@ -8,4 +8,4 @@ export interface Party {
   creationTime: Date;
   description?: string;
   status?: PartyStatus;
-}
+};

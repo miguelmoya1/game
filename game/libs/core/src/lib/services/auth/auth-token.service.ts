@@ -1,11 +1,10 @@
 import { computed, Injectable, Signal, signal } from '@angular/core';
+import { AuthTokenService } from './auth-token.service.contract';
 
 const TOKEN_KEY = 'token-key';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthTokenService {
+@Injectable()
+export class AuthTokenServiceImpl implements AuthTokenService {
   readonly #token = signal<string | null>(null);
 
   public readonly token = this.#token.asReadonly() as Signal<string>;

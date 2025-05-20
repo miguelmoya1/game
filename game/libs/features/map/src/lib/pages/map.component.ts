@@ -6,7 +6,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { GeolocationService } from '@game/core';
+import { GEOLOCATION_SERVICE } from '@game/core';
 import { MapTopControlsComponent } from '../components/map-top-controls/map-top-controls.component';
 import { PartyVisualizationComponent } from '../components/party-visualization/party-visualization.component';
 import { MapCoreService } from '../services/map-core.service';
@@ -21,7 +21,7 @@ import { PLACE_SERVICE } from '../services/place.service.contract';
   styleUrl: './map.component.css',
 })
 export class MapComponent {
-  readonly #geolocationService = inject(GeolocationService);
+  readonly #geolocationService = inject(GEOLOCATION_SERVICE);
   readonly #placeService = inject(PLACE_SERVICE);
   readonly #router = inject(Router);
 

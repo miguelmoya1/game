@@ -1,24 +1,24 @@
 <template>
   <h1>{{ 'GROUP' | translate }}</h1>
   @if (party.value(); as p) {
-    <div class="party-info-card">
-      <div class="party-row">
-        <span class="label">{{ 'LEADER' | translate }}</span>
-        <span class="value">{{ p.leaderId }}</span>
-      </div>
-      <div class="party-row">
-        <span class="label">{{ 'MEMBERS' | translate }}</span>
-        <span class="value">{{ p.memberIds.length }}/{{ p.maxMembers }}</span>
-      </div>
-      <div class="party-members-list">
-        @for (member of p.memberIds; track member) {
-          <span class="party-member">{{ member }}</span>
-        }
-      </div>
+  <div class="party-info-card">
+    <div class="party-row">
+      <span class="label">{{ 'LEADER' | translate }}</span>
+      <span class="value">{{ p.leaderId }}</span>
     </div>
+    <div class="party-row">
+      <span class="label">{{ 'MEMBERS' | translate }}</span>
+      <span class="value">{{ p.memberIds.length }}/{{ p.maxMembers }}</span>
+    </div>
+    <div class="party-members-list">
+      @for (member of p.memberIds; track member) {
+      <span class="party-member">{{ member }}</span>
+      }
+    </div>
+  </div>
   } @else {
-    <div class="party-visualization-empty">
-      <span>{{ 'NO_GROUP' | translate }}</span>
-    </div>
+  <div class="party-visualization-empty">
+    <span>{{ 'NO_GROUP' | translate }}</span>
+  </div>
   }
 </template>

@@ -1,5 +1,5 @@
 import { Component, HostBinding, inject } from '@angular/core';
-import { NotificationService } from '@game/core';
+import { NOTIFICATION_SERVICE } from '@game/core';
 
 @Component({
   selector: 'game-notifications',
@@ -7,7 +7,7 @@ import { NotificationService } from '@game/core';
   styleUrl: './notifications.component.css',
 })
 export class NotificationsComponent {
-  readonly #notificationService = inject(NotificationService);
+  readonly #notificationService = inject(NOTIFICATION_SERVICE);
   protected readonly notifications = this.#notificationService.notifications;
 
   @HostBinding('style.display')

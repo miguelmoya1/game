@@ -1,16 +1,13 @@
 import { Injectable, signal } from '@angular/core';
-
-type Notification = {
-  id: string;
-  title?: string;
-  message: string;
-  type: 'success' | 'error' | 'info' | 'warning';
-};
+import {
+  Notification,
+  NotificationService,
+} from './notification.service.contract';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NotificationService {
+export class NotificationServiceImpl implements NotificationService {
   readonly #notifications = signal<Notification[]>([]);
   public readonly notifications = this.#notifications.asReadonly();
   readonly #duration = 5000;
@@ -19,7 +16,10 @@ export class NotificationService {
     const id = this.#generateId();
     const notification: Notification = { id, message, type };
 
-    this.#notifications.update((notifications) => [...notifications, notification]);
+    this.#notifications.update((notifications) => [
+      ...notifications,
+      notification,
+    ]);
 
     if (this.#duration) {
       setTimeout(() => this.#remove(id), this.#duration);
@@ -34,7 +34,9 @@ export class NotificationService {
     }
 
     this.#notifications.update((notifications) => {
-      const index = notifications.findIndex((notification) => notification.id === id);
+      const index = notifications.findIndex(
+        (notification) => notification.id === id
+      );
 
       if (index !== -1) {
         notifications.splice(index, 1);

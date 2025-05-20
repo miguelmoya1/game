@@ -1,6 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { GeolocationService } from '@game/core';
+import { GEOLOCATION_SERVICE } from '@game/core';
 import { PlaceApiService } from '../data-access/place-api.service';
 import { mapPlaceListArrayToEntityArray } from './mappers/place-list.mapper';
 import { mapPlaceToEntity } from './mappers/place.mapper';
@@ -8,7 +8,7 @@ import { PlaceService } from './place.service.contract';
 
 @Injectable()
 export class PlaceServiceImpl implements PlaceService {
-  readonly #geolocationService = inject(GeolocationService);
+  readonly #geolocationService = inject(GEOLOCATION_SERVICE);
   readonly #placeApiService = inject(PlaceApiService);
   readonly #placeSelected = signal<string | null>(null);
 

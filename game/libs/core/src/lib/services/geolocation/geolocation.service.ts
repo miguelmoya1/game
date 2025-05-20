@@ -1,10 +1,10 @@
 import { effect, Injectable, signal } from '@angular/core';
 import { CallbackID, Geolocation, Position } from '@capacitor/geolocation';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class GeolocationService {
+import { GeolocationService } from './geolocation.service.contract';
+
+@Injectable()
+export class GeolocationServiceImpl implements GeolocationService {
   readonly #position = signal<Position | null>(null);
   readonly #watching = signal(false);
   readonly #watchId = signal<CallbackID | null>(null);
@@ -16,7 +16,11 @@ export class GeolocationService {
     this.updateCurrentPosition();
 
     effect(() => {
-      this.#watching() ? this.#watchPosition() : this.#clearWatchPosition();
+      if (this.#watching()) {
+        this.#watchPosition();
+      } else {
+        this.#clearWatchPosition();
+      }
     });
   }
 
@@ -43,7 +47,7 @@ export class GeolocationService {
           return;
         }
         this.#position.set(position);
-      },
+      }
     );
 
     this.#watchId.set(watchId);
@@ -51,6 +55,7 @@ export class GeolocationService {
 
   #clearWatchPosition() {
     const watchId = this.#watchId();
+
     if (watchId) {
       Geolocation.clearWatch({ id: watchId });
       this.#watchId.set(null);

@@ -11,10 +11,14 @@ export class TranslateExtractorService {
     try {
       const core = await this.#extract('src/core');
       const prisma = await this.#extract('prisma');
-      const app = await this.#extract('../frontend/src/app');
+      // const frontend = await this.#extract('../frontend/src/app');
+      const game = await this.#extract('../game/apps');
+      const gameLibs = await this.#extract('../game/libs');
       const templates = await this.#extract('templates');
 
-      return [...new Set([...templates, ...core, ...app, ...prisma])].sort();
+      return [
+        ...new Set([...templates, ...core, ...prisma, ...game, ...gameLibs]),
+      ].sort();
     } catch (e) {
       this.#logger.warn(e);
     }

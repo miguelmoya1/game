@@ -41,11 +41,9 @@ export * from './lib/interceptors/base-url.interceptor';
 export * from './lib/interceptors/errors.interceptor';
 export * from './lib/interceptors/header.interceptor';
 // Services
-export * from './lib/services/auth-global.service';
-export * from './lib/services/data-access/auth-token.service';
-export * from './lib/services/data-access/party-api.service';
-export * from './lib/services/geolocation.service';
-export * from './lib/services/notification.service';
-export * from './lib/services/party.service';
-export * from './lib/services/player.service';
-export * from './lib/services/translate.service';
+export * from './lib/services/auth';
+export * from './lib/services/geolocation';
+export * from './lib/services/notification';
+export * from './lib/services/party';
+export * from './lib/services/player';
+export * from './lib/services/translate';

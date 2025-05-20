@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { PartyService } from '@game/core';
+import { PARTY_SERVICE } from '@game/core';
 import { TranslatePipe } from '@game/shared';
 
 @Component({
@@ -10,7 +10,7 @@ import { TranslatePipe } from '@game/shared';
   imports: [TranslatePipe],
 })
 export class PartyPageComponent {
-  readonly partyService = inject(PartyService);
+  readonly partyService = inject(PARTY_SERVICE);
 
   get party() {
     return this.partyService.party;

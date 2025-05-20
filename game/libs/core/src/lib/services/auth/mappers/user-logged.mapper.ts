@@ -1,4 +1,4 @@
-import { UserEntity } from '../../models/user.entity';
+import { UserEntity } from '../../../models/user.entity';
 import { UserDto } from '../dto/user.dto';
 
 const isUserDto = (obj: unknown): obj is UserDto => {

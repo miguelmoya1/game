@@ -1,4 +1,4 @@
-import { PlayerEntity } from '../../models/player.entity';
+import { PlayerEntity } from '../../../models/player.entity';
 import { PlayerDto } from '../dto/player.dto';
 
 const isPlayerDto = (obj: unknown): obj is PlayerDto => {
