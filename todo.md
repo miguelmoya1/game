@@ -170,3 +170,5 @@ This document outlines the next major features to be developed, the proposed ord
 - [ ] **Scalability**: Design solutions with potential growth in the number of players, parties, and guilds in mind.
 - [ ] **Security**: Ensure APIs are protected and players cannot unduly manipulate their stats or party/guild information.
 - [ ] **Real-time Communication**: For party and guild chat, member status updates (online/offline), and notifications, consider using WebSockets or a similar real-time communication technology. This might be a separate "Core Feature" to be developed in parallel or as a prerequisite for some advanced social features.
+
+nx g @nx/angular:library --directory=libs/features/player --lazy=true --name=feature/player --routing=true --changeDetection=OnPush --displayBlock=true --flat=true --inlineStyle=true --inlineTemplate=true --skipModule=true

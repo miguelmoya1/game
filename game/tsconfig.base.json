@@ -1,0 +1,29 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@game/core": ["libs/core/src/index.ts"],
+      "@game/features/admin": ["libs/features/admin/src/index.ts"],
+      "@game/features/auth": ["libs/features/auth/src/index.ts"],
+      "@game/features/inventory": ["libs/features/inventory/src/index.ts"],
+      "@game/features/map": ["libs/features/map/src/index.ts"],
+      "@game/features/party": ["libs/features/party/src/index.ts"],
+      "@game/features/player": ["libs/features/player/src/index.ts"],
+      "@game/shared": ["libs/shared/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

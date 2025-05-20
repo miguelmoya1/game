@@ -46,5 +46,6 @@
     "features": "Controller"
   },
   "IDX.aI.enableInlineCompletion": true,
-  "IDX.aI.enableCodebaseIndexing": true
+  "IDX.aI.enableCodebaseIndexing": true,
+  "nxConsole.nxWorkspacePath": "game"
 }

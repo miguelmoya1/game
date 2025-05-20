@@ -1,0 +1,21 @@
+@let searchTemplate = search();
+
+<h4>{{ searchTemplate.name }}</h4>
+<p>{{ searchTemplate.description }}</p>
+
+<div class="actions">
+  <button
+    [style]="'primary'"
+    gameButton
+    (click)="editClicked.emit(searchTemplate.id)"
+  >
+    {{ 'EDIT' | translate }}
+  </button>
+  <button
+    [style]="'tertiary'"
+    gameButton
+    (click)="deleteClicked.emit(searchTemplate.id)"
+  >
+    {{ 'DELETE' | translate }}
+  </button>
+</div>
