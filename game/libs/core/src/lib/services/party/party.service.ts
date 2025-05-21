@@ -8,6 +8,25 @@ import { PartyService } from './party.service.contract';
   providedIn: 'root',
 })
 export class PartyServiceImpl implements PartyService {
+  readonly #api = inject(PartyApiService);
+
   readonly party = httpResource('parties/me', { parse: mapPartyToEntity });
-  private readonly api = inject(PartyApiService);
+
+  async invite(playerId: string, partyId?: string) {
+    await this.#api.invite(playerId, partyId);
+
+    this.party.reload();
+  }
+
+  async removeMember(partyId: string, playerId: string) {
+    await this.#api.removeMember(partyId, playerId);
+
+    this.party.reload();
+  }
+
+  async deleteParty(partyId: string) {
+    await this.#api.deleteParty(partyId);
+
+    this.party.reload();
+  }
 }

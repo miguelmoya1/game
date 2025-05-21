@@ -1,4 +1,5 @@
 import { PartyStatus } from '../enums/party-status.enum';
+import { Player } from './player.type';
 
 export interface Party {
   id: string;
@@ -8,4 +9,5 @@ export interface Party {
   creationTime: Date;
   description?: string;
   status?: PartyStatus;
+  members?: Player[];
 }

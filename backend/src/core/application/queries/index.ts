@@ -4,7 +4,6 @@ export { GetInventoryQuery } from './inventory/impl/get-inventory.query';
 export { GetItemByIdQuery } from './item/impl/get-item-by-id.query';
 export { GetPartyByIdQuery } from './party/impl/get-party-by-id.query';
 export { GetPartyByUserQuery } from './party/impl/get-party-by-user.query';
-export { GetPartyMembersQuery } from './party/impl/get-party-members.query';
 export { GetPlaceQuery } from './place/impl/get-place.query';
 export { GetPlacesQuery } from './place/impl/get-places.query';
 export { GetPlayerByIdHandler } from './player/handler/get-player-by-id.handler';

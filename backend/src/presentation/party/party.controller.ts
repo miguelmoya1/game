@@ -2,18 +2,17 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   AddMemberToPartyCommand,
-  CreatePartyCommand,
   DeletePartyCommand,
   RemoveMemberFromPartyCommand,
 } from '../../core/application/commands';
 import {
   GetPartyByIdQuery,
   GetPartyByUserQuery,
-  GetPartyMembersQuery,
 } from '../../core/application/queries';
 import { UserEntity } from '../../core/domain/entities';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
-import { CreatePartyDto } from './dto/create-party.dto';
+import { InvitePartyDto } from './dto/invite-party.dto';
+import { RemoveMemberDto } from './dto/remove-member.dto';
 
 @Controller('parties')
 export class PartyController {
@@ -22,37 +21,31 @@ export class PartyController {
     private readonly _queryBus: QueryBus,
   ) {}
 
-  @Post()
-  async createParty(
-    @Body() body: CreatePartyDto,
+  @Post('invite')
+  async inviteToParty(
+    @Body() body: InvitePartyDto,
     @AuthenticatedUser() user: UserEntity,
   ) {
-    const command = new CreatePartyCommand(body, user);
-
-    return await this._commandBus.execute<CreatePartyCommand, void>(command);
-  }
-
-  @Post(':partyId/members/:playerId')
-  async addMember(
-    @Param('partyId') partyId: string,
-    @Param('playerId') playerId: string,
-    @AuthenticatedUser() user: UserEntity,
-  ) {
-    const command = new AddMemberToPartyCommand(partyId, playerId, user);
-
+    const command = new AddMemberToPartyCommand(
+      body.partyId ?? '',
+      body.playerId,
+      user,
+    );
     return await this._commandBus.execute<AddMemberToPartyCommand, void>(
       command,
     );
   }
 
-  @Delete(':partyId/members/:playerId')
+  @Post('remove-member')
   async removeMember(
-    @Param('partyId') partyId: string,
-    @Param('playerId') playerId: string,
+    @Body() body: RemoveMemberDto,
     @AuthenticatedUser() user: UserEntity,
   ) {
-    const command = new RemoveMemberFromPartyCommand(partyId, playerId, user);
-
+    const command = new RemoveMemberFromPartyCommand(
+      body.partyId,
+      body.playerId,
+      user,
+    );
     return await this._commandBus.execute<RemoveMemberFromPartyCommand, void>(
       command,
     );
@@ -83,15 +76,5 @@ export class PartyController {
     const query = new GetPartyByIdQuery(partyId, user);
 
     return await this._queryBus.execute<GetPartyByIdQuery, unknown>(query);
-  }
-
-  @Get(':partyId/members')
-  async getPartyMembers(
-    @Param('partyId') partyId: string,
-    @AuthenticatedUser() user: UserEntity,
-  ) {
-    const query = new GetPartyMembersQuery(partyId, user);
-
-    return await this._queryBus.execute<GetPartyMembersQuery, unknown>(query);
   }
 }

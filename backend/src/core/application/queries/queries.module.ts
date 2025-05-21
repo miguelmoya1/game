@@ -7,7 +7,6 @@ import { GetInventoryHandler } from './inventory/handlers/get-inventory.handler'
 import { GetItemByIdHandler } from './item/handlers/get-item-by-id.handler';
 import { GetPartyByIdHandler } from './party/handler/get-party-by-id.handler';
 import { GetPartyByUserHandler } from './party/handler/get-party-by-user.handler';
-import { GetPartyMembersHandler } from './party/handler/get-party-members.handler';
 import { GetPlaceHandler } from './place/handler/get-place.handler';
 import { GetPlacesHandler } from './place/handler/get-places.handler';
 import { GetPlayerByIdHandler } from './player/handler/get-player-by-id.handler';
@@ -44,7 +43,6 @@ import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
     SearchHandler,
 
     GetPartyByIdHandler,
-    GetPartyMembersHandler,
     GetPartyByUserHandler,
   ],
 })

@@ -1,5 +1,5 @@
 import { IsEnum, IsOptional, IsString } from 'class-validator';
-import { PartyStatus } from '../../../core/domain/enums/impl/party-status.enum';
+import { PartyStatus } from '../../../core/domain/enums';
 
 export class CreatePartyDto {
   @IsString({ message: 'MUST_BE_STRING' })

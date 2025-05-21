@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { ErrorCodes } from '../../../../domain/enums';
+import { ErrorCodes, PartyStatus } from '../../../../domain/enums';
 import {
   PARTY_REPOSITORY,
   PartyRepository,
@@ -20,10 +20,36 @@ export class AddMemberToPartyHandler
   ) {}
 
   async execute(command: AddMemberToPartyCommand): Promise<void> {
-    const { user, partyId, playerId } = command;
+    const { user, playerId } = command;
+    let { partyId } = command;
+
     if (!user) {
       throw new HttpException(ErrorCodes.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
+
+    if (!partyId) {
+      const userPlayerId = await this.playerRepository.getByUserId(user.id);
+
+      if (!userPlayerId) {
+        throw new HttpException(
+          ErrorCodes.PLAYER_NOT_FOUND,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      let party = await this.partyRepository.findPartyByPlayer(userPlayerId.id);
+
+      if (!party) {
+        party = await this.partyRepository.create({
+          leaderId: userPlayerId.id,
+          description: '',
+          status: PartyStatus.OPEN,
+        });
+      }
+
+      partyId = party.id;
+    }
+
     const party = await this.partyRepository.findById(partyId);
 
     if (!party) {

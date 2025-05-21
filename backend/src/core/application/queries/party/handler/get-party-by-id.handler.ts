@@ -21,6 +21,10 @@ export class GetPartyByIdHandler implements IQueryHandler<GetPartyByIdQuery> {
   async execute(query: GetPartyByIdQuery) {
     const { partyId, user } = query;
 
+    if (!user.isAdmin()) {
+      throw new HttpException(ErrorCodes.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
+    }
+
     const party = await this.partyRepository.findById(partyId);
 
     if (!party) {
