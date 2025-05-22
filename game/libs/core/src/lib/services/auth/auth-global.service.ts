@@ -1,5 +1,5 @@
 import { httpResource } from '@angular/common/http';
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, effect, inject, Injectable } from '@angular/core';
 import { AuthGlobalService } from './auth-global.service.contract';
 import { AUTH_TOKEN_SERVICE } from './auth-token.service.contract';
 import { isAuthenticatedMapper } from './mappers/is-authenticated.mapper';
@@ -31,5 +31,16 @@ export class AuthGlobalServiceImpl implements AuthGlobalService {
 
   public setIsAuthenticated(value: boolean) {
     this.#isAuthenticated.set(value);
+  }
+
+  constructor() {
+    effect(() => {
+      const userError = this.#currentUser.error();
+
+      if (userError) {
+        this.#authTokenService.removeToken();
+        this.#isAuthenticated.set(false);
+      }
+    });
   }
 }

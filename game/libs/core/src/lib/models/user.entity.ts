@@ -5,7 +5,6 @@ export class UserEntity implements User {
   public readonly id: string;
   public readonly name: string;
   public readonly surname: string | null;
-  public readonly nickname: string | null;
   public readonly language: string;
   public readonly role: UserRole;
 
@@ -21,7 +20,6 @@ export class UserEntity implements User {
     this.id = user.id;
     this.name = user.name;
     this.surname = user.surname;
-    this.nickname = user.nickname;
     this.language = user.language;
     this.role = user.role;
 

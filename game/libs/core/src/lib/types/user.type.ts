@@ -4,7 +4,6 @@ export type User = {
   readonly id: string;
   readonly name: string;
   readonly surname: string | null;
-  readonly nickname: string | null;
   readonly language: string;
   readonly role: UserRole;
 

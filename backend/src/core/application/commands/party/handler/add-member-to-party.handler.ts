@@ -40,11 +40,10 @@ export class AddMemberToPartyHandler
       let party = await this.partyRepository.findPartyByPlayer(userPlayerId.id);
 
       if (!party) {
-        party = await this.partyRepository.create({
-          leaderId: userPlayerId.id,
-          description: '',
-          status: PartyStatus.OPEN,
-        });
+        party = await this.partyRepository.create(
+          userPlayerId.id,
+          PartyStatus.OPEN,
+        );
       }
 
       partyId = party.id;

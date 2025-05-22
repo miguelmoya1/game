@@ -34,7 +34,6 @@ export const mapUserToEntity = (user: unknown) => {
     id: user.id,
     name: user.name,
     surname: user.surname,
-    nickname: user.nickname,
     role: user.role,
     language: user.language,
     createdAt: new Date(user.createdAt),

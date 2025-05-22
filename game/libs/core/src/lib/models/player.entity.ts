@@ -3,6 +3,7 @@ import { Stats } from '../types/stats.type';
 
 export class PlayerEntity implements Player {
   public readonly id: string;
+  public readonly nickname: string | null;
   public readonly level: number;
   public readonly rank: string;
   public readonly experience: number;
@@ -12,6 +13,7 @@ export class PlayerEntity implements Player {
 
   private constructor(player: Player) {
     this.id = player.id;
+    this.nickname = player.nickname ?? null;
     this.level = player.level;
     this.rank = player.rank;
     this.experience = player.experience;

@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import Redis from 'ioredis';
-import { CreatePartyDataDto } from '../../../../application/commands';
 import { PartyEntity } from '../../../../domain/entities';
 import { PartyStatus } from '../../../../domain/enums';
 import { REDIS_CLIENT } from '../../../redis/redis.provider';
@@ -21,9 +20,7 @@ export class PartyRepositoryImpl implements PartyRepository {
 
   constructor(@Inject(REDIS_CLIENT) private readonly redis: Redis) {}
 
-  async create(createPartyDto: CreatePartyDataDto) {
-    const { leaderId, status, description } = createPartyDto;
-
+  async create(leaderId: string, status: PartyStatus, description?: string) {
     const partyId = uuidv4();
     const partyKey = `party:${partyId}`;
     const membersKey = `party:${partyId}:members`;

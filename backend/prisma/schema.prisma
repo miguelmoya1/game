@@ -75,7 +75,6 @@ model User {
   name      String
   role      UserRole  @default(USER)
   surname   String?
-  nickname  String?
   language  String    @default("en")
   accounts  Account[]
   player    Player?
@@ -86,7 +85,6 @@ model User {
   @@index([name])
   @@index([role])
   @@index([surname])
-  @@index([nickname])
 }
 
 model Place {
@@ -177,6 +175,7 @@ model Spell {
 
 model Player {
   id             String                    @id @default(uuid())
+  nickname       String?                   @unique
   level          Int                       @default(1)
   rank           Rank                      @default(E)
   experience     Int                       @default(0)

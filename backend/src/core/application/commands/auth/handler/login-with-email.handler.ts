@@ -57,10 +57,9 @@ export class LoginWithEmailHandler
     }
 
     try {
-      const { id, nickname, role, language } = user;
+      const { id, role, language } = user;
       const token = await this._jwtService.signAsync({
         id,
-        nickname,
         role,
         language,
       });

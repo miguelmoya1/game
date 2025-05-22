@@ -1,8 +1,12 @@
-import { CreatePartyDataDto } from '../../../../application/commands/party/dto/create-party-data.dto';
 import { PartyEntity } from '../../../../domain/entities';
+import { PartyStatus } from '../../../../domain/enums';
 
 export interface PartyRepository {
-  create(createPartyDto: CreatePartyDataDto): Promise<PartyEntity>;
+  create(
+    leaderId: string,
+    status: PartyStatus,
+    description?: string,
+  ): Promise<PartyEntity>;
   findById(partyId: string): Promise<PartyEntity | null>;
   addMember(partyId: string, playerId: string): Promise<void>;
   removeMember(partyId: string, playerId: string): Promise<void>;

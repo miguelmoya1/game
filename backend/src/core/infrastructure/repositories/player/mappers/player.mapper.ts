@@ -7,6 +7,7 @@ export const playerToEntity = (player: PlayerDb) => {
     id: player.id,
     level: player.level,
     rank: player.rank,
+    nickname: player.nickname,
     experience: player.experience,
     stats: player.stats as Stats[],
     userId: player.userId,

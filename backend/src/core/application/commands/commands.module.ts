@@ -10,7 +10,6 @@ import { CreateItemHandler } from './item/handler/create-item.handler';
 import { DeleteItemHandler } from './item/handler/delete-item.handler';
 import { UpdateItemHandler } from './item/handler/update-item.handler';
 import { AddMemberToPartyHandler } from './party/handler/add-member-to-party.handler';
-import { CreatePartyHandler } from './party/handler/create-party.handler';
 import { DeletePartyHandler } from './party/handler/delete-party.handler';
 import { RemoveMemberFromPartyHandler } from './party/handler/remove-member-from-party.handler';
 import { ClaimPlaceItemHandler } from './place/handler/claim-place-item.handler';
@@ -18,7 +17,6 @@ import { DeletePlaceHandler } from './place/handler/delete-place.handler';
 import { CreateSetHandler } from './set/handler/create-set.handler';
 import { DeleteSetHandler } from './set/handler/delete-set.handler';
 import { UpdateSetHandler } from './set/handler/update-set.handler';
-import { UpdateUserHandler } from './user/handler/update-user.handler';
 
 const commands = [
   ActiveAccountHandler,
@@ -26,8 +24,6 @@ const commands = [
   ForgotPasswordHandler,
   LoginWithEmailHandler,
   RegisterHandler,
-
-  UpdateUserHandler,
 
   ClaimPlaceItemHandler,
   DeletePlaceHandler,
@@ -40,7 +36,6 @@ const commands = [
   UpdateItemHandler,
   DeleteItemHandler,
 
-  CreatePartyHandler,
   AddMemberToPartyHandler,
   RemoveMemberFromPartyHandler,
   DeletePartyHandler,
