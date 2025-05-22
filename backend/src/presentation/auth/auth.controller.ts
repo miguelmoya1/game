@@ -6,15 +6,17 @@ import {
   LoginWithEmailCommand,
   RegisterCommand,
 } from '../../core/application/commands';
-import { RehydrateQuery } from '../../core/application/queries';
+import {
+  CheckEmailExistsQuery,
+  RehydrateQuery,
+} from '../../core/application/queries';
 import { UserEntity } from '../../core/domain/entities';
 import {
   AuthenticatedUser,
   IsPublic,
 } from '../../core/infrastructure/decorators';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { CreateUserDto } from './dto/create-user.dto';
+import { RegisterDto } from './dto/create.dto';
 import { LoginWithEmailDto } from './dto/login-with-email.dto';
 
 @Controller('auth')
@@ -72,16 +74,31 @@ export class AuthController {
 
   @IsPublic()
   @Post('register')
-  public async register(
-    @Body()
-    registerDto: {
-      account: CreateAccountDto;
-      user: CreateUserDto;
-    },
-  ) {
-    const { account, user } = registerDto;
+  public async register(@Body() registerDto: RegisterDto) {
+    const { email, name, password, provider, providerId, surname, userId } =
+      registerDto;
+    const account = {
+      email,
+      password,
+      provider,
+      providerId,
+      userId,
+    };
+
+    const user = {
+      name,
+      surname,
+    };
 
     const command = new RegisterCommand(account, user);
     return await this._commandBus.execute<RegisterCommand, string>(command);
+  }
+
+  @IsPublic()
+  @Post('check-email')
+  public async checkEmail(@Body() body: { email: string }) {
+    const query = new CheckEmailExistsQuery(body.email);
+
+    return await this._queryBus.execute<CheckEmailExistsQuery, boolean>(query);
   }
 }

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RepositoriesModule } from '../../../di/repositories';
 import { ServicesModule } from '../../../di/services';
+import { CheckEmailExistsHandler } from './auth/handler/check-email-exists.handler';
 import { RehydrateHandler } from './auth/handler/rehydrate.handler';
 import { GetInventoryForUserHandler } from './inventory/handlers/get-inventory-for-user.handler';
 import { GetInventoryHandler } from './inventory/handlers/get-inventory.handler';
@@ -22,6 +23,7 @@ import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
   imports: [RepositoriesModule, ServicesModule],
   providers: [
     RehydrateHandler,
+    CheckEmailExistsHandler,
     GetPlacesHandler,
     GetItemByIdHandler,
     GetPlaceHandler,

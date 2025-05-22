@@ -1,3 +1,4 @@
+export { CheckEmailExistsQuery } from './auth/impl/check-email-exists.query';
 export { RehydrateQuery } from './auth/impl/rehydrate.query';
 export { GetInventoryForUserQuery } from './inventory/impl/get-inventory-for-user.query';
 export { GetInventoryQuery } from './inventory/impl/get-inventory.query';

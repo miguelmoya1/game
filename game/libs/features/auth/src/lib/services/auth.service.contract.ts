@@ -5,6 +5,7 @@ import { RegisterDto } from '../data-access/dto/register.dto';
 export interface AuthService {
   loginEmail(loginEmailDto: LoginEmailDto): Promise<boolean>;
   register(registerDto: RegisterDto): Promise<boolean>;
+  checkEmailExists(email: string): Promise<boolean>;
 }
 
 export const AUTH_SERVICE = new InjectionToken<AuthService>('AUTH_SERVICE');

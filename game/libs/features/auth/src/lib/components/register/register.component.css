@@ -50,3 +50,9 @@ form {
   font-size: 1rem;
   color: var(--color-secondary);
 }
+
+.error-message {
+  color: var(--color-error);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}

@@ -11,17 +11,8 @@ const isUserDto = (obj: unknown): obj is UserDto => {
   return (
     typeof dto['id'] === 'string' &&
     typeof dto['name'] === 'string' &&
-    (typeof dto['surname'] === 'string' || dto['surname'] === null) &&
-    typeof dto['nickname'] === 'string' &&
     typeof dto['language'] === 'string' &&
-    typeof dto['role'] === 'string' &&
-    typeof dto['createdAt'] === 'string' &&
-    !isNaN(Date.parse(dto['createdAt'])) &&
-    typeof dto['updatedAt'] === 'string' &&
-    !isNaN(Date.parse(dto['updatedAt'])) &&
-    (dto['deletedAt'] === null ||
-      (typeof dto['deletedAt'] === 'string' &&
-        !isNaN(Date.parse(dto['deletedAt']))))
+    typeof dto['role'] === 'string'
   );
 };
 

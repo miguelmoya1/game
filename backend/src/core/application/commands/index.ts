@@ -1,3 +1,4 @@
+export * from './auth/dto/create-account-data.dto';
 export * from './auth/dto/create-user-data.dto';
 export * from './auth/impl/active-account.command';
 export * from './auth/impl/change-password.command';

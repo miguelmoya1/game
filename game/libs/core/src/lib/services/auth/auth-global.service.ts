@@ -1,5 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { computed, effect, inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthGlobalService } from './auth-global.service.contract';
 import { AUTH_TOKEN_SERVICE } from './auth-token.service.contract';
 import { isAuthenticatedMapper } from './mappers/is-authenticated.mapper';
@@ -8,6 +9,7 @@ import { mapUserToEntity } from './mappers/user-logged.mapper';
 @Injectable()
 export class AuthGlobalServiceImpl implements AuthGlobalService {
   readonly #authTokenService = inject(AUTH_TOKEN_SERVICE);
+  readonly #router = inject(Router);
 
   readonly #isAuthenticated = httpResource<boolean>(
     () =>
@@ -38,8 +40,10 @@ export class AuthGlobalServiceImpl implements AuthGlobalService {
       const userError = this.#currentUser.error();
 
       if (userError) {
+        console.error('Error fetching user:', userError);
         this.#authTokenService.removeToken();
         this.#isAuthenticated.set(false);
+        this.#router.navigate(['/auth/login']);
       }
     });
   }

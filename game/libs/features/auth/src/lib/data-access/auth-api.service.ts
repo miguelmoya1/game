@@ -11,10 +11,23 @@ export class AuthApiServiceImpl implements AuthApiService {
   readonly #httpClient = inject(HttpClient);
 
   async loginEmail(loginEmailDto: LoginEmailDto) {
-    return await firstValueFrom(this.#httpClient.post('auth/login/email', loginEmailDto).pipe(map(tokenMapper)));
+    return await firstValueFrom(
+      this.#httpClient
+        .post<{ token: string }>('auth/login/email', loginEmailDto)
+        .pipe(map(tokenMapper))
+    );
   }
 
   async register(registerDto: RegisterDto) {
-    return await firstValueFrom(this.#httpClient.post('auth/register', registerDto).pipe(map(tokenMapper)));
+    return await firstValueFrom(
+      this.#httpClient.post<void>('auth/register', registerDto)
+    );
+  }
+
+  async checkEmailExists(email: string): Promise<boolean> {
+    const result = await firstValueFrom(
+      this.#httpClient.post<{ exists: boolean }>('auth/check-email', { email })
+    );
+    return result.exists;
   }
 }

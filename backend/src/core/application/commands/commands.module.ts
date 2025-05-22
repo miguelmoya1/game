@@ -14,6 +14,7 @@ import { DeletePartyHandler } from './party/handler/delete-party.handler';
 import { RemoveMemberFromPartyHandler } from './party/handler/remove-member-from-party.handler';
 import { ClaimPlaceItemHandler } from './place/handler/claim-place-item.handler';
 import { DeletePlaceHandler } from './place/handler/delete-place.handler';
+import { CreatePlayerHandler } from './player/handler/create-player.handler';
 import { CreateSetHandler } from './set/handler/create-set.handler';
 import { DeleteSetHandler } from './set/handler/delete-set.handler';
 import { UpdateSetHandler } from './set/handler/update-set.handler';
@@ -39,6 +40,8 @@ const commands = [
   AddMemberToPartyHandler,
   RemoveMemberFromPartyHandler,
   DeletePartyHandler,
+
+  CreatePlayerHandler,
 ];
 
 @Module({

@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { UserCreatedEvent } from 'src/core/application/events/impl/user-created.event';
 import { ErrorCodes } from '../../../../domain/enums';
 import {
   ACCOUNT_REPOSITORY,
@@ -7,7 +8,12 @@ import {
   USER_REPOSITORY,
   UserRepository,
 } from '../../../../infrastructure/repositories';
-import { EMAIL_SERVICE, EmailService } from '../../../services';
+import {
+  EMAIL_SERVICE,
+  EmailService,
+  ENCRYPTION_SERVICE,
+  EncryptionService,
+} from '../../../services';
 import { RegisterCommand } from '../impl/register.command';
 
 @CommandHandler(RegisterCommand)
@@ -18,10 +24,24 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
     @Inject(USER_REPOSITORY) private readonly _userUseCase: UserRepository,
     @Inject(EMAIL_SERVICE)
     private readonly _emailService: EmailService,
+    @Inject(ENCRYPTION_SERVICE)
+    private readonly _encryptionService: EncryptionService,
+    private readonly eventBus: EventBus,
   ) {}
 
   async execute(command: RegisterCommand) {
     const { createAccountDto, createUserDto } = command;
+
+    const existingAccount = await this._accountUseCase.getOneByProviderEmail(
+      createAccountDto.email,
+    );
+
+    if (existingAccount) {
+      throw new HttpException(
+        ErrorCodes.EMAIL_ALREADY_EXISTS,
+        HttpStatus.CONFLICT,
+      );
+    }
 
     const user = await this._userUseCase.create(createUserDto);
 
@@ -32,8 +52,14 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
       );
     }
 
+    let password = createAccountDto.password;
+    if (password) {
+      password = await this._encryptionService.encrypt(password);
+    }
+
     const account = await this._accountUseCase.create({
       ...createAccountDto,
+      password,
       userId: user.id,
     });
 
@@ -43,6 +69,8 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
         HttpStatus.BAD_REQUEST,
       );
     }
+
+    this.eventBus.publish(new UserCreatedEvent(user.id));
 
     await this._emailService.sendConfirmationEmail(account, user);
   }

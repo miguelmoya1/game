@@ -87,7 +87,7 @@ select {
   }
 }
 
-.ng-invalid {
+.ng-invalid.ng-touched {
   border-color: var(--color-tertiary);
 }
 
