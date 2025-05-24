@@ -28,9 +28,9 @@ This document outlines the next major features to be developed, the proposed ord
 
 ### Frontend Tasks:
 
-- [ ] **User Interface (UI) for Parties**:
-  - [ ] Interface to create/invite to a party.
-  - [ ] Display current party members and leader.
+- [x] **User Interface (UI) for Parties**:
+  - [x] Interface to create/invite to a party.
+  - [x] Display current party members and leader.
   - [ ] Buttons and logic for: leave party, kick member (if leader), promote leader (if leader).
   - [ ] Handling party invitations (accept/decline).
 

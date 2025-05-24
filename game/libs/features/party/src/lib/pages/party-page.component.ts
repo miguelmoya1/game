@@ -12,7 +12,5 @@ import { TranslatePipe } from '@game/shared';
 export class PartyPageComponent {
   readonly partyService = inject(PARTY_SERVICE);
 
-  get party() {
-    return this.partyService.party;
-  }
+  readonly partyResource = this.partyService.party;
 }
