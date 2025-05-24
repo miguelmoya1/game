@@ -2,6 +2,7 @@ import { ItemType, PlaceCategory, Rank } from '../../../../domain/enums';
 import { Effect } from '../../../../domain/types';
 
 export type CreateItemDataDto = {
+  id?: string;
   name: string;
   description?: string;
   imageUrl?: string;

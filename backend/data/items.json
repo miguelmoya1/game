@@ -1,0 +1,175 @@
+[
+  {
+    "id": "10000000-0000-0000-0000-000000000001",
+    "name": "HELMET_INITIAL",
+    "description": "HELMET_INITIAL_DESCRIPTION",
+    "itemType": "EQUIPPABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_SELF",
+        "value": 2,
+        "stats": "CON"
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "KNOWLEDGE",
+      "FAITH"
+    ],
+    "setId": "00000000-0000-0000-0000-000000000001"
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000002",
+    "name": "ARMOR_INITIAL",
+    "description": "ARMOR_INITIAL_DESCRIPTION",
+    "itemType": "EQUIPPABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_TEAM",
+        "value": 1,
+        "stats": "STR"
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "NATURE",
+      "COMMUNITY"
+    ],
+    "setId": "00000000-0000-0000-0000-000000000002"
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000003",
+    "name": "SWORD_INITIAL",
+    "description": "SWORD_INITIAL_DESCRIPTION",
+    "itemType": "EQUIPPABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_SELF",
+        "value": 1,
+        "stats": "DEX"
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "COMMERCE",
+      "CRAFT"
+    ],
+    "setId": "00000000-0000-0000-0000-000000000003"
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000004",
+    "name": "POTION_HEALTH_SMALL",
+    "description": "POTION_HEALTH_SMALL_DESCRIPTION",
+    "itemType": "USABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_SELF",
+        "value": 10
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "HEALTH",
+      "COMMUNITY"
+    ]
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000005",
+    "name": "BOOK_KNOWLEDGE_BASIC",
+    "description": "BOOK_KNOWLEDGE_BASIC_DESCRIPTION",
+    "itemType": "USABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_TEAM",
+        "value": 2
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "KNOWLEDGE"
+    ]
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000006",
+    "name": "BRUSH_ARTS_INITIAL",
+    "description": "BRUSH_ARTS_INITIAL_DESCRIPTION",
+    "itemType": "EQUIPPABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_SELF",
+        "value": 1,
+        "stats": "CHA"
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "ARTS"
+    ]
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000007",
+    "name": "DUMBBELL_FITNESS_INITIAL",
+    "description": "DUMBBELL_FITNESS_INITIAL_DESCRIPTION",
+    "itemType": "EQUIPPABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_SELF",
+        "value": 1,
+        "stats": "STR"
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "FITNESS"
+    ]
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000008",
+    "name": "HERB_NATURE_INITIAL",
+    "description": "HERB_NATURE_INITIAL_DESCRIPTION",
+    "itemType": "USABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_SELF",
+        "value": 3
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "NATURE"
+    ]
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000009",
+    "name": "HAMMER_CRAFT_INITIAL",
+    "description": "HAMMER_CRAFT_INITIAL_DESCRIPTION",
+    "itemType": "EQUIPPABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_SELF",
+        "value": 1,
+        "stats": "CON"
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "CRAFT"
+    ]
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000010",
+    "name": "CROSS_FAITH_INITIAL",
+    "description": "CROSS_FAITH_INITIAL_DESCRIPTION",
+    "itemType": "EQUIPPABLE",
+    "effects": [
+      {
+        "type": "PASSIVE_HEAL_TEAM",
+        "value": 1
+      }
+    ],
+    "rank": "E",
+    "spawnCategories": [
+      "FAITH"
+    ]
+  }
+]

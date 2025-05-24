@@ -72,6 +72,7 @@ export class ItemRepositoryImpl implements ItemRepository {
   async create(item: CreateItemDataDto) {
     const result = await this.databaseService.item.create({
       data: {
+        id: item.id,
         name: item.name,
         description: item.description,
         imageUrl: item.imageUrl,

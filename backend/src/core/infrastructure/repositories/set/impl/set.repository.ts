@@ -83,6 +83,7 @@ export class SetRepositoryImpl implements SetRepository {
   public async create(createUSerDto: CreateSetDataDto) {
     const set = await this._database.set.create({
       data: {
+        id: createUSerDto.id,
         name: createUSerDto.name,
         description: createUSerDto.description,
         effects: createUSerDto.effects,

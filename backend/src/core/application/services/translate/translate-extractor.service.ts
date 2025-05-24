@@ -11,13 +11,20 @@ export class TranslateExtractorService {
     try {
       const core = await this.#extract('src/core');
       const prisma = await this.#extract('prisma');
-      // const frontend = await this.#extract('../frontend/src/app');
+      const data = await this.#extract('data');
       const game = await this.#extract('../game/apps');
       const gameLibs = await this.#extract('../game/libs');
       const templates = await this.#extract('templates');
 
       return [
-        ...new Set([...templates, ...core, ...prisma, ...game, ...gameLibs]),
+        ...new Set([
+          ...templates,
+          ...core,
+          ...prisma,
+          ...data,
+          ...game,
+          ...gameLibs,
+        ]),
       ].sort();
     } catch (e) {
       this.#logger.warn(e);
@@ -33,7 +40,8 @@ export class TranslateExtractorService {
       (file) =>
         file.includes('.ts') ||
         file.includes('.html') ||
-        file.includes('.prisma'),
+        file.includes('.prisma') ||
+        file.includes('.json'),
     );
 
     const strings: string[] = [];
@@ -71,6 +79,8 @@ export class TranslateExtractorService {
       `{{${this.#variableNameRegexp}}}`,
       // ['variableNameRegexp']
       `\\['${this.#variableNameRegexp}'\\]`,
+      // "variableNameRegexp"
+      `"${this.#variableNameRegexp}"`,
     ];
 
     const regexExclude = [
