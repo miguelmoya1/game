@@ -10,6 +10,17 @@ export class PlayerEntity implements Player {
   public readonly stats: Stats[];
   public readonly userId: string;
   public readonly raceId: string;
+  public readonly aggregatedStats?: Record<
+    string,
+    {
+      base: number;
+      byLevel: number;
+      bySet: number;
+      byParty: number;
+      byGuild: number;
+      total: number;
+    }
+  >;
 
   private constructor(player: Player) {
     this.id = player.id;
@@ -20,6 +31,7 @@ export class PlayerEntity implements Player {
     this.stats = player.stats;
     this.userId = player.userId;
     this.raceId = player.raceId;
+    this.aggregatedStats = player.aggregatedStats;
   }
 
   public static create(player: Player) {

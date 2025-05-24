@@ -43,7 +43,7 @@ This document outlines the next major features to be developed, the proposed ord
 - [ ] **`AggregatedStats` Data Structure Definition**:
   - Object/Class that will hold all final player stats (e.g., `finalMaxHealth`, `finalAttack`, `finalDefense`, `finalCritChance`, etc.).
 - [ ] **`AggregatedStats` Calculation Service/Endpoint**:
-  - [ ] `GET /player/{playerId}/aggregated-stats` or a similar endpoint.
+  - [ ] `GET /player/aggregated-stats` or a similar endpoint.
   - **Centralized Calculation Logic**:
     1.  [ ] Get base stats from `PlayerEntity`.
     2.  [ ] Calculate and sum modifiers from all the player's active equipped item sets.

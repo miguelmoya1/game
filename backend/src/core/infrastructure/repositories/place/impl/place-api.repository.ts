@@ -89,16 +89,9 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
   ) {}
 
   async fetchAndStorePlacesFromOverpass(latitude: number, longitude: number) {
-    const radius = 750; // in meters
-    this.#logger.debug('Fetching places with coordinates:', {
-      latitude,
-      longitude,
-      radius,
-    });
-
+    const radius = 750;
     const EARTH_RADIUS_METERS = 111_000;
     const DEGREES_TO_RADIANS = Math.PI / 180;
-
     const bBox = [
       latitude - radius / EARTH_RADIUS_METERS,
       longitude -
@@ -109,7 +102,6 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
         radius /
           (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS)),
     ];
-
     const queryConditions: string[] = [];
     const relevantTags = Object.keys(this.#osmTagToCategoryMap).reduce(
       (acc, key) => {
@@ -120,7 +112,6 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
       },
       {} as Record<string, Set<string>>,
     );
-
     const bBoxStr = bBox.join(',');
 
     for (const [tagKey, tagValuesSet] of Object.entries(relevantTags)) {

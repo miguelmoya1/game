@@ -36,6 +36,7 @@ enum PlaceCategory {
 }
 
 enum StatsType {
+  HP
   STR
   DEX
   CON

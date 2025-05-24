@@ -29,5 +29,39 @@
         }
       </ul>
     </div>
+    <div class="player-row aggregated-stats-section">
+      <span class="label">{{ 'AGGREGATED_STATS' | translate }}</span>
+      <ul class="aggregated-stats-list">
+        @for (statKey of statsKeys(); track statKey) {
+          <li>
+            <span class="stat-type"> {{ statKey | translate }} </span>
+            <span class="stat-detail">
+              Base: <b>{{ player.aggregatedStats?.[statKey]?.base }} </b>
+            </span>
+            <span class="stat-detail">
+              By Level:
+              <b> {{ player.aggregatedStats?.[statKey]?.byLevel }} </b>
+            </span>
+            <span class="stat-detail">
+              By Set: <b> {{ player.aggregatedStats?.[statKey]?.bySet }} </b>
+            </span>
+            <span class="stat-detail">
+              By Party:
+              <b> {{ player.aggregatedStats?.[statKey]?.byParty }} </b>
+            </span>
+            <span class="stat-detail">
+              By Guild:
+              <b> {{ player.aggregatedStats?.[statKey]?.byGuild }} </b>
+            </span>
+
+            <hr />
+
+            <span class="stat-detail total">
+              Total: <b>{{ player.aggregatedStats?.[statKey]?.total }} </b>
+            </span>
+          </li>
+        }
+      </ul>
+    </div>
   </div>
 }

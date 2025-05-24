@@ -2,7 +2,6 @@ import { PartyEntity } from '../../../models/party.entity';
 import { Party } from '../../../types/party.type';
 import { PartyDto } from '../dto/party.dto';
 
-// TODO: Add a dto (unknown and check if the object is a PartyDto)
 const isPartyDto = (data: unknown): data is PartyDto => {
   if (typeof data !== 'object' || data === null) {
     return false;

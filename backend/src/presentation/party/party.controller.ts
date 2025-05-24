@@ -8,8 +8,9 @@ import {
 import {
   GetPartyByIdQuery,
   GetPartyByUserQuery,
+  GetPartyMembersWithStatsQuery,
 } from '../../core/application/queries';
-import { UserEntity } from '../../core/domain/entities';
+import { PlayerEntity, UserEntity } from '../../core/domain/entities';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
 import { InvitePartyDto } from './dto/invite-party.dto';
 import { RemoveMemberDto } from './dto/remove-member.dto';
@@ -76,5 +77,15 @@ export class PartyController {
     const query = new GetPartyByIdQuery(partyId, user);
 
     return await this._queryBus.execute<GetPartyByIdQuery, unknown>(query);
+  }
+
+  @Get('me/members')
+  async getPartyMembers(@AuthenticatedUser() user: UserEntity) {
+    const query = new GetPartyMembersWithStatsQuery(user);
+
+    return await this._queryBus.execute<
+      GetPartyMembersWithStatsQuery,
+      PlayerEntity[]
+    >(query);
   }
 }

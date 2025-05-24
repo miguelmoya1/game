@@ -17,7 +17,7 @@ export class AuthGlobalServiceImpl implements AuthGlobalService {
     {
       defaultValue: false,
       parse: isAuthenticatedMapper,
-    }
+    },
   );
 
   readonly #shouldFetch = computed(() => this.#isAuthenticated.value());
@@ -25,7 +25,7 @@ export class AuthGlobalServiceImpl implements AuthGlobalService {
     () => (this.#shouldFetch() ? 'users/me' : undefined),
     {
       parse: mapUserToEntity,
-    }
+    },
   );
 
   public readonly isAuthenticated = this.#isAuthenticated.asReadonly();
@@ -40,7 +40,6 @@ export class AuthGlobalServiceImpl implements AuthGlobalService {
       const userError = this.#currentUser.error();
 
       if (userError) {
-        console.error('Error fetching user:', userError);
         this.#authTokenService.removeToken();
         this.#isAuthenticated.set(false);
         this.#router.navigate(['/auth/login']);

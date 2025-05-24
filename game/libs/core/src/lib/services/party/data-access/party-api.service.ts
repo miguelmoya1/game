@@ -12,7 +12,7 @@ export class PartyApiService {
       this.#http.post<void>(`${this.#baseUrl}/invite`, {
         playerId,
         partyId,
-      })
+      }),
     );
   }
 
@@ -23,13 +23,13 @@ export class PartyApiService {
           partyId,
           playerId,
         },
-      })
+      }),
     );
   }
 
   async deleteParty(partyId: string) {
     await firstValueFrom(
-      this.#http.delete<void>(`${this.#baseUrl}/${partyId}`)
+      this.#http.delete<void>(`${this.#baseUrl}/${partyId}`),
     );
   }
 }

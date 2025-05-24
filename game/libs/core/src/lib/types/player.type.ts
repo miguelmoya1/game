@@ -9,4 +9,15 @@ export type Player = {
   readonly stats: Stats[];
   readonly userId: string;
   readonly raceId: string;
+  readonly aggregatedStats?: Record<
+    string,
+    {
+      base: number;
+      byLevel: number;
+      bySet: number;
+      byParty: number;
+      byGuild: number;
+      total: number;
+    }
+  >;
 };

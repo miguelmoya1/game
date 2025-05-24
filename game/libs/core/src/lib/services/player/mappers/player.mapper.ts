@@ -1,4 +1,5 @@
 import { PlayerEntity } from '../../../models/player.entity';
+import { AggregatedStats } from '../../party/dto/party.dto';
 import { PlayerDto } from '../dto/player.dto';
 
 const isPlayerDto = (obj: unknown): obj is PlayerDto => {
@@ -10,19 +11,24 @@ const isPlayerDto = (obj: unknown): obj is PlayerDto => {
 
   return (
     typeof dto['id'] === 'string' &&
-    typeof dto['name'] === 'string' &&
-    (typeof dto['surname'] === 'string' || dto['surname'] === null) &&
-    typeof dto['nickname'] === 'string' &&
-    typeof dto['language'] === 'string' &&
-    typeof dto['role'] === 'string' &&
-    typeof dto['createdAt'] === 'string' &&
-    !isNaN(Date.parse(dto['createdAt'])) &&
-    typeof dto['updatedAt'] === 'string' &&
-    !isNaN(Date.parse(dto['updatedAt'])) &&
-    (dto['deletedAt'] === null ||
-      (typeof dto['deletedAt'] === 'string' &&
-        !isNaN(Date.parse(dto['deletedAt']))))
+    typeof dto['level'] === 'number' &&
+    typeof dto['rank'] === 'string' &&
+    (typeof dto['nickname'] === 'string' || dto['nickname'] === null) &&
+    typeof dto['experience'] === 'number' &&
+    Array.isArray(dto['stats']) &&
+    typeof dto['userId'] === 'string' &&
+    typeof dto['raceId'] === 'string' &&
+    typeof dto['aggregatedStats'] === 'object' &&
+    dto['aggregatedStats'] !== null
   );
+};
+
+export const mapPlayerArrayToEntityArray = (players: unknown) => {
+  if (!Array.isArray(players)) {
+    throw new Error('Invalid players data');
+  }
+
+  return players.map(mapPlayerToEntity);
 };
 
 export const mapPlayerToEntity = (player: unknown) => {
@@ -39,5 +45,6 @@ export const mapPlayerToEntity = (player: unknown) => {
     stats: player.stats,
     userId: player.userId,
     raceId: player.raceId,
+    aggregatedStats: player.aggregatedStats as AggregatedStats,
   });
 };

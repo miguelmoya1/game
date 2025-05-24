@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { PlayerItemEntity } from 'src/core/domain/entities';
 import {
   DATABASE_SERVICE,
   DatabaseService,
@@ -13,6 +14,27 @@ export class PlayerItemRepositoryImpl implements PlayerItemRepository {
   constructor(
     @Inject(DATABASE_SERVICE) private readonly _database: DatabaseService,
   ) {}
+
+  async getForPlayerIds(playerIds: string[]): Promise<PlayerItemEntity[]> {
+    const playerItems = await this._database.playerItem.findMany({
+      where: {
+        playerId: {
+          in: playerIds,
+        },
+      },
+      include: {
+        item: {
+          include: itemInclude,
+        },
+      },
+    });
+
+    if (!playerItems) {
+      return [];
+    }
+
+    return playerItems.map(playerItemToEntity);
+  }
 
   async add(playerId: string, itemId: string) {
     const playerItem = await this._database.playerItem.findFirst({

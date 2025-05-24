@@ -21,6 +21,10 @@ export class CreatePlayerHandler
 
     const stats = [
       {
+        statsType: StatsType.HP,
+        value: 100,
+      },
+      {
         statsType: StatsType.WIS,
         value: 0,
       },

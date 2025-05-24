@@ -27,3 +27,11 @@ export {
 } from './translate/translate.service.contract';
 
 export { TranslateServiceImpl } from './translate/translate.service';
+
+export { AggregatedStatsServiceImpl } from './aggregated-stats/aggregated-stats.service';
+export {
+  AGGREGATED_STATS_SERVICE,
+  AggregatedStatDetail,
+  AggregatedStats,
+  AggregatedStatsService,
+} from './aggregated-stats/aggregated-stats.service.contract';

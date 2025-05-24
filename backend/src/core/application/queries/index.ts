@@ -18,3 +18,4 @@ export { GetSetListQuery } from './set/impl/get-set-list.query';
 export { GetLanguageQuery } from './translate/impl/get-languages.query';
 export { GetTranslateQuery } from './translate/impl/get-translate.query';
 export { GetUserByIdQuery } from './user/impl/get-user-by-id.query';
+export { GetPartyMembersWithStatsQuery } from './party/impl/get-party-members-with-stats.query';

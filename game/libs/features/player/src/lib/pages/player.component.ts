@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { TranslatePipe } from '@game/shared';
 import { PLAYER_SERVICE } from '../services/player.service.contract';
 
@@ -13,4 +13,8 @@ export class PlayerComponent {
   readonly #playerService = inject(PLAYER_SERVICE);
 
   protected readonly player = this.#playerService.player;
+
+  protected readonly statsKeys = computed(() =>
+    Object.keys(this.player.value()?.aggregatedStats || {}),
+  );
 }
