@@ -1,4 +1,5 @@
 export { AccountEntity } from './impl/account.entity';
+export { DungeonEntity } from './impl/dungeon.entity';
 export { ItemEntity } from './impl/item.entity';
 export { PartyEntity } from './impl/party.entity';
 export { PlaceApiEntity } from './impl/place-api.entity';

@@ -1,4 +1,6 @@
 export { AccountProvider } from './impl/account-provider.enum';
+export { DungeonStatus } from './impl/dungeon-status.enum';
+export { DungeonType } from './impl/dungeon-type.enum';
 export { EffectType } from './impl/effect-type.enum';
 export { ErrorCodes } from './impl/error-codes.enums';
 export { ItemType } from './impl/item-type.enum';

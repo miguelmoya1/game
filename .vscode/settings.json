@@ -3,6 +3,8 @@
     "adminer",
     "dtos",
     "EQUIPPABLE",
+    "geoadd",
+    "georadius",
     "hgetall",
     "hmset",
     "housename",
@@ -27,7 +29,9 @@
     "stackable",
     "townhall",
     "uuidv",
-    "yxxx"
+    "WITHCOORD",
+    "yxxx",
+    "zrem"
   ],
   "material-icon-theme.folders.associations": {
     "data": "Global",

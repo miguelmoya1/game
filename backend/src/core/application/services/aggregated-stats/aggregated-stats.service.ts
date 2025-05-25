@@ -31,6 +31,7 @@ export class AggregatedStatsServiceImpl extends AggregatedStatsService {
       const byParty = this.#getByParty(statKey, partyInventory);
       const byGuild = 0;
       const total = base + byLevel + bySet + byParty + byGuild;
+
       stats[statKey] = { base, byLevel, bySet, byParty, byGuild, total };
     }
 

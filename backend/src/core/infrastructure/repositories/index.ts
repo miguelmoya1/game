@@ -63,3 +63,9 @@ export {
   PartyRepository,
 } from './party/contracts/party.repository.contract';
 export { PartyRepositoryImpl } from './party/impl/party.repository';
+
+export {
+  DUNGEON_REPOSITORY,
+  DungeonRepository,
+} from './dungeon/contracts/dungeon.repository.contract';
+export { DungeonRepositoryImpl } from './dungeon/impl/dungeon.repository';

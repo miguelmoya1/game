@@ -1,4 +1,5 @@
 export { Account } from './impl/account.type';
+export { Dungeon } from './impl/dungeon.type';
 export { Effect } from './impl/effect.type';
 export { Item } from './impl/item.type';
 export { Party } from './impl/party.type';

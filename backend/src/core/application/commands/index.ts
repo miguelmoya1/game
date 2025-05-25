@@ -6,6 +6,8 @@ export * from './auth/impl/forgot-password.command';
 export * from './auth/impl/login-with-email.command';
 export * from './auth/impl/register.command';
 export * from './commands.module';
+export * from './dungeon/dto/create-dungeon-data.dto';
+export * from './dungeon/impl/create-dungeon.command';
 export * from './item/dto/create-item-data.dto';
 export * from './item/dto/update-item-data.dto';
 export * from './item/impl/create-item.command';
