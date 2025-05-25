@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ServicesModule } from '../services';
 import { accountRepositoryProvider } from './impl/account.repository.provider';
+import { dungeonRepositoryProvider } from './impl/dungeon.repository.provider';
 import { itemRepositoryProvider } from './impl/item.repository.provider';
 import { partyRepositoryProvider } from './impl/party.repository.provider';
 import { placeApiHistoryRepositoryProvider } from './impl/place-api-history.repository.provider';
@@ -26,6 +27,7 @@ const repositories = [
   setRepositoryProvider,
   redisRepositoryProvider,
   partyRepositoryProvider,
+  dungeonRepositoryProvider,
 ];
 
 @Module({
