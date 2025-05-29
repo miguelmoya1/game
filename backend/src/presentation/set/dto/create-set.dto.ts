@@ -8,7 +8,7 @@ export class CreateSetDto {
 
   @IsOptional()
   @IsString({ message: 'MUST_BE_STRING' })
-  public readonly description?: string;
+  public readonly description: string;
 
   @ValidateNested({ each: true })
   @Type(() => EffectDto)

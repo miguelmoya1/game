@@ -25,7 +25,7 @@ export class PlaceDetailComponent {
   }
 
   protected close() {
-    this.#placeService.setPlaceId(null);
+    this.#placeService.setPlaceId(undefined);
     this.#router.navigate(['map']);
   }
 

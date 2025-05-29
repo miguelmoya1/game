@@ -5,6 +5,7 @@ import { GeolocationServiceImpl } from './geolocation.service';
 export interface GeolocationService {
   readonly position: Signal<Position | null>;
   readonly watching: Signal<boolean>;
+
   updateCurrentPosition(): Promise<void>;
   setWatching(watching: boolean): void;
 }
@@ -14,5 +15,5 @@ export const GEOLOCATION_SERVICE = new InjectionToken<GeolocationService>(
   {
     providedIn: 'root',
     factory: () => new GeolocationServiceImpl(),
-  }
+  },
 );

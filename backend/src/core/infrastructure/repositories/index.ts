@@ -69,3 +69,9 @@ export {
   DungeonRepository,
 } from './dungeon/contracts/dungeon.repository.contract';
 export { DungeonRepositoryImpl } from './dungeon/impl/dungeon.repository';
+
+export { StaticDataLoaderImpl } from './services/static-data-loader.service';
+export {
+  STATIC_DATA_LOADER,
+  StaticDataLoader,
+} from './services/static-data-loader.service.contract';

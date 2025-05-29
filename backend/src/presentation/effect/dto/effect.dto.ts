@@ -1,37 +1,34 @@
 import { IsEnum, IsNumber, IsOptional } from 'class-validator';
-import { EffectType, StatsType, Target } from '../../../core/domain/enums';
+import { EffectTarget, EffectType, Stats } from '../../../core/domain/enums';
 
 export class EffectDto {
-  @IsOptional()
   @IsEnum(EffectType, {
     message: 'MUST_BE_ENUM',
     context: {
       enum: EffectType,
     },
   })
-  readonly type?: EffectType;
+  readonly type: EffectType;
 
-  @IsOptional()
   @IsNumber({}, { message: 'MUST_BE_NUMBER' })
-  readonly value?: number;
+  readonly value: number;
 
-  @IsOptional()
-  @IsEnum(Target, {
+  @IsEnum(EffectTarget, {
     message: 'MUST_BE_ENUM',
     context: {
-      enum: Target,
+      enum: EffectTarget,
     },
   })
-  readonly target?: Target;
+  readonly target: EffectTarget;
 
   @IsOptional()
-  @IsEnum(StatsType, {
+  @IsEnum(Stats, {
     message: 'MUST_BE_ENUM',
     context: {
-      enum: StatsType,
+      enum: Stats,
     },
   })
-  readonly stats?: StatsType;
+  readonly stats?: Stats;
 
   @IsOptional()
   @IsNumber({}, { message: 'MUST_BE_NUMBER' })

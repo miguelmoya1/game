@@ -8,11 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum ItemType {
-  EQUIPPABLE
-  USABLE
-}
-
 enum AccountProvider {
   EMAIL
 }
@@ -35,16 +30,6 @@ enum PlaceCategory {
   HISTORIC
 }
 
-enum StatsType {
-  HP
-  STR
-  DEX
-  CON
-  INT
-  WIS
-  CHA
-}
-
 enum Rank {
   E
   D
@@ -52,23 +37,7 @@ enum Rank {
   B
   A
   S
-  SS
   NATIONAL
-  INTERNATIONAL
-}
-
-enum EffectType {
-  PASSIVE_HEAL_TEAM
-  PASSIVE_HEAL_SELF
-  REVIVE_ONCE
-  IMMUNE_POISON
-}
-
-enum Target {
-  ALLY
-  ENEMY
-  SELF
-  TEAM
 }
 
 model User {
@@ -96,17 +65,17 @@ model Place {
   lng            Float
   osmTags        Json?
   currentItemId  String
-  currentItem    Item                      @relation("CurrentItem", fields: [currentItemId], references: [id])
+  // currentItem    Item                      @relation("CurrentItem", fields: [currentItemId], references: [id])
   collectionLogs PlayerItemCollectionLog[]
   categories     PlaceCategory[]
   createdAt      DateTime                  @default(now())
   updatedAt      DateTime                  @updatedAt
   deletedAt      DateTime?
+  // @@index([currentItemId])
 
   @@index([apiId])
   @@index([name])
   @@index([lat, lng])
-  @@index([currentItemId])
 }
 
 model PlaceApiHistory {
@@ -145,35 +114,6 @@ model Account {
   @@index([userId])
 }
 
-model Race {
-  id          String    @id @default(uuid())
-  name        String    @unique
-  description String?
-  isPlayable  Boolean   @default(true)
-  spells      Spell[]
-  players     Player[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
-
-  @@index([name])
-  @@index([isPlayable])
-}
-
-model Spell {
-  id            String   @id @default(uuid())
-  name          String   @unique
-  description   String?
-  requiredLevel Int      @default(1)
-  raceId        String
-  race          Race     @relation(fields: [raceId], references: [id])
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  @@index([raceId])
-  @@index([requiredLevel])
-}
-
 model Player {
   id             String                    @id @default(uuid())
   nickname       String?                   @unique
@@ -185,7 +125,7 @@ model Player {
   userId         String                    @unique
   user           User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
   raceId         String
-  race           Race                      @relation(fields: [raceId], references: [id])
+  // race           Race                      @relation(fields: [raceId], references: [id])
   inventory      PlayerItem[]
   collectionLogs PlayerItemCollectionLog[]
   createdAt      DateTime                  @default(now())
@@ -194,7 +134,7 @@ model Player {
 
   @@index([userId])
   @@index([rank])
-  @@index([raceId])
+  // @@index([raceId])
   @@index([level])
 }
 
@@ -206,13 +146,13 @@ model PlayerItemCollectionLog {
   player              Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
   placeId             String
   place               Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
-  itemId              String
-  item                Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  // itemId              String
+  // item                Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
   @@unique([playerId, placeId, collectionMonthYear])
   @@index([playerId])
   @@index([placeId])
-  @@index([itemId])
+  // @@index([itemId])
   @@index([collectionMonthYear])
 }
 
@@ -224,49 +164,11 @@ model PlayerItem {
   playerId   String
   player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
   itemId     String
-  item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  // item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
   @@index([playerId])
-  @@index([itemId])
+  // @@index([itemId])
   @@index([isEquipped])
-}
-
-model Item {
-  id              String                    @id @default(uuid())
-  name            String
-  description     String?
-  itemType        ItemType
-  imageUrl        String?
-  // [Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR}]
-  effects         Json?                     @db.JsonB
-  rank            Rank?
-  spawnCategories PlaceCategory[]
-  currentInPlaces Place[]                   @relation("CurrentItem")
-  collectionLogs  PlayerItemCollectionLog[]
-  playerItems     PlayerItem[]
-  setId           String?
-  set             Set?                      @relation(fields: [setId], references: [id])
-  createdAt       DateTime                  @default(now())
-  updatedAt       DateTime                  @updatedAt
-  deletedAt       DateTime?
-
-  @@index([name])
-  @@index([itemType])
-  @@index([rank])
-  @@index([spawnCategories])
-  @@index([setId])
-}
-
-model Set {
-  id          String    @id @default(uuid())
-  name        String    @unique
-  description String?
-  items       Item[]
-  ///[Effect] [{type?: PASSIVE_HEAL_TEAM, value?: 10, target?: ALLY, stats?: STR, minimumItems?: number}]
-  effects     Json?     @db.JsonB
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
 }

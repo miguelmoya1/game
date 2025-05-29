@@ -12,6 +12,7 @@ import { playerItemRepositoryProvider } from './impl/player-item.repository.prov
 import { playerRepositoryProvider } from './impl/player.repository.provider';
 import { redisRepositoryProvider } from './impl/redis.provider';
 import { setRepositoryProvider } from './impl/set.repository.provider';
+import { staticDataLoadedRepositoryProvider } from './impl/static-data-loaded.repository.provider';
 import { userRepositoryProvider } from './impl/user.repository.provider';
 
 const repositories = [
@@ -28,6 +29,7 @@ const repositories = [
   redisRepositoryProvider,
   partyRepositoryProvider,
   dungeonRepositoryProvider,
+  staticDataLoadedRepositoryProvider,
 ];
 
 @Module({

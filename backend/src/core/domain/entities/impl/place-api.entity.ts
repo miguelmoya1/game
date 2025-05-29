@@ -1,16 +1,15 @@
 import { PlaceCategory } from '../../enums';
-import { PlaceApi } from '../../types';
 
-export class PlaceApiEntity implements PlaceApi {
-  declare public readonly apiId: string;
-  declare public readonly name: string;
-  declare public readonly lat: number;
-  declare public readonly lng: number;
-  declare public readonly osmTags: Record<string, string>;
-  declare public readonly randomItemId: string;
-  declare public readonly categories: PlaceCategory[];
+export abstract class PlaceApi {
+  public readonly apiId: string;
+  public readonly name: string;
+  public readonly lat: number;
+  public readonly lng: number;
+  public readonly osmTags: Record<string, string>;
+  public readonly randomItemId: string;
+  public readonly categories: PlaceCategory[];
 
-  private constructor(place: PlaceApi) {
+  protected constructor(place: PlaceApi) {
     this.apiId = place.apiId;
     this.name = place.name;
     this.lat = place.lat;
@@ -19,7 +18,9 @@ export class PlaceApiEntity implements PlaceApi {
     this.randomItemId = place.randomItemId;
     this.categories = place.categories;
   }
+}
 
+export class PlaceApiEntity extends PlaceApi {
   public static create(place: PlaceApi) {
     return new PlaceApiEntity(place);
   }

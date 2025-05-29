@@ -1,16 +1,23 @@
 import { effect, Injectable, signal } from '@angular/core';
 import { CallbackID, Geolocation, Position } from '@capacitor/geolocation';
 
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { debounceTime } from 'rxjs';
 import { GeolocationService } from './geolocation.service.contract';
 
 @Injectable()
 export class GeolocationServiceImpl implements GeolocationService {
   readonly #position = signal<Position | null>(null);
-  readonly #watching = signal(false);
+  readonly #watching = signal(true);
   readonly #watchId = signal<CallbackID | null>(null);
+  readonly #debouncedPosition = toObservable(this.#position).pipe(
+    debounceTime(1000),
+  );
 
-  public readonly position = this.#position.asReadonly();
   public readonly watching = this.#watching.asReadonly();
+  public readonly position = toSignal(this.#debouncedPosition, {
+    initialValue: null,
+  });
 
   constructor() {
     this.updateCurrentPosition();
@@ -47,7 +54,7 @@ export class GeolocationServiceImpl implements GeolocationService {
           return;
         }
         this.#position.set(position);
-      }
+      },
     );
 
     this.#watchId.set(watchId);

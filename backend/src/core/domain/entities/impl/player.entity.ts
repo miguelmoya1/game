@@ -1,7 +1,6 @@
-import { Rank } from '../../enums';
-import { Player, Stats } from '../../types';
+import { Rank, Stats } from '../../enums';
 
-export class PlayerEntity implements Player {
+export abstract class Player {
   public readonly id: string;
   public readonly nickname: string | null;
   public readonly level: number;
@@ -11,18 +10,20 @@ export class PlayerEntity implements Player {
   public readonly userId: string;
   public readonly raceId: string;
 
-  private constructor(playerItem: Player) {
-    this.id = playerItem.id;
-    this.nickname = playerItem.nickname ?? null;
-    this.level = playerItem.level;
-    this.rank = playerItem.rank;
-    this.experience = playerItem.experience;
-    this.stats = playerItem.stats;
-    this.userId = playerItem.userId;
-    this.raceId = playerItem.raceId;
+  protected constructor(player: Player) {
+    this.id = player.id;
+    this.nickname = player.nickname ?? null;
+    this.level = player.level;
+    this.rank = player.rank;
+    this.experience = player.experience;
+    this.stats = player.stats;
+    this.userId = player.userId;
+    this.raceId = player.raceId;
   }
+}
 
-  public static create(playerItem: Player) {
-    return new PlayerEntity(playerItem);
+export class PlayerEntity extends Player {
+  public static create(player: Player) {
+    return new PlayerEntity(player);
   }
 }

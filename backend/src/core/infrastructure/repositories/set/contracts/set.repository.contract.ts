@@ -5,10 +5,9 @@ import { SetEntity } from '../../../../domain/entities';
 export interface SetRepository {
   getAll(): Promise<SetEntity[] | null>;
   getById(id: string): Promise<SetEntity | null>;
-  create(createSetDto: CreateSetDataDto): Promise<SetEntity | null>;
-  update(id: string, updateSetDto: UpdateSetDataDto): Promise<SetEntity | null>;
-  search(criteria: string): Promise<SetEntity[]>;
-  delete(id: string): Promise<void>;
+  create(createSetDto: CreateSetDataDto): Promise<boolean>;
+  update(id: string, updateSetDto: UpdateSetDataDto): Promise<boolean>;
+  delete(id: string): Promise<boolean>;
 }
 
 export const SET_REPOSITORY = Symbol('SET_REPOSITORY');

@@ -1,18 +1,17 @@
 import { PartyStatus } from '../../enums';
-import { Party } from '../../types';
-import { PlayerEntity } from './player.entity';
+import { Player, PlayerEntity } from './player.entity';
 
-export class PartyEntity implements Party {
-  declare public readonly id: string;
-  declare public readonly leaderId: string;
-  declare public readonly maxMembers: number;
-  declare public readonly creationTime: Date;
-  declare public readonly description?: string;
-  declare public readonly status?: PartyStatus;
-  declare public readonly memberIds?: string[];
-  declare public readonly members?: PlayerEntity[];
+export abstract class Party {
+  public readonly id: string;
+  public readonly leaderId: string;
+  public readonly maxMembers: number;
+  public readonly creationTime: Date;
+  public readonly description?: string;
+  public readonly status?: PartyStatus;
+  public readonly memberIds?: string[];
+  public readonly members?: Player[];
 
-  private constructor(party: Party) {
+  protected constructor(party: Party) {
     this.id = party.id;
     this.leaderId = party.leaderId;
     this.maxMembers = party.maxMembers;
@@ -20,6 +19,16 @@ export class PartyEntity implements Party {
     this.description = party.description;
     this.status = party.status;
     this.memberIds = party.memberIds;
+    this.members = party.members;
+  }
+}
+
+export class PartyEntity extends Party {
+  declare public readonly members?: PlayerEntity[];
+
+  private constructor(party: Party) {
+    super(party);
+
     if (party.members) {
       this.members = party.members.map((m) => PlayerEntity.create(m));
     }

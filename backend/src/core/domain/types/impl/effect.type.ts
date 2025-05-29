@@ -1,9 +1,10 @@
-import { EffectType, StatsType, Target } from '../../enums';
+import { EffectTarget, EffectType, Stats } from '../../enums';
 
 export type Effect = {
-  readonly value?: number;
-  readonly type?: EffectType;
-  readonly stats?: StatsType;
-  readonly target?: Target;
+  readonly type: EffectType;
+  readonly target: EffectTarget;
+  readonly value: number;
+
+  readonly stats?: Stats;
   readonly minimumItems?: number;
 };

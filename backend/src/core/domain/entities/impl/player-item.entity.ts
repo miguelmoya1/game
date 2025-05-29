@@ -1,7 +1,6 @@
-import { PlayerItem } from '../../types';
 import { ItemEntity } from './item.entity';
 
-export class PlayerItemEntity implements PlayerItem {
+export abstract class PlayerItem {
   public readonly id: string;
   public readonly quantity: number;
   public readonly isEquipped: boolean;
@@ -12,7 +11,7 @@ export class PlayerItemEntity implements PlayerItem {
   public readonly createdAt: Date | null;
   public readonly updatedAt: Date | null;
 
-  private constructor(playerItem: PlayerItem) {
+  protected constructor(playerItem: PlayerItem) {
     this.id = playerItem.id;
     this.quantity = playerItem.quantity;
     this.isEquipped = playerItem.isEquipped;
@@ -23,7 +22,9 @@ export class PlayerItemEntity implements PlayerItem {
     this.createdAt = playerItem.createdAt;
     this.updatedAt = playerItem.updatedAt;
   }
+}
 
+export class PlayerItemEntity extends PlayerItem {
   public static create(playerItem: PlayerItem) {
     return new PlayerItemEntity(playerItem);
   }

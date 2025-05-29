@@ -1,40 +1,27 @@
 [
   {
-    "id": "00000000-0000-0000-0000-000000000001",
+    "id": "set:initial",
     "name": "SET_INITIAL_HELMET",
     "description": "SET_INITIAL_HELMET_DESCRIPTION",
     "effects": [
       {
-        "type": "PASSIVE_HEAL_SELF",
-        "value": 5,
-        "stats": "CON",
-        "minimumItems": 2
-      }
-    ]
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000000002",
-    "name": "SET_INITIAL_ARMOR",
-    "description": "SET_INITIAL_ARMOR_DESCRIPTION",
-    "effects": [
+        "type": "HEALING",
+        "target": "SELF",
+        "minimumItems": 2,
+        "value": 5
+      },
       {
-        "type": "PASSIVE_HEAL_TEAM",
-        "value": 3,
-        "stats": "STR",
-        "minimumItems": 2
-      }
-    ]
-  },
-  {
-    "id": "00000000-0000-0000-0000-000000000003",
-    "name": "SET_INITIAL_SWORD",
-    "description": "SET_INITIAL_SWORD_DESCRIPTION",
-    "effects": [
+        "type": "BONUS",
+        "stats": "HP",
+        "target": "SELF",
+        "minimumItems": 2,
+        "value": 5
+      },
       {
-        "type": "PASSIVE_HEAL_SELF",
-        "value": 2,
-        "stats": "DEX",
-        "minimumItems": 2
+        "type": "HEALING",
+        "value": 10,
+        "target": "TEAM",
+        "minimumItems": 4
       }
     ]
   }

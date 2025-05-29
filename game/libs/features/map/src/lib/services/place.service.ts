@@ -10,35 +10,25 @@ import { PlaceService } from './place.service.contract';
 export class PlaceServiceImpl implements PlaceService {
   readonly #geolocationService = inject(GEOLOCATION_SERVICE);
   readonly #placeApiService = inject(PlaceApiService);
-  readonly #placeSelected = signal<string | null>(null);
+  readonly #placeSelected = signal<string | undefined>(undefined);
 
   readonly #place = httpResource(
-    () =>
-      this.#placeSelected() ? `places/${this.#placeSelected()}` : undefined,
-    {
-      parse: mapPlaceToEntity,
-    }
+    () => this.#placeApiService.prepareUrl(this.#placeSelected()),
+    { parse: mapPlaceToEntity },
   );
 
   readonly #list = httpResource(
-    () => {
-      const position = this.#geolocationService.position();
-
-      if (!position?.coords) {
-        return undefined;
-      }
-
-      const { latitude, longitude } = position.coords;
-
-      return `places?lat=${latitude}&lng=${longitude}`;
-    },
-    { parse: mapPlaceListArrayToEntityArray, defaultValue: [] }
+    () =>
+      this.#placeApiService.get(
+        this.#geolocationService.position() ?? undefined,
+      ),
+    { parse: mapPlaceListArrayToEntityArray, defaultValue: [] },
   );
 
   public readonly list = this.#list.asReadonly();
   public readonly place = this.#place.asReadonly();
 
-  public setPlaceId(id: string | null) {
+  public setPlaceId(id?: string) {
     this.#placeSelected.set(id);
   }
 

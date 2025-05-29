@@ -1,8 +1,7 @@
 import { DungeonStatus, DungeonType, Rank } from '../../enums';
-import { Dungeon } from '../../types/impl/dungeon.type';
 import { ItemEntity } from './item.entity';
 
-export class DungeonEntity {
+export abstract class Dungeon {
   public readonly id: string;
   public readonly placeId: string;
   public readonly placeName: string;
@@ -17,7 +16,7 @@ export class DungeonEntity {
   public readonly memberIds: string[];
   public readonly rewards?: ItemEntity[];
 
-  private constructor(props: Dungeon) {
+  protected constructor(props: Dungeon) {
     this.id = props.id;
     this.placeId = props.placeId;
     this.placeName = props.placeName;
@@ -32,7 +31,9 @@ export class DungeonEntity {
     this.memberIds = props.memberIds;
     this.rewards = props.rewards;
   }
+}
 
+export class DungeonEntity extends Dungeon {
   public static create(props: Dungeon) {
     return new DungeonEntity(props);
   }

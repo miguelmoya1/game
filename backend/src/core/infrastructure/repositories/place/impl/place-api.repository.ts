@@ -175,20 +175,12 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
 
         const name = element.tags?.name || element.tags?.['name:en'];
         if (!name) {
-          this.#logger.debug(
-            `No name found for place with API ID ${apiId} with tags ${JSON.stringify(
-              element.tags,
-            )}`,
-          );
           skippedCount++;
           continue;
         }
 
         const categories = this.#getCategoriesForPlace(element);
         if (categories.length === 0) {
-          this.#logger.debug(
-            `No categories found for place with API ID ${apiId} with name ${name}`,
-          );
           skippedCount++;
           continue;
         }
@@ -202,9 +194,6 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
           lat = element.center.lat;
           lng = element.center.lon;
         } else {
-          this.#logger.debug(
-            `No coordinates found for place with API ID ${apiId} with name ${name}`,
-          );
           skippedCount++;
           continue;
         }
@@ -216,9 +205,6 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
         );
 
         if (itemsMatchingCategories.length === 0) {
-          this.#logger.debug(
-            `No items found for place with API ID ${apiId} with name ${name}`,
-          );
           skippedCount++;
           continue;
         }
@@ -230,9 +216,6 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
           ].id;
 
         if (!randomItemId) {
-          this.#logger.debug(
-            `No random item found for place with API ID ${apiId} with name ${name}`,
-          );
           skippedCount++;
           continue;
         }

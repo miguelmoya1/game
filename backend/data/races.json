@@ -1,0 +1,8 @@
+[
+  {
+    "id": "race:human",
+    "name": "HUMAN",
+    "description": "HUMAN_DESCRIPTION",
+    "isPlayable": true
+  }
+]

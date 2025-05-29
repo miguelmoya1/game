@@ -1,6 +1,4 @@
-import { PlayerItemCollectionLog } from '../../types';
-
-export class PlayerItemCollectionLogEntity implements PlayerItemCollectionLog {
+export abstract class PlayerItemCollectionLog {
   public readonly id: string;
   public readonly collectionMonthYear: string;
   public readonly collectedAt: Date;
@@ -8,7 +6,7 @@ export class PlayerItemCollectionLogEntity implements PlayerItemCollectionLog {
   public readonly placeId: string;
   public readonly itemId: string;
 
-  private constructor(playerItemCollectionLog: PlayerItemCollectionLog) {
+  protected constructor(playerItemCollectionLog: PlayerItemCollectionLog) {
     this.id = playerItemCollectionLog.id;
     this.collectionMonthYear = playerItemCollectionLog.collectionMonthYear;
     this.collectedAt = playerItemCollectionLog.collectedAt;
@@ -16,7 +14,9 @@ export class PlayerItemCollectionLogEntity implements PlayerItemCollectionLog {
     this.placeId = playerItemCollectionLog.placeId;
     this.itemId = playerItemCollectionLog.itemId;
   }
+}
 
+export class PlayerItemCollectionLogEntity extends PlayerItemCollectionLog {
   public static create(playerItemCollectionLog: PlayerItemCollectionLog) {
     return new PlayerItemCollectionLogEntity(playerItemCollectionLog);
   }
@@ -24,7 +24,6 @@ export class PlayerItemCollectionLogEntity implements PlayerItemCollectionLog {
   public static formatToCollectionMonthYear(time: Date) {
     const month = time.getMonth() + 1;
     const year = time.getFullYear();
-
     return `${year}-${month.toString().padStart(2, '0')}`;
   }
 

@@ -1,0 +1,9 @@
+[
+  {
+    "id": "spell-1",
+    "name": "HEAL_SPELL_NAME",
+    "description": "HEAL_SPELL_DESCRIPTION",
+    "requiredLevel": 1,
+    "raceId": "race-1"
+  }
+]

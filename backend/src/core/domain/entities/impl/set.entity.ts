@@ -1,31 +1,20 @@
-import { Effect, Set } from '../../types';
-import { ItemEntity } from './item.entity';
+import { Effect } from '../../types';
 
-export class SetEntity implements Set {
+export abstract class Set {
   public readonly id: string;
   public readonly name: string;
-  public readonly description: string | null;
+  public readonly description: string;
+  public readonly effects: Effect[];
 
-  public readonly items?: ItemEntity[] | null;
-  public readonly effects?: Effect[] | null;
-
-  public readonly createdAt: Date;
-  public readonly updatedAt: Date;
-  public readonly deletedAt: Date | null;
-
-  private constructor(set: Set) {
+  protected constructor(set: Set) {
     this.id = set.id;
     this.name = set.name;
     this.description = set.description;
-
-    this.items = set.items;
     this.effects = set.effects;
-
-    this.createdAt = set.createdAt;
-    this.updatedAt = set.updatedAt;
-    this.deletedAt = set.deletedAt;
   }
+}
 
+export class SetEntity extends Set {
   public static create(set: Set) {
     return new SetEntity(set);
   }

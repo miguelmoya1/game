@@ -4,7 +4,7 @@ import { PlaceEntity, PlaceListEntity } from '@game/core';
 export type PlaceService = {
   readonly list: Resource<PlaceListEntity[]>;
   readonly place: Resource<PlaceEntity | undefined>;
-  setPlaceId: (id: string | null) => void;
+  setPlaceId: (id: string | undefined) => void;
   claim: () => Promise<void>;
 };
 
