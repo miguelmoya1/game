@@ -1,13 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PlayerItemEntity } from 'src/core/domain/entities';
+import { PlayerItem, PlayerItemEntity } from '../../../../domain/entities';
 import {
   DATABASE_SERVICE,
   DatabaseService,
 } from '../../../../application/services';
-import { itemInclude } from '../../item/utils/item-includes';
 import { PlayerItemRepository } from '../contracts/player-item.repository.contract';
 import { playerItemToEntity } from '../mappers/player-item.mapper';
-import { PlayerIncludePayload } from '../utils/player-includes';
 
 @Injectable()
 export class PlayerItemRepositoryImpl implements PlayerItemRepository {
@@ -20,11 +18,6 @@ export class PlayerItemRepositoryImpl implements PlayerItemRepository {
       where: {
         playerId: {
           in: playerIds,
-        },
-      },
-      include: {
-        item: {
-          include: itemInclude,
         },
       },
     });
@@ -44,18 +37,13 @@ export class PlayerItemRepositoryImpl implements PlayerItemRepository {
       },
     });
 
-    let playerItemReturned: PlayerIncludePayload | null = null;
+    let playerItemReturned: PlayerItem | null = null;
 
     if (!playerItem) {
       playerItemReturned = await this._database.playerItem.create({
         data: {
           playerId,
           itemId,
-        },
-        include: {
-          item: {
-            include: itemInclude,
-          },
         },
       });
     } else {
@@ -65,11 +53,6 @@ export class PlayerItemRepositoryImpl implements PlayerItemRepository {
         },
         data: {
           quantity: playerItem.quantity + 1,
-        },
-        include: {
-          item: {
-            include: itemInclude,
-          },
         },
       });
     }
@@ -81,11 +64,6 @@ export class PlayerItemRepositoryImpl implements PlayerItemRepository {
     const playerItem = await this._database.playerItem.findMany({
       where: {
         playerId,
-      },
-      include: {
-        item: {
-          include: itemInclude,
-        },
       },
     });
 

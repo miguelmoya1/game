@@ -146,7 +146,7 @@ model PlayerItemCollectionLog {
   player              Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
   placeId             String
   place               Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
-  // itemId              String
+  itemId              String
   // item                Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
   @@unique([playerId, placeId, collectionMonthYear])

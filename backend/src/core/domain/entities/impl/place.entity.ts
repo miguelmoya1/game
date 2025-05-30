@@ -1,5 +1,5 @@
+import { JsonValue } from '@prisma/client/runtime/library';
 import { PlaceCategory } from '../../enums';
-import { Item } from './item.entity';
 
 export abstract class Place {
   public readonly id: string;
@@ -7,10 +7,9 @@ export abstract class Place {
   public readonly name: string;
   public readonly lat: number;
   public readonly lng: number;
-  public readonly osmTags: Record<string, string> | null;
+  public readonly osmTags: JsonValue;
   public readonly categories: PlaceCategory[];
   public readonly currentItemId: string;
-  public readonly currentItem?: Item | null;
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
   public readonly deletedAt: Date | null;
@@ -24,7 +23,6 @@ export abstract class Place {
     this.osmTags = place.osmTags;
     this.categories = place.categories;
     this.currentItemId = place.currentItemId;
-    this.currentItem = place.currentItem;
     this.createdAt = place.createdAt;
     this.updatedAt = place.updatedAt;
     this.deletedAt = place.deletedAt;

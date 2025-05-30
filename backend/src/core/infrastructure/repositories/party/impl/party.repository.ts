@@ -30,7 +30,7 @@ export class PartyRepositoryImpl implements PartyRepository {
       maxMembers: this.#maxMembers.toString(),
       creationTime: Date.now().toString(),
       description: description || '',
-      status: status || PartyStatus.OPEN,
+      status: status || PartyStatus.Open,
     };
 
     this.#logger.debug(`Creating party ${partyId} for leader ${leaderId}`);

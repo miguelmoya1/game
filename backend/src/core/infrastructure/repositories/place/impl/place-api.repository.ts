@@ -6,6 +6,10 @@ import {
 } from '../../../../application/services';
 import { PlaceApiEntity } from '../../../../domain/entities';
 import { PlaceApiRepository } from '../contracts/place-api.repository.contract';
+import {
+  ItemRepository,
+  ITEM_REPOSITORY,
+} from '../../item/contracts/item.repository.contract';
 
 interface OverpassElement {
   type: 'node' | 'way' | 'relation';
@@ -86,6 +90,8 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
   constructor(
     @Inject(DATABASE_SERVICE)
     private readonly _databaseService: DatabaseService,
+    @Inject(ITEM_REPOSITORY)
+    private readonly _itemRepository: ItemRepository,
   ) {}
 
   async fetchAndStorePlacesFromOverpass(latitude: number, longitude: number) {
@@ -163,12 +169,7 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
       let processedCount = 0;
       let skippedCount = 0;
 
-      const allItems = await this._databaseService.item.findMany({
-        select: {
-          id: true,
-          spawnCategories: true,
-        },
-      });
+      const allItems = await this._itemRepository.findAll();
 
       for (const element of data.elements) {
         const apiId = `${element.type}/${element.id}`;
@@ -199,7 +200,7 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
         }
 
         const itemsMatchingCategories = allItems.filter((item) =>
-          item.spawnCategories.some((category) => {
+          item.spawnCategories?.some((category) => {
             return categories.includes(category);
           }),
         );

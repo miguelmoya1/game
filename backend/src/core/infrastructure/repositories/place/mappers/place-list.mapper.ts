@@ -1,7 +1,6 @@
-import { PlaceListEntity } from '../../../../domain/entities';
-import { PlaceListIncludePayload } from '../utils/place-includes';
+import { PlaceList, PlaceListEntity } from '../../../../domain/entities';
 
-export const placeListToEntity = (place: PlaceListIncludePayload) => {
+export const placeListToEntity = (place: PlaceList) => {
   return PlaceListEntity.create({
     id: place.id,
     lat: place.lat,

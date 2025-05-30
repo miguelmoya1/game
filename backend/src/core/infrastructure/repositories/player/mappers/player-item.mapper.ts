@@ -1,8 +1,6 @@
-import { PlayerItemEntity } from '../../../../domain/entities';
-import { itemToEntity } from '../../item/mappers/item.mapper';
-import { PlayerIncludePayload } from '../utils/player-includes';
+import { PlayerItem, PlayerItemEntity } from '../../../../domain/entities';
 
-export const playerItemToEntity = (playerItem: PlayerIncludePayload) => {
+export const playerItemToEntity = (playerItem: PlayerItem) => {
   return PlayerItemEntity.create({
     id: playerItem.id,
     quantity: playerItem.quantity,
@@ -10,7 +8,6 @@ export const playerItemToEntity = (playerItem: PlayerIncludePayload) => {
     acquiredAt: playerItem.acquiredAt,
     playerId: playerItem.playerId,
     itemId: playerItem.itemId,
-    item: itemToEntity(playerItem.item),
     createdAt: playerItem.createdAt,
     updatedAt: playerItem.updatedAt,
   });

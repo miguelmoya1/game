@@ -3,14 +3,11 @@ import { CreateItemDataDto } from '../../../../application/commands';
 import { ItemEntity } from '../../../../domain/entities';
 
 export interface ItemRepository {
+  findAll(): Promise<ItemEntity[]>;
   findById(id: string): Promise<ItemEntity | null>;
-  search(criteria: string): Promise<ItemEntity[]>;
-  create(item: CreateItemDataDto): Promise<ItemEntity | null>;
-  update(
-    id: string,
-    updateItemDto: UpdateItemDataDto,
-  ): Promise<ItemEntity | null>;
-  delete(id: string): Promise<void>;
+  create(item: CreateItemDataDto): Promise<boolean>;
+  update(id: string, updateItemDto: UpdateItemDataDto): Promise<boolean>;
+  delete(id: string): Promise<boolean>;
 }
 
 export const ITEM_REPOSITORY = Symbol('ITEM_REPOSITORY');

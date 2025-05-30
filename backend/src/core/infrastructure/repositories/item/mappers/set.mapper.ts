@@ -1,17 +1,11 @@
-import { Set as SetDb } from '@prisma/client';
-import { SetEntity } from '../../../../domain/entities';
-import { Effect } from '../../../../domain/types';
+import { SetEntity, Set } from '../../../../domain/entities';
 
-export const setToEntity = (item: SetDb) => {
+export const setToEntity = (item: Set) => {
   return SetEntity.create({
     id: item.id,
     name: item.name,
     description: item.description,
 
-    effects: item.effects as Effect[],
-
-    createdAt: item.createdAt,
-    updatedAt: item.updatedAt,
-    deletedAt: item.deletedAt,
+    effects: item.effects,
   });
 };

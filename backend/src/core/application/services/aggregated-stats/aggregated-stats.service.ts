@@ -1,34 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { PlayerEntity, PlayerItemEntity } from 'src/core/domain/entities';
-import { Effect } from '../../../../core/domain/types';
-import { StatsType, Target } from '../../../domain/enums';
-import { AggregatedStatsService } from './aggregated-stats.service.contract';
-
-export type AggregatedStatDetail = {
-  base: number;
-  byLevel: number;
-  bySet: number;
-  byParty: number;
-  byGuild: number;
-  total: number;
-};
-
-export type AggregatedStats = Record<StatsType, AggregatedStatDetail>;
+import { Inject, Injectable } from '@nestjs/common';
+import { Effect } from '../../../domain/types';
+import {
+  ItemEntity,
+  PlayerEntity,
+  PlayerItemEntity,
+} from '../../../domain/entities';
+import { Stats } from '../../../domain/enums';
+import {
+  AggregatedStats,
+  AggregatedStatsService,
+} from './aggregated-stats.service.contract';
+import { Redis } from 'ioredis';
+import { PLAYER_ITEM_REPOSITORY } from 'src/core/infrastructure/repositories';
 
 @Injectable()
-export class AggregatedStatsServiceImpl extends AggregatedStatsService {
-  public calculate(player: PlayerEntity, partyInventory: PlayerItemEntity[]) {
+export class AggregatedStatsServiceImpl implements AggregatedStatsService {
+  constructor(@Inject(PLAYER_ITEM_REPOSITORY) private readonly ) {}
+
+  public calculate(
+    player: PlayerEntity,
+    partyInventory: PlayerItemEntity[]
+  ) {
     const stats: AggregatedStats = {} as AggregatedStats;
 
-    const playerInventory =
-      partyInventory.filter((item) => item.playerId === player.id) ||
-      ([] as PlayerItemEntity[]);
+    const playerItemIds = partyInventory
+      .filter((partyInventory) => partyInventory.playerId === player.id)
+      .filter((partyInventory) => partyInventory.isEquipped)
+      .map((playerInventory) => playerInventory.itemId);
+    const playerItems = items.filter((item) => playerItemIds.includes(item.id));
 
-    for (const statKey of Object.values(StatsType)) {
+    const partyItemIds = partyInventory
+      .filter((partyInventory) => partyInventory.isEquipped)
+      .map((playerInventory) => playerInventory.itemId);
+    const partyItems = items.filter((item) => partyItemIds.includes(item.id));
+
+    for (const statKey of Object.values(Stats)) {
       const base = this.#getBaseStat(statKey, player);
       const byLevel = this.#getByLevel(statKey, player.level);
-      const bySet = this.#getBySet(statKey, playerInventory);
-      const byParty = this.#getByParty(statKey, partyInventory);
+      const bySet = this.#getBySet(statKey, playerItems);
+      const byParty = this.#getByParty(statKey, partyItems);
       const byGuild = 0;
       const total = base + byLevel + bySet + byParty + byGuild;
 
@@ -38,7 +48,7 @@ export class AggregatedStatsServiceImpl extends AggregatedStatsService {
     return stats;
   }
 
-  #getBaseStat(statKey: StatsType, player: PlayerEntity) {
+  #getBaseStat(statKey: Stats, player: PlayerEntity) {
     if (!player || !player.stats || !player.stats[statKey]) {
       return 0;
     }
@@ -52,27 +62,22 @@ export class AggregatedStatsServiceImpl extends AggregatedStatsService {
     return 0;
   }
 
-  #getByLevel(statKey: StatsType, level: number) {
-    if (statKey === StatsType.HP) {
+  #getByLevel(statKey: Stats, level: number) {
+    if (statKey === Stats.HP) {
       return level * 256;
     }
 
     return 0;
   }
 
-  #getBySet(statKey: StatsType, playerInventory: PlayerItemEntity[]) {
+  #getBySet(statKey: Stats, playerInventory: PlayerItemEntity[]) {
     let bonus = 0;
-    for (const inventory of playerInventory) {
-      if (
-        !inventory.isEquipped ||
-        !inventory.item ||
-        !inventory.item.set ||
-        !inventory.item.set.effects
-      ) {
+    for (const item of playerInventory) {
+      if (!item || !item.set || !item.set.effects) {
         continue;
       }
 
-      bonus += inventory.item.set.effects.reduce((acc, effect) => {
+      bonus += item.item.set.effects.reduce((acc, effect) => {
         if (this.#isEffectValid(effect, statKey, Target.SELF)) {
           return acc + (effect.value || 0);
         }
@@ -80,7 +85,7 @@ export class AggregatedStatsServiceImpl extends AggregatedStatsService {
       }, 0);
 
       bonus +=
-        inventory.item.effects?.reduce((acc, effect) => {
+        item.item.effects?.reduce((acc, effect) => {
           if (this.#isEffectValid(effect, statKey, Target.SELF)) {
             return acc + (effect.value || 0);
           }
@@ -91,19 +96,19 @@ export class AggregatedStatsServiceImpl extends AggregatedStatsService {
     return bonus;
   }
 
-  #getByParty(statKey: StatsType, partyInventory: PlayerItemEntity[]) {
+  #getByParty(statKey: StatsType, partyInventory: ItemEntity[]) {
     let bonus = 0;
-    for (const item of partyInventory) {
+    for (const partyItem of partyInventory) {
       if (
-        !item.isEquipped ||
-        !item.item ||
-        !item.item.set ||
-        !item.item.set.effects
+        !partyItem.isEquipped ||
+        !partyItem.item ||
+        !partyItem.item.set ||
+        !partyItem.item.set.effects
       ) {
         continue;
       }
       bonus +=
-        item.item.effects?.reduce((acc, effect) => {
+        partyItem.item.effects?.reduce((acc, effect) => {
           if (this.#isEffectValid(effect, statKey, Target.TEAM)) {
             return acc + (effect.value || 0);
           }

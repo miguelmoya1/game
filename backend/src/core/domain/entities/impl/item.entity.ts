@@ -10,6 +10,7 @@ export abstract class Item {
   public readonly effects: Effect[];
   public readonly rank?: Rank;
   public readonly spawnCategories?: PlaceCategory[];
+  public readonly setId?: string;
 
   protected constructor(item: Item) {
     this.id = item.id;
@@ -20,6 +21,7 @@ export abstract class Item {
     this.imageUrl = item.imageUrl;
     this.rank = item.rank;
     this.spawnCategories = item.spawnCategories;
+    this.setId = item.setId;
   }
 }
 

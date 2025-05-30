@@ -1,122 +1,53 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateItemDataDto } from '../../../../application/commands';
 import { UpdateItemDataDto } from '../../../../application/commands/item/dto/update-item-data.dto';
-import {
-  DATABASE_SERVICE,
-  DatabaseService,
-} from '../../../../application/services';
 import { ItemRepository } from '../contracts/item.repository.contract';
 import { itemToEntity } from '../mappers/item.mapper';
-import { itemInclude } from '../utils/item-includes';
+import { REDIS_CLIENT } from '../../../redis/redis.provider';
+import { Redis } from 'ioredis';
+import { STATIC_DATA } from '../../services/static-data-loader.service.contract';
+import { Item } from '../../../../domain/entities';
 
 @Injectable()
 export class ItemRepositoryImpl implements ItemRepository {
   constructor(
-    @Inject(DATABASE_SERVICE) private readonly databaseService: DatabaseService,
+    @Inject(REDIS_CLIENT)
+    private readonly redisClient: Redis,
   ) {}
 
-  async findById(id: string) {
-    const now = new Date();
-    const result = await this.databaseService.item.findFirst({
-      where: {
-        id,
-        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
-      },
-      include: itemInclude,
-    });
+  async findAll() {
+    const rawItems = await this.redisClient.get(STATIC_DATA.items);
 
-    if (!result) {
+    if (!rawItems) {
+      return [];
+    }
+
+    const items = JSON.parse(rawItems) as Item[];
+
+    return items.map((item) => itemToEntity(item));
+  }
+
+  async findById(id: string) {
+    const items = await this.findAll();
+
+    const item = items.find((item) => item.id === id);
+
+    if (!item) {
       return null;
     }
 
-    return itemToEntity(result);
-  }
-
-  async search(criteria: string) {
-    const now = new Date();
-    const result = await this.databaseService.item.findMany({
-      where: {
-        AND: [
-          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
-          {
-            OR: [
-              {
-                id: {
-                  contains: criteria,
-                  mode: 'insensitive',
-                },
-              },
-              {
-                name: {
-                  contains: criteria,
-                  mode: 'insensitive',
-                },
-              },
-              {
-                description: {
-                  contains: criteria,
-                  mode: 'insensitive',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      include: itemInclude,
-      take: 5,
-    });
-
-    return result.map((item) => itemToEntity(item));
+    return itemToEntity(item);
   }
 
   async create(item: CreateItemDataDto) {
-    const result = await this.databaseService.item.create({
-      data: {
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        imageUrl: item.imageUrl,
-        itemType: item.itemType,
-        effects: item.effects,
-        spawnCategories: item.spawnCategories,
-        rank: item.rank,
-        setId: item.setId,
-      },
-      include: itemInclude,
-    });
-
-    if (!result) {
-      return null;
-    }
-
-    return itemToEntity(result);
+    return false;
   }
 
   async update(id: string, updateItemDto: UpdateItemDataDto) {
-    const result = await this.databaseService.item.update({
-      where: { id },
-      data: {
-        name: updateItemDto.name,
-        description: updateItemDto.description,
-        imageUrl: updateItemDto.imageUrl,
-        itemType: updateItemDto.itemType,
-        effects: updateItemDto.effects,
-        spawnCategories: updateItemDto.spawnCategories,
-        rank: updateItemDto.rank,
-        setId: updateItemDto.setId,
-      },
-      include: itemInclude,
-    });
-    if (!result) {
-      return null;
-    }
-    return itemToEntity(result);
+    return false;
   }
 
   async delete(id: string) {
-    await this.databaseService.item.update({
-      where: { id },
-      data: { deletedAt: new Date() },
-    });
+    return false;
   }
 }

@@ -35,7 +35,7 @@ export class DungeonRepositoryImpl implements DungeonRepository {
       lng: data.lng,
       type: data.type,
       rank: data.rank,
-      status: DungeonStatus.OPEN,
+      status: DungeonStatus.Open,
       startTime: new Date(startTime),
       endTime: new Date(endTime),
       maxPlayers: data.maxPlayers,

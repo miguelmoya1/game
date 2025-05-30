@@ -34,7 +34,7 @@
       enable = true;
       previews = {
         web = {
-          cwd = "./frontend";
+          cwd = "./game";
           env = {
             PORT = "$PORT";
           };

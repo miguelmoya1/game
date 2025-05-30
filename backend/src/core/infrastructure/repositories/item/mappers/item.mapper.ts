@@ -1,24 +1,16 @@
-import { ItemEntity } from '../../../../domain/entities';
-import { Effect } from '../../../../domain/types';
-import { ItemIncludePayload } from '../utils/item-includes';
-import { setToEntity } from './set.mapper';
+import { ItemEntity, Item } from '../../../../domain/entities';
 
-export const itemToEntity = (item: ItemIncludePayload) => {
+export const itemToEntity = (item: Item) => {
   return ItemEntity.create({
     id: item.id,
     name: item.name,
     description: item.description,
     itemType: item.itemType,
-    effects: item.effects as Effect[],
+    effects: item.effects,
     rank: item.rank,
     spawnCategories: item.spawnCategories,
     imageUrl: item.imageUrl,
 
     setId: item.setId,
-    set: item.set ? setToEntity(item.set) : undefined,
-
-    createdAt: item.createdAt,
-    updatedAt: item.updatedAt,
-    deletedAt: item.deletedAt,
   });
 };

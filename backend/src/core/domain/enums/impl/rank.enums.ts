@@ -1,9 +1,4 @@
-export enum Rank {
-  E = 'E',
-  D = 'D',
-  C = 'C',
-  B = 'B',
-  A = 'A',
-  S = 'S',
-  National = 'National',
-}
+import { Rank as RankPrisma } from '@prisma/client';
+
+export const Rank = RankPrisma;
+export type Rank = RankPrisma;

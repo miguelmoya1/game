@@ -6,7 +6,6 @@ import {
 import { PlaceRepository } from '../contracts/place.repository.contract';
 import { placeListToEntity } from '../mappers/place-list.mapper';
 import { placeToEntity } from '../mappers/place.mapper';
-import { placeInclude, placeListInclude } from '../utils/place-includes';
 
 @Injectable()
 export class PlaceRepositoryImpl implements PlaceRepository {
@@ -21,7 +20,6 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         id,
         OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
       },
-      include: placeInclude,
     });
 
     if (!result) {
@@ -55,7 +53,6 @@ export class PlaceRepositoryImpl implements PlaceRepository {
           },
         ],
       },
-      include: placeInclude,
       take: 5,
     });
 
@@ -95,7 +92,6 @@ export class PlaceRepositoryImpl implements PlaceRepository {
       orderBy: {
         createdAt: 'desc',
       },
-      include: placeListInclude,
     });
 
     if (!result) {
