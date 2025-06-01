@@ -1,5 +1,4 @@
-import { PlayerItem } from '../../../../domain/types';
-import { ItemResponseDto } from '../../item/dto/item-response.dto';
+import { PlayerItem } from '../../../../domain/entities';
 
 export class InventoryResponseDto {
   public readonly id: string;
@@ -8,7 +7,6 @@ export class InventoryResponseDto {
   public readonly acquiredAt: Date;
   public readonly playerId: string;
   public readonly itemId: string;
-  public readonly item: ItemResponseDto;
 
   private constructor(props: {
     id: string;
@@ -17,7 +15,6 @@ export class InventoryResponseDto {
     acquiredAt: Date;
     playerId: string;
     itemId: string;
-    item: ItemResponseDto;
   }) {
     this.id = props.id;
     this.quantity = props.quantity;
@@ -25,12 +22,11 @@ export class InventoryResponseDto {
     this.acquiredAt = props.acquiredAt;
     this.playerId = props.playerId;
     this.itemId = props.itemId;
-    this.item = props.item;
 
     Object.freeze(this);
   }
 
-  public static create(inventory: PlayerItem, item: ItemResponseDto) {
+  public static create(inventory: PlayerItem) {
     const dtoProps = {
       id: inventory.id,
       quantity: inventory.quantity,
@@ -38,7 +34,6 @@ export class InventoryResponseDto {
       acquiredAt: inventory.acquiredAt,
       playerId: inventory.playerId,
       itemId: inventory.itemId,
-      item,
     };
 
     return new InventoryResponseDto(dtoProps);

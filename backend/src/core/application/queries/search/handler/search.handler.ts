@@ -28,14 +28,10 @@ export class SearchHandler implements IQueryHandler<SearchQuery> {
       throw new HttpException(ErrorCodes.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
     }
 
-    const sets = await this._setRepository.search(criteria);
     const places = await this._placeRepository.search(criteria);
-    const items = await this._itemRepository.search(criteria);
 
     return {
-      sets: sets.map((set) => SearchResponseDto.create(set)),
       places: places.map((place) => SearchResponseDto.create(place)),
-      items: items.map((item) => SearchResponseDto.create(item)),
     };
   }
 }

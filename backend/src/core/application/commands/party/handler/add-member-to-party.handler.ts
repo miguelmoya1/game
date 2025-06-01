@@ -42,7 +42,7 @@ export class AddMemberToPartyHandler
       if (!party) {
         party = await this.partyRepository.create(
           userPlayerId.id,
-          PartyStatus.OPEN,
+          PartyStatus.Open,
         );
       }
 

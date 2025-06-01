@@ -5,11 +5,11 @@ import {
   DatabaseService,
 } from '../../../../application/services';
 import { PlaceApiEntity } from '../../../../domain/entities';
-import { PlaceApiRepository } from '../contracts/place-api.repository.contract';
 import {
-  ItemRepository,
   ITEM_REPOSITORY,
+  ItemRepository,
 } from '../../item/contracts/item.repository.contract';
+import { PlaceApiRepository } from '../contracts/place-api.repository.contract';
 
 interface OverpassElement {
   type: 'node' | 'way' | 'relation';
@@ -169,7 +169,7 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
       let processedCount = 0;
       let skippedCount = 0;
 
-      const allItems = await this._itemRepository.findAll();
+      const allItems = await this._itemRepository.getAll();
 
       for (const element of data.elements) {
         const apiId = `${element.type}/${element.id}`;

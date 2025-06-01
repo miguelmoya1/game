@@ -1,4 +1,4 @@
-import { EffectType, StatsType, Target } from '../../../../domain/enums';
+import { EffectTarget, EffectType, StatsTypes } from '../../../../domain/enums';
 
 export type CreateSetDataDto = {
   id?: string;
@@ -6,9 +6,9 @@ export type CreateSetDataDto = {
   description: string;
   effects: {
     type: EffectType;
-    target: Target;
+    target: EffectTarget;
     value: number;
-    stats?: StatsType;
+    stats?: StatsTypes;
     minimumItems?: number;
   }[];
 };

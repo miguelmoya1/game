@@ -120,7 +120,7 @@ model Player {
   level          Int                       @default(1)
   rank           Rank                      @default(E)
   experience     Int                       @default(0)
-  /// [Stats] [{statsType: STR, value: 10, target: ALLY}]
+  /// [{statsType: STR, value: 10, target: ALLY}]
   stats          Json                      @db.JsonB
   userId         String                    @unique
   user           User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -147,7 +147,6 @@ model PlayerItemCollectionLog {
   placeId             String
   place               Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
   itemId              String
-  // item                Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
   @@unique([playerId, placeId, collectionMonthYear])
   @@index([playerId])

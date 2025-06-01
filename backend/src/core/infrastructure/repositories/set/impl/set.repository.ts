@@ -6,6 +6,7 @@ import {
   UpdateSetDataDto,
 } from '../../../../application/commands';
 import { Set } from '../../../../domain/entities';
+import { STATIC_DATA } from '../../services/static-data-loader.service.contract';
 import { SetRepository } from '../contracts/set.repository.contract';
 import { setToEntity } from '../mappers/set.mapper';
 
@@ -14,7 +15,7 @@ export class SetRepositoryImpl implements SetRepository {
   constructor(@Inject(REDIS_CLIENT) private readonly _redis: Redis) {}
 
   public async getAll() {
-    const rawSets = await this._redis.get('static:sets');
+    const rawSets = await this._redis.get(STATIC_DATA.sets);
 
     if (!rawSets) {
       return [];
@@ -53,7 +54,7 @@ export class SetRepositoryImpl implements SetRepository {
       effects: createSetDto.effects,
     });
 
-    await this._redis.set('static:sets', JSON.stringify(sets));
+    await this._redis.set(STATIC_DATA.sets, JSON.stringify(sets));
 
     return true;
   }
@@ -74,7 +75,7 @@ export class SetRepositoryImpl implements SetRepository {
 
     sets[setIndex] = updatedSet;
 
-    await this._redis.set('static:sets', JSON.stringify(sets));
+    await this._redis.set(STATIC_DATA.sets, JSON.stringify(sets));
 
     return true;
   }
@@ -90,7 +91,7 @@ export class SetRepositoryImpl implements SetRepository {
 
     sets.splice(setIndex, 1);
 
-    await this._redis.set('static:sets', JSON.stringify(sets));
+    await this._redis.set(STATIC_DATA.sets, JSON.stringify(sets));
 
     return true;
   }

@@ -1,5 +1,5 @@
-import { AggregatedStats } from '../../../../../core/application/services';
-import { Player } from '../../../../domain/types';
+import { AggregatedStats } from '../../../../application/services';
+import { Player } from '../../../../domain/entities';
 
 export class PlayerResponseWithStatsDto {
   public readonly id: string;

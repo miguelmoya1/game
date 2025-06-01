@@ -1,4 +1,5 @@
-import { Rank, Stats } from '../../enums';
+import { Rank } from '../../enums';
+import { Stats } from '../../types';
 
 export abstract class Player {
   public readonly id: string;

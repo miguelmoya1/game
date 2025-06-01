@@ -3,7 +3,7 @@ import { CreateItemDataDto } from '../../../../application/commands';
 import { ItemEntity } from '../../../../domain/entities';
 
 export interface ItemRepository {
-  findAll(): Promise<ItemEntity[]>;
+  getAll(): Promise<ItemEntity[]>;
   findById(id: string): Promise<ItemEntity | null>;
   create(item: CreateItemDataDto): Promise<boolean>;
   update(id: string, updateItemDto: UpdateItemDataDto): Promise<boolean>;

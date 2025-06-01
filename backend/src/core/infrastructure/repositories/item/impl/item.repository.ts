@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Redis } from 'ioredis';
 import { CreateItemDataDto } from '../../../../application/commands';
 import { UpdateItemDataDto } from '../../../../application/commands/item/dto/update-item-data.dto';
+import { Item } from '../../../../domain/entities';
+import { REDIS_CLIENT } from '../../../redis/redis.provider';
+import { STATIC_DATA } from '../../services/static-data-loader.service.contract';
 import { ItemRepository } from '../contracts/item.repository.contract';
 import { itemToEntity } from '../mappers/item.mapper';
-import { REDIS_CLIENT } from '../../../redis/redis.provider';
-import { Redis } from 'ioredis';
-import { STATIC_DATA } from '../../services/static-data-loader.service.contract';
-import { Item } from '../../../../domain/entities';
 
 @Injectable()
 export class ItemRepositoryImpl implements ItemRepository {
@@ -15,7 +15,7 @@ export class ItemRepositoryImpl implements ItemRepository {
     private readonly redisClient: Redis,
   ) {}
 
-  async findAll() {
+  async getAll() {
     const rawItems = await this.redisClient.get(STATIC_DATA.items);
 
     if (!rawItems) {
@@ -28,7 +28,7 @@ export class ItemRepositoryImpl implements ItemRepository {
   }
 
   async findById(id: string) {
-    const items = await this.findAll();
+    const items = await this.getAll();
 
     const item = items.find((item) => item.id === id);
 

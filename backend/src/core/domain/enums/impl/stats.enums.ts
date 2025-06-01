@@ -1,4 +1,4 @@
-export enum Stats {
+export enum StatsTypes {
   HP = 'HP',
   STR = 'STR',
   DEX = 'DEX',

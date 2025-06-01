@@ -9,8 +9,6 @@ import {
   PLAYER_ITEM_REPOSITORY,
   PlayerItemRepository,
 } from '../../../../infrastructure/repositories/player/contracts/player-item.repository.contract';
-import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
-import { ItemResponseDto } from '../../item/dto/item-response.dto';
 import { InventoryResponseDto } from '../dto/inventory-response.dto';
 import { GetInventoryForUserQuery } from '../impl/get-inventory-for-user.query';
 
@@ -23,8 +21,6 @@ export class GetInventoryForUserHandler
     private readonly _playerItemRepository: PlayerItemRepository,
     @Inject(PLAYER_REPOSITORY)
     private readonly _playerRepository: PlayerRepository,
-    @Inject(PERMISSIONS_SERVICE)
-    private readonly _permissionsService: PermissionsService,
   ) {}
 
   async execute(query: GetInventoryForUserQuery) {
@@ -52,12 +48,8 @@ export class GetInventoryForUserHandler
       );
     }
 
-    const permissions = this._permissionsService.getItemPermissions(user);
-
     return inventory.map((inventoryItem) => {
-      const item = ItemResponseDto.create(inventoryItem.item, permissions);
-
-      return InventoryResponseDto.create(inventoryItem, item);
+      return InventoryResponseDto.create(inventoryItem);
     });
   }
 }

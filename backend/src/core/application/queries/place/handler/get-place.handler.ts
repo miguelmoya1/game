@@ -8,7 +8,6 @@ import {
   PlayerItemCollectionLogRepository,
 } from '../../../../infrastructure/repositories';
 import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
-import { ItemResponseDto } from '../../item/dto/item-response.dto';
 import { PlaceDetailResponseDto } from '../dto/place-detail-response.dto';
 import { GetPlaceQuery } from '../impl/get-place.query';
 
@@ -41,17 +40,10 @@ export class GetPlaceHandler implements IQueryHandler<GetPlaceQuery> {
       user,
     );
 
-    const permissionsItem = this._permissionsService.getItemPermissions(user);
-
-    if (!place.currentItem) {
+    if (!place.currentItemId) {
       throw new HttpException(ErrorCodes.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    const itemResponse = ItemResponseDto.create(
-      place.currentItem,
-      permissionsItem,
-    );
-
-    return PlaceDetailResponseDto.create(place, permissions, itemResponse);
+    return PlaceDetailResponseDto.create(place, permissions);
   }
 }

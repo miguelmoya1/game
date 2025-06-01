@@ -1,5 +1,5 @@
+import { Party } from '../../../../domain/entities';
 import { PartyStatus } from '../../../../domain/enums';
-import { Party } from '../../../../domain/types';
 
 export class PartyResponseDto {
   public readonly id: string;

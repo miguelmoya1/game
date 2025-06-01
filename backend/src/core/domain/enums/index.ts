@@ -6,5 +6,5 @@ export { ItemType } from './impl/item.enums';
 export { PartyStatus } from './impl/party.enums';
 export { PlaceCategory } from './impl/place.enums';
 export { Rank } from './impl/rank.enums';
-export { Stats } from './impl/stats.enums';
+export { StatsTypes } from './impl/stats.enums';
 export { UserRole } from './impl/user.enums';

@@ -1,7 +1,6 @@
 import { PlaceCategory } from '@prisma/client';
 import { PlaceEntity } from '../../../../domain/entities';
 import { PlacePermissions } from '../../../services';
-import { ItemResponseDto } from '../../item/dto/item-response.dto';
 
 export class PlaceDetailResponseDto {
   public readonly id: string;
@@ -10,13 +9,12 @@ export class PlaceDetailResponseDto {
   public readonly lat: number;
   public readonly lng: number;
   public readonly categories: PlaceCategory[];
+  public readonly currentItemId: string | null;
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
   public readonly deletedAt: Date | null;
 
   public readonly permissions: PlacePermissions;
-
-  public readonly currentItem: ItemResponseDto;
 
   private constructor(props: {
     id: string;
@@ -29,7 +27,7 @@ export class PlaceDetailResponseDto {
     updatedAt: Date;
     deletedAt: Date | null;
     permissions: PlacePermissions;
-    currentItem: ItemResponseDto;
+    currentItemId?: string | null;
   }) {
     this.id = props.id;
     this.apiId = props.apiId;
@@ -41,14 +39,10 @@ export class PlaceDetailResponseDto {
     this.updatedAt = props.updatedAt;
     this.deletedAt = props.deletedAt;
     this.permissions = props.permissions;
-    this.currentItem = props.currentItem;
+    this.currentItemId = props.currentItemId ?? null;
   }
 
-  public static create(
-    place: PlaceEntity,
-    placePermissions: PlacePermissions,
-    currentItem: ItemResponseDto,
-  ) {
+  public static create(place: PlaceEntity, placePermissions: PlacePermissions) {
     const dtoProps = {
       id: place.id,
       apiId: place.apiId,
@@ -56,13 +50,12 @@ export class PlaceDetailResponseDto {
       lat: place.lat,
       lng: place.lng,
       categories: place.categories,
+      currentItemId: place.currentItemId ?? null,
       createdAt: place.createdAt,
       updatedAt: place.updatedAt,
       deletedAt: place.deletedAt,
 
       permissions: placePermissions,
-
-      currentItem,
     };
 
     return new PlaceDetailResponseDto(dtoProps);

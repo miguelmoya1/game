@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { StatsType } from '../../../../domain/enums';
+import { StatsTypes } from '../../../../domain/enums';
 import {
   PLAYER_REPOSITORY,
   PlayerRepository,
@@ -14,40 +14,20 @@ export class CreatePlayerHandler
   constructor(
     @Inject(PLAYER_REPOSITORY)
     private readonly _playerRepository: PlayerRepository,
+    // @Inject(RACE_REPOSITORY)
   ) {}
 
   async execute(command: CreatePlayerCommand) {
     const { createPlayerDataDto } = command;
 
     const stats = [
-      {
-        statsType: StatsType.HP,
-        value: 100,
-      },
-      {
-        statsType: StatsType.WIS,
-        value: 0,
-      },
-      {
-        statsType: StatsType.STR,
-        value: 0,
-      },
-      {
-        statsType: StatsType.DEX,
-        value: 0,
-      },
-      {
-        statsType: StatsType.CON,
-        value: 0,
-      },
-      {
-        statsType: StatsType.INT,
-        value: 0,
-      },
-      {
-        statsType: StatsType.CHA,
-        value: 0,
-      },
+      { statsType: StatsTypes.HP, value: 100 },
+      { statsType: StatsTypes.WIS, value: 0 },
+      { statsType: StatsTypes.STR, value: 0 },
+      { statsType: StatsTypes.DEX, value: 0 },
+      { statsType: StatsTypes.CON, value: 0 },
+      { statsType: StatsTypes.INT, value: 0 },
+      { statsType: StatsTypes.CHA, value: 0 },
     ];
 
     await this._playerRepository.create({

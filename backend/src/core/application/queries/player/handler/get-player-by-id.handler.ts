@@ -6,10 +6,14 @@ import {
 } from 'src/core/application/services';
 import { ErrorCodes } from '../../../../domain/enums';
 import {
+  ITEM_REPOSITORY,
+  ItemRepository,
   PLAYER_ITEM_REPOSITORY,
   PLAYER_REPOSITORY,
   PlayerItemRepository,
   PlayerRepository,
+  SET_REPOSITORY,
+  SetRepository,
 } from '../../../../infrastructure/repositories';
 import {
   PARTY_REPOSITORY,
@@ -29,6 +33,10 @@ export class GetPlayerByIdHandler implements IQueryHandler<GetPlayerByIdQuery> {
     private readonly _aggregatedStatsService: AggregatedStatsService,
     @Inject(PARTY_REPOSITORY)
     private readonly _partyRepository: PartyRepository,
+    @Inject(ITEM_REPOSITORY)
+    private readonly _itemRepository: ItemRepository,
+    @Inject(SET_REPOSITORY)
+    private readonly _setRepository: SetRepository,
   ) {}
 
   async execute(query: GetPlayerByIdQuery) {
@@ -53,9 +61,14 @@ export class GetPlayerByIdHandler implements IQueryHandler<GetPlayerByIdQuery> {
     const party = await this._partyRepository.findPartyByPlayer(player.id);
     const ids = party?.memberIds || [player.id];
     const inventory = await this._playerItemRepository.getForPlayerIds(ids);
+    const items = await this._itemRepository.getAll();
+    const sets = await this._setRepository.getAll();
+
     const aggregatedStats = this._aggregatedStatsService.calculate(
       player,
       inventory,
+      items,
+      sets,
     );
 
     return PlayerWithAggregatedStatsDto.create(player, aggregatedStats);

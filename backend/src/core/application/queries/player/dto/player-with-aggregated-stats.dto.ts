@@ -1,4 +1,4 @@
-import { Player } from '../../../../domain/types';
+import { Player } from '../../../../domain/entities';
 import { AggregatedStats } from '../../../services';
 
 export class PlayerWithAggregatedStatsDto {

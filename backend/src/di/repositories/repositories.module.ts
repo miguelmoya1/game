@@ -16,6 +16,7 @@ import { staticDataLoadedRepositoryProvider } from './impl/static-data-loaded.re
 import { userRepositoryProvider } from './impl/user.repository.provider';
 
 const repositories = [
+  redisRepositoryProvider,
   playerItemCollectionLogRepositoryProvider,
   placeApiHistoryRepositoryProvider,
   placeApiRepositoryProvider,
@@ -26,7 +27,6 @@ const repositories = [
   playerRepositoryProvider,
   playerItemRepositoryProvider,
   setRepositoryProvider,
-  redisRepositoryProvider,
   partyRepositoryProvider,
   dungeonRepositoryProvider,
   staticDataLoadedRepositoryProvider,

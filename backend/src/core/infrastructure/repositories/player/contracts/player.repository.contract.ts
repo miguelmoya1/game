@@ -1,6 +1,6 @@
-import { Stats } from '../../../../domain/enums';
 import { CreatePlayerDataDto } from '../../../../application/commands';
 import { PlayerEntity } from '../../../../domain/entities';
+import { Stats } from '../../../../domain/types';
 
 export type Create = CreatePlayerDataDto & {
   stats: Stats[];

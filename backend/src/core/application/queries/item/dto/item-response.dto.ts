@@ -2,38 +2,31 @@ import { ItemEntity } from '../../../../domain/entities';
 import { ItemType, PlaceCategory, Rank } from '../../../../domain/enums';
 import { Effect } from '../../../../domain/types';
 import { ItemPermissions } from '../../../services';
-import { SetResponseDto } from '../../set/dto/set-response.dto';
 
 export class ItemResponseDto {
   public readonly id: string;
   public readonly name: string;
-  public readonly description: string | null;
+  public readonly description: string;
   public readonly itemType: ItemType;
-  public readonly imageUrl: string | null;
+  public readonly imageUrl?: string;
   public readonly effects?: Effect[] | null;
-  public readonly rank: Rank | null;
-  public readonly spawnCategories: PlaceCategory[];
-  public readonly createdAt: Date;
-  public readonly updatedAt: Date;
+  public readonly rank?: Rank;
+  public readonly spawnCategories?: PlaceCategory[];
   public readonly permissions: ItemPermissions;
 
   public readonly setId?: string | null;
-  public readonly set?: SetResponseDto | null;
 
   private constructor(props: {
     id: string;
     name: string;
-    description: string | null;
+    description: string;
     itemType: ItemType;
-    imageUrl: string | null;
-    effects?: Effect[] | null;
-    rank: Rank | null;
+    imageUrl?: string;
+    effects: Effect[];
+    rank?: Rank;
     setId?: string | null;
-    spawnCategories: PlaceCategory[];
-    createdAt: Date;
-    updatedAt: Date;
+    spawnCategories?: PlaceCategory[];
     permissions: ItemPermissions;
-    set?: SetResponseDto | null;
   }) {
     this.id = props.id;
     this.name = props.name;
@@ -43,11 +36,8 @@ export class ItemResponseDto {
     this.effects = props.effects;
     this.rank = props.rank;
     this.spawnCategories = props.spawnCategories;
-    this.createdAt = props.createdAt;
-    this.updatedAt = props.updatedAt;
     this.permissions = props.permissions;
     this.setId = props.setId;
-    this.set = props.set;
 
     Object.freeze(this);
   }
@@ -63,10 +53,7 @@ export class ItemResponseDto {
       rank: item.rank,
       setId: item.setId,
       spawnCategories: item.spawnCategories,
-      createdAt: item.createdAt,
-      updatedAt: item.updatedAt,
       permissions: permissions,
-      set: item.set ? SetResponseDto.create(item.set) : null,
     };
 
     return new ItemResponseDto(dtoProps);

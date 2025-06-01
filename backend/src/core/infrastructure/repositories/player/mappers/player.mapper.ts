@@ -1,6 +1,6 @@
 import { Player as PlayerDb } from '@prisma/client';
 import { PlayerEntity } from '../../../../domain/entities';
-import { Stats } from '../../../../domain/enums';
+import { Stats } from '../../../../domain/types';
 
 export const playerToEntity = (player: PlayerDb) => {
   return PlayerEntity.create({
