@@ -4,11 +4,13 @@ const MAP_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () => import('../pages/map.component'),
-  },
-  {
-    path: ':placeId',
-    loadComponent: () =>
-      import('@game/features/places').then((m) => m.PlaceDetailComponent),
+    children: [
+      {
+        path: ':placeId',
+        loadComponent: () =>
+          import('@game/features/places').then((m) => m.PlaceDetailComponent),
+      },
+    ],
   },
 
   {

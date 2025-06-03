@@ -27,18 +27,6 @@ export class ItemRepositoryImpl implements ItemRepository {
     return items.map((item) => itemToEntity(item));
   }
 
-  async findById(id: string) {
-    const items = await this.getAll();
-
-    const item = items.find((item) => item.id === id);
-
-    if (!item) {
-      return null;
-    }
-
-    return itemToEntity(item);
-  }
-
   async create(item: CreateItemDataDto) {
     return false;
   }

@@ -1,4 +1,4 @@
-import { PlaceEntity } from '@game/core';
+import { PlaceEntity } from '../../entities/place.entity';
 import { PlaceDto } from '../dto/place.dto';
 
 function isPlaceDto(obj: unknown): obj is PlaceDto {

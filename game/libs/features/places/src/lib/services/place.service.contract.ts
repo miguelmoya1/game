@@ -1,5 +1,6 @@
 import { InjectionToken, Resource } from '@angular/core';
-import { PlaceEntity, PlaceListEntity } from '@game/core';
+import { PlaceListEntity } from '../entities/place-list.entity';
+import { PlaceEntity } from '../entities/place.entity';
 import { PlaceServiceImpl } from './place.service';
 
 export type PlaceService = {

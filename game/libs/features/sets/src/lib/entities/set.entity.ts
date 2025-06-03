@@ -1,4 +1,4 @@
-import { Effect } from '@game/core';
+import { Effect } from '@game/features/effects';
 
 export abstract class Set {
   public readonly id: string;

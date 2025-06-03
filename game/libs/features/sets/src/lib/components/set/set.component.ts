@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
-import { EffectComponent, TranslatePipe } from '@game/shared';
+import { EffectComponent } from '@game/features/effects';
+import { TranslatePipe } from '@game/shared';
 import { SetEntity } from '../../entities/set.entity';
 
 @Component({

@@ -1,6 +1,6 @@
 export enum EffectTarget {
-  ALLY = 'ALLY',
-  ENEMY = 'ENEMY',
-  SELF = 'SELF',
-  TEAM = 'TEAM',
+  Self = 'SELF',
+  Ally = 'ALLY',
+  Enemy = 'ENEMY',
+  All = 'ALL',
 }

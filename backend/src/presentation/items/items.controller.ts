@@ -13,7 +13,7 @@ import {
   DeleteItemCommand,
   UpdateItemCommand,
 } from '../../core/application/commands';
-import { GetItemByIdQuery } from '../../core/application/queries';
+import { GetItemsQuery } from '../../core/application/queries';
 import { UserEntity } from '../../core/domain/entities';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -26,12 +26,9 @@ export class ItemsController {
     private readonly _commandBus: CommandBus,
   ) {}
 
-  @Get(':itemId')
-  getUser(
-    @Param('itemId') itemId: string,
-    @AuthenticatedUser() user: UserEntity,
-  ) {
-    return this._queryBus.execute(new GetItemByIdQuery(itemId, user));
+  @Get()
+  getUser(@AuthenticatedUser() user: UserEntity) {
+    return this._queryBus.execute(new GetItemsQuery(user));
   }
 
   @Post()

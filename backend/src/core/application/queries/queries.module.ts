@@ -5,7 +5,7 @@ import { CheckEmailExistsHandler } from './auth/handler/check-email-exists.handl
 import { RehydrateHandler } from './auth/handler/rehydrate.handler';
 import { GetInventoryForUserHandler } from './inventory/handlers/get-inventory-for-user.handler';
 import { GetInventoryHandler } from './inventory/handlers/get-inventory.handler';
-import { GetItemByIdHandler } from './item/handlers/get-item-by-id.handler';
+import { GetItemsHandler } from './item/handlers/get-items.handler';
 import { GetPartyByIdHandler } from './party/handler/get-party-by-id.handler';
 import { GetPartyByUserHandler } from './party/handler/get-party-by-user.handler';
 import { GetPlaceHandler } from './place/handler/get-place.handler';
@@ -24,7 +24,7 @@ import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
     RehydrateHandler,
     CheckEmailExistsHandler,
     GetPlacesHandler,
-    GetItemByIdHandler,
+    GetItemsHandler,
     GetPlaceHandler,
 
     GetUserByIdHandler,

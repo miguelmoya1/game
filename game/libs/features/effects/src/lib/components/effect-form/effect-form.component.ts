@@ -4,8 +4,10 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { EffectTarget, EffectType, StatsTarget, StatsType } from '@game/core';
+import { StatsTarget, StatsType } from '@game/core';
 import { TranslatePipe } from '@game/shared';
+import { EffectTarget } from '../../enums/effect-target.enum';
+import { EffectType } from '../../enums/effect-type.enum';
 
 @Component({
   selector: 'lib-effect-form',

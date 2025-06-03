@@ -1,6 +1,5 @@
 export enum EffectType {
-  PASSIVE_HEAL_TEAM = 'PASSIVE_HEAL_TEAM',
-  PASSIVE_HEAL_SELF = 'PASSIVE_HEAL_SELF',
-  REVIVE_ONCE = 'REVIVE_ONCE',
-  IMMUNE_POISON = 'IMMUNE_POISON',
+  Bonus = 'BONUS',
+  Healing = 'HEALING',
+  Damage = 'DAMAGE',
 }

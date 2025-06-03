@@ -1,4 +1,4 @@
-import { PlaceCategory } from '@game/core';
+import { PlaceCategory } from '../enums/place-category.enum';
 
 export abstract class Place {
   public readonly id: string;

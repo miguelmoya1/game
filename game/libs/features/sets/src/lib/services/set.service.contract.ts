@@ -5,7 +5,7 @@ import { SetEntity } from '../entities/set.entity';
 import { SetServiceImpl } from './set.service';
 
 export interface SetService {
-  readonly sets: Resource<SetEntity[]>;
+  readonly all: Resource<SetEntity[]>;
 
   create(createSetDto: CreateSetDto): Promise<void>;
   update(id: string, updateSetDto: UpdateSetDto): Promise<void>;

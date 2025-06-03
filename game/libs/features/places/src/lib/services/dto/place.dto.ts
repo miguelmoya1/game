@@ -1,5 +1,4 @@
-import { PlaceCategory } from '@game/core';
-import { ItemDto } from '@game/shared';
+import { PlaceCategory } from '../../enums/place-category.enum';
 
 export interface PlaceDto {
   id: string;
@@ -16,7 +15,6 @@ export interface PlaceDto {
     canDelete: boolean;
     canEdit: boolean;
   };
-  currentItem: ItemDto;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

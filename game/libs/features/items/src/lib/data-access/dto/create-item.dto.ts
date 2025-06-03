@@ -1,0 +1,15 @@
+import { Rank } from '@game/core';
+import { Effect } from '@game/features/effects';
+import { PlaceCategory } from '@game/features/places';
+import { ItemType } from '../../enums/item.enum';
+
+export type CreateItemDto = {
+  readonly name: string;
+  readonly description?: string;
+  readonly imageUrl?: string;
+  readonly rank?: Rank;
+  readonly itemType: ItemType;
+  readonly effects: Effect[];
+  readonly spawnCategories?: PlaceCategory[];
+  readonly setId?: string;
+};

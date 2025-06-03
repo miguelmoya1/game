@@ -56,10 +56,10 @@
     <label for="itemSet">{{ 'ITEM_SET' | translate }}</label>
     <select id="itemSet" formControlName="setId">
       <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
-      <!-- TODO: fix this -->
-      <!-- @for (set of setsOptions.value(); track $index) {
+
+      @for (set of setsOptions.value(); track $index) {
         <option [value]="set.id">{{ set.name | translate }}</option>
-      } -->
+      }
     </select>
   </div>
 

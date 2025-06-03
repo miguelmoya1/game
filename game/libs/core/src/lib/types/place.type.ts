@@ -1,4 +1,4 @@
-import { PlaceCategory } from '../enums/place-category.enum';
+import { PlaceCategory } from '../../../../features/places/src/lib/enums/place-category.enum';
 import { Item } from './item.type';
 
 export type Place = {

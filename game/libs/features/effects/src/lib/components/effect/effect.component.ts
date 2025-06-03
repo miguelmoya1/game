@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import { Effect } from '@game/core';
 import { TranslatePipe } from '@game/shared';
+import { Effect } from '../../entities/effect.type';
 
 @Component({
   selector: 'lib-effect',

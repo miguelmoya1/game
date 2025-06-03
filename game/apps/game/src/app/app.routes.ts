@@ -20,8 +20,7 @@ export const appRoutes: Route[] = [
   {
     path: 'inventory',
     canMatch: [loggedGuard],
-    loadChildren: () =>
-      import('@game/features/inventory').then((m) => m.inventoryRoutes),
+    loadChildren: () => import('./inventory/routes/inventory.routes'),
   },
   // {
   //   path: 'admin',

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -6,8 +6,11 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ItemType, PlaceCategory, Rank } from '@game/core';
+import { Rank } from '@game/core';
 import { EffectsFormComponent } from '@game/features/effects';
+import { ItemType } from '@game/features/items';
+import { PlaceCategory } from '@game/features/places';
+import { SET_SERVICE } from '@game/features/sets';
 import { TranslatePipe } from '@game/shared';
 
 // TODO: fix this
@@ -23,11 +26,10 @@ import { TranslatePipe } from '@game/shared';
   styleUrl: './item-form.component.css',
 })
 export class ItemFormComponent {
-  // readonly #setService = inject(SET_SERVICE);
+  readonly #setService = inject(SET_SERVICE);
 
   readonly itemForm = input.required<FormGroup>();
-
-  // readonly setsOptions = this.#setService.list;
+  readonly setsOptions = this.#setService.all;
 
   protected readonly itemTypes = Object.values(ItemType);
   protected readonly ranks = Object.values(Rank);

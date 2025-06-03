@@ -1,4 +1,4 @@
-import { PlaceListEntity } from '@game/core';
+import { PlaceListEntity } from '../../entities/place-list.entity';
 import { PlaceListDto } from '../dto/place-list.dto';
 
 const isPlaceListDto = (obj: unknown): obj is PlaceListDto => {
@@ -23,7 +23,7 @@ export const mapPlaceListToEntity = (data: unknown) => {
   if (!isPlaceListDto(data)) {
     console.error('Invalid data structure for PlaceListDto:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to Place entity.'
+      'Invalid data structure received. Cannot map to Place entity.',
     );
   }
   return mapPlaceList(data);
@@ -33,7 +33,7 @@ export const mapPlaceListArrayToEntityArray = (data: unknown) => {
   if (!isPlaceListDtoArray(data)) {
     console.error('Invalid data structure for PlaceListDto array:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to Place[] entity array.'
+      'Invalid data structure received. Cannot map to Place[] entity array.',
     );
   }
 

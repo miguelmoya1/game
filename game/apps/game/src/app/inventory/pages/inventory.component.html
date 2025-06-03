@@ -1,0 +1,11 @@
+<h1>{{ 'INVENTORY' | translate }}</h1>
+
+@if (inventory.value(); as inventory) {
+  <div class="items">
+    @for (inventoryItem of inventory; track $index) {
+      @if (getItemById(inventoryItem.itemId); as item) {
+        <lib-item [item]="item" />
+      }
+    }
+  </div>
+}

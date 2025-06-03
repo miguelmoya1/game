@@ -1,4 +1,4 @@
-import { Effect } from '@game/core';
+import { Effect } from '@game/features/effects';
 
 export interface SetDto {
   readonly id: string;

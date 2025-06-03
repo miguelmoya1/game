@@ -8,7 +8,7 @@
   <h4 class="effects-title">{{ 'EFFECTS' | translate }}:</h4>
 
   @for (effect of setTemplate.effects; track $index) {
-    <game-effect [effect]="effect" />
+    <lib-effect [effect]="effect" />
     <hr />
   }
 }

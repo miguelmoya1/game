@@ -1,4 +1,4 @@
-import { InventoryEntity } from '@game/core';
+import { InventoryEntity } from '../../entities/inventory.entity';
 import { InventoryDto } from '../dto/inventory.dto';
 
 const isInventoryDto = (obj: unknown): obj is InventoryDto => {
@@ -12,7 +12,6 @@ const isInventoryDto = (obj: unknown): obj is InventoryDto => {
     typeof dto['id'] === 'string' &&
     typeof dto['acquiredAt'] === 'string' &&
     typeof dto['isEquipped'] === 'boolean' &&
-    typeof dto['item'] === 'object' &&
     typeof dto['itemId'] === 'string' &&
     typeof dto['playerId'] === 'string' &&
     typeof dto['quantity'] === 'number'
@@ -27,7 +26,7 @@ export const mapInventoryToEntity = (data: unknown) => {
   if (!isInventoryDto(data)) {
     console.error('Invalid data structure for InventoryDto:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to Place entity.'
+      'Invalid data structure received. Cannot map to Place entity.',
     );
   }
   return mapInventory(data);
@@ -37,7 +36,7 @@ export const mapInventoryArrayToEntityArray = (data: unknown) => {
   if (!isInventoryDtoArray(data)) {
     console.error('Invalid data structure for InventoryDto array:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to Place[] entity array.'
+      'Invalid data structure received. Cannot map to Place[] entity array.',
     );
   }
 
@@ -49,7 +48,6 @@ const mapInventory = (data: InventoryDto) => {
     id: data.id,
     acquiredAt: new Date(data.acquiredAt),
     isEquipped: data.isEquipped,
-    item: data.item,
     itemId: data.itemId,
     playerId: data.playerId,
     quantity: data.quantity,

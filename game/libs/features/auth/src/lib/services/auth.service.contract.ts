@@ -5,7 +5,6 @@ import { AuthServiceImpl } from './auth.service';
 
 export interface AuthService {
   readonly isAuthenticated: Resource<boolean>;
-  setIsAuthenticated(isAuthenticated: boolean): void;
 
   loginEmail(loginEmailDto: LoginEmailDto): Promise<boolean>;
   register(registerDto: RegisterDto): Promise<boolean>;

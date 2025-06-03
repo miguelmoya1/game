@@ -6,7 +6,7 @@ export { GetDungeonDetailsQuery } from './dungeon/impl/get-dungeon-details.query
 export { GetNearbyDungeonsQuery } from './dungeon/impl/get-nearby-dungeons.query';
 export { GetInventoryForUserQuery } from './inventory/impl/get-inventory-for-user.query';
 export { GetInventoryQuery } from './inventory/impl/get-inventory.query';
-export { GetItemByIdQuery } from './item/impl/get-item-by-id.query';
+export { GetItemsQuery } from './item/impl/get-items.query';
 export { GetPartyByIdQuery } from './party/impl/get-party-by-id.query';
 export { GetPartyByUserQuery } from './party/impl/get-party-by-user.query';
 export { GetPartyMembersWithStatsQuery } from './party/impl/get-party-members-with-stats.query';

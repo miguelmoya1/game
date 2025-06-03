@@ -17,6 +17,10 @@
     "src/**/*.ts",
     "../features/player/src/lib/entities/player.entity.ts",
     "../features/places/src/lib/entities/place.entity.ts",
-    "../features/effects/src/lib/entities/effect.type.ts"
+    "../features/effects/src/lib/entities/effect.type.ts",
+    "../features/places/src/lib/enums/place-category.enum.ts",
+    "../features/items/src/lib/entities/item.entity.ts",
+    "../features/items/src/lib/enums/item.enum.ts",
+    "../features/inventory/src/lib/entities/inventory.entity.ts"
   ]
 }

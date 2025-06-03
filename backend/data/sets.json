@@ -12,7 +12,7 @@
       },
       {
         "type": "BONUS",
-        "stats": "HP",
+        "statType": "HP",
         "target": "SELF",
         "minimumItems": 2,
         "value": 5

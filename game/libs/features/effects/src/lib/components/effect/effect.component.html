@@ -1,18 +1,17 @@
 @let effectTemplate = effect();
 
 @if (effectTemplate.type) {
-  <span class="type"> {{ effectTemplate.type | translate }} ({{ effectTemplate.value }}) </span>
+  <span class="type">
+    {{ effectTemplate.type | translate }}
+
+    @if (effectTemplate.statType) {
+      {{ effectTemplate.statType | translate }}
+    }
+
+    ({{ effectTemplate.value }})
+  </span>
 
   @if (effectTemplate.target) {
     <span class="target">{{ effectTemplate.target | translate }}</span>
-  }
-}
-@if (effectTemplate.stats) {
-  <span class="stats">
-    {{ 'BONUS_OF' | translate }} {{ effectTemplate.stats | translate }} ({{ effectTemplate.value }})
-  </span>
-
-  @if (effectTemplate.statsTarget) {
-    <span class="target">{{ effectTemplate.statsTarget | translate }}</span>
   }
 }

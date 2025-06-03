@@ -15,9 +15,7 @@
         "outputPath": "dist/apps/game",
         "index": "apps/game/src/index.html",
         "browser": "apps/game/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": [],
         "tsConfig": "apps/game/tsconfig.app.json",
         "assets": [
           {

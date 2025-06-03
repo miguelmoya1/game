@@ -5,16 +5,16 @@ import { SET_API_SERVICE } from '../data-access/set-api.service.contract';
 import { mapSetArrayToEntityArray } from '../mappers/set.mapper';
 import { SetService } from './set.service.contract';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SetServiceImpl implements SetService {
   readonly #setApiService = inject(SET_API_SERVICE);
 
-  readonly sets = resource({
+  readonly #all = resource({
     loader: () => this.#setApiService.all().then(mapSetArrayToEntityArray),
     defaultValue: [],
   });
+
+  public readonly all = this.#all.asReadonly();
 
   public async create(createSetDto: CreateSetDto) {
     await this.#setApiService.create(createSetDto);

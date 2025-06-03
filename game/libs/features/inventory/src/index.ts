@@ -1,1 +1,1 @@
-export { default as inventoryRoutes } from './lib/routes/inventory.routes';
+export { INVENTORY_SERVICE } from './lib/services/inventory.service.contract';

@@ -4,13 +4,12 @@ import { AUTH_API_SERVICE } from '../data-access/auth-api.service.contract';
 import { LoginEmailDto } from '../data-access/dto/login-email.dto';
 import { RegisterDto } from '../data-access/dto/register.dto';
 import { AUTH_TOKEN_SERVICE } from './auth-token.service.contract';
-import { AUTH_SERVICE, AuthService } from './auth.service.contract';
+import { AuthService } from './auth.service.contract';
 import { isAuthenticatedMapper } from './mappers/is-authenticated.mapper';
 
 @Injectable()
 export class AuthServiceImpl implements AuthService {
   readonly #authApiService = inject(AUTH_API_SERVICE);
-  readonly #authService = inject(AUTH_SERVICE);
   readonly #authTokenService = inject(AUTH_TOKEN_SERVICE);
   readonly #isAuthenticated = httpResource<boolean>(
     () =>
@@ -23,10 +22,6 @@ export class AuthServiceImpl implements AuthService {
 
   public readonly isAuthenticated = this.#isAuthenticated.asReadonly();
 
-  public setIsAuthenticated(isAuthenticated: boolean) {
-    this.#isAuthenticated.set(isAuthenticated);
-  }
-
   public async register(registerDto: RegisterDto) {
     await this.#authApiService.register(registerDto);
 
@@ -38,7 +33,7 @@ export class AuthServiceImpl implements AuthService {
 
     console.log('response', response);
 
-    this.#authService.setIsAuthenticated(true);
+    this.#isAuthenticated.set(true);
     this.#authTokenService.setToken(response);
 
     return Boolean(response);

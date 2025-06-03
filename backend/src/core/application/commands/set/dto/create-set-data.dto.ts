@@ -8,7 +8,7 @@ export type CreateSetDataDto = {
     type: EffectType;
     target: EffectTarget;
     value: number;
-    stats?: StatsTypes;
+    statType?: StatsTypes;
     minimumItems?: number;
   }[];
 };

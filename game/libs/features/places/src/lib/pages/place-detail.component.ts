@@ -1,6 +1,14 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { ButtonDirective, ItemComponent, TranslatePipe } from '@game/shared';
+import { ItemComponent, ITEMS_SERVICE } from '@game/features/items';
+import { ButtonDirective, TranslatePipe } from '@game/shared';
 import { PLACE_SERVICE } from '../services/place.service.contract';
 
 @Component({
@@ -10,13 +18,31 @@ import { PLACE_SERVICE } from '../services/place.service.contract';
   styleUrl: './place-detail.component.css',
 })
 export class PlaceDetailComponent {
-  readonly #placeService = inject(PLACE_SERVICE);
   readonly #router = inject(Router);
+  readonly #placeService = inject(PLACE_SERVICE);
+  readonly #itemService = inject(ITEMS_SERVICE);
+
   readonly loading = signal(false);
 
   public readonly placeId = input.required<string>();
-
   protected readonly placeResource = this.#placeService.place;
+  protected readonly item = computed(() => {
+    const place = this.#placeService.place.value();
+
+    if (!place) {
+      return undefined;
+    }
+
+    const itemId = place.currentItemId;
+
+    const items = this.#itemService.all.value();
+
+    if (!itemId || !items) {
+      return undefined;
+    }
+
+    return items.find((item) => item.id === itemId);
+  });
 
   constructor() {
     effect(() => {

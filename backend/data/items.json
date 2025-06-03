@@ -9,7 +9,7 @@
         "type": "BONUS",
         "value": 5,
         "target": "SELF",
-        "stats": "INT"
+        "statType": "INT"
       }
     ],
     "rank": "E",
@@ -29,7 +29,7 @@
         "type": "BONUS",
         "value": 5,
         "target": "SELF",
-        "stats": "HP"
+        "statType": "HP"
       }
     ],
     "rank": "E",
@@ -49,7 +49,7 @@
         "type": "BONUS",
         "value": 5,
         "target": "SELF",
-        "stats": "STR"
+        "statType": "STR"
       }
     ],
     "rank": "E",
@@ -69,7 +69,7 @@
         "type": "BONUS",
         "value": 5,
         "target": "SELF",
-        "stats": "DEX"
+        "statType": "DEX"
       }
     ],
     "rank": "E",
