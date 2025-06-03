@@ -1,6 +1,5 @@
 import { ItemEntity, Rank } from '@game/core';
 import { ItemDto } from '../dto/item.dto';
-import { mapSetToEntity } from './set.mapper';
 
 const isItemDto = (obj: unknown): obj is ItemDto => {
   if (typeof obj !== 'object' || obj === null) {
@@ -23,7 +22,7 @@ export const mapItemToEntity = (data: unknown) => {
   if (!isItemDto(data)) {
     console.error('Invalid data structure for ItemListDto:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to ItemList entity.'
+      'Invalid data structure received. Cannot map to ItemList entity.',
     );
   }
 
@@ -36,7 +35,6 @@ export const mapItemToEntity = (data: unknown) => {
     effects: data.effects,
     rank: data.rank as Rank,
     setId: data.setId ?? undefined,
-    set: data.set ? mapSetToEntity(data.set) : undefined,
     spawnCategories: data.spawnCategories,
     permissions: data.permissions,
     createdAt: new Date(data.createdAt),

@@ -1,9 +1,0 @@
-<h2 class="title">{{ 'EDIT_SET' | translate }}</h2>
-
-<game-set-form [setForm]="setFormEdit" />
-
-<div class="actions">
-  <button gameButton type="submit" [disabled]="!setFormEdit.valid" class="submit-button" (click)="onSubmit()">
-    {{ 'EDIT_SET' | translate }}
-  </button>
-</div>

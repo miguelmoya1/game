@@ -17,25 +17,13 @@ export class SearchEntity {
 }
 
 export class SearchResponseEntity {
-  public readonly items: SearchEntity[];
   public readonly places: SearchEntity[];
-  public readonly sets: SearchEntity[];
 
-  private constructor(
-    items: SearchEntity[],
-    places: SearchEntity[],
-    sets: SearchEntity[]
-  ) {
-    this.items = items;
+  private constructor(places: SearchEntity[]) {
     this.places = places;
-    this.sets = sets;
   }
 
-  public static create(
-    items: SearchEntity[],
-    places: SearchEntity[],
-    sets: SearchEntity[]
-  ) {
-    return new SearchResponseEntity(items, places, sets);
+  public static create(places: SearchEntity[]) {
+    return new SearchResponseEntity(places);
   }
 }

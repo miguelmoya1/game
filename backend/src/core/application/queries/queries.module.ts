@@ -13,8 +13,7 @@ import { GetPlacesHandler } from './place/handler/get-places.handler';
 import { GetPlayerByIdHandler } from './player/handler/get-player-by-id.handler';
 import { GetPlayerByUserIdHandler } from './player/handler/get-player-by-user-id.handler';
 import { SearchHandler } from './search/handler/search.handler';
-import { GetSetByIdHandler } from './set/handler/get-set-by-id.handler';
-import { GetSetListHandler } from './set/handler/get-set-list.handler';
+import { GetSetsHandler } from './set/handler/get-sets.handler';
 import { GetLanguageHandler } from './translate/handler/get-language.handler';
 import { GetTranslateHandler } from './translate/handler/get-translates.handler';
 import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
@@ -39,8 +38,7 @@ import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
     GetInventoryForUserHandler,
     GetInventoryHandler,
 
-    GetSetListHandler,
-    GetSetByIdHandler,
+    GetSetsHandler,
 
     SearchHandler,
 

@@ -13,5 +13,10 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "../features/player/src/lib/entities/player.entity.ts",
+    "../features/places/src/lib/entities/place.entity.ts",
+    "../features/effects/src/lib/entities/effect.type.ts"
+  ]
 }

@@ -16,6 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@game/core": ["libs/core/src/index.ts"],
+      "@game/features/effects": ["libs/features/effects/src/index.ts"],
+      "@game/features/items": ["libs/features/items/src/index.ts"],
+      "@game/features/places": ["libs/features/places/src/index.ts"],
+      "@game/features/sets": ["libs/features/sets/src/index.ts"],
       "@game/features/admin": ["libs/features/admin/src/index.ts"],
       "@game/features/auth": ["libs/features/auth/src/index.ts"],
       "@game/features/inventory": ["libs/features/inventory/src/index.ts"],

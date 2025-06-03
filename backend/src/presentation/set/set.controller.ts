@@ -13,11 +13,7 @@ import {
   DeleteSetCommand,
   UpdateSetCommand,
 } from '../../core/application/commands';
-import {
-  GetSetByIdQuery,
-  GetSetListQuery,
-  SetResponseDto,
-} from '../../core/application/queries';
+import { GetSetsQuery, SetResponseDto } from '../../core/application/queries';
 import { UserEntity } from '../../core/domain/entities';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
 import { CreateSetDto } from './dto/create-set.dto';
@@ -30,22 +26,11 @@ export class SetController {
     private readonly _queryBus: QueryBus,
   ) {}
 
-  @Get('list')
+  @Get()
   async getSetList(@AuthenticatedUser() user: UserEntity) {
-    const command = new GetSetListQuery(user);
+    const command = new GetSetsQuery(user);
 
-    return await this._queryBus.execute<GetSetListQuery, SetResponseDto[]>(
-      command,
-    );
-  }
-
-  @Get(':setId')
-  async getSetById(
-    @AuthenticatedUser() user: UserEntity,
-    @Param('setId') setId: string,
-  ) {
-    const command = new GetSetByIdQuery(setId, user);
-    return await this._queryBus.execute<GetSetByIdQuery, SetResponseDto>(
+    return await this._queryBus.execute<GetSetsQuery, SetResponseDto[]>(
       command,
     );
   }

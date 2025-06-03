@@ -5,7 +5,5 @@ export type SearchDto = {
 };
 
 export type SearchResponseDto = {
-  readonly items: SearchDto[];
   readonly places: SearchDto[];
-  readonly sets: SearchDto[];
 };

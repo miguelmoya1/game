@@ -1,1 +1,1 @@
-export { default as partyRoutes } from './lib/routes/party.routes';
+export { PARTY_SERVICE } from './lib/services/party.service.contract';

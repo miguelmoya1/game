@@ -1,9 +1,8 @@
+import { Effect } from '../../../../features/effects/src/lib/entities/effect.type';
 import { ItemType } from '../enums/item.enum';
 import { PlaceCategory } from '../enums/place-category.enum';
 import { Rank } from '../enums/rank.enum';
-import { Effect } from '../types/effect.type';
 import { Item } from '../types/item.type';
-import { SetEntity } from './set.entity';
 
 export class ItemEntity implements Item {
   public readonly id: string;
@@ -23,7 +22,6 @@ export class ItemEntity implements Item {
   };
 
   public readonly setId?: string | null;
-  public readonly set?: SetEntity | null;
 
   private constructor(item: Item) {
     this.id = item.id;
@@ -34,7 +32,6 @@ export class ItemEntity implements Item {
     this.effects = item.effects;
     this.permissions = item.permissions;
     this.setId = item.setId;
-    this.set = item.set;
     this.rank = item.rank;
     this.spawnCategories = item.spawnCategories;
     this.createdAt = item.createdAt;

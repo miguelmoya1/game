@@ -1,13 +1,12 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { Marker } from 'maplibre-gl';
-import { MapCoreService } from './map-core.service';
-
-type Position = { latitude: number; longitude: number };
+import { MAP_CORE_SERVICE } from './map-core.service.contract';
+import { MapPlayerService, Position } from './map-player.service.contract';
 
 @Injectable()
-export class MapPlayerService {
-  readonly #mapCoreService = inject(MapCoreService);
-  readonly #map = this.#mapCoreService.map!;
+export class MapPlayerServiceImpl implements MapPlayerService {
+  readonly #mapCoreService = inject(MAP_CORE_SERVICE);
+  readonly #map = this.#mapCoreService.map;
   readonly #playerMarker = computed(() => {
     const mapLibre = this.#map();
 

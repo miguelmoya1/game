@@ -1,0 +1,67 @@
+<h1>{{ 'PLAYER' | translate }}</h1>
+
+@if (player.value(); as player) {
+  <div class="player-info-card">
+    <div class="player-row">
+      <span class="label">{{ 'RACE' | translate }}</span>
+      <span class="value">{{ player.raceId }}</span>
+    </div>
+    <div class="player-row">
+      <span class="label">{{ 'LEVEL' | translate }}</span>
+      <span class="value">{{ player.level }}</span>
+    </div>
+    <div class="player-row">
+      <span class="label">{{ 'RANK' | translate }}</span>
+      <span class="value">{{ player.rank }}</span>
+    </div>
+    <div class="player-row">
+      <span class="label">{{ 'EXPERIENCE' | translate }}</span>
+      <span class="value">{{ player.experience }}</span>
+    </div>
+    <div class="player-row stats-section">
+      <span class="label">{{ 'STATS' | translate }}</span>
+      <ul class="stats-list">
+        @for (stat of player.stats; track stat.statsType) {
+          <li>
+            <span class="stat-type">{{ stat.statsType | translate }}</span>
+            <span class="stat-value">{{ stat.value }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+    <div class="player-row aggregated-stats-section">
+      <span class="label">{{ 'AGGREGATED_STATS' | translate }}</span>
+      <ul class="aggregated-stats-list">
+        @for (statKey of statsKeys(); track statKey) {
+          <li>
+            <span class="stat-type"> {{ statKey | translate }} </span>
+            <span class="stat-detail">
+              Base: <b>{{ player.aggregatedStats?.[statKey]?.base }} </b>
+            </span>
+            <span class="stat-detail">
+              By Level:
+              <b> {{ player.aggregatedStats?.[statKey]?.byLevel }} </b>
+            </span>
+            <span class="stat-detail">
+              By Set: <b> {{ player.aggregatedStats?.[statKey]?.bySet }} </b>
+            </span>
+            <span class="stat-detail">
+              By Party:
+              <b> {{ player.aggregatedStats?.[statKey]?.byPartySetsBonus }} </b>
+            </span>
+            <span class="stat-detail">
+              By Guild:
+              <b> {{ player.aggregatedStats?.[statKey]?.byGuild }} </b>
+            </span>
+
+            <hr />
+
+            <span class="stat-detail total">
+              Total: <b>{{ player.aggregatedStats?.[statKey]?.total }} </b>
+            </span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+}

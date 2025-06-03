@@ -1,8 +1,7 @@
+import { Effect } from '@game/core';
 import { ItemType } from '../enums/item.enum';
 import { PlaceCategory } from '../enums/place-category.enum';
 import { Rank } from '../enums/rank.enum';
-import { Effect } from './effect.type';
-import { Set } from './set.type';
 import { Stats } from './stats.type';
 
 export type Item = {
@@ -25,5 +24,4 @@ export type Item = {
   readonly stats?: Stats[] | null;
 
   readonly setId?: string | null;
-  readonly set?: Set | null;
 };

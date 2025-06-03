@@ -23,7 +23,7 @@ export class UpdateSetHandler implements ICommandHandler<UpdateSetCommand> {
     const set = await this._setRepository.update(setId, updateSetDataDto);
 
     if (!set) {
-      throw new HttpException(ErrorCodes.SET_NOT_FOUND, HttpStatus.NOT_FOUND);
+      throw new HttpException(ErrorCodes.SETS_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { PlayerEntity } from '@game/core';
+import { PlayerEntity } from '@game/features/player';
 import { PlayerDto } from '../dto/player.dto';
 
 const isPlayerDto = (obj: unknown): obj is PlayerDto => {
@@ -23,7 +23,7 @@ export const mapPlayerToEntity = (data: unknown) => {
   if (!isPlayerDto(data)) {
     console.error('Invalid data structure for PlayerDto:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to Player entity.'
+      'Invalid data structure received. Cannot map to Player entity.',
     );
   }
   return PlayerEntity.create(data);
@@ -33,7 +33,7 @@ export const mapPlayerArrayToEntityArray = (data: unknown) => {
   if (!isPlayerDtoArray(data)) {
     console.error('Invalid data structure for PlayerDto array:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to Player[] entity array.'
+      'Invalid data structure received. Cannot map to Player[] entity array.',
     );
   }
   return data.map(PlayerEntity.create);

@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { AuthApiServiceImpl } from './auth-api.service';
 import { LoginEmailDto } from './dto/login-email.dto';
 import { RegisterDto } from './dto/register.dto';
 
@@ -9,5 +10,8 @@ export type AuthApiService = {
 };
 
 export const AUTH_API_SERVICE = new InjectionToken<AuthApiService>(
-  'AUTH_API_SERVICE'
+  'AUTH_API_SERVICE',
+  {
+    factory: () => new AuthApiServiceImpl(),
+  },
 );

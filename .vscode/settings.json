@@ -2,6 +2,7 @@
   "cSpell.words": [
     "adminer",
     "cooldown",
+    "Dexie",
     "dtos",
     "EQUIPPABLE",
     "geoadd",
@@ -17,6 +18,7 @@
     "maplibre",
     "maplibregl",
     "Millis",
+    "ngdexielive",
     "ossp",
     "pepa",
     "plpgsql",

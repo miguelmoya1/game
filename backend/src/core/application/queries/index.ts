@@ -18,8 +18,7 @@ export { GetPlayerByUserIdQuery } from './player/impl/get-player-by-user-id.quer
 export { QueriesModule } from './queries.module';
 export { SearchQuery } from './search/impl/search.query';
 export { SetResponseDto } from './set/dto/set-response.dto';
-export { GetSetByIdQuery } from './set/impl/get-set-by-id.query';
-export { GetSetListQuery } from './set/impl/get-set-list.query';
+export { GetSetsQuery } from './set/impl/get-sets.query';
 export { GetLanguageQuery } from './translate/impl/get-languages.query';
 export { GetTranslateQuery } from './translate/impl/get-translate.query';
 export { GetUserByIdQuery } from './user/impl/get-user-by-id.query';

@@ -1,5 +1,5 @@
-import { Effect, ItemType, PlaceCategory, Rank } from '@game/core';
-import { SetDto } from './set.dto';
+import { ItemType, PlaceCategory, Rank } from '@game/core';
+import { Effect } from '@game/features/effects';
 
 export type ItemDto = {
   readonly id: string;
@@ -18,5 +18,4 @@ export type ItemDto = {
     readonly canDelete: boolean;
   };
   readonly setId?: string | null;
-  readonly set?: SetDto | null;
 };

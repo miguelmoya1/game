@@ -1,12 +1,13 @@
 import { Injectable, signal } from '@angular/core';
 import { Map, MapOptions } from 'maplibre-gl';
+import { MapCoreService } from './map-core.service.contract';
 
 type Position = { latitude: number; longitude: number };
 
 const FIXED_ZOOM_LEVEL = 18;
 
 @Injectable()
-export class MapCoreService {
+export class MapCoreServiceImpl implements MapCoreService {
   #mapLibre = signal<Map | null>(null);
   readonly #mapConfig: Partial<MapOptions> = {
     style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',

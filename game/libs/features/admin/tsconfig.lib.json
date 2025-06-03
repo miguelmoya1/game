@@ -13,5 +13,11 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "../../core/src/lib/services/set/dto/create-set.dto.ts",
+    "../../core/src/lib/services/set/dto/update-set.dto.ts",
+    "../sets/src/lib/helpers/set-form.helper.ts",
+    "../effects/src/lib/helpers/effect-form.helper.ts"
+  ]
 }

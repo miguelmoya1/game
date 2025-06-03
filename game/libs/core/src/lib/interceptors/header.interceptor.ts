@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AUTH_TOKEN_SERVICE } from '../services/auth';
+import { AUTH_TOKEN_SERVICE } from '@game/features/auth';
 
 export const headerInterceptor: HttpInterceptorFn = (req, next) => {
   const authTokenService = inject(AUTH_TOKEN_SERVICE);

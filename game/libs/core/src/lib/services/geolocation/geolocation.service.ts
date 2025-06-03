@@ -8,7 +8,7 @@ import { GeolocationService } from './geolocation.service.contract';
 @Injectable()
 export class GeolocationServiceImpl implements GeolocationService {
   readonly #position = signal<Position | null>(null);
-  readonly #watching = signal(true);
+  readonly #watching = signal(false);
   readonly #watchId = signal<CallbackID | null>(null);
   readonly #debouncedPosition = toObservable(this.#position).pipe(
     debounceTime(1000),

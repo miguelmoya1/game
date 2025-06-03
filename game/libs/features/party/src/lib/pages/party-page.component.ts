@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { PARTY_SERVICE } from '@game/core';
+import { PARTY_SERVICE } from '@game/features/party';
 import { TranslatePipe } from '@game/shared';
 
 @Component({

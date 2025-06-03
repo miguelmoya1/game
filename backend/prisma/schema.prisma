@@ -65,13 +65,11 @@ model Place {
   lng            Float
   osmTags        Json?
   currentItemId  String
-  // currentItem    Item                      @relation("CurrentItem", fields: [currentItemId], references: [id])
   collectionLogs PlayerItemCollectionLog[]
   categories     PlaceCategory[]
   createdAt      DateTime                  @default(now())
   updatedAt      DateTime                  @updatedAt
   deletedAt      DateTime?
-  // @@index([currentItemId])
 
   @@index([apiId])
   @@index([name])
@@ -120,12 +118,10 @@ model Player {
   level          Int                       @default(1)
   rank           Rank                      @default(E)
   experience     Int                       @default(0)
-  /// [{statsType: STR, value: 10, target: ALLY}]
   stats          Json                      @db.JsonB
   userId         String                    @unique
   user           User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
   raceId         String
-  // race           Race                      @relation(fields: [raceId], references: [id])
   inventory      PlayerItem[]
   collectionLogs PlayerItemCollectionLog[]
   createdAt      DateTime                  @default(now())
@@ -134,7 +130,6 @@ model Player {
 
   @@index([userId])
   @@index([rank])
-  // @@index([raceId])
   @@index([level])
 }
 
@@ -151,7 +146,6 @@ model PlayerItemCollectionLog {
   @@unique([playerId, placeId, collectionMonthYear])
   @@index([playerId])
   @@index([placeId])
-  // @@index([itemId])
   @@index([collectionMonthYear])
 }
 
@@ -163,11 +157,9 @@ model PlayerItem {
   playerId   String
   player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
   itemId     String
-  // item       Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
   @@index([playerId])
-  // @@index([itemId])
   @@index([isEquipped])
 }

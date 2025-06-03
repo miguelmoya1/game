@@ -4,7 +4,6 @@ import { SetEntity } from '../../../../domain/entities';
 
 export interface SetRepository {
   getAll(): Promise<SetEntity[]>;
-  getById(id: string): Promise<SetEntity | null>;
   create(createSetDto: CreateSetDataDto): Promise<boolean>;
   update(id: string, updateSetDto: UpdateSetDataDto): Promise<boolean>;
   delete(id: string): Promise<boolean>;

@@ -1,7 +1,12 @@
 <form [formGroup]="itemForm()">
   <div class="form-group">
     <label for="itemName">{{ 'ITEM_NAME' | translate }}</label>
-    <input id="itemName" type="text" formControlName="name" placeholder="{{ 'ITEM_NAME' | translate }}" />
+    <input
+      id="itemName"
+      type="text"
+      formControlName="name"
+      placeholder="{{ 'ITEM_NAME' | translate }}"
+    />
     @if (name.invalid && (name.dirty || name.touched)) {
       <div class="error-message">
         @if (name.errors?.['required']) {
@@ -15,7 +20,9 @@
   </div>
 
   <div class="form-group">
-    <label for="itemDescription">{{ 'ITEM_DESCRIPTION_OPTIONAL' | translate }}</label>
+    <label for="itemDescription">{{
+      'ITEM_DESCRIPTION_OPTIONAL' | translate
+    }}</label>
     <textarea
       id="itemDescription"
       formControlName="description"
@@ -49,9 +56,10 @@
     <label for="itemSet">{{ 'ITEM_SET' | translate }}</label>
     <select id="itemSet" formControlName="setId">
       <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
-      @for (set of setsOptions.value(); track $index) {
+      <!-- TODO: fix this -->
+      <!-- @for (set of setsOptions.value(); track $index) {
         <option [value]="set.id">{{ set.name | translate }}</option>
-      }
+      } -->
     </select>
   </div>
 
@@ -64,5 +72,5 @@
     </select>
   </div>
 
-  <game-effects-form [effectsArray]="effectsArray" />
+  <lib-effects-form [effectsArray]="effectsArray" />
 </form>

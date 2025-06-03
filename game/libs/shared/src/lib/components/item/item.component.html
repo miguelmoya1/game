@@ -3,17 +3,19 @@
 <div class="header">
   <h2 class="name">{{ itemTemplate.name | translate }}</h2>
   @if (itemTemplate.rank) {
-  <span class="rank rank-{{ itemTemplate.rank }}">
-    {{ itemTemplate.rank | translate }}
-  </span>
+    <span class="rank rank-{{ itemTemplate.rank }}">
+      {{ itemTemplate.rank | translate }}
+    </span>
   }
 </div>
 
 <div class="info">
   <div class="image">
     @if (itemTemplate.imageUrl) {
-    <img [src]="itemTemplate.imageUrl" [alt]="itemTemplate.name" />
-    } @else { IMG }
+      <img [src]="itemTemplate.imageUrl" [alt]="itemTemplate.name" />
+    } @else {
+      IMG
+    }
   </div>
   <div class="meta">
     <p class="type">
@@ -21,27 +23,29 @@
       {{ itemTemplate.itemType | translate }}
     </p>
     @if (itemTemplate.description) {
-    <p class="description">{{ itemTemplate.description | translate }}</p>
+      <p class="description">{{ itemTemplate.description | translate }}</p>
     }
   </div>
 </div>
 
 @if (itemTemplate.spawnCategories && itemTemplate.spawnCategories.length > 0) {
-<div class="section spawn-categories">
-  <h3 class="section-title">
-    {{ 'SPAWN_CATEGORIES' | translate }}
-  </h3>
+  <div class="section spawn-categories">
+    <h3 class="section-title">
+      {{ 'SPAWN_CATEGORIES' | translate }}
+    </h3>
 
-  <ul class="categories-list">
-    @for (category of itemTemplate.spawnCategories; track $index) {
-    <li class="category-tag">{{ category | translate }}</li>
-    }
-  </ul>
-</div>
-} @if (itemTemplate.set; as set) {
-<div class="section">
-  <game-set [set]="set" />
-</div>
+    <ul class="categories-list">
+      @for (category of itemTemplate.spawnCategories; track $index) {
+        <li class="category-tag">{{ category | translate }}</li>
+      }
+    </ul>
+  </div>
 }
+<!-- TODO: -->
+<!-- @if (itemTemplate.set; as set) {
+  <div class="section">
+    <game-set [set]="set" />
+  </div>
+} -->
 
 <div class="footer">ID: {{ itemTemplate.id }}</div>

@@ -1,16 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { PlaceList } from '@game/core';
 import { Marker } from 'maplibre-gl';
-import { MapCoreService } from './map-core.service';
-
-type Selected = {
-  marker: Marker | null;
-  place: PlaceList | null;
-};
+import { MAP_CORE_SERVICE } from './map-core.service.contract';
+import { MapPlaceService, Selected } from './map-place.service.contract';
 
 @Injectable()
-export class MapPlaceService {
-  readonly #mapCoreService = inject(MapCoreService);
+export class MapPlaceServiceImpl implements MapPlaceService {
+  readonly #mapCoreService = inject(MAP_CORE_SERVICE);
   readonly #map = this.#mapCoreService.map;
   readonly #markers = new Map<string, Marker>();
 
@@ -31,6 +27,12 @@ export class MapPlaceService {
       this.#markers.delete(poiId);
     });
 
+    const mapLibre = this.#map();
+
+    if (!mapLibre) {
+      return;
+    }
+
     places.forEach((place) => {
       const existingMarker = this.#markers.get(place.id);
 
@@ -38,14 +40,14 @@ export class MapPlaceService {
         const element = this.#createElementMarker(place);
         const marker = new Marker({ element })
           .setLngLat([place.lng, place.lat])
-          .addTo(this.#map()!);
+          .addTo(mapLibre);
         this.#markers.set(place.id, marker);
       } else {
         existingMarker
           .getElement()
           ?.setAttribute(
             'style',
-            `--marker-fill-color: ${this.#getMarkerColor(place)}`
+            `--marker-fill-color: ${this.#getMarkerColor(place)}`,
           );
         existingMarker.setLngLat([place.lng, place.lat]);
       }

@@ -8,18 +8,14 @@ const isSearchResponseDto = (obj: unknown): obj is SearchResponseDto => {
 
   const dto = obj as Record<string, unknown>;
 
-  return (
-    typeof dto['items'] !== null &&
-    dto['sets'] !== null &&
-    dto['places'] !== null
-  );
+  return dto['places'] !== null;
 };
 
 const mapSearch = (data: SearchDto) => {
   if (typeof data !== 'object' || data === null) {
     console.error('Invalid data structure for SearchDto:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to Search entity.'
+      'Invalid data structure received. Cannot map to Search entity.',
     );
   }
 
@@ -34,13 +30,9 @@ export const mapSearchResponseToEntity = (data: unknown) => {
   if (!isSearchResponseDto(data)) {
     console.error('Invalid data structure for SearchResponseDto:', data);
     throw new TypeError(
-      'Invalid data structure received. Cannot map to SearchResponse entity.'
+      'Invalid data structure received. Cannot map to SearchResponse entity.',
     );
   }
 
-  return SearchResponseEntity.create(
-    data.items.map(mapSearch),
-    data.places.map(mapSearch),
-    data.sets.map(mapSearch)
-  );
+  return SearchResponseEntity.create(data.places.map(mapSearch));
 };

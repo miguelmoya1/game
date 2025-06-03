@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import Redis from 'ioredis';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -11,7 +11,8 @@ import {
 
 @Injectable()
 export class StaticDataLoaderImpl implements OnModuleInit, StaticDataLoader {
-  readonly #basePath = join(__dirname, '..', '..', '..', 'data');
+  readonly #basePath = join(__dirname, '..', '..', '..', '..', 'data');
+  readonly #logger = new Logger(StaticDataLoaderImpl.name);
 
   constructor(@Inject(REDIS_CLIENT) private readonly _redis: Redis) {}
 
@@ -28,7 +29,11 @@ export class StaticDataLoaderImpl implements OnModuleInit, StaticDataLoader {
       `${entity.replace('static:', '')}.json`,
     );
     const raw = await readFile(filePath, 'utf-8');
-    const data: T = JSON.parse(raw) as T;
+    const data = JSON.parse(raw) as T[];
+
+    this.#logger.debug(
+      `Loaded static data for ${entity}: ${data.length} items`,
+    );
 
     await this._redis.set(entity, JSON.stringify(data));
   }

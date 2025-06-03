@@ -69,16 +69,6 @@ export class PartyController {
     return await this._queryBus.execute<GetPartyByUserQuery, unknown>(query);
   }
 
-  @Get(':partyId')
-  async getPartyById(
-    @Param('partyId') partyId: string,
-    @AuthenticatedUser() user: UserEntity,
-  ) {
-    const query = new GetPartyByIdQuery(partyId, user);
-
-    return await this._queryBus.execute<GetPartyByIdQuery, unknown>(query);
-  }
-
   @Get('me/members')
   async getPartyMembers(@AuthenticatedUser() user: UserEntity) {
     const query = new GetPartyMembersWithStatsQuery(user);
@@ -87,5 +77,15 @@ export class PartyController {
       GetPartyMembersWithStatsQuery,
       PlayerEntity[]
     >(query);
+  }
+
+  @Get(':partyId')
+  async getPartyById(
+    @Param('partyId') partyId: string,
+    @AuthenticatedUser() user: UserEntity,
+  ) {
+    const query = new GetPartyByIdQuery(partyId, user);
+
+    return await this._queryBus.execute<GetPartyByIdQuery, unknown>(query);
   }
 }
