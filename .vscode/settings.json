@@ -54,5 +54,6 @@
   },
   "IDX.aI.enableInlineCompletion": true,
   "IDX.aI.enableCodebaseIndexing": true,
-  "nxConsole.nxWorkspacePath": "game"
+  "nxConsole.nxWorkspacePath": "game",
+  "nxConsole.generateAiAgentRules": true
 }
