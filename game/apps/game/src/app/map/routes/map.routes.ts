@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 const MAP_ROUTES: Routes = [
   {
     path: '',
-    loadComponent: () => import('../pages/map.component'),
+    loadComponent: () => import('../map.component'),
     children: [
       {
         path: ':placeId',

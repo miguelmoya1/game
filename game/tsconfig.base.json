@@ -16,16 +16,16 @@
     "baseUrl": ".",
     "paths": {
       "@game/core": ["libs/core/src/index.ts"],
-      "@game/features/effects": ["libs/features/effects/src/index.ts"],
-      "@game/features/items": ["libs/features/items/src/index.ts"],
-      "@game/features/places": ["libs/features/places/src/index.ts"],
-      "@game/features/sets": ["libs/features/sets/src/index.ts"],
       "@game/features/admin": ["libs/features/admin/src/index.ts"],
       "@game/features/auth": ["libs/features/auth/src/index.ts"],
+      "@game/features/effects": ["libs/features/effects/src/index.ts"],
       "@game/features/inventory": ["libs/features/inventory/src/index.ts"],
+      "@game/features/items": ["libs/features/items/src/index.ts"],
       "@game/features/map": ["libs/features/map/src/index.ts"],
       "@game/features/party": ["libs/features/party/src/index.ts"],
+      "@game/features/places": ["libs/features/places/src/index.ts"],
       "@game/features/player": ["libs/features/player/src/index.ts"],
+      "@game/features/sets": ["libs/features/sets/src/index.ts"],
       "@game/shared": ["libs/shared/src/index.ts"]
     }
   },

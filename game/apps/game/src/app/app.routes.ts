@@ -22,12 +22,11 @@ export const appRoutes: Route[] = [
     canMatch: [loggedGuard],
     loadChildren: () => import('./inventory/routes/inventory.routes'),
   },
-  // {
-  //   path: 'admin',
-  //   canMatch: [loggedGuard],
-  //   loadChildren: () =>
-  //     import('@game/features/admin').then((m) => m.adminRoutes),
-  // },
+  {
+    path: 'admin',
+    canMatch: [loggedGuard],
+    loadChildren: () => import('./admin/routes/admin.routes'),
+  },
   {
     path: 'player',
     canMatch: [loggedGuard],

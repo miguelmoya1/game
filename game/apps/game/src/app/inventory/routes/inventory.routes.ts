@@ -4,7 +4,7 @@ const INVENTORY_ROUTES: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('../pages/inventory.component').then((m) => m.InventoryComponent),
+      import('../inventory.component').then((m) => m.InventoryComponent),
   },
   {
     path: '**',
