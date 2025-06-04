@@ -6,6 +6,14 @@ const ADMIN_ROUTES: Routes = [
     loadComponent: () => import('../admin.component'),
   },
   {
+    path: 'item/new',
+    loadComponent: () => import('../pages/item-new.component'),
+  },
+  {
+    path: 'set/new',
+    loadComponent: () => import('../pages/set-new.component'),
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',

@@ -3,8 +3,7 @@
     <input
       class="admin-search"
       type="text"
-      [value]="search()"
-      (input)="onSearchInput($event)"
+      [(ngModel)]="search"
       [placeholder]="'SEARCH' | translate"
       autocomplete="off"
     />
@@ -13,35 +12,24 @@
   <section class="admin-section">
     <div class="admin-section-header">
       <h2 class="admin-title">{{ 'SETS' | translate }}</h2>
-      <button
-        gameButton
-        class="admin-create-btn"
-        (click)="showCreateSet = true"
-      >
+      <button gameButton class="admin-create-btn" routerLink="/admin/set/new">
         {{ 'CREATE' | translate }}
       </button>
     </div>
     <div class="admin-list admin-list--sets">
-      @for (set of sets.value(); track set.id) {
+      @for (set of filteredSets(); track set.id) {
         <div class="admin-card admin-card--set">
           <div class="admin-card-title">{{ set.name | translate }}</div>
           <div class="admin-card-desc">{{ set.description | translate }}</div>
         </div>
       }
     </div>
-    @if (showCreateSet) {
-      <lib-create-set (close)="showCreateSet = false" />
-    }
   </section>
 
   <section class="admin-section">
     <div class="admin-section-header">
       <h2 class="admin-title">{{ 'ITEMS' | translate }}</h2>
-      <button
-        gameButton
-        class="admin-create-btn"
-        (click)="showCreateItem = true"
-      >
+      <button gameButton class="admin-create-btn" routerLink="/admin/item/new">
         {{ 'CREATE' | translate }}
       </button>
     </div>
@@ -61,9 +49,5 @@
         </div>
       }
     </div>
-
-    @if (showCreateItem) {
-      <lib-create-item (close)="showCreateItem = false" />
-    }
   </section>
 </div>
