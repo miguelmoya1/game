@@ -2,8 +2,8 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslateService } from '@game/core';
-import { ItemEntity, ITEMS_SERVICE } from '@game/features/items';
-import { SET_SERVICE, SetEntity } from '@game/features/sets';
+import { ItemComponent, ItemEntity, ITEMS_SERVICE } from '@game/features/items';
+import { SET_SERVICE, SetComponent, SetEntity } from '@game/features/sets';
 import { ButtonDirective, TranslatePipe } from '@game/shared';
 
 @Component({
@@ -14,6 +14,8 @@ import { ButtonDirective, TranslatePipe } from '@game/shared';
     RouterLink,
     FormsModule,
     ReactiveFormsModule,
+    ItemComponent,
+    SetComponent,
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',

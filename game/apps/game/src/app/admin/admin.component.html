@@ -18,10 +18,7 @@
     </div>
     <div class="admin-list admin-list--sets">
       @for (set of filteredSets(); track set.id) {
-        <div class="admin-card admin-card--set">
-          <div class="admin-card-title">{{ set.name | translate }}</div>
-          <div class="admin-card-desc">{{ set.description | translate }}</div>
-        </div>
+        <lib-set [set]="set" />
       }
     </div>
   </section>
@@ -35,18 +32,7 @@
     </div>
     <div class="admin-list admin-list--items">
       @for (item of filteredItems(); track item.id) {
-        <div class="admin-card admin-card--item">
-          <div class="admin-card-title">{{ item.name | translate }}</div>
-          @if (item.setId) {
-            <div class="admin-card-set">
-              <span class="admin-card-set-label">{{ 'SET' | translate }}:</span>
-              <span class="admin-card-set-name">
-                {{ getSetName(item.setId) | translate }}
-              </span>
-            </div>
-          }
-          <div class="admin-card-desc">{{ item.description | translate }}</div>
-        </div>
+        <lib-item [item]="item" />
       }
     </div>
   </section>

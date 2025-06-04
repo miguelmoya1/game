@@ -2,6 +2,12 @@
 
 @if (effectTemplate.type) {
   <span class="type">
+    @if (effectTemplate.minimumItems) {
+      <span class="minimum-items">
+        ({{ effectTemplate.minimumItems }} {{ 'ITEMS' | translate }})
+      </span>
+    }
+
     {{ effectTemplate.type | translate }}
 
     @if (effectTemplate.statType) {

@@ -8,3 +8,8 @@
   font-weight: bold;
   color: var(--color-secondary);
 }
+
+.minimum-items {
+  font-weight: bold;
+  color: var(--color-warning);
+}

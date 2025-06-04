@@ -21,6 +21,8 @@
 .actions {
   margin-top: 1rem;
 
+  gap: 1rem;
+
   display: flex;
   justify-content: center;
 }

@@ -6,7 +6,6 @@ import { SetFormComponent } from '../../components/set-form/set-form.component';
 import { getEmptySetForm } from '../../helpers/set-form.helper';
 import { SET_SERVICE } from '../../services';
 
-// TODO: fix this
 @Component({
   selector: 'lib-create-set',
   imports: [
@@ -16,7 +15,26 @@ import { SET_SERVICE } from '../../services';
     ButtonDirective,
     SetFormComponent,
   ],
-  templateUrl: './create-set.component.html',
+  template: `
+    <h2 class="title">{{ 'CREATE_NEW_SET' | translate }}</h2>
+
+    <lib-set-form [setForm]="setForm" />
+
+    <div class="actions">
+      <button gameButton type="button" (click)="onClose()">
+        {{ 'CLOSE' | translate }}
+      </button>
+      <button
+        gameButton
+        type="submit"
+        [disabled]="!setForm.valid"
+        class="submit-button"
+        (click)="onSubmit()"
+      >
+        {{ 'CREATE_SET' | translate }}
+      </button>
+    </div>
+  `,
   styleUrl: './create-set.component.css',
 })
 export class CreateSetComponent {
@@ -34,6 +52,10 @@ export class CreateSetComponent {
     const formData = this.setForm.getRawValue();
 
     await this.#setService.create(formData);
+    this.onClose();
+  }
+
+  onClose() {
     this.#router.navigate(['/admin']);
   }
 }
