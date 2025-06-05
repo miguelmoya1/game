@@ -1,39 +1,43 @@
-<div class="admin-container">
-  <div class="admin-header">
-    <input
-      class="admin-search"
-      type="text"
-      [(ngModel)]="search"
-      [placeholder]="'SEARCH' | translate"
-      autocomplete="off"
-    />
+<nav>
+  <button gameButton class="back-btn" routerLink="/map">
+    <i class="fas fa-arrow-left"></i>
+    {{ 'BACK' | translate }}
+  </button>
+  <input
+    class="search"
+    type="text"
+    [(ngModel)]="search"
+    [placeholder]="'SEARCH' | translate"
+    autocomplete="off"
+  />
+</nav>
+
+<section>
+  <div class="header">
+    <h2>{{ 'SETS' | translate }}</h2>
+    <button gameButton class="create-btn" routerLink="/admin/set/new">
+      {{ 'CREATE' | translate }}
+    </button>
   </div>
 
-  <section class="admin-section">
-    <div class="admin-section-header">
-      <h2 class="admin-title">{{ 'SETS' | translate }}</h2>
-      <button gameButton class="admin-create-btn" routerLink="/admin/set/new">
-        {{ 'CREATE' | translate }}
-      </button>
-    </div>
-    <div class="admin-list admin-list--sets">
-      @for (set of filteredSets(); track set.id) {
-        <lib-set [set]="set" />
-      }
-    </div>
-  </section>
+  <div class="list">
+    @for (set of filteredSets(); track set.id) {
+      <lib-set [set]="set" [routerLink]="['/admin/set', set.id, 'edit']" />
+    }
+  </div>
+</section>
 
-  <section class="admin-section">
-    <div class="admin-section-header">
-      <h2 class="admin-title">{{ 'ITEMS' | translate }}</h2>
-      <button gameButton class="admin-create-btn" routerLink="/admin/item/new">
-        {{ 'CREATE' | translate }}
-      </button>
-    </div>
-    <div class="admin-list admin-list--items">
-      @for (item of filteredItems(); track item.id) {
-        <lib-item [item]="item" />
-      }
-    </div>
-  </section>
-</div>
+<section>
+  <div class="header">
+    <h2>{{ 'ITEMS' | translate }}</h2>
+    <button gameButton class="create-btn" routerLink="/admin/item/new">
+      {{ 'CREATE' | translate }}
+    </button>
+  </div>
+
+  <div class="list">
+    @for (item of filteredItems(); track item.id) {
+      <lib-item [item]="item" [routerLink]="['/admin/item', item.id, 'edit']" />
+    }
+  </div>
+</section>

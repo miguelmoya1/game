@@ -2,13 +2,12 @@ import { ItemType, PlaceCategory, Rank } from '../../../../domain/enums';
 import { Effect } from '../../../../domain/types';
 
 export type CreateItemDataDto = {
-  id?: string;
   name: string;
-  description?: string;
+  description: string;
   imageUrl?: string;
-  rank?: Rank;
+  rank: Rank;
   itemType: ItemType;
-  effects?: Effect[];
+  effects: Effect[];
   spawnCategories?: PlaceCategory[];
   setId?: string;
 };

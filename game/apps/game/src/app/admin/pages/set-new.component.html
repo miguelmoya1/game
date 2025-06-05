@@ -1,0 +1,13 @@
+<h2 class="title">{{ 'CREATE_NEW_SET' | translate }}</h2>
+
+<lib-set-form [setForm]="setForm" />
+
+<div class="actions">
+  <button gameButton type="button" (click)="onClose()">
+    {{ 'CLOSE' | translate }}
+  </button>
+
+  <button gameButton (click)="onSubmit()" [disabled]="!setForm.valid">
+    {{ 'CREATE' | translate }}
+  </button>
+</div>

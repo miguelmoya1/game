@@ -22,6 +22,5 @@ export const getEmptyEffectForm = () =>
     }),
     minimumItems: new FormControl<number | undefined>(undefined, {
       nonNullable: true,
-      validators: [Validators.required, Validators.min(0)],
     }),
   });

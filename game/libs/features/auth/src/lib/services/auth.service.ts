@@ -31,8 +31,6 @@ export class AuthServiceImpl implements AuthService {
   public async loginEmail(loginDto: LoginEmailDto) {
     const response = await this.#authApiService.loginEmail(loginDto);
 
-    console.log('response', response);
-
     this.#isAuthenticated.set(true);
     this.#authTokenService.setToken(response);
 

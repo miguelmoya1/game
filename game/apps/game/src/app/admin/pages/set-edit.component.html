@@ -1,0 +1,13 @@
+<h2 class="title">{{ 'EDIT_SET' | translate }}</h2>
+
+<lib-set-form [setForm]="setFormEdit" />
+
+<div class="actions">
+  <button gameButton type="button" (click)="onClose()">
+    {{ 'CLOSE' | translate }}
+  </button>
+
+  <button gameButton (click)="onSubmit()" [disabled]="!setFormEdit.valid">
+    {{ 'EDIT' | translate }}
+  </button>
+</div>

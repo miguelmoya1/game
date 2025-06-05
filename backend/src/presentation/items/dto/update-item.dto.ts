@@ -1,4 +1,4 @@
-import { IsArray, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 import { ItemType, PlaceCategory, Rank } from '../../../core/domain/enums';
 import { Effect } from '../../../core/domain/types';
 
@@ -30,6 +30,5 @@ export class UpdateItemDto {
   declare readonly spawnCategories?: PlaceCategory[];
 
   @IsOptional()
-  @IsUUID('4', { message: 'MUST_BE_UUID' })
   declare readonly setId?: string;
 }

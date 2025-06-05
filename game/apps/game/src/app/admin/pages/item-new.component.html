@@ -1,0 +1,13 @@
+<h2 class="title">{{ 'CREATE_NEW_ITEM' | translate }}</h2>
+
+<lib-item-form [itemForm]="itemForm" />
+
+<div class="actions">
+  <button gameButton type="button" (click)="onClose()">
+    {{ 'CLOSE' | translate }}
+  </button>
+
+  <button gameButton (click)="onSubmit()" [disabled]="!itemForm.valid">
+    {{ 'CREATE' | translate }}
+  </button>
+</div>

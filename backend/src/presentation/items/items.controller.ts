@@ -49,6 +49,7 @@ export class ItemsController {
       ...body,
       effects: body.effects ?? [],
     };
+
     const command = new UpdateItemCommand(itemId, updateItemDataDto, user);
     return await this._commandBus.execute<UpdateItemCommand, void>(command);
   }

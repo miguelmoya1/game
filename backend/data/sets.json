@@ -20,7 +20,7 @@
       {
         "type": "HEALING",
         "value": 10,
-        "target": "TEAM",
+        "target": "ALLY",
         "minimumItems": 4
       }
     ]

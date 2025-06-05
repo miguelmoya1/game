@@ -8,6 +8,10 @@
       {
         "include": "../data/**/*",
         "outDir": "dist/data"
+      },
+      {
+        "include": "../languages/**/*",
+        "outDir": "dist/languages"
       }
     ]
   }

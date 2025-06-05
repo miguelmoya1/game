@@ -6,24 +6,21 @@ export class CreateItemDto {
   @IsString({ message: 'MUST_BE_STRING' })
   declare readonly name: string;
 
-  @IsOptional()
   @IsString({ message: 'MUST_BE_STRING' })
-  declare readonly description?: string;
+  declare readonly description: string;
 
   @IsOptional()
   @IsString({ message: 'MUST_BE_STRING' })
   declare readonly imageUrl?: string;
 
-  @IsOptional()
   @IsString({ message: 'MUST_BE_STRING' })
-  declare readonly rank?: Rank;
+  declare readonly rank: Rank;
 
   @IsString({ message: 'MUST_BE_STRING' })
   declare readonly itemType: ItemType;
 
-  @IsOptional()
   @IsArray({ message: 'MUST_BE_ARRAY' })
-  declare readonly effects?: Effect[];
+  declare readonly effects: Effect[];
 
   @IsOptional()
   @IsArray({ message: 'MUST_BE_ARRAY' })
