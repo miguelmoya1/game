@@ -7,8 +7,8 @@ This document outlines the next major features to be developed, the proposed ord
 - [ ] **Monthly Item Rotation (Backend Cron Job)**
   - [ ] Implement a cron job that, once per month, changes the items assigned to all places.
   - [ ] Ensure the rotation is atomic and logged for traceability.
-- [ ] **Inventory Total Count (Frontend)**
-  - [ ] Show the total number of items in the player's inventory (UI only, no backend change).
+- [x] **Inventory Total Count (Frontend)**
+  - [x] Show the total number of items in the player's inventory (UI only, no backend change).
 - [ ] **Nearby Player Detection (Bluetooth LE, Capacitor Plugin)**
   - [ ] Integrate the Capacitor Bluetooth LE (o LT) plugin in the frontend to scan for nearby devices.
   - [ ] Emit the deviceId of the current device when found.

@@ -22,10 +22,7 @@ export class PermissionsServiceImpl implements PermissionsService {
     user: UserEntity,
   ) {
     const playerItemCollectionLog = playerItemCollectionLogs.find(
-      (p) =>
-        p.placeId === place.id &&
-        p.itemId === place.currentItemId &&
-        p.isCollectedFrom(new Date()),
+      (p) => p.placeId === place.id && p.isCollectedFrom(new Date()),
     );
 
     return {

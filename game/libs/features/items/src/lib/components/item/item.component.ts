@@ -13,6 +13,7 @@ export class ItemComponent {
   readonly #setService = inject(SET_SERVICE);
 
   public readonly item = input.required<ItemEntity>();
+  public readonly total = input<number>();
 
   protected readonly set = computed(() => {
     const setId = this.item().setId;
@@ -24,5 +25,11 @@ export class ItemComponent {
     const sets = this.#setService.all.value();
 
     return sets.find((set) => set.id === setId);
+  });
+
+  protected showFooter = computed(() => {
+    const total = this.total();
+
+    return total !== undefined && total > 0;
   });
 }

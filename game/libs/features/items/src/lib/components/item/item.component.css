@@ -138,8 +138,21 @@
   border: 1px solid rgba(var(--color-primary-rgb), 0.3);
 }
 
+.inventory-total {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 16px;
+  padding: 4px 12px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
 .footer {
-  /* Antes .item-footer */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 32px;
   font-size: var(--font-size-info);
   color: var(--color-disabled-text);
   text-align: right;

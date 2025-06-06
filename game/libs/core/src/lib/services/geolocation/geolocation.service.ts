@@ -33,7 +33,18 @@ export class GeolocationServiceImpl implements GeolocationService {
 
   public async updateCurrentPosition() {
     const position = await Geolocation.getCurrentPosition();
+
     this.#position.set(position);
+
+    // // TODO: DELETE THIS
+    // this.#position.set({
+    //   ...position,
+    //   coords: {
+    //     ...position.coords,
+    //     latitude: 38.3963805,
+    //     longitude: -0.5121485,
+    //   },
+    // });
   }
 
   public setWatching(watching: boolean) {

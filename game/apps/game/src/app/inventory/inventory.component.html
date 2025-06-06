@@ -4,7 +4,7 @@
   <div class="items">
     @for (inventoryItem of inventory; track $index) {
       @if (getItemById(inventoryItem.itemId); as item) {
-        <lib-item [item]="item" />
+        <lib-item [item]="item" [total]="inventoryItem.quantity" />
       }
     }
   </div>

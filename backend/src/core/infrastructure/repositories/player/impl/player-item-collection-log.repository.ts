@@ -17,6 +17,7 @@ export class PlayerItemCollectionLogRepositoryImpl
   constructor(
     @Inject(DATABASE_SERVICE) private readonly databaseService: DatabaseService,
   ) {}
+
   async add(create: Create): Promise<PlayerItemCollectionLogEntity> {
     const playerItemCollectionLog =
       await this.databaseService.playerItemCollectionLog.create({

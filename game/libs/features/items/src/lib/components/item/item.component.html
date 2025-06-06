@@ -48,4 +48,10 @@
   </div>
 }
 
-<div class="footer">ID: {{ itemTemplate.id }}</div>
+@if (showFooter()) {
+  <div class="footer">
+    <span class="inventory-total">
+      {{ total() }}
+    </span>
+  </div>
+}
