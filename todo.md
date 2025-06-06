@@ -4,8 +4,8 @@ This document outlines the next major features to be developed, the proposed ord
 
 ## Phase 1: Monthly Item Rotation & Inventory Improvements
 
-- [ ] **Monthly Item Rotation (Backend Cron Job)**
-  - [ ] Implement a cron job that, once per month, changes the items assigned to all places.
+- [x] **Monthly Item Rotation (Backend Cron Job)**
+  - [x] Implement a cron job that, once per month, changes the items assigned to all places.
   - [ ] Ensure the rotation is atomic and logged for traceability.
 - [x] **Inventory Total Count (Frontend)**
   - [x] Show the total number of items in the player's inventory (UI only, no backend change).

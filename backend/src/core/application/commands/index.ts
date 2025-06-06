@@ -12,6 +12,7 @@ export * from './item/dto/create-item-data.dto';
 export * from './item/dto/update-item-data.dto';
 export * from './item/impl/create-item.command';
 export { DeleteItemCommand } from './item/impl/delete-item.command';
+export * from './item/impl/rotate-monthly-items.command';
 export * from './item/impl/update-item.command';
 export * from './party/impl/add-member-to-party.command';
 export * from './party/impl/delete-party.command';

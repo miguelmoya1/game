@@ -34,6 +34,7 @@
     "uuidv",
     "WITHCOORD",
     "yxxx",
+    "zrange",
     "zrem"
   ],
   "material-icon-theme.folders.associations": {

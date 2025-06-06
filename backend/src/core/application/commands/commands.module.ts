@@ -9,6 +9,7 @@ import { RegisterHandler } from './auth/handler/register.handler';
 import { CreateDungeonHandler } from './dungeon/handler/create-dungeon.handler';
 import { CreateItemHandler } from './item/handler/create-item.handler';
 import { DeleteItemHandler } from './item/handler/delete-item.handler';
+import { RotateMonthlyItemsHandler } from './item/handler/rotate-monthly-items.handler';
 import { UpdateItemHandler } from './item/handler/update-item.handler';
 import { AddMemberToPartyHandler } from './party/handler/add-member-to-party.handler';
 import { DeletePartyHandler } from './party/handler/delete-party.handler';
@@ -44,6 +45,7 @@ const commands = [
 
   CreatePlayerHandler,
   CreateDungeonHandler,
+  RotateMonthlyItemsHandler,
 ];
 
 @Module({

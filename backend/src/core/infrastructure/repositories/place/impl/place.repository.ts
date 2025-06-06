@@ -101,6 +101,23 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     return result.map(placeListToEntity);
   }
 
+  async getAll() {
+    const now = new Date();
+    const result = await this.databaseService.place.findMany({
+      where: {
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
+      },
+    });
+    return result.map(placeToEntity);
+  }
+
+  async updateCurrentItem(id: string, currentItemId: string) {
+    await this.databaseService.place.update({
+      where: { id },
+      data: { currentItemId },
+    });
+  }
+
   async delete(id: string) {
     await this.databaseService.place.update({
       where: { id },
