@@ -1,88 +1,75 @@
-# Game Development Roadmap: Next Features
+# Game Development Roadmap: Próximas Funcionalidades
 
-This document outlines the next major features to be developed, the proposed order, and key considerations for their implementation.
+Este documento resume las siguientes grandes características a desarrollar, su orden propuesto y consideraciones clave para su implementación.
 
-## Phase 1: Monthly Item Rotation & Inventory Improvements
+## 1. Rotación Mensual de Ítems
 
-- [x] **Monthly Item Rotation (Backend Cron Job)**
-  - [x] Implement a cron job that, once per month, changes the items assigned to all places.
-  - [ ] Ensure the rotation is atomic and logged for traceability.
-- [x] **Inventory Total Count (Frontend)**
-  - [x] Show the total number of items in the player's inventory (UI only, no backend change).
-- [ ] **Nearby Player Detection (Bluetooth LE, Capacitor Plugin)**
-  - [ ] Integrate the Capacitor Bluetooth LE (o LT) plugin in the frontend to scan for nearby devices.
-  - [ ] Emit the deviceId of the current device when found.
-  - [ ] Backend: receive and store the deviceId associated with the player.
-  - [ ] Backend: provide an endpoint to list nearby players based on detected deviceIds.
-  - [ ] Frontend: show a list of nearby players in the UI.
+- [ ] **Rotación Mensual de Ítems (Backend Cron Job)**
+  - [ ] Asegurar que la rotación sea atómica y quede registrada para trazabilidad.
 
-## Phase 2: Dungeon Generation System
+## 2. Sistema de Dungeons
 
-- [ ] **Dungeon Generation System (Core Feature)**
-  - [ ] Design and implement a system to procedurally generate dungeons.
-  - [ ] Define dungeon structure, rooms, enemies, rewards, and entry/exit logic.
-  - [ ] Integrate dungeon entry points in the world/places.
-  - [ ] Ensure dungeons are replayable and scalable in difficulty.
-  - [ ] (Optional) Add dungeon leaderboards and completion tracking.
+- [ ] **Generación Procedural de Dungeons**
+  - [ ] Diseñar e implementar el sistema de generación de dungeons.
+  - [ ] Definir estructura, salas, enemigos, recompensas y lógica de entrada/salida.
+  - [ ] Integrar puntos de entrada en el mundo/lugares.
+  - [ ] Asegurar que las dungeons sean rejugables y escalables en dificultad.
+  - [ ] (Opcional) Añadir rankings y seguimiento de completado de dungeons.
 
-## Phase 3: Spells System (Race-based Spells)
+## 3. Creación de Hechizos y Enemigos
 
-**Objective:** Implement a system where each player has access to spells according to their race. Spells are defined and linked to races, and players can view and use their available spells.
+- [ ] **Entidad Spell**
+  - Campos: `id`, `name`, `description`, `requiredLevel`, `raceId`, `effects`, `createdAt`, `updatedAt`.
+  - Cada raza puede tener varios hechizos; sólo pueden usarlos jugadores de la raza y nivel adecuado.
+- [ ] **API de Hechizos**
+  - [ ] `GET /players/me/spells`: Hechizos disponibles para el jugador actual.
+  - [ ] `GET /spells/{spellId}`: Detalles de un hechizo.
+  - [ ] (Opcional) `POST /spells/cast`: Endpoint para lanzar un hechizo.
+- [ ] **Lógica de Asignación de Hechizos**
+  - [ ] Actualizar hechizos disponibles al cambiar de raza.
+  - [ ] Sólo devolver hechizos para los que el jugador cumple el nivel requerido.
+- [ ] **UI de Hechizos**
+  - [ ] Mostrar lista y detalles de hechizos en la sección de jugador.
+  - [ ] (Opcional) UI para lanzar hechizos si el juego lo soporta.
+- [ ] **Creación e Integración de Enemigos**
+  - [ ] Definir entidades y lógica de enemigos para dungeons y el mundo.
+  - [ ] Integrar enemigos en la generación de dungeons y combates.
 
-### Backend Tasks:
+## 4. Loading Inicial y Sincronización de Datos Estáticos (Frontend)
 
-- [ ] **`Spell` Entity Definition:**
-  - Fields: `id`, `name`, `description`, `requiredLevel`, `raceId` (relation to Race), `effects` (JSON or structured fields), `createdAt`, `updatedAt`.
-  - Ensure each race can have multiple spells, and spells can only be used by players of the corresponding race.
-- [ ] **API Endpoints for Spells:**
-  - [ ] `GET /players/me/spells`: Get all spells available to the current player (based on their race and level).
-  - [ ] `GET /spells/{spellId}`: Get details of a specific spell.
-  - [ ] (Optional) `POST /spells/cast`: Endpoint to cast a spell (if real-time or turn-based logic is needed).
-- [ ] **Spell Assignment Logic:**
-  - [ ] When a player's race changes, update their available spells accordingly.
-  - [ ] Only return spells for which the player meets the required level.
-- [ ] **Integration with Player Panel:**
-  - [ ] Ensure spells are shown in the player info endpoint if needed.
+- [ ] **Pantalla de loading inicial** que cargue y almacene en IndexedDB los datos estáticos:
+  - [ ] Items
+  - [ ] Spells
+  - [ ] Sets
+  - [ ] Enemies
+  - [ ] Races
+- [ ] **Sistema de actualización de datos locales**:
+  - [ ] Backend expone un objeto JSON con las fechas de última actualización de cada recurso estático.
+  - [ ] El frontend consulta este objeto y decide si debe refrescar los datos locales en IndexedDB.
+  - [ ] Lógica para refrescar sólo los recursos que hayan cambiado.
 
-### Frontend Tasks:
+## 5. Sistema de Ataques y Combate
 
-- [ ] **User Interface (UI) for Spells:**
-  - [ ] Display a list of available spells in the player section.
-  - [ ] Show spell details (name, description, effects, required level).
-  - [ ] (Optional) UI to cast spells if the game supports it.
+- [ ] **Sistema de Ataques y Combate General**
+  - [ ] Definir y desarrollar la lógica de ataques, defensa, turnos y efectos.
+  - [ ] Integrar hechizos, enemigos y jugadores en el sistema de combate.
+  - [ ] UI para mostrar y gestionar combates.
 
----
+## 6. Sistema de Gremios (Guilds/Clanes)
 
-## Phase 4: Guild System (Persistent Clans/Gremios)
+- [ ] **Entidad Guild**
+- [ ] **API de Guilds (CRUD y gestión)**
+- [ ] **Lógica de membresía y roles**
+- [ ] **Integración con otros sistemas**
+- [ ] **UI para gestión de gremios**
 
-**Objective:** Implement persistent player-run organizations (Guilds/Clans) that offer long-term social structures, progression, and benefits.
+## Consideraciones Generales
 
-### Backend Tasks:
-
-- [ ] **`Guild` Entity Definition**
-- [ ] **API Endpoints for Guilds (CRUD & Management)**
-- [ ] **Guild Membership and Role Logic**
-- [ ] **Integration with Other Systems**
-
-### Frontend Tasks:
-
-- [ ] **User Interface (UI) for Guilds**
-
----
-
-## Additional Considerations (Applicable to all Phases):
-
-- [ ] **Unit and Integration Testing**: Fundamental, especially for stat calculation, party/guild management, and permission logic.
-- [ ] **Scalability**: Design solutions with potential growth in the number of players, parties, and guilds in mind.
-- [ ] **Security**: Ensure APIs are protected and players cannot unduly manipulate their stats or party/guild information.
-- [ ] **Real-time Communication**: For party and guild chat, member status updates (online/offline), and notifications, consider using WebSockets or a similar real-time communication technology. This might be a separate "Core Feature" to be developed in parallel or as a prerequisite for some advanced social features.
+- [ ] **Testing**: Unitario e integración, especialmente para stats, party/guild y permisos.
+- [ ] **Escalabilidad**: Pensar en crecimiento de jugadores, parties y gremios.
+- [ ] **Seguridad**: Proteger APIs y evitar manipulación indebida de stats o info de party/guild.
+- [ ] **Comunicación en tiempo real**: Para chat, estado online/offline y notificaciones (WebSockets u otro sistema).
 
 ---
 
-### Completados recientes
-
-- [x] Party System (Temporary Groups)
-- [x] Integration with Set Buffs (Party-specific)
-- [x] AggregatedStats Data Structure & Calculation
-- [x] AggregatedStats Endpoint & Optimizations
-- [x] Display of AggregatedStats in UI
+> Mantener este roadmap actualizado y claro. Eliminar tareas completadas y agrupar lo pendiente por fases. Si se añaden nuevas features, seguir la estructura y claridad de este documento.
