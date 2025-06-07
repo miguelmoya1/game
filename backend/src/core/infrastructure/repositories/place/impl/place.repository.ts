@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { PlaceEntity } from 'src/core/domain/entities';
 import {
   DATABASE_SERVICE,
   DatabaseService,
@@ -101,27 +102,46 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     return result.map(placeListToEntity);
   }
 
-  async getAll() {
+  async delete(id: string) {
+    await this.databaseService.place.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+  }
+
+  async getAll(offset: number, limit: number) {
     const now = new Date();
     const result = await this.databaseService.place.findMany({
       where: {
         OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
       },
+      select: {
+        id: true,
+        categories: true,
+      },
+      skip: offset,
+      take: limit,
     });
-    return result.map(placeToEntity);
+
+    return result;
   }
 
-  async updateCurrentItem(id: string, currentItemId: string) {
-    await this.databaseService.place.update({
-      where: { id },
-      data: { currentItemId },
+  async updateMany(data: Pick<PlaceEntity, 'id' | 'currentItemId'>[]) {
+    if (!data.length) {
+      return;
+    }
+
+    await this.databaseService.place.updateMany({
+      data,
     });
   }
 
-  async delete(id: string) {
-    await this.databaseService.place.update({
-      where: { id },
-      data: { deletedAt: new Date() },
+  async getCount() {
+    const now = new Date();
+    return this.databaseService.place.count({
+      where: {
+        OR: [{ deletedAt: null }, { deletedAt: { gt: now } }],
+      },
     });
   }
 }

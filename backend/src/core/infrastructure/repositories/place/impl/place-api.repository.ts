@@ -4,7 +4,7 @@ import {
   DATABASE_SERVICE,
   DatabaseService,
 } from '../../../../application/services';
-import { PlaceApiEntity } from '../../../../domain/entities';
+import { PlaceApiEntity, PlaceEntity } from '../../../../domain/entities';
 import {
   ITEM_REPOSITORY,
   ItemRepository,
@@ -199,28 +199,6 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
           continue;
         }
 
-        const itemsMatchingCategories = allItems.filter((item) =>
-          item.spawnCategories?.some((category) => {
-            return categories.includes(category);
-          }),
-        );
-
-        if (itemsMatchingCategories.length === 0) {
-          skippedCount++;
-          continue;
-        }
-
-        // Select a random item from the filtered list
-        const randomItemId =
-          itemsMatchingCategories[
-            Math.floor(Math.random() * itemsMatchingCategories.length)
-          ].id;
-
-        if (!randomItemId) {
-          skippedCount++;
-          continue;
-        }
-
         const placeApi = PlaceApiEntity.create({
           apiId: apiId.toString(),
           name,
@@ -228,7 +206,6 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
           lng,
           osmTags: element.tags,
           categories,
-          randomItemId,
         });
 
         try {
@@ -240,7 +217,6 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
               lng: placeApi.lng,
               osmTags: placeApi.osmTags,
               categories: placeApi.categories,
-              currentItemId: placeApi.randomItemId,
             },
             create: {
               apiId: placeApi.apiId,
@@ -249,7 +225,9 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
               lng: placeApi.lng,
               osmTags: placeApi.osmTags,
               categories: placeApi.categories,
-              currentItemId: placeApi.randomItemId,
+              currentItemId:
+                PlaceEntity.getRandomMatchingItem(allItems, placeApi.categories)
+                  ?.id || '',
             },
           });
 
@@ -273,7 +251,9 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
   #getCategoriesForPlace(place: OverpassElement): PlaceCategory[] {
     const associatedCategories = new Set<PlaceCategory>();
 
-    if (!place.tags) return [];
+    if (!place.tags) {
+      return [];
+    }
 
     for (const [key, value] of Object.entries(place.tags)) {
       const tagString = `${key}=${value}`;

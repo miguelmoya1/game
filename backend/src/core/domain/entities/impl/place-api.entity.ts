@@ -6,7 +6,6 @@ export abstract class PlaceApi {
   public readonly lat: number;
   public readonly lng: number;
   public readonly osmTags: Record<string, string>;
-  public readonly randomItemId: string;
   public readonly categories: PlaceCategory[];
 
   protected constructor(place: PlaceApi) {
@@ -15,7 +14,6 @@ export abstract class PlaceApi {
     this.lat = place.lat;
     this.lng = place.lng;
     this.osmTags = place.osmTags;
-    this.randomItemId = place.randomItemId;
     this.categories = place.categories;
   }
 }

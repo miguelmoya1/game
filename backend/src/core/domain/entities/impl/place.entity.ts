@@ -1,5 +1,6 @@
 import { JsonValue } from '@prisma/client/runtime/library';
 import { PlaceCategory } from '../../enums';
+import { ItemEntity } from './item.entity';
 
 export abstract class Place {
   public readonly id: string;
@@ -32,5 +33,31 @@ export abstract class Place {
 export class PlaceEntity extends Place {
   public static create(place: Place) {
     return new PlaceEntity(place);
+  }
+
+  public static getRandomMatchingItem(
+    items: ItemEntity[],
+    categories: PlaceCategory[],
+  ) {
+    if (!categories || !categories.length) {
+      return undefined;
+    }
+
+    const matchingItems = items.filter((item) => {
+      const itemCategories = item.spawnCategories ?? [];
+      return Array.isArray(itemCategories) && Array.isArray(categories)
+        ? categories.some((cat) => itemCategories.includes(cat))
+        : false;
+    });
+
+    if (!matchingItems.length) {
+      return undefined;
+    }
+
+    return matchingItems[Math.floor(Math.random() * matchingItems.length)];
+  }
+
+  public getRandomMatchingItem(items: ItemEntity[]): ItemEntity | undefined {
+    return PlaceEntity.getRandomMatchingItem(items, this.categories);
   }
 }
