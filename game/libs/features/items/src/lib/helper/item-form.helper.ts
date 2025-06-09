@@ -1,6 +1,6 @@
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Rank } from '@game/core';
 import { PlaceCategory } from '@game/features/places';
+import { Rank } from '@game/shared';
 import { ItemType } from '../enums/item.enum';
 
 export const getEmptyItemForm = () =>

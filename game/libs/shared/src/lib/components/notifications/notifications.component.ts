@@ -1,5 +1,5 @@
 import { Component, HostBinding, inject } from '@angular/core';
-import { NOTIFICATION_SERVICE } from '@game/core';
+import { NOTIFICATION_SERVICE } from '@game/shared';
 
 @Component({
   selector: 'game-notifications',

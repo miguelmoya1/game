@@ -1,7 +1,7 @@
 import { PlaceEntity } from '../../entities/place.entity';
 import { PlaceDto } from '../dto/place.dto';
 
-function isPlaceDto(obj: unknown): obj is PlaceDto {
+const isPlaceDto = (obj: unknown): obj is PlaceDto => {
   if (typeof obj !== 'object' || obj === null) {
     return false;
   }
@@ -24,7 +24,7 @@ function isPlaceDto(obj: unknown): obj is PlaceDto {
       (typeof dto['deletedAt'] === 'string' &&
         !isNaN(Date.parse(dto['deletedAt']))))
   );
-}
+};
 
 export const mapPlaceToEntity = (data: unknown) => {
   if (!isPlaceDto(data)) {

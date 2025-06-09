@@ -1,4 +1,4 @@
-import { Stats, StatsType } from '@game/core';
+import { Stats, StatsType } from '@game/shared';
 
 export abstract class Player {
   public readonly id: string;

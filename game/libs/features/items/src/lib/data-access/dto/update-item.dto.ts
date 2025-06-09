@@ -1,6 +1,6 @@
-import { Rank } from '@game/core';
 import { Effect } from '@game/features/effects';
 import { PlaceCategory } from '@game/features/places';
+import { Rank } from '@game/shared';
 import { ItemType } from '../../enums/item.enum';
 
 export type UpdateItemDto = {

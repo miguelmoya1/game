@@ -12,6 +12,10 @@ export interface PlaceRepository {
   ): Promise<Pick<PlaceEntity, 'id' | 'categories'>[]>;
   getCount(): Promise<number>;
   updateMany(data: Pick<PlaceEntity, 'id' | 'currentItemId'>[]): Promise<void>;
+  getRandom(
+    count: number,
+    excludedIds: string[],
+  ): Promise<Pick<PlaceEntity, 'id' | 'lat' | 'lng' | 'categories'>[]>;
 }
 
 export const PLACE_REPOSITORY = Symbol('PLACE_REPOSITORY');

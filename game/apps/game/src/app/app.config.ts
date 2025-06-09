@@ -17,7 +17,7 @@ import {
   baseUrlInterceptor,
   errorsInterceptor,
   headerInterceptor,
-} from '@game/core';
+} from '@game/shared';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       appRoutes,
       withComponentInputBinding(),
-      withViewTransitions()
+      withViewTransitions(),
     ),
     provideHttpClient(
       withFetch(),
@@ -34,7 +34,7 @@ export const appConfig: ApplicationConfig = {
         headerInterceptor,
         baseUrlInterceptor,
         errorsInterceptor,
-      ])
+      ]),
     ),
     provideAnimationsAsync(),
   ],

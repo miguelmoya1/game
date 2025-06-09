@@ -1,4 +1,4 @@
-import { Rank } from '@game/core';
+import { Rank } from '@game/shared';
 import { ItemEntity } from '../../entities/item.entity';
 import { ItemDto } from '../dto/item.dto';
 

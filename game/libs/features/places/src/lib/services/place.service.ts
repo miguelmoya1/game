@@ -1,6 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { GEOLOCATION_SERVICE } from '@game/core';
+import { GEOLOCATION_SERVICE } from '@game/shared';
 import { PlaceApiService } from '../data-access/place-api.service';
 import { mapPlaceListArrayToEntityArray } from './mappers/place-list.mapper';
 import { mapPlaceToEntity } from './mappers/place.mapper';

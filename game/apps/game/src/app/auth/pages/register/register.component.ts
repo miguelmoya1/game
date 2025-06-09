@@ -8,8 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AccountProvider } from '@game/core';
-import { AUTH_SERVICE } from '@game/features/auth';
+import { AccountProvider, AUTH_SERVICE } from '@game/features/auth';
 import { ButtonDirective, TranslatePipe } from '@game/shared';
 import { catchError, debounceTime, first, map, switchMap } from 'rxjs';
 

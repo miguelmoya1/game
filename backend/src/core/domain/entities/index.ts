@@ -1,5 +1,10 @@
 export { Account, AccountEntity } from './impl/account.entity';
-export { Dungeon, DungeonEntity } from './impl/dungeon.entity';
+export {
+  Dungeon,
+  DungeonEntity,
+  Reward,
+  RewardType,
+} from './impl/dungeon.entity';
 export { Item, ItemEntity } from './impl/item.entity';
 export { Party, PartyEntity } from './impl/party.entity';
 export { PlaceApi, PlaceApiEntity } from './impl/place-api.entity';

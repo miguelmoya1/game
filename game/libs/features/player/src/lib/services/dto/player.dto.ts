@@ -1,4 +1,4 @@
-import { Stats } from '@game/core';
+import { Stats } from '@game/shared';
 
 export interface PlayerDto {
   id: string;

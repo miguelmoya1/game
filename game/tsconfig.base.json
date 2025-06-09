@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@game/core": ["libs/core/src/index.ts"],
       "@game/features/auth": ["libs/features/auth/src/index.ts"],
+      "@game/features/dungeons": ["libs/features/dungeons/src/index.ts"],
       "@game/features/effects": ["libs/features/effects/src/index.ts"],
       "@game/features/inventory": ["libs/features/inventory/src/index.ts"],
       "@game/features/items": ["libs/features/items/src/index.ts"],

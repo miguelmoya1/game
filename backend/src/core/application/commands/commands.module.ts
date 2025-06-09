@@ -6,7 +6,9 @@ import { ChangePasswordHandler } from './auth/handler/change-password.handler';
 import { ForgotPasswordHandler } from './auth/handler/forgot-password.handler';
 import { LoginWithEmailHandler } from './auth/handler/login-with-email.handler';
 import { RegisterHandler } from './auth/handler/register.handler';
+import { ClearStaleDungeonsHandler } from './dungeon/handler/clear-stale-dungeons.handler';
 import { CreateDungeonHandler } from './dungeon/handler/create-dungeon.handler';
+import { GenerateDungeonsHandler } from './dungeon/handler/generate-dungeons.handler';
 import { CreateItemHandler } from './item/handler/create-item.handler';
 import { DeleteItemHandler } from './item/handler/delete-item.handler';
 import { UpdateItemHandler } from './item/handler/update-item.handler';
@@ -46,6 +48,9 @@ const commands = [
   CreatePlayerHandler,
   CreateDungeonHandler,
   RotateMonthlyItemsHandler,
+  GenerateDungeonsHandler,
+
+  ClearStaleDungeonsHandler,
 ];
 
 @Module({

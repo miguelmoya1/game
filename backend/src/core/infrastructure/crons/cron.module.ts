@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ItemsCrons } from './items.crons';
+import { PlacesCrons } from './places.crons';
+import { DungeonsCrons } from './dungeons.crons';
 
 @Module({
   imports: [ScheduleModule.forRoot()],
-  providers: [ItemsCrons],
+  providers: [PlacesCrons, DungeonsCrons],
 })
 export class CronModule {}

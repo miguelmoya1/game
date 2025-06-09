@@ -1,14 +1,14 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
-import { TranslateService } from '@game/core';
+import { TRANSLATE_SERVICE } from '@game/shared';
 
 @Pipe({
   name: 'translate',
   pure: false,
 })
 export class TranslatePipe implements PipeTransform {
-  readonly #translateService = inject(TranslateService);
+  readonly #translateService = inject(TRANSLATE_SERVICE);
 
-  transform(value: unknown, ...args: unknown[]) {
+  transform(value: unknown) {
     return this.#translateService.translates.value()[value as string] ?? value;
   }
 }

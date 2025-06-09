@@ -1,4 +1,4 @@
-import { AccountProvider } from '@game/core';
+import { AccountProvider } from '../../enums/auth.enums';
 
 export type RegisterDto = {
   readonly name: string;

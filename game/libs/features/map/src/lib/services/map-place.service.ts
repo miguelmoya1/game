@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { PlaceList } from '@game/core';
+import { PlaceListEntity } from '@game/features/places';
 import { Marker } from 'maplibre-gl';
 import { MAP_CORE_SERVICE } from './map-core.service.contract';
 import { MapPlaceService, Selected } from './map-place.service.contract';
@@ -12,7 +12,7 @@ export class MapPlaceServiceImpl implements MapPlaceService {
 
   public readonly markerSelected = signal<Selected | null>(null);
 
-  public addPlaces(places: PlaceList[]) {
+  public addPlaces(places: PlaceListEntity[]) {
     const placesIds = new Set(places.map((place) => place.id));
 
     const markersToRemove: string[] = [];
@@ -54,13 +54,13 @@ export class MapPlaceServiceImpl implements MapPlaceService {
     });
   }
 
-  #getMarkerColor(place: PlaceList) {
+  #getMarkerColor(place: PlaceListEntity) {
     return place.permissions.canBeClaimed
       ? 'var(--color-primary)'
       : 'var(--color-warning)';
   }
 
-  #createElementMarker(place: PlaceList): HTMLElement {
+  #createElementMarker(place: PlaceListEntity) {
     const element = document.createElement('div');
     const initialColor = place.permissions.canBeClaimed
       ? 'var(--color-primary)'

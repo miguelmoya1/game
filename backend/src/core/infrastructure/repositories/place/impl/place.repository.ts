@@ -144,4 +144,21 @@ export class PlaceRepositoryImpl implements PlaceRepository {
       },
     });
   }
+
+  async getRandom(count: number, excludedIds: string[]) {
+    const now = new Date();
+    const result = await this.databaseService.place.findMany({
+      where: {
+        AND: [
+          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
+          { id: { notIn: excludedIds } },
+        ],
+      },
+      select: { id: true, lat: true, lng: true, categories: true },
+      take: count,
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return result;
+  }
 }

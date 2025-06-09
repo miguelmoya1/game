@@ -1,4 +1,4 @@
-import { StatsType } from '@game/core';
+import { StatsType } from '@game/shared';
 import { EffectTarget } from '../enums/effect-target.enum';
 import { EffectType } from '../enums/effect-type.enum';
 

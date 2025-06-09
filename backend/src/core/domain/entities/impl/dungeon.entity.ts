@@ -1,10 +1,16 @@
 import { DungeonStatus, DungeonType, Rank } from '../../enums';
-import { ItemEntity } from './item.entity';
+
+export enum RewardType {
+  Item = 'ITEM',
+}
+
+export interface Reward {
+  type: RewardType;
+  id: string;
+}
 
 export abstract class Dungeon {
-  public readonly id: string;
   public readonly placeId: string;
-  public readonly placeName: string;
   public readonly lat: number;
   public readonly lng: number;
   public readonly type: DungeonType;
@@ -12,14 +18,10 @@ export abstract class Dungeon {
   public readonly status: DungeonStatus;
   public readonly startTime: Date;
   public readonly endTime: Date;
-  public readonly maxPlayers: number;
-  public readonly memberIds: string[];
-  public readonly rewards?: ItemEntity[];
+  public readonly rewards: Reward[];
 
   protected constructor(props: Dungeon) {
-    this.id = props.id;
     this.placeId = props.placeId;
-    this.placeName = props.placeName;
     this.lat = props.lat;
     this.lng = props.lng;
     this.type = props.type;
@@ -27,8 +29,6 @@ export abstract class Dungeon {
     this.status = props.status;
     this.startTime = props.startTime;
     this.endTime = props.endTime;
-    this.maxPlayers = props.maxPlayers;
-    this.memberIds = props.memberIds;
     this.rewards = props.rewards;
   }
 }

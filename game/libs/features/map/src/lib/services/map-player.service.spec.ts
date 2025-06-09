@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MapPlayerService } from './map-player.service';
+import { MapPlayerServiceImpl } from './map-player.service';
 
-describe('MapPlayerService', () => {
-  let service: MapPlayerService;
+describe('MapPlayerServiceImpl', () => {
+  let service: MapPlayerServiceImpl;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MapPlayerService);
+    service = TestBed.inject(MapPlayerServiceImpl);
   });
 
   it('should be created', () => {

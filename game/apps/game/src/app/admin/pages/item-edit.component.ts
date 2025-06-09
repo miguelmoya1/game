@@ -8,14 +8,13 @@ import {
 } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Rank } from '@game/core';
 import { getEmptyEffectForm } from '@game/features/effects';
 import {
   ITEMS_SERVICE,
   ItemFormComponent,
   getEmptyItemForm,
 } from '@game/features/items';
-import { ButtonDirective, TranslatePipe } from '@game/shared';
+import { ButtonDirective, Rank, TranslatePipe } from '@game/shared';
 
 @Component({
   selector: 'game-item-edit',

@@ -1,10 +1,13 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TranslateService } from '@game/core';
 import { ItemComponent, ItemEntity, ITEMS_SERVICE } from '@game/features/items';
 import { SET_SERVICE, SetComponent, SetEntity } from '@game/features/sets';
-import { ButtonDirective, TranslatePipe } from '@game/shared';
+import {
+  ButtonDirective,
+  TRANSLATE_SERVICE,
+  TranslatePipe,
+} from '@game/shared';
 
 @Component({
   selector: 'game-admin',
@@ -23,7 +26,7 @@ import { ButtonDirective, TranslatePipe } from '@game/shared';
 export default class AdminComponent {
   readonly #itemsService = inject(ITEMS_SERVICE);
   readonly #setsService = inject(SET_SERVICE);
-  readonly #translateService = inject(TranslateService);
+  readonly #translateService = inject(TRANSLATE_SERVICE);
 
   protected readonly search = signal('');
   readonly #sets = this.#setsService.all;

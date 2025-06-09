@@ -1,8 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TranslateService } from '@game/core';
 import { AUTH_SERVICE } from '@game/features/auth';
-import { NotificationsComponent } from '@game/shared';
+import { NotificationsComponent, TRANSLATE_SERVICE } from '@game/shared';
 
 @Component({
   selector: 'game-root',
@@ -12,7 +11,7 @@ import { NotificationsComponent } from '@game/shared';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  readonly #translateService = inject(TranslateService);
+  readonly #translateService = inject(TRANSLATE_SERVICE);
   readonly #authService = inject(AUTH_SERVICE);
 
   protected readonly showHeader = computed(() => {

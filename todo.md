@@ -33,7 +33,7 @@ Este documento resume las siguientes grandes características a desarrollar, su 
 - [ ] **Lógica de Asignación de Hechizos**
 
   - [ ] Actualizar hechizos disponibles al cambiar de raza.
-  - [ ] Sólo devolver hechizos para los que el jugador cumple el nivel requerido.
+  - [ ] Devolver permisos del hechizo para el player, (earned...)
 
 - [ ] **UI de Hechizos**
 

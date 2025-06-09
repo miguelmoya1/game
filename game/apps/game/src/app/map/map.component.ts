@@ -6,13 +6,13 @@ import {
   viewChild,
 } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { GEOLOCATION_SERVICE } from '@game/core';
 import {
   MAP_CORE_SERVICE,
   MAP_PLACE_SERVICE,
   MAP_PLAYER_SERVICE,
 } from '@game/features/map';
 import { PLACE_SERVICE } from '@game/features/places';
+import { GEOLOCATION_SERVICE } from '@game/shared';
 import { MapTopControlsComponent } from './components/map-top-controls/map-top-controls.component';
 import { PartyVisualizationComponent } from './components/party-visualization/party-visualization.component';
 

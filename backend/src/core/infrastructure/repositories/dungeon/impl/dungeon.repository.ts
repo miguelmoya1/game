@@ -1,36 +1,49 @@
 import { Inject, Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
-import { CreateDungeonDataDto } from 'src/core/application/commands';
-import { DungeonEntity } from 'src/core/domain/entities';
+import { CreateDungeonDataDto } from '../../../../application/commands';
+import { DungeonEntity, Reward } from '../../../../domain/entities';
 import { DungeonStatus, DungeonType, Rank } from '../../../../domain/enums';
 import { REDIS_CLIENT } from '../../../redis/redis.provider';
 import { DungeonRepository } from '../contracts/dungeon.repository.contract';
 
-const uuidv4 = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    const v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
-
 @Injectable()
 export class DungeonRepositoryImpl implements DungeonRepository {
-  readonly #totalSearchResults = 50;
+  readonly #durationSeconds = 3600; // 1 hour in seconds
+  readonly #activePlacesSetKey = 'dungeon:active_place_ids';
 
   constructor(@Inject(REDIS_CLIENT) private readonly redis: Redis) {}
 
+  async cleanStaleActivePlaces() {
+    const activePlaceIds = await this.redis.smembers(this.#activePlacesSetKey);
+    if (!activePlaceIds || activePlaceIds.length === 0) {
+      return 0;
+    }
+    const existsResults = await Promise.all(
+      activePlaceIds.map((id) => this.redis.exists(`dungeon:${id}`)),
+    );
+    const validPlaceIds = activePlaceIds.filter(
+      (_, idx) => existsResults[idx] === 1,
+    );
+    if (validPlaceIds.length !== activePlaceIds.length) {
+      await this.redis.del(this.#activePlacesSetKey);
+      if (validPlaceIds.length > 0) {
+        await this.redis.sadd(this.#activePlacesSetKey, ...validPlaceIds);
+      }
+      return activePlaceIds.length - validPlaceIds.length;
+    }
+    return 0;
+  }
+
+  async getActiveDungeonPlaceIds(): Promise<string[]> {
+    return this.redis.smembers(this.#activePlacesSetKey);
+  }
+
   async create(data: CreateDungeonDataDto) {
-    const dungeonId = uuidv4();
-    const dungeonKey = `dungeon:${dungeonId}`;
-    const membersKey = `dungeon:${dungeonId}:members`;
-    const placeDungeonKey = `place:${data.placeId}:dungeon`;
+    const dungeonKey = `dungeon:${data.placeId}`;
     const startTime = Date.now();
-    const endTime = startTime + data.durationSeconds * 1000;
+    const endTime = startTime + this.#durationSeconds * 1000;
     const dungeon = DungeonEntity.create({
-      id: dungeonId,
       placeId: data.placeId,
-      placeName: data.placeName,
       lat: data.lat,
       lng: data.lng,
       type: data.type,
@@ -38,33 +51,32 @@ export class DungeonRepositoryImpl implements DungeonRepository {
       status: DungeonStatus.Open,
       startTime: new Date(startTime),
       endTime: new Date(endTime),
-      maxPlayers: data.maxPlayers,
-      memberIds: [],
+      rewards: data.rewards || [],
     });
     const pipeline = this.redis.pipeline();
-
-    pipeline.hmset(dungeonKey, dungeon);
-    pipeline.expire(dungeonKey, data.durationSeconds + 60);
-    pipeline.sadd(membersKey);
-    pipeline.geoadd('active_dungeons_geo', data.lng, data.lat, dungeonId);
-    pipeline.set(placeDungeonKey, dungeonId, 'EX', data.durationSeconds);
-
+    pipeline.hmset(dungeonKey, {
+      placeId: dungeon.placeId,
+      lat: dungeon.lat.toString(),
+      lng: dungeon.lng.toString(),
+      type: dungeon.type,
+      rank: dungeon.rank,
+      status: dungeon.status,
+      startTime: dungeon.startTime.getTime().toString(),
+      endTime: dungeon.endTime.getTime().toString(),
+      rewards: JSON.stringify(dungeon.rewards || []),
+    });
+    pipeline.expire(dungeonKey, this.#durationSeconds + 60);
+    pipeline.sadd(this.#activePlacesSetKey, data.placeId);
     await pipeline.exec();
-
     return dungeon;
   }
 
-  async findById(dungeonId: string) {
-    const dungeonKey = `dungeon:${dungeonId}`;
+  async findById(placeId: string) {
+    const dungeonKey = `dungeon:${placeId}`;
     const details = await this.redis.hgetall(dungeonKey);
     if (!details || Object.keys(details).length === 0) return null;
-    const membersKey = `dungeon:${dungeonId}:members`;
-    const memberIds = await this.redis.smembers(membersKey);
-
     return DungeonEntity.create({
-      id: dungeonId,
       placeId: details.placeId,
-      placeName: details.placeName,
       lat: parseFloat(details.lat),
       lng: parseFloat(details.lng),
       type: details.type as DungeonType,
@@ -72,8 +84,7 @@ export class DungeonRepositoryImpl implements DungeonRepository {
       status: details.status as DungeonStatus,
       startTime: new Date(Number(details.startTime)),
       endTime: new Date(Number(details.endTime)),
-      maxPlayers: parseInt(details.maxPlayers, 10),
-      memberIds,
+      rewards: (JSON.parse(details.rewards) || []) as Reward[],
     });
   }
 
@@ -86,27 +97,23 @@ export class DungeonRepositoryImpl implements DungeonRepository {
       'km',
       'WITHCOORD',
       'COUNT',
-      this.#totalSearchResults,
+      50,
     )) as [string, string][];
 
     const dungeons: DungeonEntity[] = [];
-    for (const [dungeonId] of geoResults) {
-      const dungeon = await this.findById(dungeonId);
+    for (const [placeId] of geoResults) {
+      const dungeon = await this.findById(placeId);
       if (dungeon) {
         dungeons.push(dungeon);
-      } else {
-        await this.redis.zrem('active_dungeons_geo', dungeonId);
       }
     }
     return dungeons;
   }
 
   async update(dungeon: DungeonEntity) {
-    const dungeonKey = `dungeon:${dungeon.id}`;
-
+    const dungeonKey = `dungeon:${dungeon.placeId}`;
     const details = {
       placeId: dungeon.placeId,
-      placeName: dungeon.placeName,
       lat: dungeon.lat.toString(),
       lng: dungeon.lng.toString(),
       type: dungeon.type,
@@ -114,28 +121,15 @@ export class DungeonRepositoryImpl implements DungeonRepository {
       status: dungeon.status,
       startTime: dungeon.startTime.getTime().toString(),
       endTime: dungeon.endTime.getTime().toString(),
-      maxPlayers: dungeon.maxPlayers.toString(),
+      rewards: JSON.stringify(dungeon.rewards || []),
     };
-
     await this.redis.hmset(dungeonKey, details);
-
     return dungeon;
   }
 
-  async delete(dungeonId: string) {
-    const dungeonKey = `dungeon:${dungeonId}`;
-    const membersKey = `dungeon:${dungeonId}:members`;
-    const members = await this.redis.smembers(membersKey);
-    const pipeline = this.redis.pipeline();
-
-    pipeline.del(dungeonKey);
-    pipeline.del(membersKey);
-    pipeline.zrem('active_dungeons_geo', dungeonId);
-
-    for (const memberId of members) {
-      pipeline.del(`player:${memberId}:dungeon`);
-    }
-
-    await pipeline.exec();
+  async delete(placeId: string) {
+    const dungeonKey = `dungeon:${placeId}`;
+    await this.redis.del(dungeonKey);
+    await this.redis.srem(this.#activePlacesSetKey, placeId);
   }
 }

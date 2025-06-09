@@ -1,7 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
-import { StatsType } from '@game/core';
 import { PLAYER_SERVICE } from '@game/features/player';
-import { TranslatePipe } from '@game/shared';
+import { StatsType, TranslatePipe } from '@game/shared';
 
 @Component({
   selector: 'game-player',

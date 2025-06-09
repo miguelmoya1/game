@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { DB_REF } from '@game/core';
+import { DB_REF } from '@game/shared';
 import { firstValueFrom, map } from 'rxjs';
 import { SetEntity } from '../entities/set.entity';
 import { mapSetArrayToEntityArray } from '../mappers/set.mapper';

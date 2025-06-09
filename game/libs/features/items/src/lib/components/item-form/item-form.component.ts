@@ -6,11 +6,10 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Rank } from '@game/core';
 import { EffectsFormComponent } from '@game/features/effects';
 import { PlaceCategory } from '@game/features/places';
 import { SET_SERVICE } from '@game/features/sets';
-import { TranslatePipe } from '@game/shared';
+import { Rank, TranslatePipe } from '@game/shared';
 import { ItemType } from '../../enums/item.enum';
 
 // TODO: fix this
