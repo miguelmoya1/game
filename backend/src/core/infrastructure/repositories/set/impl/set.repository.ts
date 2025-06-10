@@ -1,10 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
 import { REDIS_CLIENT } from 'src/core/infrastructure/redis/redis.provider';
-import {
-  CreateSetDataDto,
-  UpdateSetDataDto,
-} from '../../../../application/commands';
+import { CreateSetDataDto, UpdateSetDataDto } from '../../../../application/commands';
 import { Set } from '../../../../domain/entities';
 import { STATIC_DATA } from '../../services/static-data-loader.service.contract';
 import { SetRepository } from '../contracts/set.repository.contract';

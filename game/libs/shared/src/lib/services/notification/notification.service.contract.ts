@@ -18,5 +18,5 @@ export const NOTIFICATION_SERVICE = new InjectionToken<NotificationService>(
   {
     providedIn: 'root',
     factory: () => new NotificationServiceImpl(),
-  }
+  },
 );

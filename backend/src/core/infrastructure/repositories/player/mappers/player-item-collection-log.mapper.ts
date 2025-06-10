@@ -1,9 +1,7 @@
 import { PlayerItemCollectionLog as PlayerItemCollectionLogDb } from '@prisma/client';
 import { PlayerItemCollectionLogEntity } from '../../../../domain/entities';
 
-export const playerItemCollectionLogToEntity = (
-  playerItemCollectionLog: PlayerItemCollectionLogDb,
-) => {
+export const playerItemCollectionLogToEntity = (playerItemCollectionLog: PlayerItemCollectionLogDb) => {
   return PlayerItemCollectionLogEntity.create({
     id: playerItemCollectionLog.id,
     playerId: playerItemCollectionLog.playerId,

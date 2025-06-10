@@ -16,9 +16,7 @@ import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
 import { ClaimPlaceItemCommand } from '../impl/claim-place-item.command';
 
 @CommandHandler(ClaimPlaceItemCommand)
-export class ClaimPlaceItemHandler
-  implements ICommandHandler<ClaimPlaceItemCommand>
-{
+export class ClaimPlaceItemHandler implements ICommandHandler<ClaimPlaceItemCommand> {
   constructor(
     @Inject(PLACE_REPOSITORY)
     private readonly _placeRepository: PlaceRepository,
@@ -41,14 +39,9 @@ export class ClaimPlaceItemHandler
       throw new HttpException(ErrorCodes.PLACE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    const playerItemCollectionLog =
-      await this._playerItemCollectionLogRepository.getForPlace(placeId);
+    const playerItemCollectionLog = await this._playerItemCollectionLogRepository.getForPlace(placeId);
 
-    const permissions = this._permissionsService.getPlacePermissions(
-      place,
-      playerItemCollectionLog,
-      user,
-    );
+    const permissions = this._permissionsService.getPlacePermissions(place, playerItemCollectionLog, user);
 
     if (!permissions.canBeClaimed) {
       throw new HttpException(ErrorCodes.UNAUTHORIZED, HttpStatus.UNAUTHORIZED);
@@ -57,10 +50,7 @@ export class ClaimPlaceItemHandler
     const player = await this._playerRepository.getByUserId(user.id);
 
     if (!player) {
-      throw new HttpException(
-        ErrorCodes.PLAYER_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.PLAYER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     await this._playerItemRepository.add(player.id, place.currentItemId);
@@ -69,8 +59,7 @@ export class ClaimPlaceItemHandler
       playerId: player.id,
       placeId: place.id,
       itemId: place.currentItemId,
-      collectionMonthYear:
-        PlayerItemCollectionLogEntity.formatToCollectionMonthYear(new Date()),
+      collectionMonthYear: PlayerItemCollectionLogEntity.formatToCollectionMonthYear(new Date()),
     });
   }
 }

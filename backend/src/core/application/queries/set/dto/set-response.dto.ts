@@ -7,12 +7,7 @@ export class SetResponseDto {
   public readonly description: string | null;
   public readonly effects?: Effect[] | null;
 
-  private constructor(props: {
-    id: string;
-    name: string;
-    description: string | null;
-    effects?: Effect[] | null;
-  }) {
+  private constructor(props: { id: string; name: string; description: string | null; effects?: Effect[] | null }) {
     this.id = props.id;
     this.name = props.name;
     this.description = props.description;

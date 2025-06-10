@@ -1,10 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import {
-  ClearStaleDungeonsCommand,
-  GenerateDungeonsCommand,
-} from '../../application/commands';
+import { ClearStaleDungeonsCommand, GenerateDungeonsCommand } from '../../application/commands';
 
 @Injectable()
 export class DungeonsCrons {

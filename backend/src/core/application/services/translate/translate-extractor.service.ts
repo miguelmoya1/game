@@ -16,16 +16,7 @@ export class TranslateExtractorService {
       const gameLibs = await this.#extract('../game/libs');
       const templates = await this.#extract('templates');
 
-      return [
-        ...new Set([
-          ...templates,
-          ...core,
-          ...prisma,
-          ...data,
-          ...game,
-          ...gameLibs,
-        ]),
-      ].sort();
+      return [...new Set([...templates, ...core, ...prisma, ...data, ...game, ...gameLibs])].sort();
     } catch (e) {
       this.#logger.warn(e);
     }
@@ -37,11 +28,7 @@ export class TranslateExtractorService {
     const dir = await readdir(folder);
     const folders = dir.filter((file) => !file.includes('.'));
     const files = dir.filter(
-      (file) =>
-        file.includes('.ts') ||
-        file.includes('.html') ||
-        file.includes('.prisma') ||
-        file.includes('.json'),
+      (file) => file.includes('.ts') || file.includes('.html') || file.includes('.prisma') || file.includes('.json'),
     );
 
     const strings: string[] = [];
@@ -95,9 +82,7 @@ export class TranslateExtractorService {
     for (const file of files) {
       const content = await readFile(join(folder, file), 'utf-8');
 
-      const results = regexps.flatMap((regexp) =>
-        this.#extractKeys(content, new RegExp(regexp, 'g')),
-      );
+      const results = regexps.flatMap((regexp) => this.#extractKeys(content, new RegExp(regexp, 'g')));
 
       strings.push(...results);
     }
@@ -106,9 +91,7 @@ export class TranslateExtractorService {
       strings.push(...(await this.#extract(join(folder, f))));
     }
 
-    return [...new Set(strings)]
-      .filter(Boolean)
-      .filter((key) => !regexExclude.some((regex) => regex.test(key)));
+    return [...new Set(strings)].filter(Boolean).filter((key) => !regexExclude.some((regex) => regex.test(key)));
   }
 
   #extractKeys(file: string, regex: RegExp) {

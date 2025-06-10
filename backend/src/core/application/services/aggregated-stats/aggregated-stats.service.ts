@@ -1,48 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import {
-  ItemEntity,
-  PlayerEntity,
-  PlayerItemEntity,
-  SetEntity,
-} from '../../../domain/entities';
+import { ItemEntity, PlayerEntity, PlayerItemEntity, SetEntity } from '../../../domain/entities';
 import { EffectTarget, StatsTypes } from '../../../domain/enums';
 import { Effect } from '../../../domain/types';
-import {
-  AggregatedStats,
-  AggregatedStatsService,
-} from './aggregated-stats.service.contract';
+import { AggregatedStats, AggregatedStatsService } from './aggregated-stats.service.contract';
 
 @Injectable()
 export class AggregatedStatsServiceImpl implements AggregatedStatsService {
-  public calculate(
-    player: PlayerEntity,
-    partyInventory: PlayerItemEntity[],
-    items: ItemEntity[],
-    sets: SetEntity[],
-  ) {
+  public calculate(player: PlayerEntity, partyInventory: PlayerItemEntity[], items: ItemEntity[], sets: SetEntity[]) {
     const stats: AggregatedStats = {} as AggregatedStats;
 
     for (const statKey of Object.values(StatsTypes)) {
       const base = this.#getBaseStat(statKey, player);
       const byLevel = this.#getByLevel(statKey, player.level);
       const byItems = this.#getByItems(statKey, player, partyInventory, items);
-      const bySet = this.#getBySet(
-        statKey,
-        player,
-        partyInventory,
-        items,
-        sets,
-      );
-      const byPartySetsBonus = this.#getByPartySetsBonus(
-        statKey,
-        player,
-        partyInventory,
-        items,
-        sets,
-      );
+      const bySet = this.#getBySet(statKey, player, partyInventory, items, sets);
+      const byPartySetsBonus = this.#getByPartySetsBonus(statKey, player, partyInventory, items, sets);
       const byGuild = 0;
-      const total =
-        base + byLevel + bySet + byItems + byPartySetsBonus + byGuild;
+      const total = base + byLevel + bySet + byItems + byPartySetsBonus + byGuild;
 
       stats[statKey] = {
         base,
@@ -80,12 +54,7 @@ export class AggregatedStatsServiceImpl implements AggregatedStatsService {
     return 0;
   }
 
-  #getByItems(
-    statKey: StatsTypes,
-    player: PlayerEntity,
-    partyInventory: PlayerItemEntity[],
-    items: ItemEntity[],
-  ) {
+  #getByItems(statKey: StatsTypes, player: PlayerEntity, partyInventory: PlayerItemEntity[], items: ItemEntity[]) {
     const playerItems = this.#getPlayerItems(player, partyInventory, items);
 
     return playerItems.reduce((acc, item) => {
@@ -119,17 +88,10 @@ export class AggregatedStatsServiceImpl implements AggregatedStatsService {
         return acc;
       }
 
-      const totalEquipped = this.#getTotalEquippedSets(
-        player,
-        partyInventory,
-        items,
-        set.id,
-      );
+      const totalEquipped = this.#getTotalEquippedSets(player, partyInventory, items, set.id);
 
       const validEffects = set.effects
-        .filter((effect) =>
-          this.#isEffectValid(effect, statKey, EffectTarget.Self),
-        )
+        .filter((effect) => this.#isEffectValid(effect, statKey, EffectTarget.Self))
         .filter((effect) => (effect.minimumItems || 0) <= totalEquipped);
 
       return (
@@ -148,24 +110,14 @@ export class AggregatedStatsServiceImpl implements AggregatedStatsService {
     items: ItemEntity[],
     sets: SetEntity[],
   ) {
-    const partySetsWithoutPlayer = this.#getPartySetsWithoutPlayer(
-      player,
-      partyInventory,
-      items,
-      sets,
-    );
+    const partySetsWithoutPlayer = this.#getPartySetsWithoutPlayer(player, partyInventory, items, sets);
 
     return partySetsWithoutPlayer.reduce((acc, set) => {
       if (!set || !set.effects) {
         return acc;
       }
 
-      const totalEquipped = this.#getTotalEquippedSets(
-        player,
-        partyInventory,
-        items,
-        set.id,
-      );
+      const totalEquipped = this.#getTotalEquippedSets(player, partyInventory, items, set.id);
 
       const validEffects = set.effects
         .filter(
@@ -184,11 +136,7 @@ export class AggregatedStatsServiceImpl implements AggregatedStatsService {
     }, 0);
   }
 
-  #getPlayerItems(
-    player: PlayerEntity,
-    partyInventory: PlayerItemEntity[],
-    items: ItemEntity[],
-  ) {
+  #getPlayerItems(player: PlayerEntity, partyInventory: PlayerItemEntity[], items: ItemEntity[]) {
     const playerItemIds = partyInventory
       .filter((inventory) => inventory.playerId === player.id)
       .map((inventory) => inventory.itemId);
@@ -202,44 +150,26 @@ export class AggregatedStatsServiceImpl implements AggregatedStatsService {
     items: ItemEntity[],
     sets: SetEntity[],
   ) {
-    const partyInventoryWithoutPlayer = partyInventory.filter(
-      (inventory) => inventory.playerId !== player.id,
-    );
+    const partyInventoryWithoutPlayer = partyInventory.filter((inventory) => inventory.playerId !== player.id);
 
     const partyItems = items.filter((item) =>
-      partyInventoryWithoutPlayer.some(
-        (inventory) => inventory.itemId === item.id,
-      ),
+      partyInventoryWithoutPlayer.some((inventory) => inventory.itemId === item.id),
     );
 
-    const setIds = partyItems
-      .filter((item) => item.setId)
-      .map((item) => item.setId);
+    const setIds = partyItems.filter((item) => item.setId).map((item) => item.setId);
 
     return sets.filter((set) => setIds.includes(set.id));
   }
 
-  #getPlayerSets(
-    player: PlayerEntity,
-    partyInventory: PlayerItemEntity[],
-    items: ItemEntity[],
-    sets: SetEntity[],
-  ) {
+  #getPlayerSets(player: PlayerEntity, partyInventory: PlayerItemEntity[], items: ItemEntity[], sets: SetEntity[]) {
     const playerItems = this.#getPlayerItems(player, partyInventory, items);
 
-    const setIds = playerItems
-      .filter((item) => item.setId)
-      .map((item) => item.setId);
+    const setIds = playerItems.filter((item) => item.setId).map((item) => item.setId);
 
     return sets.filter((set) => setIds.includes(set.id));
   }
 
-  #getTotalEquippedSets(
-    player: PlayerEntity,
-    partyInventory: PlayerItemEntity[],
-    items: ItemEntity[],
-    setId: string,
-  ) {
+  #getTotalEquippedSets(player: PlayerEntity, partyInventory: PlayerItemEntity[], items: ItemEntity[], setId: string) {
     const playerItemSetEquipped = this.#getPlayerItems(
       player,
       partyInventory.filter((item) => item.isEquipped),

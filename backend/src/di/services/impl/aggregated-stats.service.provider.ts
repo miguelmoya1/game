@@ -5,8 +5,7 @@ import {
   AggregatedStatsServiceImpl,
 } from '../../../core/application/services';
 
-export const aggregatedStatsServiceProvider: Provider<AggregatedStatsService> =
-  {
-    provide: AGGREGATED_STATS_SERVICE,
-    useClass: AggregatedStatsServiceImpl,
-  };
+export const aggregatedStatsServiceProvider: Provider<AggregatedStatsService> = {
+  provide: AGGREGATED_STATS_SERVICE,
+  useClass: AggregatedStatsServiceImpl,
+};

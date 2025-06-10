@@ -8,19 +8,11 @@ export type Create = {
 };
 
 export interface PlayerItemCollectionLogRepository {
-  getForPlaces(
-    placeIds: string[],
-    monthYear?: string,
-  ): Promise<PlayerItemCollectionLogEntity[]>;
+  getForPlaces(placeIds: string[], monthYear?: string): Promise<PlayerItemCollectionLogEntity[]>;
 
-  getForPlace(
-    placeId: string,
-    monthYear?: string,
-  ): Promise<PlayerItemCollectionLogEntity[]>;
+  getForPlace(placeId: string, monthYear?: string): Promise<PlayerItemCollectionLogEntity[]>;
 
   add(create: Create): Promise<PlayerItemCollectionLogEntity>;
 }
 
-export const PLAYER_ITEM_COLLECTION_LOG_REPOSITORY = Symbol(
-  'PLAYER_ITEM_COLLECTION_LOG_REPOSITORY',
-);
+export const PLAYER_ITEM_COLLECTION_LOG_REPOSITORY = Symbol('PLAYER_ITEM_COLLECTION_LOG_REPOSITORY');

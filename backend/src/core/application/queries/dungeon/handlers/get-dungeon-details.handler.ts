@@ -1,16 +1,11 @@
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import {
-  DungeonRepository,
-  DungeonRepositoryImpl,
-} from '../../../../infrastructure/repositories';
+import { DungeonRepository, DungeonRepositoryImpl } from '../../../../infrastructure/repositories';
 import { DungeonResponseDto } from '../dto/dungeon-response.dto';
 import { GetDungeonDetailsQuery } from '../impl/get-dungeon-details.query';
 
 @QueryHandler(GetDungeonDetailsQuery)
-export class GetDungeonDetailsHandler
-  implements IQueryHandler<GetDungeonDetailsQuery>
-{
+export class GetDungeonDetailsHandler implements IQueryHandler<GetDungeonDetailsQuery> {
   constructor(
     @Inject(DungeonRepositoryImpl)
     private readonly dungeonRepository: DungeonRepository,

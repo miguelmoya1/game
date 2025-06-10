@@ -12,9 +12,7 @@ import { EMAIL_SERVICE, EmailService } from '../../../services';
 import { ForgotPasswordCommand } from '../impl/forgot-password.command';
 
 @CommandHandler(ForgotPasswordCommand)
-export class ForgotPasswordHandler
-  implements ICommandHandler<ForgotPasswordCommand>
-{
+export class ForgotPasswordHandler implements ICommandHandler<ForgotPasswordCommand> {
   constructor(
     @Inject(ACCOUNT_REPOSITORY)
     private readonly _accountRepository: AccountRepository,
@@ -27,20 +25,12 @@ export class ForgotPasswordHandler
   async execute(command: ForgotPasswordCommand) {
     const { email } = command;
 
-    const hashForPasswordReset = createHash('sha256')
-      .update(email)
-      .digest('hex');
+    const hashForPasswordReset = createHash('sha256').update(email).digest('hex');
 
-    const account = await this._accountRepository.forgotPassword(
-      email,
-      hashForPasswordReset,
-    );
+    const account = await this._accountRepository.forgotPassword(email, hashForPasswordReset);
 
     if (!account) {
-      throw new HttpException(
-        ErrorCodes.ACCOUNT_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.ACCOUNT_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const user = await this._userRepository.findById(account.userId);

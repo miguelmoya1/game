@@ -31,14 +31,9 @@ export class GetPlaceHandler implements IQueryHandler<GetPlaceQuery> {
       throw new HttpException(ErrorCodes.PLACE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    const playerItemCollectionLog =
-      await this._playerItemCollectionLogRepository.getForPlaces([placeId]);
+    const playerItemCollectionLog = await this._playerItemCollectionLogRepository.getForPlaces([placeId]);
 
-    const permissions = this._permissionsService.getPlacePermissions(
-      place,
-      playerItemCollectionLog,
-      user,
-    );
+    const permissions = this._permissionsService.getPlacePermissions(place, playerItemCollectionLog, user);
 
     if (!place.currentItemId) {
       throw new HttpException(ErrorCodes.ITEM_NOT_FOUND, HttpStatus.NOT_FOUND);

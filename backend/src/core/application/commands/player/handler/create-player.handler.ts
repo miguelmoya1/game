@@ -1,16 +1,11 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { StatsTypes } from '../../../../domain/enums';
-import {
-  PLAYER_REPOSITORY,
-  PlayerRepository,
-} from '../../../../infrastructure/repositories';
+import { PLAYER_REPOSITORY, PlayerRepository } from '../../../../infrastructure/repositories';
 import { CreatePlayerCommand } from '../impl/create-player.command';
 
 @CommandHandler(CreatePlayerCommand)
-export class CreatePlayerHandler
-  implements ICommandHandler<CreatePlayerCommand>
-{
+export class CreatePlayerHandler implements ICommandHandler<CreatePlayerCommand> {
   constructor(
     @Inject(PLAYER_REPOSITORY)
     private readonly _playerRepository: PlayerRepository,

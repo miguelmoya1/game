@@ -7,12 +7,7 @@ export class UserResponseDto {
   public readonly language: string | null;
   public readonly role: UserRole;
 
-  private constructor(data: {
-    id: string;
-    name: string;
-    language: string | null;
-    role: UserRole;
-  }) {
+  private constructor(data: { id: string; name: string; language: string | null; role: UserRole }) {
     this.id = data.id;
     this.name = data.name;
     this.language = data.language;

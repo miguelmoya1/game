@@ -13,5 +13,5 @@ export const AUTH_TOKEN_SERVICE = new InjectionToken<AuthTokenService>(
   {
     providedIn: 'root',
     factory: () => new AuthTokenServiceImpl(),
-  }
+  },
 );

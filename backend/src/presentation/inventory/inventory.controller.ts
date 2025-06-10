@@ -18,10 +18,7 @@ export class InventoryController {
   }
 
   @Get('player/:playerId')
-  getInventory(
-    @AuthenticatedUser() user: UserEntity,
-    @Param('playerId') playerId: string,
-  ) {
+  getInventory(@AuthenticatedUser() user: UserEntity, @Param('playerId') playerId: string) {
     return this._queryBus.execute(new GetInventoryQuery(playerId, user));
   }
 }

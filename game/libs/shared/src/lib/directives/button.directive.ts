@@ -1,4 +1,11 @@
-import { Directive, effect, ElementRef, inject, input, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  Renderer2,
+} from '@angular/core';
 
 export type ButtonStyle = 'primary' | 'secondary' | 'tertiary' | 'outlined';
 
@@ -43,32 +50,76 @@ export class ButtonDirective {
 
   #prepareStyle(style: ButtonStyle, disabled: boolean) {
     if (disabled) {
-      this.#renderer.setStyle(this.#el.nativeElement, 'backgroundColor', 'var(--color-disabled)');
-      this.#renderer.setStyle(this.#el.nativeElement, 'color', 'var(--color-disabled-text)');
-      this.#renderer.setStyle(this.#el.nativeElement, 'border', '1px solid var(--color-disabled)');
+      this.#renderer.setStyle(
+        this.#el.nativeElement,
+        'backgroundColor',
+        'var(--color-disabled)',
+      );
+      this.#renderer.setStyle(
+        this.#el.nativeElement,
+        'color',
+        'var(--color-disabled-text)',
+      );
+      this.#renderer.setStyle(
+        this.#el.nativeElement,
+        'border',
+        '1px solid var(--color-disabled)',
+      );
       this.#renderer.setStyle(this.#el.nativeElement, 'cursor', 'not-allowed');
       return;
     }
 
-    this.#renderer.setStyle(this.#el.nativeElement, 'backgroundColor', 'transparent');
+    this.#renderer.setStyle(
+      this.#el.nativeElement,
+      'backgroundColor',
+      'transparent',
+    );
     this.#renderer.setStyle(this.#el.nativeElement, 'cursor', 'pointer');
 
     switch (style) {
       case 'primary':
-        this.#renderer.setStyle(this.#el.nativeElement, 'border', '1px solid var(--color-primary)');
-        this.#renderer.setStyle(this.#el.nativeElement, 'color', 'var(--color-primary)');
+        this.#renderer.setStyle(
+          this.#el.nativeElement,
+          'border',
+          '1px solid var(--color-primary)',
+        );
+        this.#renderer.setStyle(
+          this.#el.nativeElement,
+          'color',
+          'var(--color-primary)',
+        );
         break;
       case 'secondary':
-        this.#renderer.setStyle(this.#el.nativeElement, 'border', '1px solid var(--color-secondary)');
-        this.#renderer.setStyle(this.#el.nativeElement, 'color', 'var(--color-secondary)');
+        this.#renderer.setStyle(
+          this.#el.nativeElement,
+          'border',
+          '1px solid var(--color-secondary)',
+        );
+        this.#renderer.setStyle(
+          this.#el.nativeElement,
+          'color',
+          'var(--color-secondary)',
+        );
         break;
       case 'tertiary':
-        this.#renderer.setStyle(this.#el.nativeElement, 'border', '1px solid var(--color-tertiary)');
-        this.#renderer.setStyle(this.#el.nativeElement, 'color', 'var(--color-tertiary)');
+        this.#renderer.setStyle(
+          this.#el.nativeElement,
+          'border',
+          '1px solid var(--color-tertiary)',
+        );
+        this.#renderer.setStyle(
+          this.#el.nativeElement,
+          'color',
+          'var(--color-tertiary)',
+        );
         break;
       case 'outlined':
         this.#renderer.setStyle(this.#el.nativeElement, 'border', 'none');
-        this.#renderer.setStyle(this.#el.nativeElement, 'color', 'var(--color-primary)');
+        this.#renderer.setStyle(
+          this.#el.nativeElement,
+          'color',
+          'var(--color-primary)',
+        );
         this.#renderer.setStyle(this.#el.nativeElement, 'display', 'inline');
         break;
     }

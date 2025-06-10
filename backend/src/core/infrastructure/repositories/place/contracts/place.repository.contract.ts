@@ -6,16 +6,10 @@ export interface PlaceRepository {
   search(criteria: string): Promise<PlaceEntity[]>;
   delete(id: string): Promise<void>;
 
-  getAll(
-    offset: number,
-    limit: number,
-  ): Promise<Pick<PlaceEntity, 'id' | 'categories'>[]>;
+  getAll(offset: number, limit: number): Promise<Pick<PlaceEntity, 'id' | 'categories'>[]>;
   getCount(): Promise<number>;
   updateMany(data: Pick<PlaceEntity, 'id' | 'currentItemId'>[]): Promise<void>;
-  getRandom(
-    count: number,
-    excludedIds: string[],
-  ): Promise<Pick<PlaceEntity, 'id' | 'lat' | 'lng' | 'categories'>[]>;
+  getRandom(count: number, excludedIds: string[]): Promise<Pick<PlaceEntity, 'id' | 'lat' | 'lng' | 'categories'>[]>;
 }
 
 export const PLACE_REPOSITORY = Symbol('PLACE_REPOSITORY');

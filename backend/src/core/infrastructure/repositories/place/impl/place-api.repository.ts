@@ -1,14 +1,8 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { PlaceCategory } from '@prisma/client';
-import {
-  DATABASE_SERVICE,
-  DatabaseService,
-} from '../../../../application/services';
+import { DATABASE_SERVICE, DatabaseService } from '../../../../application/services';
 import { PlaceApiEntity, PlaceEntity } from '../../../../domain/entities';
-import {
-  ITEM_REPOSITORY,
-  ItemRepository,
-} from '../../item/contracts/item.repository.contract';
+import { ITEM_REPOSITORY, ItemRepository } from '../../item/contracts/item.repository.contract';
 import { PlaceApiRepository } from '../contracts/place-api.repository.contract';
 
 interface OverpassElement {
@@ -73,11 +67,7 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
 
     // ARTS
     'amenity=theatre': [PlaceCategory.ARTS],
-    'tourism=museum': [
-      PlaceCategory.ARTS,
-      PlaceCategory.KNOWLEDGE,
-      PlaceCategory.HISTORIC,
-    ],
+    'tourism=museum': [PlaceCategory.ARTS, PlaceCategory.KNOWLEDGE, PlaceCategory.HISTORIC],
     'tourism=gallery': [PlaceCategory.ARTS],
     'amenity=cinema': [PlaceCategory.ARTS],
 
@@ -100,13 +90,9 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
     const DEGREES_TO_RADIANS = Math.PI / 180;
     const bBox = [
       latitude - radius / EARTH_RADIUS_METERS,
-      longitude -
-        radius /
-          (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS)),
+      longitude - radius / (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS)),
       latitude + radius / EARTH_RADIUS_METERS,
-      longitude +
-        radius /
-          (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS)),
+      longitude + radius / (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS)),
     ];
     const queryConditions: string[] = [];
     const relevantTags = Object.keys(this.#osmTagToCategoryMap).reduce(
@@ -122,15 +108,9 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
 
     for (const [tagKey, tagValuesSet] of Object.entries(relevantTags)) {
       const valuesRegex = Array.from(tagValuesSet).join('|');
-      queryConditions.push(
-        `node["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`,
-      );
-      queryConditions.push(
-        `way["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`,
-      );
-      queryConditions.push(
-        `relation["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`,
-      );
+      queryConditions.push(`node["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`);
+      queryConditions.push(`way["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`);
+      queryConditions.push(`relation["${tagKey}"~"^(${valuesRegex})$"](${bBoxStr});`);
     }
 
     const overpassQuery = `
@@ -225,24 +205,18 @@ export class PlaceApiRepositoryImpl implements PlaceApiRepository {
               lng: placeApi.lng,
               osmTags: placeApi.osmTags,
               categories: placeApi.categories,
-              currentItemId:
-                PlaceEntity.getRandomMatchingItem(allItems, placeApi.categories)
-                  ?.id || '',
+              currentItemId: PlaceEntity.getRandomMatchingItem(allItems, placeApi.categories)?.id || '',
             },
           });
 
           processedCount++;
         } catch (error) {
-          this.#logger.error(
-            `Error saving place with API ID ${placeApi.apiId}: ${error}`,
-          );
+          this.#logger.error(`Error saving place with API ID ${placeApi.apiId}: ${error}`);
           skippedCount++;
         }
       }
 
-      this.#logger.debug(
-        `Processed ${processedCount} POIs, skipped ${skippedCount} POIs.`,
-      );
+      this.#logger.debug(`Processed ${processedCount} POIs, skipped ${skippedCount} POIs.`);
     } catch (error) {
       this.#logger.error(error);
     }

@@ -1,18 +1,6 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import {
-  CreateSetCommand,
-  DeleteSetCommand,
-  UpdateSetCommand,
-} from '../../core/application/commands';
+import { CreateSetCommand, DeleteSetCommand, UpdateSetCommand } from '../../core/application/commands';
 import { GetSetsQuery, SetResponseDto } from '../../core/application/queries';
 import { UserEntity } from '../../core/domain/entities';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
@@ -30,27 +18,18 @@ export class SetController {
   async getSetList(@AuthenticatedUser() user: UserEntity) {
     const command = new GetSetsQuery(user);
 
-    return await this._queryBus.execute<GetSetsQuery, SetResponseDto[]>(
-      command,
-    );
+    return await this._queryBus.execute<GetSetsQuery, SetResponseDto[]>(command);
   }
 
   @Post()
-  async createSet(
-    @AuthenticatedUser() user: UserEntity,
-    @Body() body: CreateSetDto,
-  ) {
+  async createSet(@AuthenticatedUser() user: UserEntity, @Body() body: CreateSetDto) {
     const command = new CreateSetCommand(body, user);
 
     return await this._commandBus.execute<CreateSetCommand, void>(command);
   }
 
   @Put(':setId')
-  async updateSet(
-    @AuthenticatedUser() user: UserEntity,
-    @Param('setId') setId: string,
-    @Body() body: UpdateSetDto,
-  ) {
+  async updateSet(@AuthenticatedUser() user: UserEntity, @Param('setId') setId: string, @Body() body: UpdateSetDto) {
     const updateSetDataDto = {
       ...body,
       effects: body.effects ?? [],
@@ -60,10 +39,7 @@ export class SetController {
   }
 
   @Delete(':setId')
-  async deleteSet(
-    @AuthenticatedUser() user: UserEntity,
-    @Param('setId') setId: string,
-  ) {
+  async deleteSet(@AuthenticatedUser() user: UserEntity, @Param('setId') setId: string) {
     const command = new DeleteSetCommand(setId, user);
     await this._commandBus.execute(command);
     return { success: true };

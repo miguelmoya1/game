@@ -12,10 +12,7 @@ export class SearchController {
   ) {}
 
   @Get()
-  async getSearchList(
-    @AuthenticatedUser() user: UserEntity,
-    @Query('criteria') criteria: string,
-  ) {
+  async getSearchList(@AuthenticatedUser() user: UserEntity, @Query('criteria') criteria: string) {
     const command = new SearchQuery(criteria, user);
 
     return await this._queryBus.execute<SearchQuery, unknown>(command);

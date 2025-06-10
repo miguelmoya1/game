@@ -17,14 +17,11 @@ export class GetPointHandler implements IQueryHandler<GetPointQuery> {
       throw new Error(ErrorCodes.PLACE_NOT_FOUND);
     }
 
-    const place = await this.queryBus.execute<GetPlaceQuery, PlaceEntity>(
-      new GetPlaceQuery(placeId, user),
-    );
+    const place = await this.queryBus.execute<GetPlaceQuery, PlaceEntity>(new GetPlaceQuery(placeId, user));
 
-    const dungeon = await this.queryBus.execute<
-      GetDungeonDetailsQuery,
-      DungeonEntity
-    >(new GetDungeonDetailsQuery(placeId, user));
+    const dungeon = await this.queryBus.execute<GetDungeonDetailsQuery, DungeonEntity>(
+      new GetDungeonDetailsQuery(placeId, user),
+    );
 
     return PointResponseDto.create({
       place,

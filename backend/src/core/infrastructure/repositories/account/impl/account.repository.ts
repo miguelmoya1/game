@@ -1,27 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { AccountProvider } from '@prisma/client';
 import { CreateAccountDataDto } from '../../../../application/commands/auth/dto/create-account-data.dto';
-import {
-  DATABASE_SERVICE,
-  DatabaseService,
-} from '../../../../application/services';
+import { DATABASE_SERVICE, DatabaseService } from '../../../../application/services';
 import { AccountRepository } from '../contracts/account.repository.contract';
 import { accountToEntity } from '../mappers/account.mapper';
 
 @Injectable()
 export class AccountRepositoryImpl implements AccountRepository {
-  constructor(
-    @Inject(DATABASE_SERVICE) private readonly _database: DatabaseService,
-  ) {}
+  constructor(@Inject(DATABASE_SERVICE) private readonly _database: DatabaseService) {}
 
   async findByHash(hashForPasswordReset: string) {
     const now = new Date();
     const account = await this._database.account.findFirst({
       where: {
-        AND: [
-          { hashForPasswordReset },
-          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
-        ],
+        AND: [{ hashForPasswordReset }, { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] }],
       },
     });
 
@@ -105,10 +97,7 @@ export class AccountRepositoryImpl implements AccountRepository {
     const now = new Date();
     const account = await this._database.account.findFirst({
       where: {
-        AND: [
-          { id: accountId },
-          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
-        ],
+        AND: [{ id: accountId }, { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] }],
       },
     });
 
@@ -120,8 +109,7 @@ export class AccountRepositoryImpl implements AccountRepository {
   }
 
   public async create(createAccountDto: CreateAccountDataDto) {
-    const { email, provider, providerId, password, userId, isPrimary } =
-      createAccountDto;
+    const { email, provider, providerId, password, userId, isPrimary } = createAccountDto;
 
     const account = await this._database.account.create({
       data: {

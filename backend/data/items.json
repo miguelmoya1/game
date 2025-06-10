@@ -13,10 +13,7 @@
       }
     ],
     "rank": "E",
-    "spawnCategories": [
-      "NATURE",
-      "COMMUNITY"
-    ],
+    "spawnCategories": ["NATURE", "COMMUNITY"],
     "setId": "set:initial"
   },
   {
@@ -33,10 +30,7 @@
       }
     ],
     "rank": "E",
-    "spawnCategories": [
-      "NATURE",
-      "COMMUNITY"
-    ],
+    "spawnCategories": ["NATURE", "COMMUNITY"],
     "setId": "set:initial"
   },
   {
@@ -53,10 +47,7 @@
       }
     ],
     "rank": "E",
-    "spawnCategories": [
-      "NATURE",
-      "COMMUNITY"
-    ],
+    "spawnCategories": ["NATURE", "COMMUNITY"],
     "setId": "set:initial"
   },
   {
@@ -73,10 +64,7 @@
       }
     ],
     "rank": "E",
-    "spawnCategories": [
-      "NATURE",
-      "COMMUNITY"
-    ],
+    "spawnCategories": ["NATURE", "COMMUNITY"],
     "setId": "set:initial"
   }
 ]

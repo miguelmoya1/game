@@ -19,9 +19,7 @@ import { GetPartyMembersWithStatsQuery } from '../impl/get-party-members-with-st
 
 @QueryHandler(GetPartyMembersWithStatsQuery)
 @Injectable()
-export class GetPartyMembersWithStatsHandler
-  implements IQueryHandler<GetPartyMembersWithStatsQuery>
-{
+export class GetPartyMembersWithStatsHandler implements IQueryHandler<GetPartyMembersWithStatsQuery> {
   constructor(
     @Inject(PLAYER_REPOSITORY)
     private readonly playerRepository: PlayerRepository,
@@ -38,10 +36,7 @@ export class GetPartyMembersWithStatsHandler
     const player = await this.playerRepository.getByUserId(user.id);
 
     if (!player) {
-      throw new HttpException(
-        ErrorCodes.PLAYER_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.PLAYER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const party = await this.partyRepository.findPartyByPlayer(player.id);
@@ -56,9 +51,7 @@ export class GetPartyMembersWithStatsHandler
       return [];
     }
 
-    const partyInventories = await this.playerItemRepository.getForPlayerIds(
-      party.memberIds ?? [],
-    );
+    const partyInventories = await this.playerItemRepository.getForPlayerIds(party.memberIds ?? []);
 
     const players: PlayerResponseWithStatsDto[] = [];
 
@@ -66,12 +59,7 @@ export class GetPartyMembersWithStatsHandler
     const sets = await this.setRepository.getAll();
 
     for (const member of members) {
-      const aggregatedStats = this.aggregatedStatsService.calculate(
-        member,
-        partyInventories,
-        items,
-        sets,
-      );
+      const aggregatedStats = this.aggregatedStatsService.calculate(member, partyInventories, items, sets);
 
       players.push(PlayerResponseWithStatsDto.create(member, aggregatedStats));
     }

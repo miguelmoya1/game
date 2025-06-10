@@ -1,18 +1,13 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { ErrorCodes } from '../../../../domain/enums';
-import {
-  SET_REPOSITORY,
-  SetRepository,
-} from '../../../../infrastructure/repositories';
+import { SET_REPOSITORY, SetRepository } from '../../../../infrastructure/repositories';
 import { SetResponseDto } from '../dto/set-response.dto';
 import { GetSetsQuery } from '../impl/get-sets.query';
 
 @QueryHandler(GetSetsQuery)
 export class GetSetsHandler implements IQueryHandler<GetSetsQuery> {
-  constructor(
-    @Inject(SET_REPOSITORY) private readonly _setRepository: SetRepository,
-  ) {}
+  constructor(@Inject(SET_REPOSITORY) private readonly _setRepository: SetRepository) {}
 
   async execute(query: GetSetsQuery) {
     const { user } = query;

@@ -1,9 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Redis } from 'ioredis';
-import {
-  CreateItemDataDto,
-  UpdateItemDataDto,
-} from '../../../../application/commands';
+import { CreateItemDataDto, UpdateItemDataDto } from '../../../../application/commands';
 import { Item } from '../../../../domain/entities';
 import { REDIS_CLIENT } from '../../../redis/redis.provider';
 import { STATIC_DATA } from '../../services/static-data-loader.service.contract';

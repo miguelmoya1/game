@@ -34,10 +34,7 @@ export class GetPartyByIdHandler implements IQueryHandler<GetPartyByIdQuery> {
     const player = await this.playerRepository.getByUserId(user.id);
 
     if (!player) {
-      throw new HttpException(
-        ErrorCodes.PLAYER_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.PLAYER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const isLeader = party.leaderId === player.id;

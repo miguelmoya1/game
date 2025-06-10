@@ -18,22 +18,15 @@ export class TranslateServiceImpl implements TranslateService {
 
   async init() {
     const translateFilesService = new TranslateFilesService();
-    this.#languages = await translateFilesService.createAll(
-      this.#languagesAvailable,
-    );
+    this.#languages = await translateFilesService.createAll(this.#languagesAvailable);
   }
 
   public getTranslate(req: FastifyRequest, language?: string) {
     if (language) {
-      return (this.#languages[language] || this.#languages['en']) as Record<
-        string,
-        string
-      >;
+      return (this.#languages[language] || this.#languages['en']) as Record<string, string>;
     }
 
-    let lang = [...new Set(req.headers['accept-language']?.split(','))]?.[0]
-      ?.substring(0, 2)
-      .toLocaleLowerCase();
+    let lang = [...new Set(req.headers['accept-language']?.split(','))]?.[0]?.substring(0, 2).toLocaleLowerCase();
 
     if (!this.#languages[lang]) {
       lang = 'en';

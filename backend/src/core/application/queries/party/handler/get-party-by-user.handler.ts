@@ -11,9 +11,7 @@ import { PartyResponseDto } from '../dto/party-response.dto';
 import { GetPartyByUserQuery } from '../impl/get-party-by-user.query';
 
 @QueryHandler(GetPartyByUserQuery)
-export class GetPartyByUserHandler
-  implements IQueryHandler<GetPartyByUserQuery>
-{
+export class GetPartyByUserHandler implements IQueryHandler<GetPartyByUserQuery> {
   constructor(
     @Inject(PARTY_REPOSITORY) private readonly partyRepository: PartyRepository,
     @Inject(PLAYER_REPOSITORY)
@@ -26,10 +24,7 @@ export class GetPartyByUserHandler
     const player = await this.playerRepository.getByUserId(user.id);
 
     if (!player) {
-      throw new HttpException(
-        ErrorCodes.PLAYER_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.PLAYER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const party = await this.partyRepository.findPartyByPlayer(player.id);

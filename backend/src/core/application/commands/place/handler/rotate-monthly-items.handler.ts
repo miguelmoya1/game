@@ -1,9 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import {
-  Place,
-  PlaceEntity,
-} from '../../../../domain/entities/impl/place.entity';
+import { Place, PlaceEntity } from '../../../../domain/entities/impl/place.entity';
 import {
   ITEM_REPOSITORY,
   ItemRepository,
@@ -13,9 +10,7 @@ import {
 import { RotateMonthlyItemsCommand } from '../impl/rotate-monthly-items.command';
 
 @CommandHandler(RotateMonthlyItemsCommand)
-export class RotateMonthlyItemsHandler
-  implements ICommandHandler<RotateMonthlyItemsCommand>
-{
+export class RotateMonthlyItemsHandler implements ICommandHandler<RotateMonthlyItemsCommand> {
   constructor(
     @Inject(ITEM_REPOSITORY) private readonly itemRepository: ItemRepository,
     @Inject(PLACE_REPOSITORY) private readonly placeRepository: PlaceRepository,

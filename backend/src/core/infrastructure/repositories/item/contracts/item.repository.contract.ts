@@ -1,7 +1,4 @@
-import {
-  CreateItemDataDto,
-  UpdateItemDataDto,
-} from '../../../../application/commands';
+import { CreateItemDataDto, UpdateItemDataDto } from '../../../../application/commands';
 import { ItemEntity } from '../../../../domain/entities';
 
 export interface ItemRepository {

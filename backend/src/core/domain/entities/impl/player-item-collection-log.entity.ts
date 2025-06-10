@@ -28,9 +28,6 @@ export class PlayerItemCollectionLogEntity extends PlayerItemCollectionLog {
   }
 
   public isCollectedFrom(date: Date) {
-    return (
-      this.collectionMonthYear ===
-      PlayerItemCollectionLogEntity.formatToCollectionMonthYear(date)
-    );
+    return this.collectionMonthYear === PlayerItemCollectionLogEntity.formatToCollectionMonthYear(date);
   }
 }

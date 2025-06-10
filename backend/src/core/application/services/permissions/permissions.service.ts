@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  PlaceListEntity,
-  PlayerItemCollectionLogEntity,
-  UserEntity,
-} from '../../../domain/entities';
+import { PlaceListEntity, PlayerItemCollectionLogEntity, UserEntity } from '../../../domain/entities';
 import type { PermissionsService } from './permissions.service.contract';
 
 @Injectable()

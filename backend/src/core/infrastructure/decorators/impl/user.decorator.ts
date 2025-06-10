@@ -8,16 +8,14 @@ declare module 'fastify' {
   }
 }
 
-export const AuthenticatedUser = createParamDecorator(
-  (data: string, ctx: ExecutionContext) => {
-    const request = ctx.switchToHttp().getRequest<FastifyRequest>();
+export const AuthenticatedUser = createParamDecorator((data: string, ctx: ExecutionContext) => {
+  const request = ctx.switchToHttp().getRequest<FastifyRequest>();
 
-    const user = request.user;
+  const user = request.user;
 
-    if (data && user && data in user) {
-      return user[data as keyof UserEntity];
-    }
+  if (data && user && data in user) {
+    return user[data as keyof UserEntity];
+  }
 
-    return user;
-  },
-);
+  return user;
+});

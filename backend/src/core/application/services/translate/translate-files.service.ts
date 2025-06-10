@@ -40,15 +40,10 @@ export class TranslateFilesService {
       // Create file if not exists
       if (!dir.includes(`${language}.json`)) {
         this.#logger.debug(`Create ${language}.json`);
-        await writeFile(
-          filePath,
-          JSON.stringify(this.#getDefaultValues(), null, 2),
-        );
+        await writeFile(filePath, JSON.stringify(this.#getDefaultValues(), null, 2));
       }
 
-      let file = JSON.parse(
-        await readFile(filePath, { encoding: 'utf8' }),
-      ) as object;
+      let file = JSON.parse(await readFile(filePath, { encoding: 'utf8' })) as object;
 
       const fileKeys = Object.keys(file);
 
@@ -82,10 +77,7 @@ export class TranslateFilesService {
         this.#logger.debug(`Add ${total} keys to ${language}.json`);
       }
 
-      if (
-        JSON.stringify(Object.keys(file)) !==
-        JSON.stringify(Object.keys(file).sort())
-      ) {
+      if (JSON.stringify(Object.keys(file)) !== JSON.stringify(Object.keys(file).sort())) {
         const ordered = Object.keys(file)
           .sort()
           .reduce(

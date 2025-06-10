@@ -8,12 +8,7 @@ import {
   USER_REPOSITORY,
   UserRepository,
 } from '../../../../infrastructure/repositories';
-import {
-  EMAIL_SERVICE,
-  EmailService,
-  ENCRYPTION_SERVICE,
-  EncryptionService,
-} from '../../../services';
+import { EMAIL_SERVICE, EmailService, ENCRYPTION_SERVICE, EncryptionService } from '../../../services';
 import { RegisterCommand } from '../impl/register.command';
 
 @CommandHandler(RegisterCommand)
@@ -32,24 +27,16 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
   async execute(command: RegisterCommand) {
     const { createAccountDto, createUserDto } = command;
 
-    const existingAccount = await this._accountUseCase.getOneByProviderEmail(
-      createAccountDto.email,
-    );
+    const existingAccount = await this._accountUseCase.getOneByProviderEmail(createAccountDto.email);
 
     if (existingAccount) {
-      throw new HttpException(
-        ErrorCodes.EMAIL_ALREADY_EXISTS,
-        HttpStatus.CONFLICT,
-      );
+      throw new HttpException(ErrorCodes.EMAIL_ALREADY_EXISTS, HttpStatus.CONFLICT);
     }
 
     const user = await this._userUseCase.create(createUserDto);
 
     if (!user) {
-      throw new HttpException(
-        ErrorCodes.USER_NOT_CREATED,
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException(ErrorCodes.USER_NOT_CREATED, HttpStatus.BAD_REQUEST);
     }
 
     let password = createAccountDto.password;
@@ -64,10 +51,7 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
     });
 
     if (!account) {
-      throw new HttpException(
-        ErrorCodes.ACCOUNT_NOT_CREATED,
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException(ErrorCodes.ACCOUNT_NOT_CREATED, HttpStatus.BAD_REQUEST);
     }
 
     this.eventBus.publish(new UserCreatedEvent(user.id));

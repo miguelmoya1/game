@@ -18,12 +18,8 @@ export class DungeonRepositoryImpl implements DungeonRepository {
     if (!activePlaceIds || activePlaceIds.length === 0) {
       return 0;
     }
-    const existsResults = await Promise.all(
-      activePlaceIds.map((id) => this.redis.exists(`dungeon:${id}`)),
-    );
-    const validPlaceIds = activePlaceIds.filter(
-      (_, idx) => existsResults[idx] === 1,
-    );
+    const existsResults = await Promise.all(activePlaceIds.map((id) => this.redis.exists(`dungeon:${id}`)));
+    const validPlaceIds = activePlaceIds.filter((_, idx) => existsResults[idx] === 1);
     if (validPlaceIds.length !== activePlaceIds.length) {
       await this.redis.del(this.#activePlacesSetKey);
       if (validPlaceIds.length > 0) {
@@ -94,9 +90,7 @@ export class DungeonRepositoryImpl implements DungeonRepository {
     }
 
     const placeDungeonKeys = placeIds.map((id) => `dungeon:${id}`);
-    const dungeonIdsOrNulls = (await this.redis.mget(placeDungeonKeys)).filter(
-      Boolean,
-    ) as string[];
+    const dungeonIdsOrNulls = (await this.redis.mget(placeDungeonKeys)).filter(Boolean) as string[];
 
     if (dungeonIdsOrNulls.length === 0) {
       return [];

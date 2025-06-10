@@ -1,12 +1,6 @@
 import { AccountProvider } from '@prisma/client';
 import { Exclude } from 'class-transformer';
-import {
-  IsEmail,
-  IsEmpty,
-  IsEnum,
-  IsString,
-  ValidateIf,
-} from 'class-validator';
+import { IsEmail, IsEmpty, IsEnum, IsString, ValidateIf } from 'class-validator';
 
 export class CreateAccountDto {
   @IsEmail(undefined, { message: 'MUST_BE_EMAIL' })

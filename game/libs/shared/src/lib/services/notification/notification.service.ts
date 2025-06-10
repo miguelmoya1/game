@@ -35,7 +35,7 @@ export class NotificationServiceImpl implements NotificationService {
 
     this.#notifications.update((notifications) => {
       const index = notifications.findIndex(
-        (notification) => notification.id === id
+        (notification) => notification.id === id,
       );
 
       if (index !== -1) {

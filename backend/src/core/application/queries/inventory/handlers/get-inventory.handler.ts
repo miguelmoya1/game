@@ -1,10 +1,7 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { ErrorCodes } from '../../../../domain/enums';
-import {
-  PLAYER_REPOSITORY,
-  PlayerRepository,
-} from '../../../../infrastructure/repositories';
+import { PLAYER_REPOSITORY, PlayerRepository } from '../../../../infrastructure/repositories';
 import {
   PLAYER_ITEM_REPOSITORY,
   PlayerItemRepository,
@@ -31,10 +28,7 @@ export class GetInventoryHandler implements IQueryHandler<GetInventoryQuery> {
     const player = await this._playerRepository.getById(playerId);
 
     if (!player) {
-      throw new HttpException(
-        ErrorCodes.INVENTORY_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.INVENTORY_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const inventory = await this._playerItemRepository.getForPlayer(playerId);

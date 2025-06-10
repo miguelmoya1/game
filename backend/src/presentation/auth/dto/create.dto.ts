@@ -1,13 +1,6 @@
 import { AccountProvider } from '@prisma/client';
 import { Exclude } from 'class-transformer';
-import {
-  IsEmail,
-  IsEmpty,
-  IsEnum,
-  IsOptional,
-  IsString,
-  ValidateIf,
-} from 'class-validator';
+import { IsEmail, IsEmpty, IsEnum, IsOptional, IsString, ValidateIf } from 'class-validator';
 import { CreateAccountDataDto } from '../../../core/application/commands';
 
 export class RegisterDto {

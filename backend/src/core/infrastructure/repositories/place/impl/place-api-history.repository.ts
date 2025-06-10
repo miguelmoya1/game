@@ -1,17 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  DATABASE_SERVICE,
-  DatabaseService,
-} from '../../../../application/services';
+import { DATABASE_SERVICE, DatabaseService } from '../../../../application/services';
 import { PlaceApiHistoryRepository } from '../contracts/place-api-history.repository.contract';
 
 @Injectable()
-export class PlaceApiHistoryRepositoryImpl
-  implements PlaceApiHistoryRepository
-{
-  constructor(
-    @Inject(DATABASE_SERVICE) private readonly databaseService: DatabaseService,
-  ) {}
+export class PlaceApiHistoryRepositoryImpl implements PlaceApiHistoryRepository {
+  constructor(@Inject(DATABASE_SERVICE) private readonly databaseService: DatabaseService) {}
 
   // TODO: Check the logic of this repository (lat, lng, radius)
   async shouldRequestApi(latitude: number, longitude: number, radius = 500) {

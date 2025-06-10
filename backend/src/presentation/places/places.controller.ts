@@ -1,9 +1,6 @@
 import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import {
-  ClaimPlaceItemCommand,
-  DeletePlaceCommand,
-} from '../../core/application/commands';
+import { ClaimPlaceItemCommand, DeletePlaceCommand } from '../../core/application/commands';
 import { GetPlaceQuery } from '../../core/application/queries';
 import { UserEntity } from '../../core/domain/entities';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
@@ -16,26 +13,17 @@ export class PlacesController {
   ) {}
 
   @Get(':placeId')
-  public getPlace(
-    @Param('placeId') placeId: string,
-    @AuthenticatedUser() user: UserEntity,
-  ) {
+  public getPlace(@Param('placeId') placeId: string, @AuthenticatedUser() user: UserEntity) {
     return this._queryBus.execute(new GetPlaceQuery(placeId, user));
   }
 
   @Post(':placeId/claim')
-  public claimPlace(
-    @Param('placeId') placeId: string,
-    @AuthenticatedUser() user: UserEntity,
-  ) {
+  public claimPlace(@Param('placeId') placeId: string, @AuthenticatedUser() user: UserEntity) {
     return this._commandBus.execute(new ClaimPlaceItemCommand(placeId, user));
   }
 
   @Delete(':placeId')
-  async deletePlace(
-    @AuthenticatedUser() user: UserEntity,
-    @Param('placeId') placeId: string,
-  ) {
+  async deletePlace(@AuthenticatedUser() user: UserEntity, @Param('placeId') placeId: string) {
     const command = new DeletePlaceCommand(placeId, user);
     await this._commandBus.execute(command);
     return { success: true };

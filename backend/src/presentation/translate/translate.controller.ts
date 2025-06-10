@@ -1,10 +1,7 @@
 import { Controller, Get, Param, Req } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { FastifyRequest } from 'fastify';
-import {
-  GetLanguageQuery,
-  GetTranslateQuery,
-} from '../../core/application/queries';
+import { GetLanguageQuery, GetTranslateQuery } from '../../core/application/queries';
 import { IsPublic } from '../../core/infrastructure/decorators';
 
 @Controller('translate')
@@ -29,10 +26,7 @@ export class TranslateController {
 
   @Get('/:lang')
   @IsPublic()
-  public getTranslateByLanguage(
-    @Req() req: FastifyRequest,
-    @Param('lang') lang: string,
-  ) {
+  public getTranslateByLanguage(@Req() req: FastifyRequest, @Param('lang') lang: string) {
     const command = new GetTranslateQuery(req, lang);
 
     return this._queryBus.execute(command);

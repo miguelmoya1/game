@@ -3,10 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Resend } from 'resend';
 import { AccountEntity, UserEntity } from '../../../domain/entities';
-import {
-  TRANSLATE_SERVICE,
-  TranslateService,
-} from '../translate/translate.service.contract';
+import { TRANSLATE_SERVICE, TranslateService } from '../translate/translate.service.contract';
 import type { EmailService } from './email.service.contract.ts';
 
 export enum EmailTemplate {
@@ -25,10 +22,7 @@ export class EmailServiceImpl implements EmailService {
     private readonly _translateService: TranslateService,
   ) {}
 
-  public sendConfirmationEmail = async (
-    account: AccountEntity,
-    user: UserEntity,
-  ) => {
+  public sendConfirmationEmail = async (account: AccountEntity, user: UserEntity) => {
     const confirmationLink = `${process.env.URL_FRONTEND}/auth/confirm/${account.id}`;
 
     const language = user.language || 'en';
@@ -36,8 +30,7 @@ export class EmailServiceImpl implements EmailService {
     return this.#resend.emails.send({
       from: this.#from,
       to: account.email,
-      subject:
-        this._translateService.get(language)['CONFIRM_EMAIL_SUBJECT'] || '',
+      subject: this._translateService.get(language)['CONFIRM_EMAIL_SUBJECT'] || '',
       html: await this.#getTemplate(EmailTemplate.CONFIRM_EMAIL, {
         confirmationLink,
         ...this._translateService.get(language),
@@ -45,10 +38,7 @@ export class EmailServiceImpl implements EmailService {
     });
   };
 
-  public sendPasswordResetEmail = async (
-    account: AccountEntity,
-    user: UserEntity,
-  ) => {
+  public sendPasswordResetEmail = async (account: AccountEntity, user: UserEntity) => {
     const resetLink = `${process.env.URL_FRONTEND}/auth/reset-password/${account.hashForPasswordReset}`;
 
     const language = user.language || 'en';
@@ -78,9 +68,7 @@ export class EmailServiceImpl implements EmailService {
   #replaceVariables = (template: string, variables: Record<string, string>) => {
     return Object.entries(variables).reduce(
       (acc, [key, value]) =>
-        acc
-          .replace(new RegExp(`{{ ${key} }}`, 'g'), value)
-          .replace(new RegExp(`{{${key}}}`, 'g'), value),
+        acc.replace(new RegExp(`{{ ${key} }}`, 'g'), value).replace(new RegExp(`{{${key}}}`, 'g'), value),
       template,
     );
   };

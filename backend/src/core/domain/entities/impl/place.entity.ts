@@ -35,10 +35,7 @@ export class PlaceEntity extends Place {
     return new PlaceEntity(place);
   }
 
-  public static getRandomMatchingItem(
-    items: ItemEntity[],
-    categories: PlaceCategory[],
-  ) {
+  public static getRandomMatchingItem(items: ItemEntity[], categories: PlaceCategory[]) {
     if (!categories || !categories.length) {
       return undefined;
     }

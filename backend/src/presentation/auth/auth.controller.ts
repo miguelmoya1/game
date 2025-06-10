@@ -6,15 +6,9 @@ import {
   LoginWithEmailCommand,
   RegisterCommand,
 } from '../../core/application/commands';
-import {
-  CheckEmailExistsQuery,
-  RehydrateQuery,
-} from '../../core/application/queries';
+import { CheckEmailExistsQuery, RehydrateQuery } from '../../core/application/queries';
 import { UserEntity } from '../../core/domain/entities';
-import {
-  AuthenticatedUser,
-  IsPublic,
-} from '../../core/infrastructure/decorators';
+import { AuthenticatedUser, IsPublic } from '../../core/infrastructure/decorators';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { RegisterDto } from './dto/create.dto';
 import { LoginWithEmailDto } from './dto/login-with-email.dto';
@@ -31,9 +25,7 @@ export class AuthController {
   public async confirmLogin(@Param('accountId') accountId: string) {
     const command = new ActiveAccountCommand(accountId);
 
-    return await this._commandBus.execute<ActiveAccountCommand, string>(
-      command,
-    );
+    return await this._commandBus.execute<ActiveAccountCommand, string>(command);
   }
 
   @Get('is-authenticated')
@@ -67,16 +59,13 @@ export class AuthController {
     const { email, password } = loginWithEmailDto;
 
     const command = new LoginWithEmailCommand(email, password);
-    return await this._commandBus.execute<LoginWithEmailCommand, string>(
-      command,
-    );
+    return await this._commandBus.execute<LoginWithEmailCommand, string>(command);
   }
 
   @IsPublic()
   @Post('register')
   public async register(@Body() registerDto: RegisterDto) {
-    const { email, name, password, provider, providerId, surname, userId } =
-      registerDto;
+    const { email, name, password, provider, providerId, surname, userId } = registerDto;
     const account = {
       email,
       password,

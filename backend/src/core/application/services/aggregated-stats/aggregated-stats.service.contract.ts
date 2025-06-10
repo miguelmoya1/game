@@ -1,9 +1,4 @@
-import {
-  ItemEntity,
-  PlayerEntity,
-  PlayerItemEntity,
-  SetEntity,
-} from '../../../domain/entities';
+import { ItemEntity, PlayerEntity, PlayerItemEntity, SetEntity } from '../../../domain/entities';
 import { StatsTypes } from '../../../domain/enums';
 
 export type AggregatedStatDetail = {

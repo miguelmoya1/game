@@ -2,11 +2,7 @@ import { PartyEntity } from '../../../../domain/entities';
 import { PartyStatus } from '../../../../domain/enums';
 
 export interface PartyRepository {
-  create(
-    leaderId: string,
-    status: PartyStatus,
-    description?: string,
-  ): Promise<PartyEntity>;
+  create(leaderId: string, status: PartyStatus, description?: string): Promise<PartyEntity>;
   findById(partyId: string): Promise<PartyEntity | null>;
   addMember(partyId: string, playerId: string): Promise<void>;
   removeMember(partyId: string, playerId: string): Promise<void>;

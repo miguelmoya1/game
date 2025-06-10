@@ -1,10 +1,7 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ErrorCodes } from '../../../../domain/enums';
-import {
-  PLACE_REPOSITORY,
-  PlaceRepository,
-} from '../../../../infrastructure/repositories';
+import { PLACE_REPOSITORY, PlaceRepository } from '../../../../infrastructure/repositories';
 import { DeletePlaceCommand } from '../impl/delete-place.command';
 
 @CommandHandler(DeletePlaceCommand)

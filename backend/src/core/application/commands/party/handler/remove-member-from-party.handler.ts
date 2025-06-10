@@ -10,9 +10,7 @@ import {
 import { RemoveMemberFromPartyCommand } from '../impl/remove-member-from-party.command';
 
 @CommandHandler(RemoveMemberFromPartyCommand)
-export class RemoveMemberFromPartyHandler
-  implements ICommandHandler<RemoveMemberFromPartyCommand>
-{
+export class RemoveMemberFromPartyHandler implements ICommandHandler<RemoveMemberFromPartyCommand> {
   constructor(
     @Inject(PARTY_REPOSITORY) private readonly partyRepository: PartyRepository,
     @Inject(PLAYER_REPOSITORY)
@@ -25,19 +23,13 @@ export class RemoveMemberFromPartyHandler
     const party = await this.partyRepository.findById(partyId);
 
     if (!party) {
-      throw new HttpException(
-        ErrorCodes.INTERNAL_SERVER_ERROR,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(ErrorCodes.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     const player = await this.playerRepository.getByUserId(user.id);
 
     if (!player) {
-      throw new HttpException(
-        ErrorCodes.PLAYER_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.PLAYER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const isLeader = party.leaderId === player.id;

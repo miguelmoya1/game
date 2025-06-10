@@ -38,14 +38,10 @@ export class GetPointsHandler implements IQueryHandler<GetPointsQuery> {
     const { lat, lng, user } = query;
 
     if (!lat || !lng) {
-      throw new HttpException(
-        ErrorCodes.PLACE_MISSING_LAT_LNG,
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException(ErrorCodes.PLACE_MISSING_LAT_LNG, HttpStatus.BAD_REQUEST);
     }
 
-    const shouldRequestApi =
-      await this._placeApiHistoryRepository.shouldRequestApi(lat, lng);
+    const shouldRequestApi = await this._placeApiHistoryRepository.shouldRequestApi(lat, lng);
 
     if (shouldRequestApi) {
       await this._placeApiRepository.fetchAndStorePlacesFromOverpass(lat, lng);
@@ -53,20 +49,15 @@ export class GetPointsHandler implements IQueryHandler<GetPointsQuery> {
     }
 
     const places = await this._placeRepository.get(lat, lng);
-    const playerItemCollectionLogs =
-      await this._playerItemCollectionLogRepository.getForPlaces(
-        places.map((place) => place.id),
-      );
+    const playerItemCollectionLogs = await this._playerItemCollectionLogRepository.getForPlaces(
+      places.map((place) => place.id),
+    );
 
     const placesIds = places.map((place) => place.id);
     const dungeons = await this._dungeonRepository.findByPlaceIds(placesIds);
 
     return places.map((place) => {
-      const permissions = this._permissionsService.getPlacePermissions(
-        place,
-        playerItemCollectionLogs,
-        user,
-      );
+      const permissions = this._permissionsService.getPlacePermissions(place, playerItemCollectionLogs, user);
 
       const dungeon = dungeons.find((dungeon) => dungeon.placeId === place.id);
 

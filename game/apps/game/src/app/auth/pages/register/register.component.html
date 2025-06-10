@@ -16,9 +16,9 @@
       />
 
       @if (name?.touched && name?.errors?.['required']) {
-      <p class="error-message">
-        {{ 'REGISTER_NAME_REQUIRED' | translate }}
-      </p>
+        <p class="error-message">
+          {{ 'REGISTER_NAME_REQUIRED' | translate }}
+        </p>
       }
     </div>
 
@@ -36,17 +36,19 @@
       />
 
       @if (email?.touched && email?.errors?.['email']) {
-      <p class="error-message">
-        {{ 'REGISTER_EMAIL_INVALID' | translate }}
-      </p>
-      } @if (email?.touched && email?.errors?.['required']) {
-      <p class="error-message">
-        {{ 'REGISTER_EMAIL_REQUIRED' | translate }}
-      </p>
-      } @if (email?.touched && email?.errors?.['emailTaken']) {
-      <p class="error-message">
-        {{ 'REGISTER_EMAIL_TAKEN' | translate }}
-      </p>
+        <p class="error-message">
+          {{ 'REGISTER_EMAIL_INVALID' | translate }}
+        </p>
+      }
+      @if (email?.touched && email?.errors?.['required']) {
+        <p class="error-message">
+          {{ 'REGISTER_EMAIL_REQUIRED' | translate }}
+        </p>
+      }
+      @if (email?.touched && email?.errors?.['emailTaken']) {
+        <p class="error-message">
+          {{ 'REGISTER_EMAIL_TAKEN' | translate }}
+        </p>
       }
     </div>
     <div class="input-group">
@@ -63,9 +65,9 @@
       />
 
       @if (password?.touched && password?.errors?.['required']) {
-      <p class="error-message">
-        {{ 'REGISTER_PASSWORD_REQUIRED' | translate }}
-      </p>
+        <p class="error-message">
+          {{ 'REGISTER_PASSWORD_REQUIRED' | translate }}
+        </p>
       }
     </div>
     <div class="input-group">
@@ -81,15 +83,17 @@
         [placeholder]="'REGISTER_CONFIRM_PASSWORD_PLACEHOLDER' | translate"
       />
       @if (confirmPassword?.touched && confirmPassword?.errors?.['required']) {
-      <p class="error-message">
-        {{ 'REGISTER_CONFIRM_PASSWORD_REQUIRED' | translate }}
-      </p>
-
-      } @if (confirmPassword?.touched &&
-      confirmPassword?.errors?.['passwordMismatch']) {
-      <p class="error-message">
-        {{ 'REGISTER_PASSWORD_MISMATCH' | translate }}
-      </p>
+        <p class="error-message">
+          {{ 'REGISTER_CONFIRM_PASSWORD_REQUIRED' | translate }}
+        </p>
+      }
+      @if (
+        confirmPassword?.touched &&
+        confirmPassword?.errors?.['passwordMismatch']
+      ) {
+        <p class="error-message">
+          {{ 'REGISTER_PASSWORD_MISMATCH' | translate }}
+        </p>
       }
     </div>
 

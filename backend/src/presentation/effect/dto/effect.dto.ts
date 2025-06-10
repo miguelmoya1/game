@@ -1,9 +1,5 @@
 import { IsEnum, IsNumber, IsOptional } from 'class-validator';
-import {
-  EffectTarget,
-  EffectType,
-  StatsTypes,
-} from '../../../core/domain/enums';
+import { EffectTarget, EffectType, StatsTypes } from '../../../core/domain/enums';
 
 export class EffectDto {
   @IsEnum(EffectType, {

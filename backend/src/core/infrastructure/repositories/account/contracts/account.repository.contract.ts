@@ -8,10 +8,7 @@ export interface AccountRepository {
   getById(accountId: string): Promise<AccountEntity | null>;
   create(registerDto: CreateAccountDataDto): Promise<AccountEntity | null>;
   forgotPassword(email: string, hash: string): Promise<AccountEntity | null>;
-  changePassword(
-    accountId: string,
-    password: string,
-  ): Promise<AccountEntity | null>;
+  changePassword(accountId: string, password: string): Promise<AccountEntity | null>;
   findByHash(hashForPasswordReset: string): Promise<AccountEntity | null>;
 }
 

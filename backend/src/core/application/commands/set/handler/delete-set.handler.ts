@@ -1,17 +1,12 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ErrorCodes } from '../../../../domain/enums';
-import {
-  SET_REPOSITORY,
-  SetRepository,
-} from '../../../../infrastructure/repositories';
+import { SET_REPOSITORY, SetRepository } from '../../../../infrastructure/repositories';
 import { DeleteSetCommand } from '../impl/delete-set.command';
 
 @CommandHandler(DeleteSetCommand)
 export class DeleteSetHandler implements ICommandHandler<DeleteSetCommand> {
-  constructor(
-    @Inject(SET_REPOSITORY) private readonly _setRepository: SetRepository,
-  ) {}
+  constructor(@Inject(SET_REPOSITORY) private readonly _setRepository: SetRepository) {}
 
   async execute(command: DeleteSetCommand) {
     const { setId, user } = command;

@@ -10,9 +10,7 @@ import {
 import { AddMemberToPartyCommand } from '../impl/add-member-to-party.command';
 
 @CommandHandler(AddMemberToPartyCommand)
-export class AddMemberToPartyHandler
-  implements ICommandHandler<AddMemberToPartyCommand>
-{
+export class AddMemberToPartyHandler implements ICommandHandler<AddMemberToPartyCommand> {
   constructor(
     @Inject(PARTY_REPOSITORY) private readonly partyRepository: PartyRepository,
     @Inject(PLAYER_REPOSITORY)
@@ -31,19 +29,13 @@ export class AddMemberToPartyHandler
       const userPlayerId = await this.playerRepository.getByUserId(user.id);
 
       if (!userPlayerId) {
-        throw new HttpException(
-          ErrorCodes.PLAYER_NOT_FOUND,
-          HttpStatus.NOT_FOUND,
-        );
+        throw new HttpException(ErrorCodes.PLAYER_NOT_FOUND, HttpStatus.NOT_FOUND);
       }
 
       let party = await this.partyRepository.findPartyByPlayer(userPlayerId.id);
 
       if (!party) {
-        party = await this.partyRepository.create(
-          userPlayerId.id,
-          PartyStatus.Open,
-        );
+        party = await this.partyRepository.create(userPlayerId.id, PartyStatus.Open);
       }
 
       partyId = party.id;
@@ -52,19 +44,13 @@ export class AddMemberToPartyHandler
     const party = await this.partyRepository.findById(partyId);
 
     if (!party) {
-      throw new HttpException(
-        ErrorCodes.INTERNAL_SERVER_ERROR,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(ErrorCodes.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     const player = await this.playerRepository.getByUserId(user.id);
 
     if (!player) {
-      throw new HttpException(
-        ErrorCodes.PLAYER_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.PLAYER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     const isLeader = party.leaderId === player.id;
@@ -75,10 +61,7 @@ export class AddMemberToPartyHandler
     }
 
     if (isMember) {
-      throw new HttpException(
-        ErrorCodes.PLAYER_ALREADY_IN_PARTY,
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException(ErrorCodes.PLAYER_ALREADY_IN_PARTY, HttpStatus.BAD_REQUEST);
     }
 
     await this.partyRepository.addMember(partyId, playerId);

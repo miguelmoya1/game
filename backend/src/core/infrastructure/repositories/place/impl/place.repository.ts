@@ -1,18 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PlaceEntity } from 'src/core/domain/entities';
-import {
-  DATABASE_SERVICE,
-  DatabaseService,
-} from '../../../../application/services';
+import { DATABASE_SERVICE, DatabaseService } from '../../../../application/services';
 import { PlaceRepository } from '../contracts/place.repository.contract';
 import { placeListToEntity } from '../mappers/place-list.mapper';
 import { placeToEntity } from '../mappers/place.mapper';
 
 @Injectable()
 export class PlaceRepositoryImpl implements PlaceRepository {
-  constructor(
-    @Inject(DATABASE_SERVICE) private readonly databaseService: DatabaseService,
-  ) {}
+  constructor(@Inject(DATABASE_SERVICE) private readonly databaseService: DatabaseService) {}
 
   async findById(id: string) {
     const now = new Date();
@@ -69,10 +64,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     const DEGREES_TO_RADIANS = Math.PI / 180;
 
     const latitudeDelta = (radius / EARTH_RADIUS_METERS) * (180 / Math.PI);
-    const longitudeDelta =
-      (radius /
-        (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS))) *
-      (180 / Math.PI);
+    const longitudeDelta = (radius / (EARTH_RADIUS_METERS * Math.cos(latitude * DEGREES_TO_RADIANS))) * (180 / Math.PI);
 
     const result = await this.databaseService.place.findMany({
       where: {
@@ -149,10 +141,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     const now = new Date();
     const result = await this.databaseService.place.findMany({
       where: {
-        AND: [
-          { OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] },
-          { id: { notIn: excludedIds } },
-        ],
+        AND: [{ OR: [{ deletedAt: null }, { deletedAt: { gt: now } }] }, { id: { notIn: excludedIds } }],
       },
       select: { id: true, lat: true, lng: true, categories: true },
       take: count,

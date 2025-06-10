@@ -1,17 +1,12 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ErrorCodes } from '../../../../domain/enums';
-import {
-  ACCOUNT_REPOSITORY,
-  AccountRepository,
-} from '../../../../infrastructure/repositories';
+import { ACCOUNT_REPOSITORY, AccountRepository } from '../../../../infrastructure/repositories';
 import { ENCRYPTION_SERVICE, EncryptionService } from '../../../services';
 import { ChangePasswordCommand } from '../impl/change-password.command';
 
 @CommandHandler(ChangePasswordCommand)
-export class ChangePasswordHandler
-  implements ICommandHandler<ChangePasswordCommand>
-{
+export class ChangePasswordHandler implements ICommandHandler<ChangePasswordCommand> {
   constructor(
     @Inject(ACCOUNT_REPOSITORY)
     private readonly _accountRepository: AccountRepository,
@@ -22,14 +17,10 @@ export class ChangePasswordHandler
   async execute(command: ChangePasswordCommand) {
     const { hashForPasswordReset, password } = command;
 
-    const account =
-      await this._accountRepository.findByHash(hashForPasswordReset);
+    const account = await this._accountRepository.findByHash(hashForPasswordReset);
 
     if (!account) {
-      throw new HttpException(
-        ErrorCodes.ACCOUNT_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.ACCOUNT_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     if ((account.hashExpiredAt || 0) < new Date()) {
@@ -38,16 +29,10 @@ export class ChangePasswordHandler
 
     const encryptedPassword = await this._encryptionService.encrypt(password);
     const { id } = account;
-    const accountDb = await this._accountRepository.changePassword(
-      id,
-      encryptedPassword,
-    );
+    const accountDb = await this._accountRepository.changePassword(id, encryptedPassword);
 
     if (!accountDb) {
-      throw new HttpException(
-        ErrorCodes.ACCOUNT_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException(ErrorCodes.ACCOUNT_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
   }
 }

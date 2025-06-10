@@ -3,7 +3,8 @@ import { Routes } from '@angular/router';
 const PARTY_ROUTES: Routes = [
   {
     path: '',
-    loadComponent: () => import('../pages/party-page.component').then((m) => m.PartyPageComponent),
+    loadComponent: () =>
+      import('../pages/party-page.component').then((m) => m.PartyPageComponent),
   },
 ];
 

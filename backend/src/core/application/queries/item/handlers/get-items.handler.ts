@@ -1,10 +1,7 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { ErrorCodes } from '../../../../domain/enums';
-import {
-  ITEM_REPOSITORY,
-  ItemRepository,
-} from '../../../../infrastructure/repositories';
+import { ITEM_REPOSITORY, ItemRepository } from '../../../../infrastructure/repositories';
 import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
 import { ItemResponseDto } from '../dto/item-response.dto';
 import { GetItemsQuery } from '../impl/get-items.query';

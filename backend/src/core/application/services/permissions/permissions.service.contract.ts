@@ -1,8 +1,4 @@
-import {
-  PlaceListEntity,
-  PlayerItemCollectionLogEntity,
-  UserEntity,
-} from '../../../domain/entities';
+import { PlaceListEntity, PlayerItemCollectionLogEntity, UserEntity } from '../../../domain/entities';
 import { ItemPermissions } from './types/item-permissions.type';
 import { PlacePermissions } from './types/place-permissions.type';
 
