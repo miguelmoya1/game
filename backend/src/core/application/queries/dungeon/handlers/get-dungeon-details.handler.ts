@@ -1,6 +1,5 @@
-import { HttpException, HttpStatus, Inject } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { ErrorCodes } from 'src/core/domain/enums';
 import {
   DungeonRepository,
   DungeonRepositoryImpl,
@@ -18,15 +17,14 @@ export class GetDungeonDetailsHandler
   ) {}
 
   async execute(query: GetDungeonDetailsQuery) {
-    const dungeon = await this.dungeonRepository.findById(query.dungeonId);
+    const { placeId } = query;
+
+    const dungeon = await this.dungeonRepository.findByPlaceIds([placeId]);
 
     if (!dungeon) {
-      throw new HttpException(
-        ErrorCodes.DUNGEON_NOT_FOUND,
-        HttpStatus.NOT_FOUND,
-      );
+      return undefined;
     }
 
-    return DungeonResponseDto.create(dungeon);
+    return DungeonResponseDto.create(dungeon[0]);
   }
 }

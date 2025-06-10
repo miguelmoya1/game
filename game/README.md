@@ -1,1 +1,1 @@
-nx g @nx/angular:library --directory=libs/features/dungeons --lazy=true --name=features/dungeons --routing=true --changeDetection=OnPush --displayBlock=true --flat=true --inlineStyle=true --inlineTemplate=true --skipModule=true
+nx g @nx/angular:library --directory=libs/features/points --lazy=true --name=features/points --routing=true --changeDetection=OnPush --displayBlock=true --flat=true --inlineStyle=true --inlineTemplate=true --skipModule=true

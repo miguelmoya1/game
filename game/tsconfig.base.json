@@ -24,6 +24,7 @@
       "@game/features/party": ["libs/features/party/src/index.ts"],
       "@game/features/places": ["libs/features/places/src/index.ts"],
       "@game/features/player": ["libs/features/player/src/index.ts"],
+      "@game/features/points": ["libs/features/points/src/index.ts"],
       "@game/features/sets": ["libs/features/sets/src/index.ts"],
       "@game/shared": ["libs/shared/src/index.ts"]
     }

@@ -1,6 +1,6 @@
-import { UserEntity } from 'src/core/domain/entities';
+import { UserEntity } from '../../../../domain/entities';
 
-export class GetDungeonDetailsQuery {
+export class GetPointQuery {
   constructor(
     public readonly placeId: string,
     public readonly user: UserEntity,

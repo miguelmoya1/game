@@ -1,7 +1,8 @@
 import { HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { ErrorCodes } from '../../../../domain/enums';
 import {
+  DUNGEON_REPOSITORY,
+  DungeonRepository,
   PLACE_API_HISTORY_REPOSITORY,
   PLACE_API_REPOSITORY,
   PLACE_REPOSITORY,
@@ -10,13 +11,14 @@ import {
   PlaceRepository,
   PLAYER_ITEM_COLLECTION_LOG_REPOSITORY,
   PlayerItemCollectionLogRepository,
-} from '../../../../infrastructure/repositories';
+} from 'src/core/infrastructure/repositories';
+import { ErrorCodes } from '../../../../domain/enums';
 import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
-import { PlaceListResponseDto } from '../dto/place-list-response.dto';
-import { GetPlacesQuery } from '../impl/get-places.query';
+import { PointListResponseDto } from '../dto/point-list-response.dto';
+import { GetPointsQuery } from '../impl/get-points.query';
 
-@QueryHandler(GetPlacesQuery)
-export class GetPlacesHandler implements IQueryHandler<GetPlacesQuery> {
+@QueryHandler(GetPointsQuery)
+export class GetPointsHandler implements IQueryHandler<GetPointsQuery> {
   constructor(
     @Inject(PLACE_REPOSITORY)
     private readonly _placeRepository: PlaceRepository,
@@ -28,9 +30,11 @@ export class GetPlacesHandler implements IQueryHandler<GetPlacesQuery> {
     private readonly _playerItemCollectionLogRepository: PlayerItemCollectionLogRepository,
     @Inject(PERMISSIONS_SERVICE)
     private readonly _permissionsService: PermissionsService,
+    @Inject(DUNGEON_REPOSITORY)
+    private readonly _dungeonRepository: DungeonRepository,
   ) {}
 
-  async execute(query: GetPlacesQuery) {
+  async execute(query: GetPointsQuery) {
     const { lat, lng, user } = query;
 
     if (!lat || !lng) {
@@ -54,6 +58,9 @@ export class GetPlacesHandler implements IQueryHandler<GetPlacesQuery> {
         places.map((place) => place.id),
       );
 
+    const placesIds = places.map((place) => place.id);
+    const dungeons = await this._dungeonRepository.findByPlaceIds(placesIds);
+
     return places.map((place) => {
       const permissions = this._permissionsService.getPlacePermissions(
         place,
@@ -61,7 +68,15 @@ export class GetPlacesHandler implements IQueryHandler<GetPlacesQuery> {
         user,
       );
 
-      return PlaceListResponseDto.create(place, permissions);
+      const dungeon = dungeons.find((dungeon) => dungeon.placeId === place.id);
+
+      return PointListResponseDto.create({
+        placeId: place.id,
+        lat: place.lat,
+        lng: place.lng,
+        hasDungeon: !!dungeon,
+        placePermissions: permissions,
+      });
     });
   }
 }

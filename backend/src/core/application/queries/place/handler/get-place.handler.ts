@@ -8,7 +8,7 @@ import {
   PlayerItemCollectionLogRepository,
 } from '../../../../infrastructure/repositories';
 import { PERMISSIONS_SERVICE, PermissionsService } from '../../../services';
-import { PlaceDetailResponseDto } from '../dto/place-detail-response.dto';
+import { PlaceDetailResponseDto } from '../dto/place-response.dto';
 import { GetPlaceQuery } from '../impl/get-place.query';
 
 @QueryHandler(GetPlaceQuery)

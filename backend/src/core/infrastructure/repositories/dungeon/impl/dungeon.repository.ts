@@ -88,25 +88,52 @@ export class DungeonRepositoryImpl implements DungeonRepository {
     });
   }
 
-  async findNearby(lat: number, lng: number, radiusKm: number) {
-    const geoResults = (await this.redis.georadius(
-      'active_dungeons_geo',
-      lng,
-      lat,
-      radiusKm,
-      'km',
-      'WITHCOORD',
-      'COUNT',
-      50,
-    )) as [string, string][];
+  async findByPlaceIds(placeIds: string[]) {
+    if (!placeIds || placeIds.length === 0) {
+      return [];
+    }
+
+    const placeDungeonKeys = placeIds.map((id) => `dungeon:${id}`);
+    const dungeonIdsOrNulls = (await this.redis.mget(placeDungeonKeys)).filter(
+      Boolean,
+    ) as string[];
+
+    if (dungeonIdsOrNulls.length === 0) {
+      return [];
+    }
+
+    const pipeline = this.redis.pipeline();
+    dungeonIdsOrNulls.forEach((key) => {
+      pipeline.hgetall(key);
+    });
+    const results = await pipeline.exec();
+
+    if (!results || results.length === 0) {
+      return [];
+    }
 
     const dungeons: DungeonEntity[] = [];
-    for (const [placeId] of geoResults) {
-      const dungeon = await this.findById(placeId);
-      if (dungeon) {
-        dungeons.push(dungeon);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [_, result] of results) {
+      if (result && typeof result === 'object') {
+        const details = result as Record<string, string>;
+        dungeons.push(
+          DungeonEntity.create({
+            placeId: details.placeId,
+            lat: parseFloat(details.lat),
+            lng: parseFloat(details.lng),
+            type: details.type as DungeonType,
+            rank: details.rank as Rank,
+            status: details.status as DungeonStatus,
+            startTime: new Date(Number(details.startTime)),
+            endTime: new Date(Number(details.endTime)),
+            rewards: (JSON.parse(details.rewards) || []) as Reward[],
+          }),
+        );
       }
     }
+
     return dungeons;
   }
 

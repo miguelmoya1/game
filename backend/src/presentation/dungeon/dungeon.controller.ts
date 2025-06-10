@@ -1,34 +1,19 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { UserEntity } from 'src/core/domain/entities';
-import {
-  GetDungeonDetailsQuery,
-  GetNearbyDungeonsQuery,
-} from '../../core/application/queries';
+import { GetDungeonDetailsQuery } from '../../core/application/queries';
 import { AuthenticatedUser } from '../../core/infrastructure/decorators';
 
 @Controller('dungeons')
 export class DungeonController {
   constructor(private readonly queryBus: QueryBus) {}
 
-  @Get('nearby')
-  async getNearby(
-    @Query('lat') lat: number,
-    @Query('lng') lng: number,
-    @Query('radius') radius: number,
-    @AuthenticatedUser() user: UserEntity,
-  ) {
-    const query = new GetNearbyDungeonsQuery(lat, lng, radius, user);
-
-    return this.queryBus.execute<GetNearbyDungeonsQuery, unknown>(query);
-  }
-
-  @Get(':dungeonId')
+  @Get(':placeId')
   async getDetails(
-    @Param('dungeonId') dungeonId: string,
+    @Param('placeId') placeId: string,
     @AuthenticatedUser() user: UserEntity,
   ) {
-    const query = new GetDungeonDetailsQuery(dungeonId, user);
+    const query = new GetDungeonDetailsQuery(placeId, user);
 
     return this.queryBus.execute<GetDungeonDetailsQuery, unknown>(query);
   }

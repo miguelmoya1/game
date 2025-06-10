@@ -9,9 +9,10 @@ import { GetItemsHandler } from './item/handlers/get-items.handler';
 import { GetPartyByIdHandler } from './party/handler/get-party-by-id.handler';
 import { GetPartyByUserHandler } from './party/handler/get-party-by-user.handler';
 import { GetPlaceHandler } from './place/handler/get-place.handler';
-import { GetPlacesHandler } from './place/handler/get-places.handler';
 import { GetPlayerByIdHandler } from './player/handler/get-player-by-id.handler';
 import { GetPlayerByUserIdHandler } from './player/handler/get-player-by-user-id.handler';
+import { GetPointHandler } from './point/handler/get-point.handler';
+import { GetPointsHandler } from './point/handler/get-points.handler';
 import { SearchHandler } from './search/handler/search.handler';
 import { GetSetsHandler } from './set/handler/get-sets.handler';
 import { GetLanguageHandler } from './translate/handler/get-language.handler';
@@ -23,7 +24,6 @@ import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
   providers: [
     RehydrateHandler,
     CheckEmailExistsHandler,
-    GetPlacesHandler,
     GetItemsHandler,
     GetPlaceHandler,
 
@@ -44,6 +44,9 @@ import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
 
     GetPartyByIdHandler,
     GetPartyByUserHandler,
+
+    GetPointsHandler,
+    GetPointHandler,
   ],
 })
 export class QueriesModule {}
