@@ -1,23 +1,23 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { PlaceListEntity } from '@game/features/places';
+import { PointEntity } from '@game/features/points';
 import { Marker } from 'maplibre-gl';
 import { MAP_CORE_SERVICE } from './map-core.service.contract';
-import { MapPlaceService, Selected } from './map-place.service.contract';
+import { MapPointsService, Selected } from './map-points.service.contract';
 
 @Injectable()
-export class MapPlaceServiceImpl implements MapPlaceService {
+export class MapPointsServiceImpl implements MapPointsService {
   readonly #mapCoreService = inject(MAP_CORE_SERVICE);
   readonly #map = this.#mapCoreService.map;
   readonly #markers = new Map<string, Marker>();
 
   public readonly markerSelected = signal<Selected | null>(null);
 
-  public addPlaces(places: PlaceListEntity[]) {
-    const placesIds = new Set(places.map((place) => place.id));
+  public setPoints(points: PointEntity[]) {
+    const pointsIds = new Set(points.map((point) => point.placeId));
 
     const markersToRemove: string[] = [];
     this.#markers.forEach((_, poiId) => {
-      if (!placesIds.has(poiId)) {
+      if (!pointsIds.has(poiId)) {
         markersToRemove.push(poiId);
       }
     });
@@ -33,36 +33,36 @@ export class MapPlaceServiceImpl implements MapPlaceService {
       return;
     }
 
-    places.forEach((place) => {
-      const existingMarker = this.#markers.get(place.id);
+    points.forEach((point) => {
+      const existingMarker = this.#markers.get(point.placeId);
 
       if (!existingMarker) {
-        const element = this.#createElementMarker(place);
+        const element = this.#createElementMarker(point);
         const marker = new Marker({ element })
-          .setLngLat([place.lng, place.lat])
+          .setLngLat([point.lng, point.lat])
           .addTo(mapLibre);
-        this.#markers.set(place.id, marker);
+        this.#markers.set(point.placeId, marker);
       } else {
         existingMarker
           .getElement()
           ?.setAttribute(
             'style',
-            `--marker-fill-color: ${this.#getMarkerColor(place)}`,
+            `--marker-fill-color: ${this.#getMarkerColor(point)}`,
           );
-        existingMarker.setLngLat([place.lng, place.lat]);
+        existingMarker.setLngLat([point.lng, point.lat]);
       }
     });
   }
 
-  #getMarkerColor(place: PlaceListEntity) {
-    return place.permissions.canBeClaimed
+  #getMarkerColor(point: PointEntity) {
+    return point.placePermissions.canBeClaimed
       ? 'var(--color-primary)'
       : 'var(--color-warning)';
   }
 
-  #createElementMarker(place: PlaceListEntity) {
+  #createElementMarker(point: PointEntity) {
     const element = document.createElement('div');
-    const initialColor = place.permissions.canBeClaimed
+    const initialColor = point.placePermissions.canBeClaimed
       ? 'var(--color-primary)'
       : 'var(--color-warning)';
     // Basic styles applied directly, no external CSS class needed for core function
@@ -72,7 +72,7 @@ export class MapPlaceServiceImpl implements MapPlaceService {
 
     element.style.setProperty('--marker-fill-color', initialColor);
     // Unique ID for potential targeting inside SVG
-    const uniqueIdSuffix = place.id.replace(/[^a-zA-Z0-9]/g, '');
+    const uniqueIdSuffix = point.placeId.replace(/[^a-zA-Z0-9]/g, '');
     // SVG defines its own appearance including animation and color via fill attribute
     const svgString = `
       <svg width="32" height="42" viewBox="0 0 32 42" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
@@ -96,7 +96,7 @@ export class MapPlaceServiceImpl implements MapPlaceService {
       e.stopPropagation();
 
       // Find the marker instance associated with this element/poiId
-      const markerInstance = this.#markers.get(place.id);
+      const markerInstance = this.#markers.get(point.placeId);
 
       if (!markerInstance) {
         this.markerSelected.set(null);
@@ -105,7 +105,7 @@ export class MapPlaceServiceImpl implements MapPlaceService {
 
       const selected = {
         marker: markerInstance ?? null,
-        place: this.markerSelected()?.place === place ? null : place,
+        point: this.markerSelected()?.point === point ? null : point,
       };
 
       this.markerSelected.set(selected);

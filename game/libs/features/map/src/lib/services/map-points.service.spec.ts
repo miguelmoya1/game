@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MapPlaceServiceImpl } from './map-place.service';
+import { MapPointsServiceImpl } from './map-points.service';
 
-describe('MapPlaceServiceImpl', () => {
-  let service: MapPlaceServiceImpl;
+describe('MapPointsServiceImpl', () => {
+  let service: MapPointsServiceImpl;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MapPlaceServiceImpl);
+    service = TestBed.inject(MapPointsServiceImpl);
   });
 
   it('should be created', () => {

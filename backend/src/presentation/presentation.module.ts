@@ -4,11 +4,13 @@ import { CommandsModule } from '../core/application/commands';
 import { EventsModule } from '../core/application/events';
 import { QueriesModule } from '../core/application/queries';
 import { AuthController } from './auth/auth.controller';
+import { DungeonController } from './dungeon/dungeon.controller';
 import { InventoryController } from './inventory/inventory.controller';
 import { ItemsController } from './items/items.controller';
 import { PartyController } from './party/party.controller';
 import { PlacesController } from './places/places.controller';
 import { PlayerController } from './player/places.controller';
+import { PointsController } from './point/point.controller';
 import { SearchController } from './search/search.controller';
 import { SetController } from './set/set.controller';
 import { TranslateController } from './translate/translate.controller';
@@ -27,6 +29,8 @@ import { UsersController } from './users/users.controller';
     SetController,
     TranslateController,
     UsersController,
+    PointsController,
+    DungeonController,
   ],
 })
 export class PresentationModule {}

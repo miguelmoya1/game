@@ -3,6 +3,7 @@ import { RepositoriesModule } from '../../../di/repositories';
 import { ServicesModule } from '../../../di/services';
 import { CheckEmailExistsHandler } from './auth/handler/check-email-exists.handler';
 import { RehydrateHandler } from './auth/handler/rehydrate.handler';
+import { GetDungeonDetailsHandler } from './dungeon/handlers/get-dungeon-details.handler';
 import { GetInventoryForUserHandler } from './inventory/handlers/get-inventory-for-user.handler';
 import { GetInventoryHandler } from './inventory/handlers/get-inventory.handler';
 import { GetItemsHandler } from './item/handlers/get-items.handler';
@@ -47,6 +48,8 @@ import { GetUserByIdHandler } from './user/handler/get-user-by-id.handler';
 
     GetPointsHandler,
     GetPointHandler,
+
+    GetDungeonDetailsHandler,
   ],
 })
 export class QueriesModule {}

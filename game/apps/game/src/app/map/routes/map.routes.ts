@@ -7,8 +7,7 @@ const MAP_ROUTES: Routes = [
     children: [
       {
         path: ':placeId',
-        loadComponent: () =>
-          import('@game/features/places').then((m) => m.PlaceDetailComponent),
+        loadComponent: () => import('../pages/place-detail.component'),
       },
     ],
   },

@@ -1,6 +1,6 @@
 import { PlaceEntity } from '@game/features/places';
 
-export interface PointListDto {
+export interface PointDto {
   readonly lat: number;
   readonly lng: number;
   readonly placeId: string;

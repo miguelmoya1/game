@@ -90,14 +90,8 @@ export class DungeonRepositoryImpl implements DungeonRepository {
     }
 
     const placeDungeonKeys = placeIds.map((id) => `dungeon:${id}`);
-    const dungeonIdsOrNulls = (await this.redis.mget(placeDungeonKeys)).filter(Boolean) as string[];
-
-    if (dungeonIdsOrNulls.length === 0) {
-      return [];
-    }
-
     const pipeline = this.redis.pipeline();
-    dungeonIdsOrNulls.forEach((key) => {
+    placeDungeonKeys.forEach((key) => {
       pipeline.hgetall(key);
     });
     const results = await pipeline.exec();
@@ -108,10 +102,9 @@ export class DungeonRepositoryImpl implements DungeonRepository {
 
     const dungeons: DungeonEntity[] = [];
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for (const [_, result] of results) {
-      if (result && typeof result === 'object') {
-        const details = result as Record<string, string>;
+    for (const result of results) {
+      const details = result[1] as Record<string, string>;
+      if (details && typeof details === 'object' && Object.keys(details).length > 0) {
         dungeons.push(
           DungeonEntity.create({
             placeId: details.placeId,
@@ -122,7 +115,7 @@ export class DungeonRepositoryImpl implements DungeonRepository {
             status: details.status as DungeonStatus,
             startTime: new Date(Number(details.startTime)),
             endTime: new Date(Number(details.endTime)),
-            rewards: (JSON.parse(details.rewards) || []) as Reward[],
+            rewards: details.rewards ? ((JSON.parse(details.rewards) || []) as Reward[]) : [],
           }),
         );
       }

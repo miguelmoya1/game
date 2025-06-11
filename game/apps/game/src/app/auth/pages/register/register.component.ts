@@ -102,7 +102,6 @@ export default class RegisterComponent {
     if (result) {
       this.#router.navigate(['/auth/login']);
       // TODO: Handle successful registration (e.g., navigate to login page or show success message)
-      console.log('Registration successful!');
     }
   }
 }

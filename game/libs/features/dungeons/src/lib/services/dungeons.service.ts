@@ -5,11 +5,15 @@ import { mapDungeonDtoToEntity } from './mappers/dungeon.mapper';
 
 @Injectable()
 export class DungeonsServiceImpl implements DungeonsService {
-  public readonly placeId = signal<string | null>(null);
+  readonly #placeId = signal<string | null>(null);
   readonly #dungeonResource = httpResource(
-    () => (this.placeId() ? `dungeons/${this.placeId()}` : undefined),
+    () => (this.#placeId() ? `dungeons/${this.#placeId()}` : undefined),
     { parse: mapDungeonDtoToEntity },
   );
 
   public readonly dungeon = this.#dungeonResource.asReadonly();
+
+  public setPlaceId(id: string | null): void {
+    this.#placeId.set(id);
+  }
 }

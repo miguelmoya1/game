@@ -7,19 +7,23 @@ import {
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { DUNGEONS_SERVICE } from '@game/features/dungeons';
 import { ItemComponent, ITEMS_SERVICE } from '@game/features/items';
+import { PLACE_SERVICE } from '@game/features/places';
+import { POINTS_SERVICE } from '@game/features/points';
 import { ButtonDirective, TranslatePipe } from '@game/shared';
-import { PLACE_SERVICE } from '../services/place.service.contract';
 
 @Component({
-  selector: 'lib-place-detail',
+  selector: 'game-place-detail',
   imports: [ButtonDirective, TranslatePipe, ItemComponent],
   templateUrl: './place-detail.component.html',
   styleUrl: './place-detail.component.css',
 })
-export class PlaceDetailComponent {
+export default class PlaceDetailComponent {
   readonly #router = inject(Router);
   readonly #placeService = inject(PLACE_SERVICE);
+  readonly #dungeonsService = inject(DUNGEONS_SERVICE);
+  readonly #pointsService = inject(POINTS_SERVICE);
   readonly #itemService = inject(ITEMS_SERVICE);
 
   readonly loading = signal(false);
@@ -47,6 +51,7 @@ export class PlaceDetailComponent {
   constructor() {
     effect(() => {
       this.#placeService.setPlaceId(this.placeId());
+      this.#dungeonsService.setPlaceId(this.placeId());
     });
   }
 
@@ -68,6 +73,7 @@ export class PlaceDetailComponent {
 
     this.loading.set(true);
     await this.#placeService.claim();
+    this.#pointsService.all.reload();
     this.loading.set(false);
   }
 }

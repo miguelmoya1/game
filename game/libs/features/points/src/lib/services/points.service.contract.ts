@@ -1,9 +1,9 @@
 import { InjectionToken, Resource } from '@angular/core';
-import { PointListEntity } from '../entities/point-list.entity';
+import { PointEntity } from '../entities/point.entity';
 import { PointsServiceImpl } from './points.service';
 
 export type PointsService = {
-  readonly points: Resource<PointListEntity[]>;
+  readonly all: Resource<PointEntity[]>;
 };
 
 export const POINTS_SERVICE = new InjectionToken<PointsService>(
