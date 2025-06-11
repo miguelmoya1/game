@@ -84,44 +84,28 @@ export class DungeonRepositoryImpl implements DungeonRepository {
     });
   }
 
-  async findByPlaceIds(placeIds: string[]) {
+  async hasActiveDungeon(placeIds: string[]) {
     if (!placeIds || placeIds.length === 0) {
-      return [];
+      return {};
     }
 
-    const placeDungeonKeys = placeIds.map((id) => `dungeon:${id}`);
+    const dungeonKeys = placeIds.map((id) => `dungeon:${id}`);
     const pipeline = this.redis.pipeline();
-    placeDungeonKeys.forEach((key) => {
-      pipeline.hgetall(key);
+    dungeonKeys.forEach((key) => {
+      pipeline.exists(key);
     });
     const results = await pipeline.exec();
 
     if (!results || results.length === 0) {
-      return [];
+      return {};
     }
 
-    const dungeons: DungeonEntity[] = [];
+    const activeDungeons: Record<string, boolean> = {};
 
-    for (const result of results) {
-      const details = result[1] as Record<string, string>;
-      if (details && typeof details === 'object' && Object.keys(details).length > 0) {
-        dungeons.push(
-          DungeonEntity.create({
-            placeId: details.placeId,
-            lat: parseFloat(details.lat),
-            lng: parseFloat(details.lng),
-            type: details.type as DungeonType,
-            rank: details.rank as Rank,
-            status: details.status as DungeonStatus,
-            startTime: new Date(Number(details.startTime)),
-            endTime: new Date(Number(details.endTime)),
-            rewards: details.rewards ? ((JSON.parse(details.rewards) || []) as Reward[]) : [],
-          }),
-        );
-      }
-    }
-
-    return dungeons;
+    return results.reduce((acc, result, index) => {
+      acc[placeIds[index]] = !!result[1];
+      return acc;
+    }, activeDungeons);
   }
 
   async update(dungeon: DungeonEntity) {

@@ -54,12 +54,12 @@ export class GetPointsHandler implements IQueryHandler<GetPointsQuery> {
     );
 
     const placesIds = places.map((place) => place.id);
-    const dungeons = await this._dungeonRepository.findByPlaceIds(placesIds);
+    const dungeons = await this._dungeonRepository.hasActiveDungeon(placesIds);
 
     return places.map((place) => {
       const permissions = this._permissionsService.getPlacePermissions(place, playerItemCollectionLogs, user);
 
-      const dungeon = dungeons.find((dungeon) => dungeon.placeId === place.id);
+      const dungeon = dungeons[place.id];
 
       return PointListResponseDto.create({
         placeId: place.id,

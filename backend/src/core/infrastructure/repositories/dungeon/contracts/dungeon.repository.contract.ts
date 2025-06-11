@@ -4,7 +4,7 @@ import { DungeonEntity } from '../../../../domain/entities';
 export interface DungeonRepository {
   create(data: CreateDungeonDataDto): Promise<DungeonEntity>;
   findById(dungeonId: string): Promise<DungeonEntity | null>;
-  findByPlaceIds(placeIds: string[]): Promise<DungeonEntity[]>;
+  hasActiveDungeon(placeIds: string[]): Promise<Record<string, boolean>>;
   update(dungeon: DungeonEntity): Promise<DungeonEntity>;
   delete(dungeonId: string): Promise<void>;
 
