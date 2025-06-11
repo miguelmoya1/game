@@ -1,11 +1,18 @@
 import { httpResource } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { mapPointListArrayToEntityArray } from './mappers/point-list.mapper';
+import { PointsService } from './points.service.contract';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PointsService {
-  readonly #points = httpResource('points');
+export class PointsServiceImpl implements PointsService {
+  readonly #points = httpResource('points', {
+    defaultValue: [],
+    parse: mapPointListArrayToEntityArray,
+  });
 
-  readonly watchPlaceId = signal<string | null>(null);
+  public readonly points = this.#points.asReadonly();
 }
+
+// TODO: cambiar el map-places por points y poner la logiva del click

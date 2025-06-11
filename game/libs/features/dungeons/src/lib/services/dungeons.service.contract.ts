@@ -1,9 +1,10 @@
-import { InjectionToken, Resource } from '@angular/core';
+import { InjectionToken, Resource, Signal } from '@angular/core';
 import { DungeonEntity } from '../entities/dungeon.entity';
 import { DungeonsServiceImpl } from './dungeons.service';
 
 export interface DungeonsService {
-  readonly all: Resource<DungeonEntity[]>;
+  readonly dungeon: Resource<DungeonEntity | undefined>;
+  readonly placeId: Signal<string | null>;
 }
 
 export const DUNGEONS_SERVICE = new InjectionToken<DungeonsService>(
