@@ -1,30 +1,33 @@
-<button
-  aria-label="Close"
-  class="close"
-  gameButton
-  color="primary"
-  (click)="close()"
+<div
+  class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-[url(/images/background.png)] w-2xl bg-cover bg-center max-w-full pt-6 p-12 border border-gray-600"
 >
-  X
-</button>
+  <button
+    class="absolute top-4 right-4"
+    aria-label="Close"
+    gameButton
+    color="primary"
+    (click)="close()"
+  >
+    X
+  </button>
 
-@if (placeResource.value(); as place) {
-  <div class="content">
-    <h1>{{ place.name }}</h1>
+  @if (placeResource.value(); as place) {
+    <game-title type="h1" class="mb-12">
+      {{ place.name }}
+    </game-title>
 
     @if (item(); as item) {
-      <lib-item [item]="item" />
+      <lib-item [item]="item" class="w-full" />
     }
 
     <button
       gameButton
       [disabled]="!place.permissions.canBeClaimed"
       (click)="claim()"
+      class="mt-6 w-full"
     >
-      {{
-        (place.permissions.alreadyClaimed ? 'ALREADY_CLAIMED' : 'CLAIM')
-          | translate
-      }}
+      @let claimed = place.permissions.alreadyClaimed;
+      {{ (claimed ? 'ALREADY_CLAIMED' : 'CLAIM') | translate }}
     </button>
-  </div>
-}
+  }
+</div>

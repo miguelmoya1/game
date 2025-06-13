@@ -1,13 +1,11 @@
 import { Component, computed, inject } from '@angular/core';
 import { PLAYER_SERVICE } from '@game/features/player';
-import { StatsType, TranslatePipe } from '@game/shared';
+import { StatsType, TitleComponent, TranslatePipe } from '@game/shared';
 
 @Component({
   selector: 'game-player',
-  standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, TitleComponent],
   templateUrl: './player.component.html',
-  styleUrl: './player.component.css',
 })
 export class PlayerComponent {
   readonly #playerService = inject(PLAYER_SERVICE);

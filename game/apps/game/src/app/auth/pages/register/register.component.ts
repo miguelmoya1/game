@@ -9,14 +9,19 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AccountProvider, AUTH_SERVICE } from '@game/features/auth';
-import { ButtonDirective, TranslatePipe } from '@game/shared';
+import { ButtonDirective, TitleComponent, TranslatePipe } from '@game/shared';
 import { catchError, debounceTime, first, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'game-register',
-  imports: [TranslatePipe, ReactiveFormsModule, ButtonDirective, RouterLink],
+  imports: [
+    TranslatePipe,
+    ReactiveFormsModule,
+    ButtonDirective,
+    RouterLink,
+    TitleComponent,
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
 })
 export default class RegisterComponent {
   readonly #authService = inject(AUTH_SERVICE);

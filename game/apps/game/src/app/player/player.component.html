@@ -1,63 +1,90 @@
-<h1>{{ 'PLAYER' | translate }}</h1>
+<game-title type="h1" class="my-8 !text-center w-full">
+  {{ 'PLAYER' | translate }}
+</game-title>
 
 @if (player.value(); as player) {
-  <div class="player-info-card">
-    <div class="player-row">
-      <span class="label">{{ 'RACE' | translate }}</span>
-      <span class="value">{{ player.raceId }}</span>
+  <div
+    class="border border-gray-600 rounded-xl shadow-lg p-8 mx-auto mb-8 max-w-3xl flex flex-col gap-2"
+  >
+    <div class="flex flex-row justify-between items-center text-lg py-4 px-2">
+      <game-title type="h4">
+        {{ 'LEVEL' | translate }}
+      </game-title>
+      <span class="text-right font-medium">{{ player.level }}</span>
     </div>
-    <div class="player-row">
-      <span class="label">{{ 'LEVEL' | translate }}</span>
-      <span class="value">{{ player.level }}</span>
+
+    <div class="flex flex-row justify-between items-center text-lg py-4 px-2">
+      <game-title type="h4">
+        {{ 'RANK' | translate }}
+      </game-title>
+      <span class="text-right font-medium">{{ player.rank }}</span>
     </div>
-    <div class="player-row">
-      <span class="label">{{ 'RANK' | translate }}</span>
-      <span class="value">{{ player.rank }}</span>
+
+    <div class="flex flex-row justify-between items-center text-lg py-4 px-2">
+      <game-title type="h4">
+        {{ 'EXPERIENCE' | translate }}
+      </game-title>
+      <span class="text-right font-medium">{{ player.experience }}</span>
     </div>
-    <div class="player-row">
-      <span class="label">{{ 'EXPERIENCE' | translate }}</span>
-      <span class="value">{{ player.experience }}</span>
+
+    <div class="flex flex-col items-start py-4 px-2">
+      <game-title type="h2" class="mb-2">
+        {{ 'STATS' | translate }}
+      </game-title>
+      @for (stat of player.stats; track stat.statsType) {
+        <div
+          class="w-full flex justify-between py-2 border-b border-dashed border-gray-600 last:border-b-0"
+        >
+          <span class="text-secondary/90">
+            {{ stat.statsType | translate }}
+          </span>
+          <span class="text-primary font-bold">{{ stat.value }}</span>
+        </div>
+      }
     </div>
-    <div class="player-row stats-section">
-      <span class="label">{{ 'STATS' | translate }}</span>
-      <ul class="stats-list">
-        @for (stat of player.stats; track stat.statsType) {
-          <li>
-            <span class="stat-type">{{ stat.statsType | translate }}</span>
-            <span class="stat-value">{{ stat.value }}</span>
-          </li>
-        }
-      </ul>
-    </div>
-    <div class="player-row aggregated-stats-section">
-      <span class="label">{{ 'AGGREGATED_STATS' | translate }}</span>
-      <ul class="aggregated-stats-list">
+    <div class="flex flex-col items-center gap-4 mt-6 rounded-lg shadow p-4">
+      <game-title type="h2" class="mb-2">
+        {{ 'AGGREGATED_STATS' | translate }}
+      </game-title>
+      <ul class="flex flex-wrap justify-evenly gap-2 w-full">
         @for (statKey of statsKeys(); track statKey) {
-          <li>
-            <span class="stat-type"> {{ statKey | translate }} </span>
-            <span class="stat-detail">
-              Base: <b>{{ player.aggregatedStats?.[statKey]?.base }} </b>
-            </span>
-            <span class="stat-detail">
-              By Level:
-              <b> {{ player.aggregatedStats?.[statKey]?.byLevel }} </b>
-            </span>
-            <span class="stat-detail">
-              By Set: <b> {{ player.aggregatedStats?.[statKey]?.bySet }} </b>
-            </span>
-            <span class="stat-detail">
-              By Party:
-              <b> {{ player.aggregatedStats?.[statKey]?.byPartySetsBonus }} </b>
-            </span>
-            <span class="stat-detail">
-              By Guild:
-              <b> {{ player.aggregatedStats?.[statKey]?.byGuild }} </b>
+          <li
+            class="rounded-md px-6 py-4 min-w-48 shadow flex flex-col items-start mb-2 border border-gray-600 text-base"
+          >
+            <game-title type="h4" class="mb-2">
+              {{ statKey | translate }}
+            </game-title>
+
+            <span class="flex justify-between w-full">
+              <span>{{ 'BASE' | translate }}</span>
+              {{ player.aggregatedStats?.[statKey]?.base }}
             </span>
 
-            <hr />
+            <span class="flex justify-between w-full">
+              <span>{{ 'BY_LEVEL' | translate }}</span>
+              {{ player.aggregatedStats?.[statKey]?.byLevel }}
+            </span>
 
-            <span class="stat-detail total">
-              Total: <b>{{ player.aggregatedStats?.[statKey]?.total }} </b>
+            <span class="flex justify-between w-full">
+              <span>{{ 'BY_SET' | translate }}</span>
+              {{ player.aggregatedStats?.[statKey]?.bySet }}
+            </span>
+
+            <span class="flex justify-between w-full">
+              <span>{{ 'BY_PARTY' | translate }}</span>
+              {{ player.aggregatedStats?.[statKey]?.byPartySetsBonus }}
+            </span>
+
+            <span class="flex justify-between w-full">
+              <span>{{ 'BY_GUILD' | translate }}</span>
+              {{ player.aggregatedStats?.[statKey]?.byGuild }}
+            </span>
+
+            <span
+              class="w-full pt-2 mt-2 border-t border-gray-600 flex justify-between"
+            >
+              <span>{{ 'TOTAL' | translate }}</span>
+              {{ player.aggregatedStats?.[statKey]?.total }}
             </span>
           </li>
         }

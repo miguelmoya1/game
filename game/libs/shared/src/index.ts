@@ -15,3 +15,8 @@ export { GEOLOCATION_SERVICE } from './lib/services/geolocation/geolocation.serv
 export { NOTIFICATION_SERVICE } from './lib/services/notification/notification.service.contract';
 export { TRANSLATE_SERVICE } from './lib/services/translate/translate.service.contract';
 export { Stats } from './lib/types/stats.type';
+export { RankComponent } from './lib/ui/rank.component';
+export { TextComponent } from './lib/ui/text.component';
+export { TitleComponent } from './lib/ui/title.component';
+
+export * from './lib/ui/chip.component';

@@ -1,13 +1,31 @@
 import { Component, computed, inject, input } from '@angular/core';
+import { EffectComponent } from '@game/features/effects';
 import { ItemEntity } from '@game/features/items';
 import { SET_SERVICE, SetComponent } from '@game/features/sets';
-import { TranslatePipe } from '@game/shared';
+import {
+  ChipComponent,
+  RankComponent,
+  TextComponent,
+  TitleComponent,
+  TranslatePipe,
+} from '@game/shared';
 
 @Component({
   selector: 'lib-item',
-  imports: [TranslatePipe, SetComponent],
+  imports: [
+    TranslatePipe,
+    SetComponent,
+    TitleComponent,
+    RankComponent,
+    TextComponent,
+    ChipComponent,
+    EffectComponent,
+  ],
   templateUrl: './item.component.html',
-  styleUrl: './item.component.css',
+  host: {
+    class:
+      'block w-full flex flex-col p-8 gap-4 border border-gray-600 rounded-lg max-w-xl',
+  },
 })
 export class ItemComponent {
   readonly #setService = inject(SET_SERVICE);

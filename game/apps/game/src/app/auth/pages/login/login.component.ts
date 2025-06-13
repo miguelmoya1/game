@@ -7,13 +7,18 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AUTH_SERVICE } from '@game/features/auth';
-import { ButtonDirective, TranslatePipe } from '@game/shared';
+import { ButtonDirective, TitleComponent, TranslatePipe } from '@game/shared';
 
 @Component({
   selector: 'game-login',
-  imports: [ReactiveFormsModule, ButtonDirective, TranslatePipe, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    ButtonDirective,
+    TranslatePipe,
+    RouterLink,
+    TitleComponent,
+  ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
 })
 export default class LoginComponent {
   readonly #authService = inject(AUTH_SERVICE);

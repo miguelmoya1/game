@@ -1,14 +1,20 @@
-<form [formGroup]="setForm()">
-  <div class="form-group">
-    <label for="setName">{{ 'SET_NAME' | translate }}</label>
+<form
+  [formGroup]="setForm()"
+  class="flex flex-col gap-4 p-4 bg-gray-800 rounded-lg shadow-md"
+>
+  <div class="flex flex-col gap-1">
+    <label for="setName" class="text-sm font-semibold text-primary-200">{{
+      'SET_NAME' | translate
+    }}</label>
     <input
       id="setName"
       type="text"
       formControlName="name"
       placeholder="{{ 'SET_NAME' | translate }}"
+      class="px-3 py-2 rounded border border-gray-600 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-primary-300"
     />
     @if (name.invalid && (name.dirty || name.touched)) {
-      <div class="error-message">
+      <div class="text-xs text-red-400 mt-1">
         @if (name.errors?.['required']) {
           {{ 'NAME_REQUIRED' | translate }}
         }
@@ -19,14 +25,17 @@
     }
   </div>
 
-  <div class="form-group">
-    <label for="setDescription">
-      {{ 'SET_DESCRIPTION_OPTIONAL' | translate }}
-    </label>
+  <div class="flex flex-col gap-1">
+    <label
+      for="setDescription"
+      class="text-sm font-semibold text-primary-200"
+      >{{ 'SET_DESCRIPTION_OPTIONAL' | translate }}</label
+    >
     <textarea
       id="setDescription"
       formControlName="description"
       placeholder="{{ 'SET_DESCRIPTION_PLACEHOLDER' | translate }}"
+      class="px-3 py-2 rounded border border-gray-600 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-primary-300 min-h-[80px]"
     ></textarea>
   </div>
 

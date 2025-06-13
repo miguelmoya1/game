@@ -1,23 +1,26 @@
 @let effectTemplate = effect();
 
 @if (effectTemplate.type) {
-  <span class="type">
-    @if (effectTemplate.minimumItems) {
-      <span class="minimum-items">
-        ({{ effectTemplate.minimumItems }} {{ 'ITEMS' | translate }})
+  @if (effectTemplate.minimumItems) {
+    <div class="flex items-center gap-1">
+      {{ effectTemplate.minimumItems }}
+      <span class="text-xs">
+        {{ 'ITEMS' | translate }}
       </span>
-    }
+    </div>
+  }
 
-    {{ effectTemplate.type | translate }}
+  <div class="flex items-center gap-1">
+    <span>{{ effectTemplate.type | translate }}</span>
 
     @if (effectTemplate.statType) {
-      {{ effectTemplate.statType | translate }}
+      <span>{{ effectTemplate.statType | translate }}</span>
     }
 
     ({{ effectTemplate.value }})
-  </span>
 
-  @if (effectTemplate.target) {
-    <span class="target">{{ effectTemplate.target | translate }}</span>
-  }
+    <span class="text-xs">
+      {{ effectTemplate.target | translate }}
+    </span>
+  </div>
 }

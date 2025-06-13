@@ -1,57 +1,65 @@
 @let itemTemplate = item();
 
-<div class="header">
-  <h2 class="name">{{ itemTemplate.name | translate }}</h2>
+<div class="flex items-center justify-between">
+  <game-title type="h2">{{ itemTemplate.name | translate }}</game-title>
   @if (itemTemplate.rank) {
-    <span class="rank rank-{{ itemTemplate.rank }}">
-      {{ itemTemplate.rank | translate }}
-    </span>
+    <game-rank [rank]="itemTemplate.rank" />
   }
 </div>
 
-<div class="info">
-  <div class="image">
+<div class="flex gap-4 items-start">
+  <div
+    class="w-16 h-16 flex items-center justify-center bg-gray-700 rounded overflow-hidden"
+  >
     @if (itemTemplate.imageUrl) {
-      <img [src]="itemTemplate.imageUrl" [alt]="itemTemplate.name" />
+      <img
+        [src]="itemTemplate.imageUrl"
+        [alt]="itemTemplate.name"
+        class="object-cover w-full h-full"
+      />
     } @else {
-      IMG
+      <span class="text-xs text-gray-400">IMG</span>
     }
   </div>
-  <div class="meta">
-    <p class="type">
-      <span>{{ 'TYPE' | translate }}:</span>
-      {{ itemTemplate.itemType | translate }}
-    </p>
+  <div class="flex-1">
+    <game-title type="h4">
+      {{ 'TYPE' | translate }}: {{ itemTemplate.itemType | translate }}
+    </game-title>
+
     @if (itemTemplate.description) {
-      <p class="description">{{ itemTemplate.description | translate }}</p>
+      <game-text> {{ itemTemplate.description | translate }} </game-text>
     }
   </div>
 </div>
 
-@if (itemTemplate.spawnCategories && itemTemplate.spawnCategories.length > 0) {
-  <div class="section spawn-categories">
-    <h3 class="section-title">
-      {{ 'SPAWN_CATEGORIES' | translate }}
-    </h3>
+@if (itemTemplate.effects) {
+  <div class="flex flex-col gap-2 mt-3">
+    <game-title type="h4">
+      {{ 'EFFECTS' | translate }}
+    </game-title>
 
-    <ul class="categories-list">
-      @for (category of itemTemplate.spawnCategories; track $index) {
-        <li class="category-tag">{{ category | translate }}</li>
+    <div class="flex flex-col gap-2">
+      @for (effect of itemTemplate.effects; track $index) {
+        <lib-effect [effect]="effect" />
       }
-    </ul>
+    </div>
+  </div>
+}
+
+@if (itemTemplate.spawnCategories && itemTemplate.spawnCategories.length > 0) {
+  <div class="flex flex-col gap-2 mt-3">
+    <game-title type="h4">
+      {{ 'SPAWN_CATEGORIES' | translate }}
+    </game-title>
+
+    <div class="flex flex-wrap gap-2 mt-2">
+      @for (category of itemTemplate.spawnCategories; track $index) {
+        <game-chip> {{ category | translate }} </game-chip>
+      }
+    </div>
   </div>
 }
 
 @if (set(); as set) {
-  <div class="section">
-    <lib-set [set]="set" />
-  </div>
-}
-
-@if (showFooter()) {
-  <div class="footer">
-    <span class="inventory-total">
-      {{ total() }}
-    </span>
-  </div>
+  <lib-set [set]="set" />
 }

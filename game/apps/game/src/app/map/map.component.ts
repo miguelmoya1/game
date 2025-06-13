@@ -20,7 +20,6 @@ import { PartyVisualizationComponent } from './components/party-visualization/pa
   selector: 'game-map',
   imports: [RouterOutlet, MapTopControlsComponent, PartyVisualizationComponent],
   templateUrl: './map.component.html',
-  styleUrl: './map.component.css',
 })
 export default class MapComponent {
   readonly #geolocationService = inject(GEOLOCATION_SERVICE);

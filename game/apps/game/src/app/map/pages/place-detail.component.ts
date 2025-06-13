@@ -11,13 +11,12 @@ import { DUNGEONS_SERVICE } from '@game/features/dungeons';
 import { ItemComponent, ITEMS_SERVICE } from '@game/features/items';
 import { PLACE_SERVICE } from '@game/features/places';
 import { POINTS_SERVICE } from '@game/features/points';
-import { ButtonDirective, TranslatePipe } from '@game/shared';
+import { ButtonDirective, TitleComponent, TranslatePipe } from '@game/shared';
 
 @Component({
   selector: 'game-place-detail',
-  imports: [ButtonDirective, TranslatePipe, ItemComponent],
+  imports: [ButtonDirective, TranslatePipe, ItemComponent, TitleComponent],
   templateUrl: './place-detail.component.html',
-  styleUrl: './place-detail.component.css',
 })
 export default class PlaceDetailComponent {
   readonly #router = inject(Router);

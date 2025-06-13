@@ -1,8 +1,14 @@
 @let effectGroupTemplate = effectGroup();
 
-<div [formGroup]="$any(effectGroupTemplate)" class="effect-form-container">
-  <div class="form-group small-margin">
-    <label for="effectMinimumItems-{{ index() }}">
+<div
+  [formGroup]="$any(effectGroupTemplate)"
+  class="flex flex-col gap-4 p-4 bg-gray-800 rounded-lg shadow-md"
+>
+  <div class="flex flex-col gap-1">
+    <label
+      for="effectMinimumItems-{{ index() }}"
+      class="text-xs font-semibold text-primary-200"
+    >
       {{ 'REQUIRED_PIECES_OPTIONAL' | translate }}
     </label>
     <input
@@ -10,13 +16,14 @@
       type="number"
       formControlName="minimumItems"
       placeholder="{{ 'EXAMPLE_2' | translate }}"
+      class="px-3 py-2 rounded border border-gray-600 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-primary-300"
     />
     @if (
       effectGroupTemplate.get('minimumItems')?.invalid &&
       (effectGroupTemplate.get('minimumItems')?.dirty ||
         effectGroupTemplate.get('minimumItems')?.touched)
     ) {
-      <div class="error-message">
+      <div class="text-xs text-red-400 mt-1">
         @if (effectGroupTemplate.get('minimumItems')?.errors?.['required']) {
           {{ 'REQUIRED' | translate }}
         }
@@ -27,12 +34,19 @@
     }
   </div>
 
-  <div class="effect-fields-grid">
-    <div class="form-group">
-      <label for="effect_type-{{ index() }}">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="flex flex-col gap-1">
+      <label
+        for="effect_type-{{ index() }}"
+        class="text-xs font-semibold text-primary-200"
+      >
         {{ 'EFFECT_TYPE' | translate }}
       </label>
-      <select id="effect_type-{{ index() }}" formControlName="type">
+      <select
+        id="effect_type-{{ index() }}"
+        formControlName="type"
+        class="px-3 py-2 rounded border border-gray-600 bg-gray-900 text-white"
+      >
         <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
         @for (eType of effectTypes; track eType) {
           <option [value]="eType">{{ eType | translate }}</option>
@@ -40,11 +54,18 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="target-{{ index() }}">
+    <div class="flex flex-col gap-1">
+      <label
+        for="target-{{ index() }}"
+        class="text-xs font-semibold text-primary-200"
+      >
         {{ 'TARGET' | translate }}
       </label>
-      <select id="target-{{ index() }}" formControlName="target">
+      <select
+        id="target-{{ index() }}"
+        formControlName="target"
+        class="px-3 py-2 rounded border border-gray-600 bg-gray-900 text-white"
+      >
         <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
         @for (eTarget of effectTargets; track eTarget) {
           <option [value]="eTarget">{{ eTarget | translate }}</option>
@@ -52,11 +73,18 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="stat_type-{{ index() }}">
+    <div class="flex flex-col gap-1">
+      <label
+        for="stat_type-{{ index() }}"
+        class="text-xs font-semibold text-primary-200"
+      >
         {{ 'STATS_OPTIONAL' | translate }}
       </label>
-      <select id="stat_type-{{ index() }}" formControlName="statType">
+      <select
+        id="stat_type-{{ index() }}"
+        formControlName="statType"
+        class="px-3 py-2 rounded border border-gray-600 bg-gray-900 text-white"
+      >
         <option [ngValue]="null">-- {{ 'NONE' | translate }} --</option>
         @for (sType of statsTypes; track sType) {
           <option [value]="sType">{{ sType | translate }}</option>
@@ -64,8 +92,11 @@
       </select>
     </div>
 
-    <div class="form-group">
-      <label for="value-{{ index() }}">
+    <div class="flex flex-col gap-1">
+      <label
+        for="value-{{ index() }}"
+        class="text-xs font-semibold text-primary-200"
+      >
         {{ 'EFFECT_OR_STAT_VALUE' | translate }}
       </label>
       <input
@@ -74,13 +105,14 @@
         step="any"
         formControlName="value"
         placeholder="{{ 'EXAMPLE_10_OR_01' | translate }}"
+        class="px-3 py-2 rounded border border-gray-600 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-primary-300"
       />
       @if (
         effectGroupTemplate.get('value')?.invalid &&
         (effectGroupTemplate.get('value')?.dirty ||
           effectGroupTemplate.get('value')?.touched)
       ) {
-        <div class="error-message">
+        <div class="text-xs text-red-400 mt-1">
           @if (effectGroupTemplate.get('value')?.errors?.['pattern']) {
             {{ 'MUST_BE_NUMBER' | translate }}
           }

@@ -1,9 +1,17 @@
-<h1>{{ 'LOGIN_TITLE' | translate }}</h1>
+<game-title type="h1" class="pt-16 w-full !text-center">
+  {{ 'LOGIN_TITLE' | translate }}
+</game-title>
 
-<div class="content">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="input-group">
-      <label for="login-email">
+<div
+  class="border border-gray-600 rounded-2xl shadow p-8 max-w-sm w-full mx-auto flex flex-col gap-8 mt-8"
+>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col gap-5"
+  >
+    <div class="flex flex-col gap-1">
+      <label for="login-email" class="font-semibold">
         {{ 'LOGIN_EMAIL_PLACEHOLDER' | translate }}
       </label>
       <input
@@ -12,10 +20,11 @@
         type="email"
         autocomplete="email"
         [placeholder]="'LOGIN_EMAIL_PLACEHOLDER' | translate"
+        class="rounded-lg border border-gray-700 px-4 py-2 shadow-sm focus:outline-none placeholder-gray-600"
       />
     </div>
-    <div class="input-group">
-      <label for="login-password">
+    <div class="flex flex-col gap-1">
+      <label for="login-password" class="font-semibold">
         {{ 'LOGIN_PASSWORD_PLACEHOLDER' | translate }}
       </label>
       <input
@@ -24,16 +33,27 @@
         autocomplete="current-password"
         type="password"
         [placeholder]="'LOGIN_PASSWORD_PLACEHOLDER' | translate"
+        class="rounded-lg border border-gray-700 px-4 py-2 shadow-sm focus:outline-none placeholder-gray-600"
       />
     </div>
-    <button gameButton type="submit" [disabled]="loginForm.invalid">
+    <button
+      gameButton
+      type="submit"
+      [disabled]="loginForm.invalid"
+      class="mt-2 w-full"
+    >
       {{ 'LOGIN_BUTTON_TEXT' | translate }}
     </button>
   </form>
 
-  <div class="register-link">
-    <p>{{ 'LOGIN_TO_REGISTER_TEXT' | translate }}</p>
-    <button routerLink="/auth/register" gameButton [style]="'outlined'">
+  <div class="text-center mt-2 text-secondary text-base">
+    <p class="mb-2">{{ 'LOGIN_TO_REGISTER_TEXT' | translate }}</p>
+    <button
+      routerLink="/auth/register"
+      gameButton
+      [style]="'outlined'"
+      class="w-full"
+    >
       {{ 'LOGIN_TO_REGISTER_BUTTON_TEXT' | translate }}
     </button>
   </div>

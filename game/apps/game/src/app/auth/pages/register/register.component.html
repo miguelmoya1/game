@@ -1,89 +1,97 @@
-<h1>{{ 'REGISTER_TITLE' | translate }}</h1>
+<game-title type="h1" class="pt-16 w-full !text-center">
+  {{ 'REGISTER_TITLE' | translate }}
+</game-title>
 
-<div class="content">
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="input-group">
-      <label for="register-name">
+<div
+  class="border border-gray-600 rounded-2xl shadow p-8 max-w-sm w-full mx-auto flex flex-col gap-8 mt-8"
+>
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col gap-5"
+  >
+    <div class="flex flex-col gap-1">
+      <label for="register-name" class="font-semibold">
         {{ 'REGISTER_NAME_PLACEHOLDER' | translate }}
       </label>
       <input
         id="register-name"
-        gameInput
         formControlName="name"
         type="text"
         autocomplete="given-name"
         [placeholder]="'REGISTER_NAME_PLACEHOLDER' | translate"
+        class="rounded-lg border border-gray-700 px-4 py-2 shadow-sm focus:outline-none placeholder-gray-600"
       />
 
       @if (name?.touched && name?.errors?.['required']) {
-        <p class="error-message">
+        <p class="text-error text-sm mt-1">
           {{ 'REGISTER_NAME_REQUIRED' | translate }}
         </p>
       }
     </div>
 
-    <div class="input-group">
-      <label for="register-email">
+    <div class="flex flex-col gap-1">
+      <label for="register-email" class="font-semibold">
         {{ 'REGISTER_EMAIL_PLACEHOLDER' | translate }}
       </label>
       <input
         id="register-email"
-        gameInput
         formControlName="email"
         autocomplete="email"
         type="email"
         [placeholder]="'REGISTER_EMAIL_PLACEHOLDER' | translate"
+        class="rounded-lg border border-gray-700 px-4 py-2 shadow-sm focus:outline-none placeholder-gray-600"
       />
 
       @if (email?.touched && email?.errors?.['email']) {
-        <p class="error-message">
+        <p class="text-error text-sm mt-1">
           {{ 'REGISTER_EMAIL_INVALID' | translate }}
         </p>
       }
       @if (email?.touched && email?.errors?.['required']) {
-        <p class="error-message">
+        <p class="text-error text-sm mt-1">
           {{ 'REGISTER_EMAIL_REQUIRED' | translate }}
         </p>
       }
       @if (email?.touched && email?.errors?.['emailTaken']) {
-        <p class="error-message">
+        <p class="text-error text-sm mt-1">
           {{ 'REGISTER_EMAIL_TAKEN' | translate }}
         </p>
       }
     </div>
-    <div class="input-group">
-      <label for="register-password">
+    <div class="flex flex-col gap-1">
+      <label for="register-password" class="font-semibold">
         {{ 'REGISTER_PASSWORD_PLACEHOLDER' | translate }}
       </label>
       <input
         id="register-password"
-        gameInput
         formControlName="password"
         type="password"
         autocomplete="new-password"
         [placeholder]="'REGISTER_PASSWORD_PLACEHOLDER' | translate"
+        class="rounded-lg border border-gray-700 px-4 py-2 shadow-sm focus:outline-none placeholder-gray-600"
       />
 
       @if (password?.touched && password?.errors?.['required']) {
-        <p class="error-message">
+        <p class="text-error text-sm mt-1">
           {{ 'REGISTER_PASSWORD_REQUIRED' | translate }}
         </p>
       }
     </div>
-    <div class="input-group">
-      <label for="register-confirm-password">
+    <div class="flex flex-col gap-1">
+      <label for="register-confirm-password" class="font-semibold">
         {{ 'REGISTER_CONFIRM_PASSWORD_PLACEHOLDER' | translate }}
       </label>
       <input
         id="register-confirm-password"
-        gameInput
         formControlName="confirmPassword"
         type="password"
         autocomplete="new-password"
         [placeholder]="'REGISTER_CONFIRM_PASSWORD_PLACEHOLDER' | translate"
+        class="rounded-lg border border-gray-700 px-4 py-2 shadow-sm focus:outline-none placeholder-gray-600"
       />
       @if (confirmPassword?.touched && confirmPassword?.errors?.['required']) {
-        <p class="error-message">
+        <p class="text-error text-sm mt-1">
           {{ 'REGISTER_CONFIRM_PASSWORD_REQUIRED' | translate }}
         </p>
       }
@@ -91,21 +99,30 @@
         confirmPassword?.touched &&
         confirmPassword?.errors?.['passwordMismatch']
       ) {
-        <p class="error-message">
+        <p class="text-error text-sm mt-1">
           {{ 'REGISTER_PASSWORD_MISMATCH' | translate }}
         </p>
       }
     </div>
 
-    <button gameButton type="submit" [disabled]="registerForm.invalid">
+    <button
+      gameButton
+      type="submit"
+      [disabled]="registerForm.invalid"
+      class="mt-2 w-full"
+    >
       {{ 'REGISTER_BUTTON_TEXT' | translate }}
     </button>
   </form>
+  <div class="text-center mt-2 text-secondary text-base">
+    <p class="mb-2">{{ 'REGISTER_TO_LOGIN_TEXT' | translate }}</p>
 
-  <div class="register-link">
-    <p>{{ 'REGISTER_TO_LOGIN_TEXT' | translate }}</p>
-
-    <button routerLink="/auth/login" gameButton [style]="'outlined'">
+    <button
+      routerLink="/auth/login"
+      gameButton
+      [style]="'outlined'"
+      class="w-full"
+    >
       {{ 'REGISTER_TO_LOGIN_BUTTON_TEXT' | translate }}
     </button>
   </div>
