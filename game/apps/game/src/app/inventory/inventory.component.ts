@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { INVENTORY_SERVICE } from '@game/features/inventory';
 import { ItemComponent, ITEMS_SERVICE } from '@game/features/items';
-import { TranslatePipe } from '@game/shared';
+import { TitleComponent, TranslatePipe } from '@game/shared';
 
 @Component({
   selector: 'game-inventory',
-  imports: [TranslatePipe, ItemComponent],
+  imports: [TranslatePipe, ItemComponent, TitleComponent],
   templateUrl: './inventory.component.html',
-  styleUrl: './inventory.component.css',
 })
 export class InventoryComponent {
   readonly #inventoryService = inject(INVENTORY_SERVICE);

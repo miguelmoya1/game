@@ -1,7 +1,9 @@
-<h1>{{ 'INVENTORY' | translate }}</h1>
+<game-title type="h1" class="pt-16 w-full !text-center">
+  {{ 'INVENTORY' | translate }}
+</game-title>
 
 @if (inventory.value(); as inventory) {
-  <div class="items">
+  <div class="flex flex-wrap gap-4 justify-start items-start w-full p-4">
     @for (inventoryItem of inventory; track $index) {
       @if (getItemById(inventoryItem.itemId); as item) {
         <lib-item [item]="item" [total]="inventoryItem.quantity" />

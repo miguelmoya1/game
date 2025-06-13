@@ -32,34 +32,53 @@
   </div>
 </div>
 
-@if (itemTemplate.effects) {
-  <div class="flex flex-col gap-2 mt-3">
-    <game-title type="h4">
-      {{ 'EFFECTS' | translate }}
-    </game-title>
+<button class="mt-4 text-sm cursor-pointer" (click)="showMore.set(!showMore())">
+  {{ showMore() ? ('SHOW_LESS' | translate) : ('SHOW_MORE' | translate) }}
+</button>
 
-    <div class="flex flex-col gap-2">
-      @for (effect of itemTemplate.effects; track $index) {
-        <lib-effect [effect]="effect" />
-      }
+<div
+  class="transition-all duration-500 overflow-hidden"
+  [class.max-h-0]="!showMore()"
+  [class.opacity-0]="!showMore()"
+  [class.opacity-100]="showMore()"
+>
+  @if (itemTemplate.effects) {
+    <div class="flex flex-col gap-2 mt-3">
+      <game-title type="h4">
+        {{ 'EFFECTS' | translate }}
+      </game-title>
+
+      <div class="flex flex-col gap-2">
+        @for (effect of itemTemplate.effects; track $index) {
+          <lib-effect [effect]="effect" />
+        }
+      </div>
     </div>
-  </div>
-}
+  }
 
-@if (itemTemplate.spawnCategories && itemTemplate.spawnCategories.length > 0) {
-  <div class="flex flex-col gap-2 mt-3">
-    <game-title type="h4">
-      {{ 'SPAWN_CATEGORIES' | translate }}
-    </game-title>
+  @if (
+    itemTemplate.spawnCategories && itemTemplate.spawnCategories.length > 0
+  ) {
+    <div class="flex flex-col gap-2 mt-3">
+      <game-title type="h4">
+        {{ 'SPAWN_CATEGORIES' | translate }}
+      </game-title>
 
-    <div class="flex flex-wrap gap-2 mt-2">
-      @for (category of itemTemplate.spawnCategories; track $index) {
-        <game-chip> {{ category | translate }} </game-chip>
-      }
+      <div class="flex flex-wrap gap-2 mt-2">
+        @for (category of itemTemplate.spawnCategories; track $index) {
+          <game-chip> {{ category | translate }} </game-chip>
+        }
+      </div>
     </div>
-  </div>
-}
+  }
 
-@if (set(); as set) {
-  <lib-set [set]="set" />
+  @if (set(); as set) {
+    <lib-set [set]="set" />
+  }
+</div>
+
+@if (showFooter()) {
+  <div class="flex items-center justify-end" [class.mt-4]="showMore()">
+    <span class="text-gray-400 text-sm"> {{ total() }} </span>
+  </div>
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, model } from '@angular/core';
 import { EffectComponent } from '@game/features/effects';
 import { ItemEntity } from '@game/features/items';
 import { SET_SERVICE, SetComponent } from '@game/features/sets';
@@ -32,6 +32,7 @@ export class ItemComponent {
 
   public readonly item = input.required<ItemEntity>();
   public readonly total = input<number>();
+  public readonly showMore = model<boolean>(false);
 
   protected readonly set = computed(() => {
     const setId = this.item().setId;
